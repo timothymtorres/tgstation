@@ -24,7 +24,7 @@
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
-/mob/living/carbon/alien/Initialize()
+/mob/living/carbon/alien/Initialize(mapload)
 	add_verb(src, /mob/living/proc/mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
@@ -57,7 +57,7 @@
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
-		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
+		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1 * delta_time, BURN)
@@ -69,7 +69,7 @@
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 	else
-		clear_alert("alien_fire")
+		clear_alert(ALERT_XENO_FIRE)
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
 	return FALSE
@@ -127,11 +127,8 @@ Des: Removes all infected images from the alien.
 		new_xeno.name = name
 		new_xeno.real_name = real_name
 	if(mind)
+		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
-	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
-	if(nanites)
-		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
-		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)

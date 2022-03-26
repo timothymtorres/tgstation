@@ -2,66 +2,6 @@
 
 #define CHECK_DNA_AND_SPECIES(C) if(!(C.dna?.species)) return
 
-//Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
-#define ACIDFLESH /datum/mutation/human/acidflesh
-#define ANTENNA /datum/mutation/human/antenna
-#define ANTIGLOWY /datum/mutation/human/glow/anti
-#define BADBLINK /datum/mutation/human/badblink
-#define BADSIGHT /datum/mutation/human/nearsight
-#define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
-#define BLINDMUT /datum/mutation/human/blind
-#define CHAMELEON /datum/mutation/human/chameleon
-#define CHAV /datum/mutation/human/chav
-#define CLOWNMUT /datum/mutation/human/clumsy
-#define COUGH /datum/mutation/human/cough
-#define CRYOKINESIS /datum/mutation/human/cryokinesis
-#define DEAFMUT /datum/mutation/human/deaf
-#define DWARFISM /datum/mutation/human/dwarfism
-#define ELVIS /datum/mutation/human/elvis
-#define EPILEPSY /datum/mutation/human/epilepsy
-#define EXTRASTUN /datum/mutation/human/extrastun
-#define FIREBREATH /datum/mutation/human/firebreath
-#define FIRESWEAT /datum/mutation/human/fire
-#define GELADIKINESIS /datum/mutation/human/geladikinesis
-#define GIGANTISM /datum/mutation/human/gigantism
-#define GLOWY /datum/mutation/human/glow
-#define HARS /datum/mutation/human/headless
-#define HULK /datum/mutation/human/hulk
-#define INSULATED /datum/mutation/human/insulated
-#define LASEREYES /datum/mutation/human/laser_eyes
-#define MARTYRDOM /datum/mutation/human/martyrdom
-#define MEDIEVAL /datum/mutation/human/medieval
-#define MINDREAD /datum/mutation/human/mindreader
-#define MUTATE /datum/mutation/human/bad_dna
-#define MUT_MUTE /datum/mutation/human/mute
-#define NERVOUS /datum/mutation/human/nervousness
-#define OLFACTION /datum/mutation/human/olfaction
-#define PARANOIA /datum/mutation/human/paranoia
-#define RACEMUT /datum/mutation/human/race
-#define RADIOACTIVE /datum/mutation/human/radioactive
-#define AUTONOMY /datum/mutation/human/self_amputation
-#define SHOCKTOUCH /datum/mutation/human/shock
-#define SPACEMUT /datum/mutation/human/space_adaptation
-#define SPASTIC /datum/mutation/human/spastic
-#define SPIDER_WEB /datum/mutation/human/webbing
-#define STIMMED /datum/mutation/human/stimmed
-#define STONER /datum/mutation/human/stoner
-#define STRONG /datum/mutation/human/strong
-#define SWEDISH /datum/mutation/human/swedish
-#define TELEPATHY /datum/mutation/human/telepathy
-#define THERMAL /datum/mutation/human/thermal
-#define TK /datum/mutation/human/telekinesis
-#define TONGUESPIKE /datum/mutation/human/tonguespike
-#define TONGUESPIKECHEM /datum/mutation/human/tongue_spike/chem
-#define TOURETTES /datum/mutation/human/tourettes
-#define UNINTELLIGIBLE /datum/mutation/human/unintelligible
-#define VOID /datum/mutation/human/void
-#define WACKY /datum/mutation/human/wacky
-#define XRAY /datum/mutation/human/xray
-
-#define BURDENED /datum/mutation/human/burdened
-#define HONORBOUND /datum/mutation/human/honorbound
-
 #define UE_CHANGED "ue changed"
 #define UI_CHANGED "ui changed"
 #define UF_CHANGED "uf changed"
@@ -84,6 +24,8 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
 
+#define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
+
 #define DNA_EYE_COLOR_BLOCK 4
 #define DNA_FACIAL_HAIR_COLOR_BLOCK 2
 #define DNA_FACIAL_HAIRSTYLE_BLOCK 6
@@ -93,7 +35,9 @@
 #define DNA_SKIN_TONE_BLOCK 3
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
-#define DNA_FEATURE_BLOCKS 15
+/// This number needs to equal the total number of DNA blocks
+#define DNA_FEATURE_BLOCKS 16
+
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
 #define DNA_LIZARD_MARKINGS_BLOCK 3
@@ -109,6 +53,7 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_MONKEY_TAIL_BLOCK 15
+#define DNA_POD_HAIR_BLOCK 16
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -122,31 +67,31 @@
 #define LIPS 5
 #define NOBLOOD 6
 #define NOTRANSSTING 7
-/// Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define MUTCOLORS_PARTSONLY 8
-#define NOZOMBIE 9
+#define NOZOMBIE 8
 /// Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define DIGITIGRADE 10
-#define NO_UNDERWEAR 11
-#define NOSTOMACH 12
-#define NO_DNA_COPY     13
-#define DRINKSBLOOD 14
+#define DIGITIGRADE 9
+#define NO_UNDERWEAR 10
+#define NOSTOMACH 11
+#define NO_DNA_COPY 12
+#define DRINKSBLOOD 13
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 15
-#define AGENDER 16
+#define DYNCOLORS 14
+#define AGENDER 15
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 17
+#define NOEYESPRITES 16
 /// Used for determining which wounds are applicable to this species.
 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
-#define HAS_FLESH 18
+#define HAS_FLESH 17
 /// if we have bones (can suffer bone wounds)
-#define HAS_BONE 19
+#define HAS_BONE 18
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 20
+#define HAS_MARKINGS 19
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 21
+#define NOBLOODOVERLAY 20
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 22
+#define NOAUGMENTS 21
+///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
+#define BLOOD_CLANS 22
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
@@ -173,6 +118,17 @@
 #define ORGAN_SLOT_TONGUE "tongue"
 #define ORGAN_SLOT_VOICE "vocal_cords"
 #define ORGAN_SLOT_ZOMBIE "zombie_infection"
+
+/// Organ slot external
+#define ORGAN_SLOT_EXTERNAL_TAIL "tail"
+#define ORGAN_SLOT_EXTERNAL_SPINES "spines"
+#define ORGAN_SLOT_EXTERNAL_SNOUT "snout"
+#define ORGAN_SLOT_EXTERNAL_FRILLS "frills"
+#define ORGAN_SLOT_EXTERNAL_HORNS "horns"
+#define ORGAN_SLOT_EXTERNAL_WINGS "wings"
+#define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
+#define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
+#define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
@@ -264,29 +220,45 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_SYNTH_MILITARY "military_synth"
 
 //Defines for Golem Species IDs
-#define SPECIES_GOLEM "iron golem"
-#define SPECIES_GOLEM_ADAMANTINE "adamantine golem"
-#define SPECIES_GOLEM_PLASMA "plasma golem"
-#define SPECIES_GOLEM_DIAMOND "diamond golem"
-#define SPECIES_GOLEM_GOLD "gold golem"
-#define SPECIES_GOLEM_SILVER "silver golem"
-#define SPECIES_GOLEM_PLASTEEL "plasteel golem"
-#define SPECIES_GOLEM_TITANIUM "titanium golem"
-#define SPECIES_GOLEM_PLASTITANIUM "plastitanium golem"
-#define SPECIES_GOLEM_ALIEN "alloy golem"
-#define SPECIES_GOLEM_WOOD "wood golem"
-#define SPECIES_GOLEM_URANIUM "uranium golem"
-#define SPECIES_GOLEM_SAND "sand golem"
-#define SPECIES_GOLEM_GLASS "glass golem"
-#define SPECIES_GOLEM_BLUESPACE "bluespace golem"
-#define SPECIES_GOLEM_BANANIUM "bananium golem"
-#define SPECIES_GOLEM_CULT "runic golem"
-#define SPECIES_GOLEM_CLOTH "cloth golem"
-#define SPECIES_GOLEM_PLASTIC "plastic golem"
-#define SPECIES_GOLEM_BRONZE "bronze golem"
-#define SPECIES_GOLEM_CARDBOARD "cardboard golem"
-#define SPECIES_GOLEM_LEATHER "leather golem"
-#define SPECIES_GOLEM_DURATHREAD "durathread golem"
-#define SPECIES_GOLEM_BONE "bone golem"
-#define SPECIES_GOLEM_SNOW "snow golem"
-#define SPECIES_GOLEM_HYDROGEN "Metallic Hydrogen golem"
+#define SPECIES_GOLEM "iron_golem"
+#define SPECIES_GOLEM_ADAMANTINE "adamantine_golem"
+#define SPECIES_GOLEM_PLASMA "plasma_golem"
+#define SPECIES_GOLEM_DIAMOND "diamond_golem"
+#define SPECIES_GOLEM_GOLD "gold_golem"
+#define SPECIES_GOLEM_SILVER "silver_golem"
+#define SPECIES_GOLEM_PLASTEEL "plasteel_golem"
+#define SPECIES_GOLEM_TITANIUM "titanium_golem"
+#define SPECIES_GOLEM_PLASTITANIUM "plastitanium_golem"
+#define SPECIES_GOLEM_ALIEN "alloy_golem"
+#define SPECIES_GOLEM_WOOD "wood_golem"
+#define SPECIES_GOLEM_URANIUM "uranium_golem"
+#define SPECIES_GOLEM_SAND "sand_golem"
+#define SPECIES_GOLEM_GLASS "glass_golem"
+#define SPECIES_GOLEM_BLUESPACE "bluespace_golem"
+#define SPECIES_GOLEM_BANANIUM "bananium_golem"
+#define SPECIES_GOLEM_CULT "runic_golem"
+#define SPECIES_GOLEM_CLOTH "cloth_golem"
+#define SPECIES_GOLEM_PLASTIC "plastic_golem"
+#define SPECIES_GOLEM_BRONZE "bronze_golem"
+#define SPECIES_GOLEM_CARDBOARD "cardboard_golem"
+#define SPECIES_GOLEM_LEATHER "leather_golem"
+#define SPECIES_GOLEM_DURATHREAD "durathread_golem"
+#define SPECIES_GOLEM_BONE "bone_golem"
+#define SPECIES_GOLEM_SNOW "snow_golem"
+#define SPECIES_GOLEM_HYDROGEN "metallic_hydrogen_golem"
+
+// Defines for used in creating "perks" for the species preference pages.
+/// A key that designates UI icon displayed on the perk.
+#define SPECIES_PERK_ICON "ui_icon"
+/// A key that designates the name of the perk.
+#define SPECIES_PERK_NAME "name"
+/// A key that designates the description of the perk.
+#define SPECIES_PERK_DESC "description"
+/// A key that designates what type of perk it is (see below).
+#define SPECIES_PERK_TYPE "perk_type"
+
+// The possible types each perk can be.
+// Positive perks are shown in green, negative in red, and neutral in grey.
+#define SPECIES_POSITIVE_PERK "positive"
+#define SPECIES_NEGATIVE_PERK "negative"
+#define SPECIES_NEUTRAL_PERK "neutral"

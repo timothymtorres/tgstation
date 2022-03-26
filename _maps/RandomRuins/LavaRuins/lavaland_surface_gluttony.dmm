@@ -3,7 +3,7 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "b" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
 /turf/open/lava/smooth/lava_land_surface,
@@ -80,7 +80,7 @@
 /turf/closed/indestructible/riveted/uranium,
 /area/ruin/powered/gluttony)
 "S" = (
-/obj/machinery/door/airlock/uranium,
+/obj/machinery/door/airlock/uranium/safe,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)

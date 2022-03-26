@@ -15,7 +15,7 @@
 	/// Cooldown for the powerup to respawn after it's been used
 	COOLDOWN_DECLARE(respawn_cooldown)
 
-/obj/effect/powerup/Initialize()
+/obj/effect/powerup/Initialize(mapload)
 	. = ..()
 	if(lifetime)
 		QDEL_IN(src, lifetime)
@@ -95,7 +95,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/item/gun in target.GetAllContents())
+	for(var/obj/item/gun in target.get_all_contents())
 		if(!isgun(gun) && !istype(gun, /obj/item/flamethrower))
 			continue
 		SEND_SIGNAL(gun, COMSIG_ITEM_RECHARGED)
@@ -116,7 +116,7 @@
 	. = ..()
 	if(!.)
 		return
-	target.apply_status_effect(STATUS_EFFECT_LIGHTNINGORB)
+	target.apply_status_effect(/datum/status_effect/lightningorb)
 
 /obj/effect/powerup/mayhem
 	name = "Orb of Mayhem"
@@ -127,4 +127,4 @@
 	. = ..()
 	if(!.)
 		return
-	target.apply_status_effect(STATUS_EFFECT_MAYHEM)
+	target.apply_status_effect(/datum/status_effect/mayhem)

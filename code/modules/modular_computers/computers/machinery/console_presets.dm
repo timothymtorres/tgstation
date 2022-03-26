@@ -5,7 +5,7 @@
 	var/_has_battery = FALSE
 	var/_has_ai = FALSE
 
-/obj/machinery/modular_computer/console/preset/Initialize()
+/obj/machinery/modular_computer/console/preset/Initialize(mapload)
 	. = ..()
 	if(!cpu)
 		return
@@ -52,7 +52,7 @@
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/aidiag())
 	hard_drive.store_file(new/datum/computer_file/program/robocontrol())
-
+	hard_drive.store_file(new/datum/computer_file/program/scipaper_program())
 
 // ===== COMMAND CONSOLE =====
 /obj/machinery/modular_computer/console/preset/command

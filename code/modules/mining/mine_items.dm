@@ -1,14 +1,15 @@
 /**********************Light************************/
 
-//this item is intended to give the effect of entering the mine, so that light gradually fades
+//this item is intended to give the effect of entering the mine, so that light gradually fades. we also use the base effect for certain lighting effects while mapping.
 /obj/effect/light_emitter
-	name = "Light emitter"
+	name = "light emitter"
+	icon_state = "lighting_marker"
 	anchored = TRUE
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	var/set_luminosity = 8
 	var/set_cap = 0
 
-/obj/effect/light_emitter/Initialize()
+/obj/effect/light_emitter/Initialize(mapload)
 	. = ..()
 	set_light(set_luminosity, set_cap)
 

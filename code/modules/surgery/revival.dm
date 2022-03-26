@@ -21,19 +21,24 @@
 		return FALSE
 	if(target.suiciding || HAS_TRAIT(target, TRAIT_HUSK))
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+		return FALSE
 	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE
 
 /datum/surgery_step/revive
-	name = "shock body"
+	name = "shock brain"
 	implements = list(
 		/obj/item/shockpaddles = 100,
-		/obj/item/melee/baton = 75,
+		/obj/item/melee/touch_attack/shock = 100,
+		/obj/item/melee/baton/security = 75,
 		/obj/item/gun/energy = 60)
 	repeatable = TRUE
 	time = 5 SECONDS
+	success_sound = 'sound/magic/lightningbolt.ogg'
+	failure_sound = 'sound/magic/lightningbolt.ogg'
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
 	. = TRUE
@@ -42,9 +47,9 @@
 		if((paddles.req_defib && !paddles.defib.powered) || !paddles.wielded || paddles.cooldown || paddles.busy)
 			to_chat(user, span_warning("You need to wield both paddles, and [paddles.defib] must be powered!"))
 			return FALSE
-	if(istype(tool, /obj/item/melee/baton))
-		var/obj/item/melee/baton/baton = tool
-		if(!baton.turned_on)
+	if(istype(tool, /obj/item/melee/baton/security))
+		var/obj/item/melee/baton/security/baton = tool
+		if(!baton.active)
 			to_chat(user, span_warning("[baton] needs to be active!"))
 			return FALSE
 	if(istype(tool, /obj/item/gun/energy))
@@ -61,11 +66,16 @@
 		span_notice("[user] prepares to shock [target]'s brain with [tool]."))
 	target.notify_ghost_cloning("Someone is trying to zap your brain.", source = target)
 
+/datum/surgery_step/revive/play_preop_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(istype(tool, /obj/item/shockpaddles))
+		playsound(tool, 'sound/machines/defib_charge.ogg', 75, 0)
+	else
+		..()
+
 /datum/surgery_step/revive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(user, target, span_notice("You successfully shock [target]'s brain with [tool]..."),
 		span_notice("[user] send a powerful shock to [target]'s brain with [tool]..."),
 		span_notice("[user] send a powerful shock to [target]'s brain with [tool]..."))
-	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, TRUE)
 	target.grab_ghost()
 	target.adjustOxyLoss(-50, 0)
 	target.updatehealth()
@@ -82,6 +92,5 @@
 	display_results(user, target, span_notice("You shock [target]'s brain with [tool], but [target.p_they()] doesn't react."),
 		span_notice("[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react."),
 		span_notice("[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react."))
-	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, TRUE)
 	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 180)
 	return FALSE

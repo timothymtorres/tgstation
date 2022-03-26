@@ -26,81 +26,15 @@
 		if(R.name != "blobspawn")
 			if(prob(35))
 				if(isspaceturf(R.loc))
-					new /mob/living/simple_animal/rabbit/space(R.loc)
+					new /mob/living/simple_animal/rabbit/easter/space(R.loc)
 				else
-					new /mob/living/simple_animal/rabbit(R.loc)
-
-/mob/living/simple_animal/rabbit
-	name = "\improper rabbit"
-	desc = "The hippiest hop around."
-	gender = PLURAL
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	health = 15
-	maxHealth = 15
-	icon = 'icons/mob/easter.dmi'
-	icon_state = "rabbit_white"
-	icon_living = "rabbit_white"
-	icon_dead = "rabbit_white_dead"
-	speak = list("Hop into Easter!","Come get your eggs!","Prizes for everyone!")
-	speak_emote = list("sniffles","twitches")
-	emote_hear = list("hops.")
-	emote_see = list("hops around","bounces up and down")
-	butcher_results = list(/obj/item/food/meat/slab = 1)
-	can_be_held = TRUE
-	density = FALSE
-	speak_chance = 2
-	turns_per_move = 3
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	attack_verb_continuous = "kicks"
-	attack_verb_simple = "kick"
-	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
-	gold_core_spawnable = FRIENDLY_SPAWN
-	///passed to animal_variety component as the prefix icon.
-	var/icon_prefix = "rabbit"
-	///passed to egg_layer component as how many eggs it starts out as able to lay.
-	var/initial_egg_amount = 10
-
-/mob/living/simple_animal/rabbit/Initialize()
-	. = ..()
-	AddElement(/datum/element/pet_bonus, "hops around happily!")
-	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
-	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
-	var/eggs_added_from_eating = rand(1, 4)
-	var/max_eggs_held = 8
-	AddComponent(/datum/component/egg_layer,\
-		/obj/item/food/egg/loaded,\
-		list(/obj/item/food/grown/carrot),\
-		feed_messages,\
-		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
-		initial_egg_amount,\
-		eggs_added_from_eating,\
-		max_eggs_held\
-	)
-
-/mob/living/simple_animal/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
-	initial_egg_amount = 0
-
-/mob/living/simple_animal/rabbit/space
-	icon_state = "s_rabbit_white"
-	icon_living = "s_rabbit_white"
-	icon_dead = "s_rabbit_white_dead"
-	icon_prefix = "s_rabbit"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
-	maxbodytemp = 1500
-	unsuitable_atmos_damage = 0
+					new /mob/living/simple_animal/rabbit/easter(R.loc)
 
 //Easter Baskets
 /obj/item/storage/basket/easter
 	name = "Easter Basket"
 
-/obj/item/storage/basket/easter/Initialize()
+/obj/item/storage/basket/easter/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg))
@@ -146,19 +80,24 @@
 	inhand_icon_state = "satchel_carrot"
 
 //Egg prizes and egg spawns!
-/obj/item/food/egg
-	var/containsPrize = FALSE
+/obj/item/surprise_egg
+	name = "wrapped egg"
+	desc = "A chocolate egg containing a little something special. Unwrap and enjoy!"
+	icon_state = "egg"
+	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
+	icon = 'icons/obj/food/food.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	obj_flags = UNIQUE_RENAME
 
-/obj/item/food/egg/loaded
-	containsPrize = TRUE
-
-/obj/item/food/egg/loaded/Initialize()
+/obj/item/surprise_egg/Initialize(mapload)
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
 
-/obj/item/food/egg/proc/dispensePrize(turf/where)
-	var/prize_list = list(/obj/item/clothing/head/bunnyhead,
+/obj/item/surprise_egg/proc/dispensePrize(turf/where)
+	var/static/list/prize_list = list(/obj/item/clothing/head/bunnyhead,
 		/obj/item/clothing/suit/bunnysuit,
 		/obj/item/storage/backpack/satchel/bunnysatchel,
 		/obj/item/food/grown/carrot,
@@ -181,13 +120,11 @@
 	new won(where)
 	new/obj/item/food/chocolateegg(where)
 
-/obj/item/food/egg/attack_self(mob/user)
+/obj/item/surprise_egg/attack_self(mob/user)
 	..()
-	if(containsPrize)
-		to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
-		dispensePrize(get_turf(user))
-		containsPrize = FALSE
-		qdel(src)
+	to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
+	dispensePrize(get_turf(user))
+	qdel(src)
 
 //Easter Recipes + food
 /obj/item/food/hotcrossbun

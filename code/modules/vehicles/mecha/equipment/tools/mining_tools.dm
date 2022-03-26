@@ -20,11 +20,11 @@
 	var/drill_level = DRILL_BASIC
 	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 
-/obj/item/mecha_parts/mecha_equipment/drill/Initialize()
+/obj/item/mecha_parts/mecha_equipment/drill/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
 
-/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// Check if we can even use the equipment to begin with.
 	if(!action_checks(target))
 		return
@@ -93,9 +93,9 @@
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
-/turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
-		if((get_dir(drill.chassis,M)&drill.chassis.dir) && !M.dug)
+/turf/open/misc/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	for(var/turf/open/misc/asteroid/M in range(1, drill.chassis))
+		if((get_dir(drill.chassis,M) & drill.chassis.dir) && !M.dug)
 			M.getDug()
 	drill.log_message("Drilled through [src]", LOG_MECHA)
 	drill.move_ores()
@@ -169,7 +169,7 @@
 	var/scanning_time = 0
 	mech_flags = EXOSUIT_MODULE_WORKING
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize()
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 

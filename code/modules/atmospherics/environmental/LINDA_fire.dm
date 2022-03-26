@@ -1,4 +1,11 @@
+/// Returns reactions which will contribute to a hotspot's size.
+/proc/init_hotspot_reactions()
+	var/list/fire_reactions = list()
+	for (var/datum/gas_reaction/reaction as anything in subtypesof(/datum/gas_reaction))
+		if(initial(reaction.expands_hotspot))
+			fire_reactions += reaction
 
+	return fire_reactions
 
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
@@ -24,21 +31,21 @@
 	if (oxy < 0.5)
 		return
 	. = air_gases[/datum/gas/plasma]
-	var/tox = . ? .[MOLES] : 0
+	var/plas = . ? .[MOLES] : 0
 	. = air_gases[/datum/gas/tritium]
 	var/trit = . ? .[MOLES] : 0
 	. = air_gases[/datum/gas/hydrogen]
 	var/h2 = . ? .[MOLES] : 0
 	if(active_hotspot)
 		if(soh)
-			if(tox > 0.5 || trit > 0.5 || h2 > 0.5)
+			if(plas > 0.5 || trit > 0.5 || h2 > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5 || h2 > 0.5))
+	if((exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST) && (plas > 0.5 || trit > 0.5 || h2 > 0.5))
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
@@ -57,6 +64,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = GASFIRE_LAYER
+	plane = ABOVE_GAME_PLANE
 	blend_mode = BLEND_ADD
 	light_system = MOVABLE_LIGHT
 	light_range = LIGHT_RANGE_FIRE
@@ -108,6 +116,7 @@
  */
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
+	var/datum/gas_mixture/reference
 	if(!istype(location) || !(location.air))
 		return
 
@@ -117,17 +126,22 @@
 
 	//Passive mode
 	if(bypassing)
-		volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
-		temperature = location.air.temperature
+		reference = location.air // Our color and volume will depend on the turf's gasmix
 	//Active mode
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
 		if(affected) //in case volume is 0
+			reference = affected // Our color and volume will depend on this small sparked gasmix
 			affected.temperature = temperature
 			affected.react(src)
-			temperature = affected.temperature
-			volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 			location.assume_air(affected)
+
+	if(reference)
+		volume = 0
+		var/list/cached_results = reference.reaction_results
+		for (var/reaction in SSair.hotspot_reactions)
+			volume += cached_results[reaction] * FIRE_GROWTH_RATE
+		temperature = reference.temperature
 
 	// Handles the burning of atoms.
 	for(var/A in location)

@@ -12,7 +12,7 @@
 //NEUTRAL SPELLS (punished by honorbound gods if you get caught using it)
 #define SCHOOL_EVOCATION "evocation" //kill or destroy shit, usually out of thin air
 #define SCHOOL_TRANSMUTATION "transmutation" //transform shit
-#define SCHOOL_TRANSLOCATION "illusion" //movement based
+#define SCHOOL_TRANSLOCATION "translocation" //movement based
 #define SCHOOL_CONJURATION "conjuration" //summoning
 
 //EVIL SPELLS (instant smite + banishment)
@@ -21,6 +21,8 @@
 
 //invocation types - what does the wizard need to do to invoke (cast) the spell?
 
+///Allows being able to cast the spell without saying anything.
+#define INVOCATION_NONE "none"
 ///Forces the wizard to shout (and be able to) to cast the spell.
 #define INVOCATION_SHOUT "shout"
 ///Forces the wizard to emote (and be able to) to cast the spell.

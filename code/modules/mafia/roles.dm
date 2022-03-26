@@ -1,5 +1,5 @@
 /datum/mafia_role
-	var/name = "Assistant"
+	var/name = JOB_ASSISTANT
 	var/desc = "You are a crewmember without any special abilities."
 	var/win_condition = "kill all mafia and solo killing roles."
 	var/team = MAFIA_TEAM_TOWN
@@ -240,8 +240,8 @@
 	current_target = null
 	if(!target.can_action(game, src, "role reveal"))
 		return
-	add_note("N[game.turn] - [current_target.body.real_name] - Revealed true identity")
-	to_chat(body,span_warning("You have revealed the true nature of the [current_target]!"))
+	add_note("N[game.turn] - [target.body.real_name] - Revealed true identity")
+	to_chat(body,span_warning("You have revealed the true nature of the [target]!"))
 	target.reveal_role(game, verbose = TRUE)
 	can_use = FALSE
 
@@ -522,6 +522,8 @@
 /datum/mafia_role/hos/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	if(execute_target == target)
 		to_chat(body,span_warning("You have decided against executing tonight."))
+		execute_target = null
+		return
 	to_chat(body,span_warning("You have decided to execute [target.body.real_name] tonight."))
 	execute_target = target
 
@@ -545,6 +547,7 @@
 			role_flags |= ROLE_VULNERABLE
 
 /datum/mafia_role/hos/proc/internal_affairs(datum/mafia_controller/game)
+	SIGNAL_HANDLER
 	to_chat(body,span_userdanger("You have been killed by Nanotrasen Internal Affairs!"))
 	reveal_role(game, verbose = TRUE)
 	kill(game,src,FALSE) //you technically kill yourself but that shouldn't matter

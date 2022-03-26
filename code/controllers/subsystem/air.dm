@@ -17,6 +17,7 @@ SUBSYSTEM_DEF(air)
 	var/cost_pipenets = 0
 	var/cost_atmos_machinery = 0
 	var/cost_rebuilds = 0
+	var/cost_adjacent = 0
 
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
@@ -25,10 +26,12 @@ SUBSYSTEM_DEF(air)
 	var/list/rebuild_queue = list()
 	//Subservient to rebuild queue
 	var/list/expansion_queue = list()
+	/// List of turfs to recalculate adjacent turfs on before processing
+	var/list/adjacent_rebuild = list()
 	/// A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.
 	var/list/obj/machinery/atmos_machinery = list()
-	var/list/pipe_init_dirs_cache = list()
 
+	var/list/pipe_init_dirs_cache = list()
 	//atmos singletons
 	var/list/gas_reactions = list()
 	var/list/atmos_gen
@@ -38,6 +41,8 @@ SUBSYSTEM_DEF(air)
 	var/list/turf/active_super_conductivity = list()
 	var/list/turf/open/high_pressure_delta = list()
 	var/list/atom_process = list()
+	/// Reactions which will contribute to a hotspot's size.
+	var/list/hotspot_reactions
 
 	/// A cache of objects that perisists between processing runs when resumed == TRUE. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.
 	var/list/currentrun = list()
@@ -59,6 +64,7 @@ SUBSYSTEM_DEF(air)
 	msg += "AM:[round(cost_atmos_machinery,1)]|"
 	msg += "AO:[round(cost_atoms, 1)]|"
 	msg += "RB:[round(cost_rebuilds,1)]|"
+	msg += "AJ:[round(cost_adjacent,1)]|"
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
 	msg += "HS:[hotspots.len]|"
@@ -70,6 +76,7 @@ SUBSYSTEM_DEF(air)
 	msg += "AO:[atom_process.len]|"
 	msg += "RB:[rebuild_queue.len]|"
 	msg += "EP:[expansion_queue.len]|"
+	msg += "AJ:[adjacent_rebuild.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	return ..()
 
@@ -77,11 +84,13 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
 	gas_reactions = init_gas_reactions()
+	hotspot_reactions = init_hotspot_reactions()
 
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
 	setup_turf_visuals()
+	process_adjacent_rebuild()
 	return ..()
 
 
@@ -90,6 +99,16 @@ SUBSYSTEM_DEF(air)
 
 	//Rebuilds can happen at any time, so this needs to be done outside of the normal system
 	cost_rebuilds = 0
+	cost_adjacent = 0
+
+	// We need to have a solid setup for turfs before fire, otherwise we'll get massive runtimes and strange behavior
+	if(length(adjacent_rebuild))
+		timer = TICK_USAGE_REAL
+		process_adjacent_rebuild()
+		//This does mean that the apperent rebuild costs fluctuate very quickly, this is just the cost of having them always process, no matter what
+		cost_adjacent = TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
 
 	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
 	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
@@ -199,6 +218,44 @@ SUBSYSTEM_DEF(air)
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
+/datum/controller/subsystem/air/Recover()
+	excited_groups = SSair.excited_groups
+	active_turfs = SSair.active_turfs
+	hotspots = SSair.hotspots
+	networks = SSair.networks
+	rebuild_queue = SSair.rebuild_queue
+	expansion_queue = SSair.expansion_queue
+	adjacent_rebuild = SSair.adjacent_rebuild
+	atmos_machinery = SSair.atmos_machinery
+	pipe_init_dirs_cache = SSair.pipe_init_dirs_cache
+	gas_reactions = SSair.gas_reactions
+	atmos_gen = SSair.atmos_gen
+	planetary = SSair.planetary
+	active_super_conductivity = SSair.active_super_conductivity
+	high_pressure_delta = SSair.high_pressure_delta
+	atom_process = SSair.atom_process
+	currentrun = SSair.currentrun
+	queued_for_activation = SSair.queued_for_activation
+
+/datum/controller/subsystem/air/proc/process_adjacent_rebuild(init = FALSE)
+	var/list/queue = adjacent_rebuild
+
+	while (length(queue))
+		var/turf/currT = queue[1]
+		var/goal = queue[currT]
+		queue.Cut(1,2)
+
+		currT.immediate_calculate_adjacent_turfs()
+		if(goal == MAKE_ACTIVE)
+			add_to_active(currT)
+		else if(goal == KILL_EXCITED)
+			add_to_active(currT, TRUE)
+
+		if(init)
+			CHECK_TICK
+		else
+			if(MC_TICK_CHECK)
+				break
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = FALSE)
 	if (!resumed)
@@ -339,10 +396,7 @@ SUBSYSTEM_DEF(air)
 			currentrun.len--
 			if (!remake)
 				continue
-			var/list/targets = remake.get_rebuild_targets()
-			remake.rebuilding = FALSE //It's allowed to renter the queue now
-			for(var/datum/pipeline/build_off as anything in targets)
-				build_off.build_pipeline(remake) //This'll add to the expansion queue
+			remake.rebuild_pipes()
 			if (MC_TICK_CHECK)
 				return
 
@@ -372,8 +426,8 @@ SUBSYSTEM_DEF(air)
 			continue
 		for(var/obj/machinery/atmospherics/considered_device in result)
 			if(!istype(considered_device, /obj/machinery/atmospherics/pipe))
-				considered_device.setPipenet(net, borderline)
-				net.addMachineryMember(considered_device)
+				considered_device.set_pipenet(net, borderline)
+				net.add_machinery_member(considered_device)
 				continue
 			var/obj/machinery/atmospherics/pipe/item = considered_device
 			if(net.members.Find(item))
@@ -541,7 +595,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/setup_atmos_machinery()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		AM.atmosinit()
+		AM.atmos_init()
 		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
@@ -569,7 +623,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	var/obj/machinery/atmospherics/AM
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		AM.atmosinit()
+		AM.atmos_init()
 		CHECK_TICK
 
 	for(var/A in 1 to atmos_machines.len)
@@ -590,7 +644,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	if(!pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"])
 		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir, init_dir)
-		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.GetInitDirections()
+		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.get_init_directions()
 		qdel(temp)
 
 	return pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"]
@@ -617,6 +671,9 @@ GLOBAL_LIST_EMPTY(colored_images)
  */
 /datum/controller/subsystem/air/proc/start_processing_machine(obj/machinery/machine)
 	if(machine.atmos_processing)
+		return
+	if(QDELETED(machine))
+		stack_trace("We tried to add a garbage collecting machine to SSair. Don't")
 		return
 	machine.atmos_processing = TRUE
 	atmos_machinery += machine

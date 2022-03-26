@@ -19,7 +19,6 @@
 		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/open/floor/plating/rust)
 
-
 /turf/open/floor/iron/update_icon_state()
 	if(broken || burnt)
 		return ..()

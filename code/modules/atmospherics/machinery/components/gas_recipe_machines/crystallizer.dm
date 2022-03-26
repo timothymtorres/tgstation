@@ -9,9 +9,10 @@
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 80, ACID = 30)
 	circuit = /obj/item/circuitboard/machine/crystallizer
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	vent_movement = NONE
@@ -31,7 +32,7 @@
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
 
-/obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
+/obj/machinery/atmospherics/components/binary/crystallizer/Initialize(mapload)
 	. = ..()
 	internal = new
 
@@ -49,7 +50,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	SetInitDirections()
+	set_init_directions()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	var/obj/machinery/atmospherics/node2 = nodes[2]
 	if(node1)
@@ -62,27 +63,31 @@
 		nodes[2] = null
 
 	if(parents[1])
-		nullifyPipenet(parents[1])
+		nullify_pipenet(parents[1])
 	if(parents[2])
-		nullifyPipenet(parents[2])
+		nullify_pipenet(parents[2])
 
-	atmosinit()
+	atmos_init()
 	node1 = nodes[1]
 	if(node1)
-		node1.atmosinit()
-		node1.addMember(src)
+		node1.atmos_init()
+		node1.add_member(src)
 	node2 = nodes[2]
 	if(node2)
-		node2.atmosinit()
-		node2.addMember(src)
+		node2.atmos_init()
+		node2.add_member(src)
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
 	cut_overlays()
-	add_overlay(getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer))
-	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer))
+	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[dir]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
+	pipe_appearance1.color = COLOR_LIME
+	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "intact_[turn(dir, 180)]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
+	pipe_appearance2.color = COLOR_MOSTLY_PURE_RED
+	. += pipe_appearance1
+	. += pipe_appearance2
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_icon_state()
 	. = ..()
@@ -95,18 +100,10 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby_secondary(mob/user)
 	if(!can_interact(user))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	on = !on
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
-
-///Checks if the gases in the input are the ones needed by the recipe
-/obj/machinery/atmospherics/components/binary/crystallizer/proc/check_gas_requirements()
-	var/datum/gas_mixture/contents = airs[2]
-	for(var/gas_type in selected_recipe.requirements)
-		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
-			return FALSE
-	return TRUE
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
@@ -118,12 +115,18 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	for(var/gas_type in selected_recipe.requirements)
+		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
+			continue
+		if(internal.gases[gas_type] && internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type] * 2)
+			continue
 		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * gas_input))
 
 ///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
 	var/gas_check = 0
 	for(var/gas_type in selected_recipe.requirements)
+		if(!internal.gases[gas_type] || !internal.gases[gas_type][MOLES])
+			return FALSE
 		if(internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type])
 			gas_check++
 	if(gas_check == selected_recipe.requirements.len)
@@ -136,16 +139,12 @@
 		(internal.temperature >= selected_recipe.max_temp && internal.temperature <= (selected_recipe.max_temp * MAX_DEVIATION_RATE)))
 		quality_loss = min(quality_loss + 1.5, 100)
 
-	var/median_temperature = (selected_recipe.max_temp - selected_recipe.min_temp) * 0.5
+	var/median_temperature = (selected_recipe.max_temp + selected_recipe.min_temp) / 2
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
-		quality_loss = max(quality_loss - 5.5, -100)
+		quality_loss = max(quality_loss - 5.5, -85)
 
-	if(selected_recipe.reaction_type == "endothermic")
-		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
-		update_parents()
-	else if(selected_recipe.reaction_type == "exothermic")
-		internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
-		update_parents()
+	internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+	update_parents()
 
 ///Conduction between the internal gasmix and the moderating (cooling/heating) gasmix.
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_conduction()
@@ -177,8 +176,7 @@
 	if(!on || !is_operational || selected_recipe == null)
 		return
 
-	if(check_gas_requirements())
-		inject_gases()
+	inject_gases()
 
 	if(!internal.total_moles())
 		return
@@ -198,7 +196,8 @@
 	progress_bar = 0
 
 	for(var/gas_type in selected_recipe.requirements)
-		var/amount_consumed = selected_recipe.requirements[gas_type] + quality_loss * 5
+		var/required_gas_moles = selected_recipe.requirements[gas_type]
+		var/amount_consumed = required_gas_moles + (required_gas_moles * (quality_loss * 0.01))
 		if(internal.gases[gas_type][MOLES] < amount_consumed)
 			quality_loss = min(quality_loss + 10, 100)
 		internal.remove_specific(gas_type, amount_consumed)
@@ -290,7 +289,7 @@
 			var/amount_consumed = selected_recipe.requirements[gas_type]
 			requirements += "-[amount_consumed] moles of [initial(gas_required.name)]"
 		requirements += "In a temperature range between [selected_recipe.min_temp] K and [selected_recipe.max_temp] K"
-		requirements += "The crystallization reaction will be [selected_recipe.reaction_type]"
+		requirements += "The crystallization reaction will be [selected_recipe.energy_release ? (selected_recipe.energy_release > 0 ? "exothermic" : "endothermic") : "thermally neutral"]"
 	data["requirements"] = requirements.Join("\n")
 
 	var/temperature

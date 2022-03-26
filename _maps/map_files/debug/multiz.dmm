@@ -39,7 +39,7 @@
 /turf/closed/wall/r_wall,
 /area/engineering/gravity_generator)
 "al" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
 	},
@@ -60,7 +60,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ap" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
 	},
@@ -80,7 +80,7 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
 	},
@@ -107,16 +107,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "aw" = (
-/turf/open/floor/plating,
-/area/engineering/atmos)
-"ax" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
-"ay" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "aD" = (
@@ -234,11 +224,8 @@
 "bd" = (
 /obj/structure/table,
 /obj/item/weldingtool/experimental,
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
 /area/engineering/main)
 "bf" = (
@@ -250,11 +237,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Gravity Generator APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
 "bh" = (
@@ -270,15 +253,12 @@
 	},
 /area/engineering/gravity_generator)
 "bj" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/machinery/light/directional/south,
 /obj/structure/table,
 /obj/item/analyzer,
 /obj/item/wrench,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "bk" = (
@@ -368,16 +348,13 @@
 /turf/closed/wall/r_wall,
 /area/hallway/primary/central)
 "bB" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/closet/jcloset,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bC" = (
@@ -401,16 +378,13 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bG" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/structure/closet/secure_closet/captains,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron{
 	dir = 8
 	},
@@ -459,21 +433,14 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"bT" = (
-/obj/effect/spawner/randomarcade,
-/turf/open/floor/iron,
-/area/hallway/primary/central)
 "bU" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/structure/closet/firecloset/full,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron{
 	dir = 9
 	},
@@ -658,8 +625,8 @@
 /area/hallway/secondary/entry)
 "cM" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/healthanalyzer,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
@@ -714,18 +681,15 @@
 /turf/open/floor/iron,
 /area/construction)
 "da" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "db" = (
@@ -903,7 +867,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "dZ" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -1066,7 +1030,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/engineering/storage)
@@ -1079,7 +1043,7 @@
 	dir = 8;
 	icon_state = "connector_map-2"
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/construction)
 "gW" = (
@@ -1241,7 +1205,7 @@
 /turf/open/floor/plating,
 /area/engineering/storage)
 "oh" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -1474,12 +1438,12 @@
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "BM" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
 "CA" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -1601,7 +1565,7 @@
 /turf/open/floor/plating,
 /area/engineering/storage)
 "Kd" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -1716,7 +1680,7 @@
 /turf/open/floor/iron,
 /area/engineering/storage)
 "UA" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/storage)
@@ -1744,12 +1708,16 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"WR" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "XN" = (
 /obj/structure/railing,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "XQ" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
@@ -2553,7 +2521,7 @@ ad
 Dm
 ah
 am
-ax
+aw
 aw
 ba
 bk
@@ -2607,7 +2575,7 @@ ad
 af
 ah
 am
-ay
+aw
 aN
 bb
 bl
@@ -2661,7 +2629,7 @@ ad
 af
 ah
 am
-ay
+aw
 aO
 bc
 bm
@@ -3584,7 +3552,7 @@ dV
 aI
 aI
 ak
-bT
+WR
 bE
 co
 bO

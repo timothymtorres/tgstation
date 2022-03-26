@@ -147,6 +147,9 @@
 	for(var/i in 1 to 4 + rand(1,2))
 		var/chosen = getbork()
 		var/obj/item/food_item = new chosen(T)
+		if(istype(food_item, /obj/item/food))
+			var/obj/item/food/foody = food_item
+			foody.food_flags |= FOOD_SILVER_SPAWNED
 		if(prob(5))//Fry it!
 			var/obj/item/food/deepfryholder/fried
 			fried = new(T, food_item)
@@ -265,6 +268,15 @@
 
 /datum/chemical_reaction/slime/slimeoverload/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	empulse(get_turf(holder.my_atom), 3, 7)
+	..()
+
+/datum/chemical_reaction/slime/slimecell
+	required_reagents = list(/datum/reagent/toxin/plasma = 1)
+	required_container = /obj/item/slime_extract/yellow
+	required_other = TRUE
+
+/datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, created_volume)
+	new /obj/item/stock_parts/cell/emproof/slime(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimeglow
@@ -392,7 +404,7 @@
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder?.my_atom)
-		explosion(holder.my_atom, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6)
+		explosion(holder.my_atom, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
 
 
 /datum/chemical_reaction/slime/slimecornoil

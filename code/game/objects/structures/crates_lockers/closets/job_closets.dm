@@ -78,7 +78,7 @@
 /obj/structure/closet/lawcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/suit/blacktwopiece(src)
-	new /obj/item/clothing/under/rank/civilian/lawyer/female(src)
+	new /obj/item/clothing/under/rank/civilian/lawyer/beige(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/black(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/red(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/bluesuit(src)
@@ -188,12 +188,10 @@
 		/obj/item/storage/backpack/medic = 1,
 		/obj/item/storage/backpack/satchel/med = 1,
 		/obj/item/clothing/suit/hooded/wintercoat/medical = 1,
-		/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
 		/obj/item/clothing/head/nursehat = 1,
-		/obj/item/clothing/under/rank/medical/doctor/blue = 1,
-		/obj/item/clothing/under/rank/medical/doctor/green = 1,
-		/obj/item/clothing/under/rank/medical/doctor/purple = 1,
-		/obj/item/clothing/under/rank/medical/doctor = 3,
+		/obj/item/clothing/under/rank/medical/scrubs/blue = 1,
+		/obj/item/clothing/under/rank/medical/scrubs/green = 1,
+		/obj/item/clothing/under/rank/medical/scrubs/purple = 1,
 		/obj/item/clothing/suit/toggle/labcoat = 3,
 		/obj/item/clothing/suit/toggle/labcoat/paramedic = 3,
 		/obj/item/clothing/shoes/sneakers/white = 3,
@@ -278,8 +276,8 @@
 	var/static/items_inside = list(
 		/obj/item/clothing/accessory/pocketprotector = 1,
 		/obj/item/storage/backpack/science = 2,
-		/obj/item/storage/backpack/satchel/tox = 2,
-		/obj/item/storage/backpack/duffelbag/toxins = 2,
+		/obj/item/storage/backpack/satchel/science = 2,
+		/obj/item/storage/backpack/duffelbag/science = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/science = 1,
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
 		/obj/item/clothing/suit/toggle/labcoat/science = 3,

@@ -3,7 +3,7 @@
 	var/obj/item/melee/touch_attack/attached_hand = null
 	var/drawmessage = "You channel the power of the spell to your hand."
 	var/dropmessage = "You draw the power out of your hand."
-	invocation_type = "none" //you scream on connecting, not summoning
+	invocation_type = INVOCATION_NONE //you scream on connecting, not summoning
 	include_user = TRUE
 	range = -1
 
@@ -12,7 +12,7 @@
 	if(action?.owner)
 		var/mob/guy_who_needs_to_know = action.owner
 		to_chat(guy_who_needs_to_know, span_notice("The power of the spell dissipates from your hand."))
-	..()
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
 	QDEL_NULL(attached_hand)

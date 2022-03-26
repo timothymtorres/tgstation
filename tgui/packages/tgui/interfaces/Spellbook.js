@@ -1,6 +1,6 @@
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Blink, Box, Button, Dimmer, Divider, Icon, Modal, NoticeBox, ProgressBar, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Divider, Icon, NoticeBox, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const TAB2NAME = [
@@ -225,7 +225,9 @@ const SingleLoadout = (props, context) => {
           fluid
           icon={icon}
           content="Purchase Loadout"
-          onClick={() => act(loadoutId)} />
+          onClick={() => act('purchase_loadout', {
+            id: loadoutId,
+          })} />
         <Divider />
         <Box color={loadoutColor}>
           Added by {author}.
@@ -309,7 +311,7 @@ const lineHeightRandomize = 6;
 
 const Randomize = (props, context) => {
   const { act, data } = useBackend(context);
-  const { points } = data;
+  const { points, semi_random_bonus, full_random_bonus } = data;
   return (
     <Stack fill vertical>
       {points < 10 && (
@@ -317,6 +319,7 @@ const Randomize = (props, context) => {
       )}
       <Stack.Item grow mt={10}>
         Semi-Randomize will ensure you at least get some mobility and lethality.
+        Guaranteed to have {semi_random_bonus} points worth of spells.
       </Stack.Item>
       <Stack.Item>
         <Button.Confirm
@@ -331,6 +334,7 @@ const Randomize = (props, context) => {
       </Stack.Item>
       <Stack.Item>
         Full Random will give you anything. There&apos;s no going back, either!
+        Guaranteed to have {full_random_bonus} points worth of spells.
       </Stack.Item>
       <Stack.Item>
         <NoticeBox danger>

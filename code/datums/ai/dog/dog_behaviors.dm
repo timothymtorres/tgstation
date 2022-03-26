@@ -10,15 +10,12 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/item/fetch_thing = controller.blackboard[BB_FETCH_TARGET]
 
-	if(fetch_thing.anchored || !isturf(fetch_thing.loc) || IS_EDIBLE(fetch_thing)) //either we can't pick it up, or we'd rather eat it, so stop trying.
+	//either we can't pick it up, or we'd rather eat it, so stop trying.
+	if(fetch_thing.anchored || !isturf(fetch_thing.loc) || IS_EDIBLE(fetch_thing) || !living_pawn.CanReach(fetch_thing))
 		finish_action(controller, FALSE)
 		return
 
-	if(in_range(living_pawn, fetch_thing))
-		finish_action(controller, TRUE)
-		return
-
-	finish_action(controller, FALSE)
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/fetch/finish_action(datum/ai_controller/controller, success)
 	. = ..()
@@ -48,6 +45,8 @@
 /datum/ai_behavior/simple_equip/finish_action(datum/ai_controller/controller, success)
 	. = ..()
 	controller.blackboard[BB_FETCH_TARGET] = null
+	if(!success)
+		controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
 /datum/ai_behavior/simple_equip/proc/pickup_item(datum/ai_controller/controller, obj/item/target)
 	var/atom/pawn = controller.pawn
@@ -85,6 +84,7 @@
 
 /datum/ai_behavior/deliver_item/finish_action(datum/ai_controller/controller, success)
 	. = ..()
+	controller.blackboard[BB_FETCH_TARGET] = null
 	controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
 /// Actually drop the fetched item to the target
@@ -187,21 +187,34 @@
 		finish_action(controller, TRUE)
 		return
 
+	if(!controller.blackboard[BB_DOG_HARASS_FRUSTRATION])
+		controller.blackboard[BB_DOG_HARASS_FRUSTRATION] = world.time
+	else if(controller.blackboard[BB_DOG_HARASS_FRUSTRATION] + AI_DOG_HARASS_FRUSTRATE_TIME < world.time) // if we haven't actually bit them in a while, give up
+		living_pawn.visible_message(span_danger("[living_pawn] yawns and seems to lose interest in harassing [harass_target]."))
+		finish_action(controller, FALSE)
+		return
+
 	// subtypes of this behavior can change behavior for how eager/averse the pawn is to attack the target as opposed to falling back/making noise/getting help
 	if(in_range(living_pawn, living_target))
 		attack(controller, living_target)
-	else if(DT_PROB(50, delta_time))
+	else if(DT_PROB(15, delta_time))
 		living_pawn.manual_emote("[pick("barks", "growls", "stares")] menacingly at [harass_target]!")
+		if(DT_PROB(40, delta_time))
+			playsound(living_pawn, pick('sound/creatures/dog/growl1.ogg', 'sound/creatures/dog/growl2.ogg'), 50, TRUE, -1)
 
 /datum/ai_behavior/harass/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.blackboard[BB_DOG_HARASS_TARGET] = null
+	controller.blackboard[BB_DOG_HARASS_FRUSTRATION] = null
 
 /// A proc representing when the mob is pushed to actually attack the target. Again, subtypes can be used to represent different attacks from different animals, or it can be some other generic behavior
 /datum/ai_behavior/harass/proc/attack(datum/ai_controller/controller, mob/living/living_target)
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
+
+	controller.blackboard[BB_DOG_HARASS_FRUSTRATION] = world.time
+
 	// make sure the pawn gets some temporary strength boost to actually attack the target instead of pathetically nuzzling them.
 	var/old_melee_lower = living_pawn.melee_damage_lower
 	var/old_melee_upper = living_pawn.melee_damage_upper

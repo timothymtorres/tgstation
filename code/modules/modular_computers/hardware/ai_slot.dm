@@ -52,7 +52,7 @@
 	if(stored_card)
 		to_chat(user, span_notice("You remove [stored_card] from [src]."))
 		locked = FALSE
-		if(user)
+		if(Adjacent(user))
 			user.put_in_hands(stored_card)
 		else
 			stored_card.forceMove(drop_location())
@@ -60,10 +60,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/computer_hardware/ai_slot/attackby(obj/item/I, mob/living/user)
-	if(..())
-		return
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, span_notice("You press down on the manual eject button with \the [I]."))
-		try_eject(user, TRUE)
-		return
+/obj/item/computer_hardware/ai_slot/screwdriver_act(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice("You press down on the manual eject button with [tool]."))
+	try_eject(user, TRUE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS

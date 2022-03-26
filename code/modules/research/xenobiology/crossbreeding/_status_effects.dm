@@ -270,7 +270,7 @@
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	duration = 100
 
@@ -287,7 +287,7 @@
 
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	duration = 300
 	var/original_coeff
@@ -416,7 +416,7 @@
 
 /datum/status_effect/adamantinecookie
 	id = "adamantinecookie"
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	duration = 100
 
@@ -527,7 +527,7 @@
 	else
 		cooldown = max_cooldown
 		var/list/sheets = list()
-		for(var/obj/item/stack/sheet/S in owner.GetAllContents())
+		for(var/obj/item/stack/sheet/S in owner.get_all_contents())
 			if(S.amount < S.max_amount)
 				sheets += S
 
@@ -552,7 +552,7 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in owner.GetAllContents())
+	for(var/obj/item/stock_parts/cell/C in owner.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
@@ -818,7 +818,7 @@
 	var/faction_name
 
 /datum/status_effect/stabilized/pink/on_apply()
-	faction_name = owner.real_name
+	faction_name = REF(owner)
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick()
@@ -864,7 +864,7 @@
 
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
-		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5)
+		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 	return ..()
 
 /datum/status_effect/stabilized/black

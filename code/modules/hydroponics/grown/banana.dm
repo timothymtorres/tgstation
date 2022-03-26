@@ -32,8 +32,8 @@
 	. = ..()
 	var/obj/item/grown/bananapeel/peel = .
 	if(istype(peel))
-		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
-		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
+		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
+		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 
 /obj/item/food/grown/banana/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -85,7 +85,7 @@
 	plantname = "Mimana Tree"
 	product = /obj/item/food/grown/banana/mime
 	growthstages = 4
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nothing = 0.1, /datum/reagent/toxin/mutetoxin = 0.1, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
@@ -114,7 +114,7 @@
 	plantname = "Bluespace Banana Tree"
 	instability = 40
 	product = /obj/item/food/grown/banana/bluespace
-	mutatelist = list()
+	mutatelist = null
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 30
@@ -144,3 +144,34 @@
 /obj/item/grown/bananapeel/specialpeel/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
+
+/obj/item/food/grown/banana/bunch
+	name = "banana bunch"
+	desc = "Am exquisite bunch of bananas. The almost otherwordly plumpness steers the mind any discening entertainer towards the divine."
+	icon_state = "banana_bunch"
+	bite_consumption_mod = 4
+	var/is_ripening = FALSE
+
+/obj/item/food/grown/banana/bunch/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
+	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
+
+/obj/item/food/grown/banana/bunch/proc/start_ripening()
+	if(is_ripening)
+		return
+	playsound(src, 'sound/effects/fuse.ogg', 80)
+
+	animate(src, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
+	animate(time = 1, pixel_z = 0, easing = BOUNCE_EASING)
+	addtimer(CALLBACK(src, .proc/explosive_ripening), 3 SECONDS)
+	for(var/i in 1 to 32)
+		animate(color = (i % 2) ? "#ffffff": "#ff6739", time = 1, easing = QUAD_EASING)
+
+/obj/item/food/grown/banana/bunch/proc/explosive_ripening()
+	honkerblast(src, light_range = 3, medium_range = 1)
+	for(var/mob/shook_boi in range(6, loc))
+		shake_camera(shook_boi, 3, 5)
+	var/obj/effect/decal/cleanable/food/plant_smudge/banana_smudge = new(loc)
+	banana_smudge.color = "#ffe02f"
+	qdel(src)

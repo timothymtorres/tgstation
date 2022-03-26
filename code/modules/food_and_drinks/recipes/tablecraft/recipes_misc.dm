@@ -54,7 +54,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/loadedbakedpotato
 	subcategory = CAT_MISCFOOD
@@ -63,7 +63,7 @@
 	name = "Cheesy fries"
 	reqs = list(
 		/obj/item/food/fries = 1,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/cheesyfries
 	subcategory = CAT_MISCFOOD
@@ -72,7 +72,7 @@
 	name = "Poutine"
 	reqs = list(
 		/obj/item/food/fries = 1,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/gravy = 3
 	)
 	result = /obj/item/food/poutine
@@ -90,7 +90,7 @@
 /datum/crafting_recipe/food/eggplantparm
 	name ="Eggplant parmigiana"
 	reqs = list(
-		/obj/item/food/cheese = 2,
+		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/grown/eggplant = 1
 	)
 	result = /obj/item/food/eggplantparm
@@ -151,7 +151,7 @@
 /datum/crafting_recipe/food/risotto
 	name = "Risotto"
 	reqs = list(
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/ethanol/wine = 5,
 		/obj/item/food/salad/boiledrice = 1,
 		/obj/item/food/grown/mushroom/chanterelle = 1
@@ -177,7 +177,7 @@
 	reqs = list(
 		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/cream = 5,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/meat/rawcrab = 1
 	)
 	result = /obj/item/food/crab_rangoon
@@ -192,4 +192,48 @@
 		/datum/reagent/toxin/mutagen = 5
 	)
 	result = /obj/item/food/cheese/royal
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/ant_candy
+	name = "Ant Candy"
+	reqs = list(/obj/item/stack/rods = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/water = 5,
+		/datum/reagent/ants = 10
+	)
+	result = /obj/item/food/ant_candy
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/pesto
+	name = "Pesto"
+	reqs = list(
+		/obj/item/food/firm_cheese_slice = 1,
+		/datum/reagent/consumable/salt = 5,
+		/obj/item/food/grown/herbs = 2,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/quality_oil = 5,
+		/obj/item/food/canned/pine_nuts = 1
+	)
+	result = /obj/item/food/pesto
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/tomato_sauce
+	name = "Tomato sauce"
+	reqs = list(
+		/obj/item/food/canned/tomatoes = 1,
+		/datum/reagent/consumable/salt = 2,
+		/obj/item/food/grown/herbs = 1,
+		/datum/reagent/consumable/quality_oil = 5
+	)
+	result = /obj/item/food/tomato_sauce
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/bechamel_sauce
+	name = "Bechamel sauce"
+	reqs = list(
+		/datum/reagent/consumable/milk = 10,
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/food/butter = 1
+	)
+	result = /obj/item/food/bechamel_sauce
 	subcategory = CAT_MISCFOOD

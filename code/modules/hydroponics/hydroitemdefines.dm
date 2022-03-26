@@ -10,11 +10,43 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
+
+/obj/item/plant_analyzer/Initialize(mapload)
+	. = ..()
+	register_item_context()
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
 	. += span_notice("Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.")
+
+/obj/item/plant_analyzer/add_item_context(
+	obj/item/source,
+	list/context,
+	atom/target,
+)
+
+	if(isliving(target))
+		// It's a health analyzer, but for podpeople.
+		var/mob/living/living_target = target
+		if(!(living_target.mob_biotypes & MOB_PLANT))
+			return NONE
+
+		context[SCREENTIP_CONTEXT_LMB] = "Scan health"
+		context[SCREENTIP_CONTEXT_RMB] = "Scan chemicals"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(isitem(target))
+		// Easier to handle this here, as grown items are split across two type-paths
+		var/obj/item/item_target = target
+		if(!item_target.get_plant_seed())
+			return NONE
+
+		context[SCREENTIP_CONTEXT_LMB] = "Scan plant stats"
+		context[SCREENTIP_CONTEXT_RMB] = "Scan plant chemicals"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
@@ -104,8 +136,10 @@
  * user - the person doing the scanning
  */
 /obj/item/plant_analyzer/proc/plant_biotype_health_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
-	user.visible_message(span_notice("[user] analyzes [scanned_mob]'s vitals."), \
-						span_notice("You analyze [scanned_mob]'s vitals."))
+	user.visible_message(
+		span_notice("[user] analyzes [scanned_mob]'s vitals."),
+		span_notice("You analyze [scanned_mob]'s vitals.")
+		)
 
 	healthscan(user, scanned_mob, advanced = TRUE)
 	add_fingerprint(user)
@@ -117,8 +151,10 @@
  * user - the person doing the scanning
  */
 /obj/item/plant_analyzer/proc/plant_biotype_chem_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
-	user.visible_message(span_notice("[user] analyzes [scanned_mob]'s bloodstream."), \
-						span_notice("You analyze [scanned_mob]'s bloodstream."))
+	user.visible_message(
+		span_notice("[user] analyzes [scanned_mob]'s bloodstream."),
+		span_notice("You analyze [scanned_mob]'s bloodstream.")
+		)
 	chemscan(user, scanned_mob)
 	add_fingerprint(user)
 
@@ -131,15 +167,14 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray_stats(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = "<span class='info'>*---------*\n"
+	var/returned_message = "*---------*\n"
 	if(scanned_tray.myseed)
-		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
-		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]</span>\n"
+		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
+		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
 		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
-		returned_message += "[span_info("<B>No plant found.</B>")]\n"
+		returned_message += span_bold("No plant found.\n")
 
-	returned_message += "<span class='info'>"
 	returned_message += "- Weed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]\n"
 	returned_message += "- Pest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]\n"
 	returned_message += "- Toxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]\n"
@@ -148,8 +183,8 @@
 	if(scanned_tray.yieldmod != 1)
 		returned_message += "- Yield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]\n"
 
-	returned_message += "*---------*</span>"
-	return returned_message
+	returned_message += "*---------*"
+	return span_info(returned_message)
 
 /**
  * This proc is called when we scan a hydroponics tray or soil on right click (chemicals mode)
@@ -160,15 +195,13 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray_chems(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = "<span class='info'>*---------*\n"
+	var/returned_message = "*---------*\n"
 	if(scanned_tray.myseed)
-		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
-		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]</span>\n"
+		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
+		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
 		returned_message += scan_plant_chems(scanned_tray.myseed)
 	else
-		returned_message += "[span_info("<B>No plant found.</B>")]\n"
-
-	returned_message += "<span class='info'>"
+		returned_message += span_bold("No plant found.\n")
 
 	returned_message += "- Tray contains:\n"
 	if(scanned_tray.reagents.reagent_list.len)
@@ -177,8 +210,8 @@
 	else
 		returned_message += "[span_notice("No reagents found.")]\n"
 
-	returned_message += "*---------*</span>"
-	return returned_message
+	returned_message += "*---------*"
+	return span_info(returned_message)
 
 /**
  * This proc is called when a seed or any grown plant is scanned on left click (stats mode).
@@ -189,7 +222,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
-	var/returned_message = "[span_info("*---------*\nThis is \a <span class='name'>[scanned_object]")].\n"
+	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -199,8 +232,8 @@
 	else
 		returned_message += "*---------*\nNo genes found.\n*---------*"
 
-	returned_message += "</span>\n"
-	return returned_message
+	returned_message += "\n"
+	return span_info(returned_message)
 
 /**
  * This proc is called when a seed or any grown plant is scanned on right click (chemical mode).
@@ -211,7 +244,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object)
-	var/returned_message = "[span_info("*---------*\nThis is \a <span class='name'>[scanned_object]")].\n"
+	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -223,8 +256,8 @@
 	else
 		returned_message += "*---------*\nNo reagents found.\n*---------*"
 
-	returned_message += "</span>\n"
-	return returned_message
+	returned_message += "\n"
+	return span_info(returned_message)
 
 /**
  * This proc is formats the traits and stats of a seed into a message.
@@ -257,7 +290,7 @@
 	text += "- Weed Growth Rate: [span_notice("[scanned.weed_rate]")]\n"
 	text += "- Weed Vulnerability: [span_notice("[scanned.weed_chance]")]\n"
 	if(scanned.rarity)
-		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]</span>\n"
+		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]\n"
 	var/all_removable_traits = ""
 	var/all_immutable_traits = ""
 	for(var/datum/plant_gene/trait/traits in scanned.genes)
@@ -268,8 +301,8 @@
 		else
 			all_immutable_traits += "[(all_immutable_traits == "") ? "" : ", "][traits.get_name()]"
 
-	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]</span>\n"
-	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]</span>\n"
+	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]\n"
+	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]\n"
 	var/datum/plant_gene/scanned_graft_result = scanned.graft_gene? new scanned.graft_gene : new /datum/plant_gene/trait/repeated_harvest
 	text += "- Grafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]\n"
 	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards
@@ -291,10 +324,10 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_genes(obj/item/seeds/scanned)
 	var/text = ""
 	text += "- Plant Reagent Genes -\n"
-	text += "*---------*\n<span class='notice'>"
+	text += "*---------*\n"
 	for(var/datum/plant_gene/reagent/gene in scanned.genes)
 		text += "- [gene.get_name()] -\n"
-	text += "</span>*---------*"
+	text += "*---------*"
 	return text
 
 /**
@@ -307,21 +340,21 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_contents(obj/item/scanned_plant)
 	var/text = ""
 	var/reagents_text = ""
-	text += "<br>[span_info("- Plant Reagents -")]"
-	text += "<br>[span_info("Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]")]"
+	text += "- Plant Reagents -\n"
+	text += "Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]\n"
 	var/chem_cap = 0
 	for(var/_reagent in scanned_plant.reagents.reagent_list)
-		var/datum/reagent/reagent  = _reagent
+		var/datum/reagent/reagent = _reagent
 		var/amount = reagent.volume
 		chem_cap += reagent.volume
-		reagents_text += "\n[span_info("- [reagent.name]: [amount]")]"
+		reagents_text += "\n- [reagent.name]: [amount]"
 	if(chem_cap > 100)
-		text += "<br>[span_warning("- Reagent Traits Over 100% Production")]</br>"
+		text += "- [span_danger("Reagent Traits Over 100% Production")]\n"
 
 	if(reagents_text)
-		text += "<br>[span_info("*---------*")]"
+		text += "*---------*"
 		text += reagents_text
-	text += "<br>[span_info("*---------*")]"
+	text += "\n*---------*"
 	return text
 
 /**
@@ -332,7 +365,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/get_graft_text(obj/item/graft/scanned_graft)
-	var/text = "[span_info("*---------*")]\n<span class='info'>- Plant Graft -\n"
+	var/text = "*---------*\n- Plant Graft -\n"
 	if(scanned_graft.parent_name)
 		text += "- Parent Plant: [span_notice("[scanned_graft.parent_name]")] -\n"
 	if(scanned_graft.stored_trait)
@@ -344,8 +377,8 @@
 	text += "- Lifespan: [span_notice("[scanned_graft.lifespan]")]\n"
 	text += "- Weed Growth Rate: [span_notice("[scanned_graft.weed_rate]")]\n"
 	text += "- Weed Vulnerability: [span_notice("[scanned_graft.weed_chance]")]\n"
-	text += "*---------*</span>"
-	return text
+	text += "*---------*"
+	return span_info(text)
 
 
 // *************************************
@@ -416,7 +449,7 @@
 	flags_1 = NONE
 	resistance_flags = FLAMMABLE
 
-/obj/item/cultivator/rake/Initialize()
+/obj/item/cultivator/rake/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -456,7 +489,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/obj/item/hatchet/Initialize()
+/obj/item/hatchet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 100)
 
@@ -490,7 +523,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
 
-/obj/item/scythe/Initialize()
+/obj/item/scythe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 90, 105)
 
@@ -501,7 +534,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, "desecration" ,50, TRUE, -1)
+			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
@@ -538,6 +571,37 @@
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
+/// Secateurs can be used to style podperson "hair"
+/obj/item/secateurs/attack(mob/trimmed, mob/living/trimmer)
+	if(ispodperson(trimmed))
+		var/mob/living/carbon/human/pod = trimmed
+		var/location = trimmer.zone_selected
+		if((location in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !pod.get_bodypart(BODY_ZONE_HEAD))
+			to_chat(trimmer, span_warning("[pod] [pod.p_do()]n't have a head!"))
+			return
+		if(location == BODY_ZONE_HEAD && !trimmer.combat_mode)
+			if(!trimmer.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return
+			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
+			if(isnull(new_style))
+				return
+			trimmer.visible_message(
+				span_notice("[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
+				span_notice("You try to change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
+			)
+			if(new_style && do_after(trimmer, 6 SECONDS, target = pod))
+				trimmer.visible_message(
+					span_notice("[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
+					span_notice("You successfully change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
+				)
+
+				var/datum/species/pod/species = pod.dna?.species
+				species?.change_hairstyle(pod, new_style)
+		else
+			return ..()
+	else
+		return ..()
+
 /obj/item/geneshears
 	name = "Botanogenetic Plant Shears"
 	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
@@ -552,12 +616,10 @@
 	throwforce = 8
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	material_flags = MATERIAL_NO_EFFECTS
 	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/gold=500)
 	attack_verb_continuous = list("slashes", "slices", "cuts")
 	attack_verb_simple = list("slash", "slice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-
 
 // *************************************
 // Nutrient defines for hydroponics
@@ -570,7 +632,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
-/obj/item/reagent_containers/glass/bottle/nutrient/Initialize()
+/obj/item/reagent_containers/glass/bottle/nutrient/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)

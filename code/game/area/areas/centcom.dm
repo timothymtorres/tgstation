@@ -8,38 +8,78 @@
 /area/centcom
 	name = "CentCom"
 	icon_state = "centcom"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 /area/centcom/control
-	name = "CentCom Docks"
+	name = "CentCom Central Control"
+	icon_state = "centcom_control"
 
-/area/centcom/evac
+/area/centcom/evacuation
+	name = "CentCom Recovery Wing"
+	icon_state = "centcom_evacuation"
+
+/area/centcom/evacuation/ship
 	name = "CentCom Recovery Ship"
+	icon_state = "centcom_evacuation_ship"
+
+/area/centcom/fore
+	name = "Fore CentCom Dock"
+	icon_state = "centcom_fore"
 
 /area/centcom/supply
-	name = "CentCom Supply Shuttle Dock"
+	name = "CentCom Supply Wing"
+	icon_state = "centcom_supply"
 
 /area/centcom/ferry
 	name = "CentCom Transport Shuttle Dock"
+	icon_state = "centcom_ferry"
+
+/area/centcom/briefing
+	name = "CentCom Briefing Room"
+	icon_state = "centcom_briefing"
+
+/area/centcom/armory
+	name = "CentCom Armory"
+	icon_state = "centcom_armory"
+
+/area/centcom/admin
+	name = "CentCom Administrative Office"
+	icon_state = "centcom_admin"
+
+/area/centcom/admin/storage
+	name = "CentCom Administrative Office Storage"
+	icon_state = "centcom_admin_storage"
 
 /area/centcom/prison
 	name = "Admin Prison"
+	icon_state = "centcom_prison"
+
+/area/centcom/prison/cells
+	name = "Admin Prison Cells"
+	icon_state = "centcom_cells"
+
+/area/centcom/courtroom
+	name = "Nanotrasen Grand Courtroom"
+	icon_state = "centcom_court"
 
 /area/centcom/holding
 	name = "Holding Facility"
+	icon_state = "centcom_holding"
 
 /area/centcom/supplypod/supplypod_temp_holding
-	name = "Supplypod Shipping lane"
+	name = "Supplypod Shipping Lane"
 	icon_state = "supplypod_flight"
 
 /area/centcom/supplypod
 	name = "Supplypod Facility"
 	icon_state = "supplypod"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
 
 /area/centcom/supplypod/pod_storage
 	name = "Supplypod Storage"
@@ -50,7 +90,7 @@
 	icon_state = "supplypod_loading"
 	var/loading_id = ""
 
-/area/centcom/supplypod/loading/Initialize()
+/area/centcom/supplypod/loading/Initialize(mapload)
 	. = ..()
 	if(!loading_id)
 		CRASH("[type] created without a loading_id")
@@ -82,7 +122,7 @@
 /area/tdome
 	name = "Thunderdome"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
@@ -90,12 +130,16 @@
 /area/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+
 
 /area/tdome/arena_source
 	name = "Thunderdome Arena Template"
 	icon_state = "thunder"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+
 
 /area/tdome/tdome1
 	name = "Thunderdome (Team 1)"
@@ -105,13 +149,14 @@
 	name = "Thunderdome (Team 2)"
 	icon_state = "green"
 
-/area/tdome/tdomeadmin
-	name = "Thunderdome (Admin.)"
-	icon_state = "purple"
+/area/tdome/tdomeadmin //delete this
+/area/tdome/administration
+	name = "Thunderdome Administration"
+	icon_state = "thunder_admin"
 
-/area/tdome/tdomeobserve
-	name = "Thunderdome (Observer.)"
-	icon_state = "purple"
+/area/tdome/observation
+	name = "Thunderdome Observation"
+	icon_state = "thunder_observe"
 
 
 //ENEMY
@@ -119,8 +164,8 @@
 //Wizard
 /area/wizard_station
 	name = "Wizard's Den"
-	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	icon_state = "wizards_den"
+	static_lighting = TRUE
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
@@ -130,9 +175,11 @@
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
-	icon_state = "yellow"
+	icon_state = "abductor_ship"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | NOTELEPORT
+	static_lighting = FALSE
+	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	network_root_id = "ALIENS"
@@ -151,7 +198,7 @@
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
 	icon_state = "syndie-control"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/syndicate_mothership/elite_squad
@@ -164,6 +211,9 @@
 	name = "Capture the Flag"
 	icon_state = "yellow"
 	requires_power = FALSE
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 

@@ -1,3 +1,6 @@
+#define USERNAME_SIZE 32
+#define CHANNELNAME_SIZE 12
+#define MESSAGE_SIZE 2048
 
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
@@ -44,7 +47,7 @@
 		if("PRG_speak")
 			if(!channel || isnull(active_channel))
 				return
-			var/message = reject_bad_text(params["message"])
+			var/message = reject_bad_chattext(params["message"], MESSAGE_SIZE)
 			if(!message)
 				return
 			if(channel.password && (!(src in channel.active_clients) && !(src in channel.offline_clients)))
@@ -65,7 +68,7 @@
 				active_channel = new_target // Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
 				return TRUE
 
-			active_channel =  new_target
+			active_channel = new_target
 			channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
 			if((!(src in channel.active_clients) && !(src in channel.offline_clients)) && !channel.password)
 				channel.add_client(src)
@@ -76,7 +79,7 @@
 				active_channel = null
 				return TRUE
 		if("PRG_newchannel")
-			var/channel_title = reject_bad_text(params["new_channel_name"])
+			var/channel_title = reject_bad_chattext(params["new_channel_name"], CHANNELNAME_SIZE)
 			if(!channel_title)
 				return
 			var/datum/ntnet_conversation/C = new /datum/ntnet_conversation()
@@ -88,8 +91,7 @@
 		if("PRG_toggleadmin")
 			if(netadmin_mode)
 				netadmin_mode = FALSE
-				if(channel)
-					channel.remove_client(src) // We shouldn't be in channel's user list, but just in case...
+				channel?.add_client(src)
 				return TRUE
 			var/mob/living/user = usr
 			if(can_run(user, TRUE, ACCESS_NETWORK))
@@ -99,7 +101,7 @@
 				netadmin_mode = TRUE
 				return TRUE
 		if("PRG_changename")
-			var/newname = sanitize(params["new_name"])
+			var/newname = reject_bad_chattext(params["new_name"], USERNAME_SIZE)
 			newname = replacetext(newname, " ", "_")
 			if(!newname || newname == username)
 				return
@@ -114,13 +116,13 @@
 			var/logname = stripped_input(params["log_name"])
 			if(!logname)
 				return
-			var/datum/computer_file/data/logfile = new /datum/computer_file/data/logfile()
+			var/datum/computer_file/data/text/logfile = new()
 			// Now we will generate HTML-compliant file that can actually be viewed/printed.
 			logfile.filename = logname
-			logfile.stored_data = "\[b\]Logfile dump from NTNRC channel [channel.title]\[/b\]\[BR\]"
+			logfile.stored_text = "\[b\]Logfile dump from NTNRC channel [channel.title]\[/b\]\[BR\]"
 			for(var/logstring in channel.messages)
-				logfile.stored_data = "[logfile.stored_data][logstring]\[BR\]"
-			logfile.stored_data = "[logfile.stored_data]\[b\]Logfile dump completed.\[/b\]"
+				logfile.stored_text = "[logfile.stored_text][logstring]\[BR\]"
+			logfile.stored_text = "[logfile.stored_text]\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
 			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 			if(!computer || !hard_drive || !hard_drive.store_file(logfile))
@@ -135,7 +137,7 @@
 		if("PRG_renamechannel")
 			if(!authed)
 				return
-			var/newname = reject_bad_text(params["new_name"])
+			var/newname = reject_bad_chattext(params["new_name"], CHANNELNAME_SIZE)
 			if(!newname || !channel)
 				return
 			channel.add_status_message("Channel renamed from [channel.title] to [newname] by operator.")
@@ -267,3 +269,7 @@
 		data["messages"] = list()
 
 	return data
+
+#undef USERNAME_SIZE
+#undef CHANNELNAME_SIZE
+#undef MESSAGE_SIZE

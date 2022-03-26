@@ -12,7 +12,7 @@ aren't already linked to another console. Any consoles it cannot link up with (e
 linked or there aren't any in range), you'll just not have access to that menu. In the settings menu, there are menu options that
 allow a player to attempt to re-sync with nearby consoles. You can also force it to disconnect from a specific console.
 
-The only thing that requires toxins access is locking and unlocking the console on the settings menu.
+The only thing that requires ordnance access is locking and unlocking the console on the settings menu.
 Nothing else in the console has ID requirements.
 
 */
@@ -45,7 +45,7 @@ Nothing else in the console has ID requirements.
 		return reagent.name
 	return ID
 
-/obj/machinery/computer/rdconsole/Initialize()
+/obj/machinery/computer/rdconsole/Initialize(mapload)
 	. = ..()
 	stored_research = SSresearch.science_tech
 	stored_research.consoles_accessing[src] = TRUE
@@ -105,6 +105,8 @@ Nothing else in the console has ID requirements.
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
+			if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
@@ -129,7 +131,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		to_chat(user, span_notice("You disable the security protocols[locked? " and unlock the console":""]."))
-		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
 	return ..()
@@ -316,20 +318,15 @@ Nothing else in the console has ID requirements.
 				say("No Design Disk Inserted!")
 				return TRUE
 			var/slot = text2num(params["slot"])
-			var/datum/design/design = SSresearch.techweb_design_by_id(params["selectedDesign"])
+			var/design_id = params["selectedDesign"]
+			if(!stored_research.researched_designs.Find(design_id))
+				stack_trace("ID did not map to a researched datum [design_id]")
+				return
+			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 			if(design)
-				var/autolathe_friendly = TRUE
-				if(design.reagents_list.len)
-					autolathe_friendly = FALSE
-					design.category -= "Imported"
-				else
-					for(var/material in design.materials)
-						if( !(material in list(/datum/material/iron, /datum/material/glass)))
-							autolathe_friendly = FALSE
-							design.category -= "Imported"
-
 				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
-					design.build_type = autolathe_friendly ? (design.build_type | AUTOLATHE) : design.build_type
+					if(design.autolathe_exportable && !design.reagents_list.len)
+						design.build_type |= AUTOLATHE
 					design.category |= "Imported"
 				d_disk.blueprints[slot] = design
 			return TRUE

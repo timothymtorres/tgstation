@@ -35,7 +35,7 @@
 	/// Max bomb timer allower in seconds
 	var/bomb_timer_max = 20
 
-/obj/item/pizzabox/Initialize()
+/obj/item/pizzabox/Initialize(mapload)
 	. = ..()
 	if(pizza)
 		pizza = new pizza
@@ -82,11 +82,11 @@
 	if(open)
 		if(pizza)
 			var/mutable_appearance/pizza_overlay = mutable_appearance(pizza.icon, pizza.icon_state)
-			pizza_overlay.pixel_y = -3
+			pizza_overlay.pixel_y = -2
 			. += pizza_overlay
 		if(bomb)
 			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state)
-			bomb_overlay.pixel_y = 5
+			bomb_overlay.pixel_y = 8
 			. += bomb_overlay
 		return
 
@@ -150,17 +150,12 @@
 				update_appearance()
 				return
 			else
-				bomb_timer = input(user, "Set the [bomb] timer from [bomb_timer_min] to [bomb_timer_max].", bomb, bomb_timer) as num|null
-
-				if (isnull(bomb_timer))
+				bomb_timer = tgui_input_number(user, "Set the bomb timer", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
+				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
-
-				bomb_timer = clamp(CEILING(bomb_timer, 1), bomb_timer_min, bomb_timer_max)
 				bomb_defused = FALSE
-
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
-
 				to_chat(user, span_warning("You trap [src] with [bomb]."))
 				update_appearance()
 	else if(boxes.len)
@@ -224,7 +219,7 @@
 				to_chat(user, span_notice("You scribble illegibly on [src]!"))
 				return
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
-			box.boxtag += stripped_input(user, "Write on [box]'s tag:", box, "", 30)
+			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
 			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			to_chat(user, span_notice("You write with [I] on [src]."))
@@ -296,7 +291,7 @@
 	wires = null
 	update_appearance()
 
-/obj/item/pizzabox/bomb/Initialize()
+/obj/item/pizzabox/bomb/Initialize(mapload)
 	. = ..()
 	if(!pizza)
 		var/randompizza = pick(subtypesof(/obj/item/food/pizza))
@@ -348,7 +343,7 @@
 	///List of ckeys and their favourite pizzas. e.g. pizza_preferences[ckey] = /obj/item/food/pizza/meat
 	var/static/list/pizza_preferences
 
-/obj/item/pizzabox/infinite/Initialize()
+/obj/item/pizzabox/infinite/Initialize(mapload)
 	. = ..()
 	if(!pizza_preferences)
 		pizza_preferences = list()
@@ -363,6 +358,7 @@
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	if(ishuman(user))
 		attune_pizza(user)
+		to_chat(user, span_notice("Another pizza immediately appears in the box, what the hell?"))
 	return ..()
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/nommer) //tonight on "proc names I never thought I'd type"
@@ -376,11 +372,11 @@
 		else if(nommer.has_quirk(/datum/quirk/pineapple_hater))
 			var/list/pineapple_pizza_liker = pizza_types.Copy()
 			pineapple_pizza_liker -= /obj/item/food/pizza/pineapple
-			pizza_preferences[nommer.ckey] = pickweight(pineapple_pizza_liker)
-		else if(nommer.mind && nommer.mind.assigned_role == "Botanist")
+			pizza_preferences[nommer.ckey] = pick_weight(pineapple_pizza_liker)
+		else if(nommer.mind?.assigned_role.title == /datum/job/botanist)
 			pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
 		else
-			pizza_preferences[nommer.ckey] = pickweight(pizza_types)
+			pizza_preferences[nommer.ckey] = pick_weight(pizza_types)
 	if(pizza)
 		//if the pizza isn't our favourite, delete it
 		if(pizza.type != pizza_preferences[nommer.ckey])

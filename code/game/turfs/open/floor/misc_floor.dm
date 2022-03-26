@@ -7,7 +7,7 @@
 	floor_tile = /obj/item/stack/tile/circuit
 	var/on = TRUE
 
-/turf/open/floor/circuit/Initialize()
+/turf/open/floor/circuit/Initialize(mapload)
 	SSmapping.nuke_tiles += src
 	update_appearance()
 	. = ..()
@@ -149,7 +149,7 @@
 	floor_tile = /obj/item/stack/tile/bronze/flat
 
 /turf/open/floor/bronze/filled
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "clockwork_floor_filled"
 	floor_tile = /obj/item/stack/tile/bronze/filled
 
 /turf/open/floor/bronze/filled/lavaland
@@ -200,15 +200,26 @@
 	return list("eightiesred_damaged")
 
 /turf/open/floor/plating/rust
-	name = "rusted plating"
-	desc = "Corrupted steel."
-	icon_state = "plating_rust"
+	//SDMM supports colors, this is simply for easier mapping
+	//and should be removed on initialize
+	color = COLOR_BROWN
 
-/turf/open/floor/plating/rust/plasma
-	initial_gas_mix = "plasma=104;TEMP=293.15"
+/turf/open/floor/plating/rust/Initialize(mapload)
+	. = ..()
+	color = null
 
-/turf/open/floor/plating/rust/rust_heretic_act()
-	return
+/turf/open/floor/plating/rust/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/rust)
+
+/turf/open/floor/plating/plasma
+	initial_gas_mix = ATMOS_TANK_PLASMA
+
+/turf/open/floor/plating/plasma/rust/Initialize(mapload)
+	. = ..()
+	// Because this is a fluff turf explicitly for KiloStation it doesn't make sense to ChangeTurf like usual
+	// Especially since it looks like we don't even change the default icon/iconstate???
+	AddElement(/datum/element/rust)
 
 /turf/open/floor/stone
 	name = "stone brick floor"

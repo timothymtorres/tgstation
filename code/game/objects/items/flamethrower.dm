@@ -37,11 +37,11 @@
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)
-		qdel(weldtool)
+		QDEL_NULL(weldtool)
 	if(igniter)
-		qdel(igniter)
+		QDEL_NULL(igniter)
 	if(ptank)
-		qdel(ptank)
+		QDEL_NULL(ptank)
 	return ..()
 
 /obj/item/flamethrower/process()
@@ -83,33 +83,38 @@
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
-			var/turflist = getline(user, target_turf)
+			var/turflist = get_line(user, target_turf)
 			log_combat(user, target, "flamethrowered", src)
 			flame_turf(turflist)
 
-/obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && !status)//Taking this apart
-		var/turf/T = get_turf(src)
-		if(weldtool)
-			weldtool.forceMove(T)
-			weldtool = null
-		if(igniter)
-			igniter.forceMove(T)
-			igniter = null
-		if(ptank)
-			ptank.forceMove(T)
-			ptank = null
-		new /obj/item/stack/rods(T)
-		qdel(src)
-		return
+/obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(status)
+		return FALSE
+	tool.play_tool_sound(src)
+	var/turf/T = get_turf(src)
+	if(weldtool)
+		weldtool.forceMove(T)
+		weldtool = null
+	if(igniter)
+		igniter.forceMove(T)
+		igniter = null
+	if(ptank)
+		ptank.forceMove(T)
+		ptank = null
+	new /obj/item/stack/rods(T)
+	qdel(src)
 
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER && igniter && !lit)
+/obj/item/flamethrower/screwdriver_act(mob/living/user, obj/item/tool)
+	if(igniter && !lit)
+		tool.play_tool_sound(src)
 		status = !status
 		to_chat(user, span_notice("[igniter] is now [status ? "secured" : "unsecured"]!"))
 		update_appearance()
-		return
+		return TRUE
 
-	else if(isigniter(W))
+/obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
+	if(isigniter(W))
 		var/obj/item/assembly/igniter/I = W
 		if(I.secured)
 			return
@@ -197,7 +202,7 @@
 	for(var/turf/T in turflist)
 		if(T == previousturf)
 			continue //so we don't burn the tile we be standin on
-		var/list/turfs_sharing_with_prev = previousturf.GetAtmosAdjacentTurfs(alldir=1)
+		var/list/turfs_sharing_with_prev = previousturf.get_atmos_adjacent_turfs(alldir=1)
 		if(!(T in turfs_sharing_with_prev))
 			break
 		if(igniter)

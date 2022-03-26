@@ -11,7 +11,7 @@
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/meat/steak = 1,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/sandwich
 	subcategory = CAT_SANDWICH
@@ -20,7 +20,7 @@
 	name = "Cheese sandwich"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
-		/obj/item/food/cheese = 2
+		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/cheese_sandwich
 	subcategory = CAT_SANDWICH
@@ -62,3 +62,13 @@
 	result = /obj/item/food/hotdog
 	subcategory = CAT_SANDWICH
 
+/datum/crafting_recipe/food/blt
+	name = "BLT"
+	reqs = list(
+		/obj/item/food/breadslice/plain = 2,
+		/obj/item/food/meat/bacon = 2,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/tomato = 1
+	)
+	result = /obj/item/food/blt
+	subcategory = CAT_SANDWICH

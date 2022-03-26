@@ -7,7 +7,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("tasteless soup" = 1)
 	foodtypes = VEGETABLES
-	eatverbs = list("slurp","sip","inhale","drink")
+	eatverbs = list("slurp", "sip", "inhale", "drink")
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/soup/wish
@@ -17,7 +17,7 @@
 	food_reagents = list(/datum/reagent/water = 10)
 	tastes = list("wishes" = 1)
 
-/obj/item/food/soup/wish/Initialize()
+/obj/item/food/soup/wish/Initialize(mapload)
 	. = ..()
 	var/wish_true = prob(25)
 	if(wish_true)
@@ -64,7 +64,7 @@
 	name = "clown's tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/banana = 10, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 16, /datum/reagent/consumable/clownstears = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/banana = 10, /datum/reagent/lube = 5, /datum/reagent/consumable/nutriment/vitamin = 16, /datum/reagent/consumable/clownstears = 10)
 	tastes = list("a bad joke" = 1)
 	foodtypes = FRUIT | SUGAR
 
@@ -93,7 +93,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("chaos" = 1)
 
-/obj/item/food/soup/mystery/Initialize()
+/obj/item/food/soup/mystery/Initialize(mapload)
 	. = ..()
 	var/extra_reagent = null
 	extra_reagent = pick(
@@ -183,9 +183,9 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 6)
 	foodtypes = VEGETABLES
 
-/obj/item/food/soup/beet/Initialize()
+/obj/item/food/soup/beet/Initialize(mapload)
 	. = ..()
-	name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
+	name = pick("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")
 	tastes = list(name = 1)
 
 
@@ -256,7 +256,7 @@
 	name = "electron soup"
 	desc = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
 	icon_state = "electronsoup"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity/enriched = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity/enriched = 12)
 	tastes = list("mushroom" = 1, "electrons" = 4)
 	foodtypes = VEGETABLES | TOXIC
 

@@ -58,8 +58,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/thermomachine
-	name = "Machine Design (Freezer/Heater Board)"
-	desc = "The circuit board for a freezer/heater."
+	name = "Machine Design (Thermomachine Board)"
+	desc = "The circuit board for a thermomachine."
 	id = "thermomachine"
 	build_path = /obj/item/circuitboard/machine/thermomachine
 	category = list ("Engineering Machinery")
@@ -157,6 +157,14 @@
 	id = "chem_heater"
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 	build_path = /obj/item/circuitboard/machine/chem_heater
+	category = list ("Medical Machinery")
+
+/datum/design/board/chem_mass_spec
+	name = "Machine Design (High-Performance Liquid Chromatography)"
+	desc = "The circuit board for a High-Performance Liquid Chromatography (Machine Board)"
+	id = "chem_mass_spec"
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	build_path = /obj/item/circuitboard/machine/chem_mass_spec
 	category = list ("Medical Machinery")
 
 /datum/design/board/smoke_machine
@@ -298,38 +306,6 @@
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/nanite_chamber
-	name = "Machine Design (Nanite Chamber Board)"
-	desc = "The circuit board for a Nanite Chamber."
-	id = "nanite_chamber"
-	build_path = /obj/item/circuitboard/machine/nanite_chamber
-	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/public_nanite_chamber
-	name = "Machine Design (Public Nanite Chamber Board)"
-	desc = "The circuit board for a Public Nanite Chamber."
-	id = "public_nanite_chamber"
-	build_path = /obj/item/circuitboard/machine/public_nanite_chamber
-	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/nanite_programmer
-	name = "Machine Design (Nanite Programmer Board)"
-	desc = "The circuit board for a Nanite Programmer."
-	id = "nanite_programmer"
-	build_path = /obj/item/circuitboard/machine/nanite_programmer
-	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/nanite_program_hub
-	name = "Machine Design (Nanite Program Hub Board)"
-	desc = "The circuit board for a Nanite Program Hub."
-	id = "nanite_program_hub"
-	build_path = /obj/item/circuitboard/machine/nanite_program_hub
-	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/board/dnascanner
 	name = "Machine Design (DNA Scanner)"
 	desc = "The circuit board for a DNA Scanner."
@@ -351,6 +327,22 @@
 	desc = "The circuit board for a tachyon-doppler research array"
 	id = "doppler_array"
 	build_path = /obj/item/circuitboard/machine/doppler_array
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/anomaly_refinery
+	name = "Machine Design (Anomaly Refinery Board)"
+	desc = "The circuit board for an anomaly refinery"
+	id = "anomaly_refinery"
+	build_path = /obj/item/circuitboard/machine/anomaly_refinery
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/tank_compressor
+	name = "Machine Design (Tank Compressor Board)"
+	desc = "The circuit board for a tank compressor"
+	id = "tank_compressor"
+	build_path = /obj/item/circuitboard/machine/tank_compressor
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -491,14 +483,6 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/rad_collector
-	name = "Machine Design (Radiation Collector Board)"
-	desc = "The circuit board for a radiation collector array."
-	id = "rad_collector"
-	build_path = /obj/item/circuitboard/machine/rad_collector
-	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/board/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
 	desc = "The circuit board for a grounding rod."
@@ -545,6 +529,14 @@
 	desc = "The circuit board for a Griddle."
 	id = "griddle"
 	build_path = /obj/item/circuitboard/machine/griddle
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/oven
+	name = "Machine Design (Oven)"
+	desc = "The circuit board for a Oven."
+	id = "oven"
+	build_path = /obj/item/circuitboard/machine/oven
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -595,14 +587,6 @@
 	build_path = /obj/item/circuitboard/machine/ore_silo
 	category = list ("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-
-/datum/design/board/paystand
-	name = "Machine Design (Pay Stand)"
-	desc = "The circuit board for a paystand."
-	id = "paystand"
-	build_path = /obj/item/circuitboard/machine/paystand
-	category = list ("Misc. Machinery")
-
 
 /datum/design/board/fat_sucker
 	name = "Machine Design (Lipid Extractor)"
@@ -695,7 +679,7 @@
 	name = "Machine Design (Account Registration Device)"
 	desc = "The circuit board for a Account Registration Device."
 	id = "accounting"
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SERVICE
 	build_path = /obj/item/circuitboard/machine/accounting
 	category = list ("Misc. Machinery")
 
@@ -711,7 +695,7 @@
 
 /datum/design/board/HFR_fuel_input
 	name = "Machine Design (HFR fuel input)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR fuel input."
 	id = "HFR_fuel_input"
 	build_path = /obj/item/circuitboard/machine/HFR_fuel_input
 	category = list ("Engineering Machinery")
@@ -719,7 +703,7 @@
 
 /datum/design/board/HFR_waste_output
 	name = "Machine Design (HFR waste output)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR waste output."
 	id = "HFR_waste_output"
 	build_path = /obj/item/circuitboard/machine/HFR_waste_output
 	category = list ("Engineering Machinery")
@@ -727,7 +711,7 @@
 
 /datum/design/board/HFR_moderator_input
 	name = "Machine Design (HFR moderator input)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR moderator input."
 	id = "HFR_moderator_input"
 	build_path = /obj/item/circuitboard/machine/HFR_moderator_input
 	category = list ("Engineering Machinery")
@@ -735,7 +719,7 @@
 
 /datum/design/board/HFR_corner
 	name = "Machine Design (HFR corner)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR corner."
 	id = "HFR_corner"
 	build_path = /obj/item/circuitboard/machine/HFR_corner
 	category = list ("Engineering Machinery")
@@ -743,7 +727,7 @@
 
 /datum/design/board/HFR_interface
 	name = "Machine Design (HFR interface)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR interface."
 	id = "HFR_interface"
 	build_path = /obj/item/circuitboard/machine/HFR_interface
 	category = list ("Engineering Machinery")
@@ -778,5 +762,13 @@
 	desc = "The circuit board for a component printer"
 	id = "component_printer"
 	build_path = /obj/item/circuitboard/machine/component_printer
+	category = list("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/module_printer
+	name = "Machine Design (Module Duplicator)"
+	desc = "The circuit board for a module duplicator"
+	id = "module_duplicator"
+	build_path = /obj/item/circuitboard/machine/module_duplicator
 	category = list("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

@@ -22,6 +22,7 @@
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	max_integrity = 100
 	item_flags = XENOMORPH_HOLDABLE
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
@@ -40,30 +41,13 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
-/obj/item/clothing/mask/facehugger/lamarr
-	name = "Lamarr"
-	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
-	sterile = 1
-
-/obj/item/clothing/mask/facehugger/dead
-	icon_state = "facehugger_dead"
-	inhand_icon_state = "facehugger_inactive"
-	worn_icon_state = "facehugger_dead"
-	stat = DEAD
-
-/obj/item/clothing/mask/facehugger/impregnated
-	icon_state = "facehugger_impregnated"
-	inhand_icon_state = "facehugger_impregnated"
-	worn_icon_state = "facehugger_impregnated"
-	stat = DEAD
-
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
-	if(obj_integrity < 90)
+	if(atom_integrity < 90)
 		Die()
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
-	return O.attack_obj(src, user, params)
+	return O.attack_atom(src, user, params)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
@@ -129,58 +113,55 @@
 		icon_state = "[base_icon_state]"
 		Leap(hit_atom)
 
-/obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/M)
+/obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/hit_mob)
 	// valid targets: carbons except aliens and devils
 	// facehugger state early exit checks
 	if(stat != CONSCIOUS)
 		return FALSE
 	if(attached)
 		return FALSE
-	if(iscarbon(M))
-		// disallowed carbons
-		if(isalien(M))
-			return FALSE
-		var/mob/living/carbon/target = M
-		// gotta have a head to be implanted (no changelings or sentient plants)
-		if(!target.get_bodypart(BODY_ZONE_HEAD))
-			return FALSE
-		// gotta be able to have the xeno implanted
-		if(HAS_TRAIT(M, TRAIT_XENO_IMMUNE))
-			return FALSE
-		// carbon, has head, not alien or devil, has no hivenode or embryo: valid
-		return TRUE
-
-	return FALSE
-
-/obj/item/clothing/mask/facehugger/proc/Leap(mob/living/M)
-	if(!valid_to_attach(M))
+	if(!iscarbon(hit_mob))
 		return FALSE
-	if(iscarbon(M))
-		var/mob/living/carbon/target = M
-		if(target.wear_mask && istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
-			return FALSE
+	// disallowed carbons
+	if(isalien(hit_mob))
+		return FALSE
+	var/mob/living/carbon/target = hit_mob
+	// gotta have a head to be implanted (no changelings or sentient plants)
+	if(!target.get_bodypart(BODY_ZONE_HEAD))
+		return FALSE
+	// gotta be able to have the xeno implanted
+	if(HAS_TRAIT(hit_mob, TRAIT_XENO_IMMUNE))
+		return FALSE
+	// carbon, has head, not an alien nor has an hivenode or embryo: valid
+	return TRUE
+
+/obj/item/clothing/mask/facehugger/proc/Leap(mob/living/hit_mob)
+	//check if not carbon/alien/has facehugger already/ect.
+	if(!valid_to_attach(hit_mob))
+		return FALSE
+	var/mob/living/carbon/target = hit_mob
+	if(target.wear_mask && istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
+		return FALSE
 	// passed initial checks - time to leap!
-	M.visible_message(span_danger("[src] leaps at [M]'s face!"), \
-							span_userdanger("[src] leaps at your face!"))
+	target.visible_message(span_danger("[src] leaps at [target]'s face!"), \
+						span_userdanger("[src] leaps at your face!"))
 
 	// probiscis-blocker handling
-	if(iscarbon(M))
-		var/mob/living/carbon/target = M
+	if(target.is_mouth_covered(head_only = TRUE))
+		target.visible_message(span_danger("[src] smashes against [target]'s [target.head]!"), \
+							span_userdanger("[src] smashes against your [target.head]!"))
+		Die()
+		return FALSE
 
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.is_mouth_covered(head_only = 1))
-				H.visible_message(span_danger("[src] smashes against [H]'s [H.head]!"), \
-									span_userdanger("[src] smashes against your [H.head]!"))
-				Die()
-				return FALSE
+	if(target.wear_mask)
+		var/obj/item/clothing/worn_mask = target.wear_mask
+		if(target.dropItemToGround(worn_mask))
+			target.visible_message(span_danger("[src] tears [worn_mask] off of [target]'s face!"), \
+								span_userdanger("[src] tears [worn_mask] off of your face!"))
 
-		if(target.wear_mask)
-			var/obj/item/clothing/W = target.wear_mask
-			if(target.dropItemToGround(W))
-				target.visible_message(span_danger("[src] tears [W] off of [target]'s face!"), \
-									span_userdanger("[src] tears [W] off of your face!"))
-		target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1)
+	if(!target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1))
+		return FALSE
+	log_combat(target, src, "was facehugged by")
 	return TRUE // time for a smoke
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
@@ -273,6 +254,33 @@
 			return FALSE
 		return TRUE
 	return FALSE
+
+/obj/item/clothing/mask/facehugger/lamarr
+	name = "Lamarr"
+	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
+	sterile = TRUE
+
+/obj/item/clothing/mask/facehugger/dead
+	icon_state = "facehugger_dead"
+	inhand_icon_state = "facehugger_inactive"
+	worn_icon_state = "facehugger_dead"
+	stat = DEAD
+
+/obj/item/clothing/mask/facehugger/impregnated
+	icon_state = "facehugger_impregnated"
+	inhand_icon_state = "facehugger_impregnated"
+	worn_icon_state = "facehugger_impregnated"
+	stat = DEAD
+
+/obj/item/clothing/mask/facehugger/toy
+	inhand_icon_state = "facehugger_inactive"
+	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
+	real = FALSE
+	sterile = TRUE
+	tint = 3 //Makes it feel more authentic when it latches on
+
+/obj/item/clothing/mask/facehugger/toy/Die()
+	return
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME

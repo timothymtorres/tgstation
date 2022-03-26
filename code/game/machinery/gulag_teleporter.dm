@@ -35,9 +35,10 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/gloves/color/plasmaman,
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/gas))
+		/obj/item/clothing/mask/gas,
+	))
 
-/obj/machinery/gulag_teleporter/Initialize()
+/obj/machinery/gulag_teleporter/Initialize(mapload)
 	. = ..()
 	locate_reclaimer()
 

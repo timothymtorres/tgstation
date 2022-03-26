@@ -93,6 +93,10 @@
 			"weight": 0
 		},
 
+		"Blob Infection": {
+			"weight": 0
+		},
+
 		"Alien Infestation": {
 			"weight": 0
 		},
@@ -106,10 +110,6 @@
 		},
 
 		"Abductors": {
-			"weight": 0
-		},
-
-		"Swarmers": {
 			"weight": 0
 		},
 

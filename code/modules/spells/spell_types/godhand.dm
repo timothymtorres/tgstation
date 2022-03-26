@@ -17,7 +17,7 @@
 	throw_speed = 0
 	var/charges = 1
 
-/obj/item/melee/touch_attack/Initialize()
+/obj/item/melee/touch_attack/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
@@ -33,11 +33,20 @@
 	. = ..()
 	if(!proximity)
 		return
+	if(charges > 0)
+		use_charge(user)
+
+/obj/item/melee/touch_attack/proc/use_charge(mob/living/user, whisper = FALSE)
+	if(QDELETED(src))
+		return
+
 	if(catchphrase)
-		user.say(catchphrase, forced = "spell")
-	playsound(get_turf(user), on_use_sound,50,TRUE)
-	charges--
-	if(charges <= 0)
+		if(whisper)
+			user.say("#[catchphrase]", forced = "spell")
+		else
+			user.say(catchphrase, forced = "spell")
+	playsound(get_turf(user), on_use_sound, 50, TRUE)
+	if(--charges <= 0)
 		qdel(src)
 
 /obj/item/melee/touch_attack/Destroy()
@@ -152,6 +161,8 @@
 						   span_danger("You feel something attaching itself to you, and a strong desire to discuss your [elaborate_backstory] at length!"))
 
 	ADD_TRAIT(duffelvictim, TRAIT_DUFFEL_CURSE_PROOF, CURSED_ITEM_TRAIT(conjuredduffel.name))
+	conjuredduffel.pickup(duffelvictim)
+	conjuredduffel.forceMove(duffelvictim)
 	if(duffelvictim.dropItemToGround(duffelvictim.back))
 		duffelvictim.equip_to_slot_if_possible(conjuredduffel, ITEM_SLOT_BACK, TRUE, TRUE)
 	else

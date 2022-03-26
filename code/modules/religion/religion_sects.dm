@@ -49,12 +49,14 @@
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select()
+	SHOULD_CALL_PARENT(TRUE)
+	SSblackbox.record_feedback("text", "sect_chosen", 1, name)
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)
 	SHOULD_CALL_PARENT(TRUE)
-	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span")
-	to_chat(chap, "<span class='notice'>[desc]</span")
+	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span>")
+	to_chat(chap, "<span class='notice'>[desc]</span>")
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/chap)
@@ -111,7 +113,7 @@
 				blessed.update_damage_overlays()
 		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
 		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		playsound(chap, "punch", 25, TRUE, -1)
+		playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -133,8 +135,9 @@
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
 	desired_items = list(/obj/item/stock_parts/cell = "with battery charge")
-	rites_list = list(/datum/religion_rites/synthconversion)
+	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/machine_blessing)
 	altar_icon_state = "convertaltar-blue"
+	max_favor = 2500
 
 /datum/religion_sect/mechanical/sect_bless(mob/living/target, mob/living/chap)
 	if(iscyborg(target))
@@ -296,13 +299,13 @@
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()
 	if(!ishuman(new_convert))
-		to_chat(span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
+		to_chat(new_convert, span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
 		return FALSE
 	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
+		to_chat(new_convert, span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
-	holy_dna.add_mutation(HONORBOUND)
+	holy_dna.add_mutation(/datum/mutation/human/honorbound)
 
 /datum/religion_sect/burden
 	name = "Punished God"
@@ -317,10 +320,10 @@
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	..()
 	if(!ishuman(new_convert))
-		to_chat(span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
+		to_chat(new_convert, span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
 		return
 	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(span_warning("[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened."))
+		to_chat(new_convert, span_warning("[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened."))
 		return
 	var/datum/dna/holy_dna = new_convert.dna
 	holy_dna.add_mutation(/datum/mutation/human/burdened)
@@ -355,7 +358,7 @@
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
-	playsound(chap, "punch", 25, TRUE, -1)
+	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
 
@@ -374,3 +377,32 @@
 	return TRUE
 
 #undef MINIMUM_YUCK_REQUIRED
+
+/datum/religion_sect/spar
+	name = "Sparring God"
+	quote = "Your next swing must be faster, neophyte. Steel your heart."
+	desc = "Spar other crewmembers to gain favor or other rewards. Exchange favor to steel yourself against real battles."
+	tgui_icon = "fist-raised"
+	altar_icon_state = "convertaltar-orange"
+	alignment = ALIGNMENT_NEUT
+	rites_list = list(
+		/datum/religion_rites/sparring_contract,
+		/datum/religion_rites/ceremonial_weapon,
+		/datum/religion_rites/declare_arena,
+		/datum/religion_rites/tenacious,
+		/datum/religion_rites/unbreakable,
+	)
+	///the one allowed contract. making a new contract dusts the old one
+	var/obj/item/sparring_contract/existing_contract
+	///places you can spar in. rites can be used to expand this list with new arenas!
+	var/list/arenas = list(
+		"Recreation Area" = /area/commons/fitness/recreation,
+		"Chapel" = /area/service/chapel
+	)
+	///how many matches you've lost with holy stakes. 3 = excommunication
+	var/matches_lost = 0
+	///past opponents who you've beaten in holy battles. You can't fight them again to prevent favor farming
+	var/list/past_opponents = list()
+
+/datum/religion_sect/spar/tool_examine(mob/living/holy_creature)
+	return "You have [round(favor)] sparring matches won in [GLOB.deity]'s name to redeem. You have lost [matches_lost] holy matches. You will be excommunicated after losing three matches."

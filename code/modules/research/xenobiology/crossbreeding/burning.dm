@@ -9,7 +9,7 @@ Burning extracts:
 	effect = "burning"
 	icon_state = "burning"
 
-/obj/item/slimecross/burning/Initialize()
+/obj/item/slimecross/burning/Initialize(mapload)
 	. = ..()
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
@@ -137,12 +137,13 @@ Burning extracts:
 	var/list/turfs = list()
 	for(var/turf/open/T in range(1,get_turf(user)))
 		turfs += T
-	for(var/i = 0, i < amount, i++)
+	for(var/i in 1 to amount)
 		var/path = get_random_food()
-		var/obj/item/O = new path(pick(turfs))
-		O.reagents.add_reagent(/datum/reagent/toxin/slimejelly,5) //Oh god it burns
+		var/obj/item/food/food = new path(pick(turfs))
+		food.reagents.add_reagent(/datum/reagent/toxin/slimejelly,5) //Oh god it burns
+		food.food_flags |= FOOD_SILVER_SPAWNED
 		if(prob(50))
-			O.desc += " It smells strange..."
+			food.desc += " It smells strange..."
 	user.visible_message(span_danger("[src] produces a few pieces of food!"))
 	..()
 
@@ -156,7 +157,7 @@ Burning extracts:
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
 			new /obj/effect/particle_effect/sparks(get_turf(L))
-			playsound(get_turf(L), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(get_turf(L), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	..()
 
 /obj/item/slimecross/burning/sepia
@@ -187,7 +188,6 @@ Burning extracts:
 	for(var/obj/machinery/light/L in A) //Shamelessly copied from the APC effect.
 		L.on = TRUE
 		L.break_light_tube()
-		L.on = FALSE
 		stoplag()
 	..()
 
@@ -247,11 +247,11 @@ Burning extracts:
 /obj/item/slimecross/burning/gold/do_effect(mob/user)
 	user.visible_message(span_danger("[src] shudders violently, and summons an army for [user]!"))
 	for(var/i in 1 to 3) //Less than gold normally does, since it's safer and faster.
-		var/mob/living/simple_animal/S = create_random_mob(get_turf(user), HOSTILE_SPAWN)
-		S.faction |= "[REF(user)]"
+		var/mob/living/spawned_mob = create_random_mob(get_turf(user), HOSTILE_SPAWN)
+		spawned_mob.faction |= "[REF(user)]"
 		if(prob(50))
-			for(var/j = 1, j <= rand(1, 3), j++)
-				step(S, pick(NORTH,SOUTH,EAST,WEST))
+			for(var/j in 1 to rand(1, 3))
+				step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))
 	..()
 
 /obj/item/slimecross/burning/oil
@@ -311,5 +311,5 @@ Burning extracts:
 
 /obj/item/slimecross/burning/rainbow/do_effect(mob/user)
 	user.visible_message(span_notice("[src] flattens into a glowing rainbow blade."))
-	new /obj/item/kitchen/knife/rainbowknife(get_turf(user))
+	new /obj/item/knife/rainbowknife(get_turf(user))
 	..()

@@ -387,6 +387,10 @@ em {
   color: #6d3f40;
 }
 
+.gangradio {
+  color: #ac2ea1;
+}
+
 .centcomradio {
   color: #686868;
 }
@@ -551,6 +555,10 @@ h1.alert, h2.alert {
   color: #03ff39;
 }
 
+.grey {
+  color: #838383;
+}
+
 .red {
   color: #FF0000;
 }
@@ -561,6 +569,11 @@ h1.alert, h2.alert {
 
 .nicegreen {
   color: #14a833;
+}
+
+.boldnicegreen {
+  color: #14a833;
+  font-weight: bold;
 }
 
 .cult {
@@ -918,4 +931,9 @@ h1.alert, h2.alert {
 
 .ml-3 {
   margin-left: 3em;
+}
+
+.tooltip {
+  font-style: italic;
+  border-bottom: 1px dashed #000;
 }

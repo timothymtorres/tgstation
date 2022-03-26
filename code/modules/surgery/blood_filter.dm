@@ -21,11 +21,13 @@
 	implements = list(/obj/item/blood_filter = 95)
 	repeatable = TRUE
 	time = 2.5 SECONDS
+	success_sound = 'sound/machines/ping.ogg'
 
 /datum/surgery_step/filter_blood/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin filtering [target]'s blood..."),
 		span_notice("[user] uses [tool] to filter [target]'s blood."),
 		span_notice("[user] uses [tool] on [target]'s chest."))
+	display_pain(target, "You feel a throbbing pain in your chest!")
 
 /datum/surgery_step/filter_blood/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(target.reagents?.total_volume)

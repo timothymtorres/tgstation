@@ -7,12 +7,14 @@
 		BB_FETCH_IGNORE_LIST = list(),\
 		BB_DOG_ORDER_MODE = DOG_COMMAND_NONE,\
 		BB_DOG_PLAYING_DEAD = FALSE,\
-		BB_DOG_HARASS_TARGET = null)
+		BB_DOG_HARASS_TARGET = null,\
+		BB_DOG_HARASS_FRUSTRATION = null,\
+		BB_VISION_RANGE = AI_DOG_VISION_RANGE)
 	ai_movement = /datum/ai_movement/jps
+	planning_subtrees = list(/datum/ai_planning_subtree/dog)
 
 	COOLDOWN_DECLARE(heel_cooldown)
 	COOLDOWN_DECLARE(command_cooldown)
-	COOLDOWN_DECLARE(reset_ignore_cooldown)
 
 
 /datum/ai_controller/dog/process(delta_time)
@@ -35,7 +37,7 @@
 /datum/ai_controller/dog/UnpossessPawn(destroy)
 	var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
 	if(carried_item)
-		pawn.visible_message("<span='danger'>[pawn] drops [carried_item].</span>")
+		pawn.visible_message(span_danger("[pawn] drops [carried_item]"))
 		carried_item.forceMove(pawn.drop_location())
 		blackboard[BB_SIMPLE_CARRY_ITEM] = null
 	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_LIVING_DEATH, COMSIG_GLOB_CARBON_THROW_THING, COMSIG_PARENT_QDELETING))
@@ -54,73 +56,6 @@
 		return
 
 	return simple_pawn.access_card
-
-/datum/ai_controller/dog/SelectBehaviors(delta_time)
-	current_behaviors = list()
-	var/mob/living/living_pawn = pawn
-
-	// occasionally reset our ignore list
-	if(COOLDOWN_FINISHED(src, reset_ignore_cooldown) && length(blackboard[BB_FETCH_IGNORE_LIST]))
-		COOLDOWN_START(src, reset_ignore_cooldown, AI_FETCH_IGNORE_DURATION)
-		blackboard[BB_FETCH_IGNORE_LIST] = list()
-
-	// if we were just ordered to heel, chill out for a bit
-	if(!COOLDOWN_FINISHED(src, heel_cooldown))
-		return
-
-	// if we're not already carrying something and we have a fetch target (and we're not already doing something with it), see if we can eat/equip it
-	if(!blackboard[BB_SIMPLE_CARRY_ITEM] && blackboard[BB_FETCH_TARGET])
-		var/atom/movable/interact_target = blackboard[BB_FETCH_TARGET]
-		if(in_range(living_pawn, interact_target) && (isturf(interact_target.loc)))
-			current_movement_target = interact_target
-			if(IS_EDIBLE(interact_target))
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
-			else if(isitem(interact_target))
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/simple_equip)
-			else
-				blackboard[BB_FETCH_TARGET] = null
-				blackboard[BB_FETCH_DELIVER_TO] = null
-			return
-
-	// if we're carrying something and we have a destination to deliver it, do that
-	if(blackboard[BB_SIMPLE_CARRY_ITEM] && blackboard[BB_FETCH_DELIVER_TO])
-		var/atom/return_target = blackboard[BB_FETCH_DELIVER_TO]
-		if(!can_see(pawn, return_target, length=AI_DOG_VISION_RANGE))
-			// if the return target isn't in sight, we'll just forget about it and carry the thing around
-			blackboard[BB_FETCH_DELIVER_TO] = null
-			return
-		current_movement_target = return_target
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/deliver_item)
-		return
-
-	// occasionally see if there's any loose snacks in sight nearby
-	if(DT_PROB(40, delta_time))
-		for(var/obj/item/potential_snack in oview(living_pawn,2))
-			if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
-				current_movement_target = potential_snack
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
-				return
-
-/datum/ai_controller/dog/PerformIdleBehavior(delta_time)
-	var/mob/living/living_pawn = pawn
-	if(!isturf(living_pawn.loc) || living_pawn.pulledby)
-		return
-
-	// if we were just ordered to heel, chill out for a bit
-	if(!COOLDOWN_FINISHED(src, heel_cooldown))
-		return
-
-	// if we're just ditzing around carrying something, occasionally print a message so people know we have something
-	if(blackboard[BB_SIMPLE_CARRY_ITEM] && DT_PROB(5, delta_time))
-		var/obj/item/carry_item = blackboard[BB_SIMPLE_CARRY_ITEM]
-		living_pawn.visible_message(span_notice("[living_pawn] gently teethes on \the [carry_item] in [living_pawn.p_their()] mouth."), vision_distance=COMBAT_MESSAGE_RANGE)
-
-	if(DT_PROB(5, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE))
-		var/move_dir = pick(GLOB.alldirs)
-		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
-	else if(DT_PROB(10, delta_time))
-		living_pawn.manual_emote(pick("dances around.","chases [living_pawn.p_their()] tail!"))
-		living_pawn.AddComponent(/datum/component/spinny)
 
 /// Someone has thrown something, see if it's someone we care about and start listening to the thrown item so we can see if we want to fetch it when it lands
 /datum/ai_controller/dog/proc/listened_throw(datum/source, mob/living/carbon/carbon_thrower)
@@ -147,10 +82,15 @@
 	if(!istype(thrown_thing) || !isturf(thrown_thing.loc) || !can_see(pawn, thrown_thing, length=AI_DOG_VISION_RANGE))
 		return
 
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
+		return
 	current_movement_target = thrown_thing
 	blackboard[BB_FETCH_TARGET] = thrown_thing
 	blackboard[BB_FETCH_DELIVER_TO] = throwing_datum.thrower
-	current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/fetch)
+	if(living_pawn.buckled)
+		queue_behavior(/datum/ai_behavior/resist)
+	queue_behavior(/datum/ai_behavior/fetch)
 
 /// Someone's interacting with us by hand, see if they're being nice or mean
 /datum/ai_controller/dog/proc/on_attack_hand(datum/source, mob/living/user)
@@ -165,7 +105,7 @@
 		var/list/friends = blackboard[BB_DOG_FRIENDS]
 		if(blackboard[BB_SIMPLE_CARRY_ITEM] && !current_movement_target && friends[WEAKREF(user)])
 			var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
-			pawn.visible_message("<span='danger'>[pawn] drops [carried_item] at [user]'s feet!</span>")
+			pawn.visible_message(span_danger("[pawn] drops [carried_item] at [user]'s feet!"))
 			// maybe have a dedicated proc for dropping things
 			carried_item.forceMove(get_turf(user))
 			blackboard[BB_SIMPLE_CARRY_ITEM] = null
@@ -208,7 +148,7 @@
 	if(!carried_item)
 		return
 
-	ol_yeller.visible_message("<span='danger'>[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()].</span>")
+	ol_yeller.visible_message(span_danger("[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()]."))
 	carried_item.forceMove(ol_yeller.drop_location())
 	blackboard[BB_SIMPLE_CARRY_ITEM] = null
 
@@ -264,7 +204,7 @@
 	var/command
 	if(findtext(spoken_text, "heel") || findtext(spoken_text, "sit") || findtext(spoken_text, "stay"))
 		command = COMMAND_HEEL
-	else if(findtext(spoken_text, "fetch") || findtext(spoken_text, "get it"))
+	else if(findtext(spoken_text, "fetch"))
 		command = COMMAND_FETCH
 	else if(findtext(spoken_text, "attack") || findtext(spoken_text, "sic"))
 		command = COMMAND_ATTACK
@@ -299,7 +239,7 @@
 		if(COMMAND_DIE)
 			blackboard[BB_DOG_ORDER_MODE] = DOG_COMMAND_NONE
 			CancelActions()
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/play_dead)
+			queue_behavior(/datum/ai_behavior/play_dead)
 
 /// Someone we like is pointing at something, see if it's something we might want to interact with (like if they might want us to fetch something for them)
 /datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/movable/pointed_movable)
@@ -330,12 +270,12 @@
 			blackboard[BB_FETCH_TARGET] = pointed_movable
 			blackboard[BB_FETCH_DELIVER_TO] = pointing_friend
 			if(living_pawn.buckled)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/fetch)
+				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
+			queue_behavior(/datum/ai_behavior/fetch)
 		if(DOG_COMMAND_ATTACK)
 			pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!"))
 			current_movement_target = pointed_movable
 			blackboard[BB_DOG_HARASS_TARGET] = WEAKREF(pointed_movable)
 			if(living_pawn.buckled)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
-			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/harass)
+				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something
+			queue_behavior(/datum/ai_behavior/harass)
