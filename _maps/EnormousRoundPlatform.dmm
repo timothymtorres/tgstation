@@ -42837,6 +42837,9 @@
 	icon_state = "platingdmg3"
 	},
 /area/commons/toilet/restrooms)
+"xbd" = (
+/turf/open/floor/iron/recharge_floor,
+/area/space)
 "xbi" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -73624,9 +73627,9 @@ oFV
 oFV
 oFV
 oFV
+xbd
 oFV
-oFV
-oFV
+xbd
 oFV
 oFV
 oFV
@@ -73922,8 +73925,8 @@ oFV
 oFV
 oFV
 oFV
-oFV
-oFV
+xbd
+xbd
 oFV
 oFV
 oFV
@@ -74220,6 +74223,7 @@ oFV
 oFV
 oFV
 oFV
+xbd
 oFV
 oFV
 oFV
@@ -74230,8 +74234,7 @@ oFV
 oFV
 oFV
 oFV
-oFV
-oFV
+xbd
 oFV
 oFV
 oFV
@@ -74515,8 +74518,8 @@ oFV
 oFV
 oFV
 oFV
-oFV
-oFV
+xbd
+xbd
 oFV
 oFV
 oFV
@@ -76646,7 +76649,7 @@ oFV
 oFV
 oFV
 oFV
-oFV
+xbd
 oFV
 oFV
 oFV
@@ -78457,7 +78460,7 @@ oFV
 ipc
 oFV
 oFV
-oFV
+xbd
 oFV
 oFV
 ipc
@@ -79668,7 +79671,7 @@ bFC
 bFC
 uDT
 bFC
-bFC
+xbd
 xZA
 rKH
 rKH
@@ -118357,7 +118360,7 @@ gUj
 bCt
 wGI
 uwQ
-dhk
+xbd
 dhk
 dhk
 dhk
@@ -129229,7 +129232,7 @@ oFV
 oFV
 dhk
 wMh
-wMh
+xbd
 wMh
 mHQ
 ndT
