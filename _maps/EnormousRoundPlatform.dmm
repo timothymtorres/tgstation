@@ -7701,7 +7701,7 @@
 /turf/open/floor/plating,
 /area/service/chapel)
 "dtt" = (
-/turf/open/space/basic,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics)
 "dtJ" = (
 /obj/machinery/computer/atmos_control/carbon_tank,
@@ -12288,7 +12288,7 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "fCh" = (
-/turf/open/space/basic,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "fCs" = (
 /obj/machinery/light/small,
