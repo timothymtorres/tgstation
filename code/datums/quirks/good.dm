@@ -223,3 +223,12 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+
+/datum/quirk/faithful_companion
+	name = "Faithful Companion"
+	desc = "You start the shift with a loyal pet of your choice."
+	icon = "paw"
+	value = 12
+	gain_text = "<span class='notice'>You gain a friend.</span>"
+	lose_text = "<span class='danger'>You lose a friend!</span>"
+	medical_record_text = "Patient was provided a service animal as a companion."
