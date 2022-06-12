@@ -104,7 +104,40 @@
 			victim.exit_blood_effect()
 		return TRUE
 
-	to_chat(src, span_danger("You devour [victim]. Your health is fully restored."))
+	if(istype(src, /mob/living/simple_animal/hostile/imp/slaughter) && is_clown_job(victim.mind?.assigned_role))
+		var/mob/living/simple_animal/hostile/imp/slaughter/laughter/clown_tastes_funny = new demon_type(loc, src)
+	
+		/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
+
+		var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
+		var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
+		S.key = C.key
+		S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+		S.mind.special_role = ROLE_SLAUGHTER_DEMON
+		S.mind.add_antag_datum(antag_type)
+		
+		playsound(get_turf(src), clown_tastes_funny.feast_sound, 50, TRUE)
+		to_chat(src, span_danger("You devour [victim]. Your health is fully restored."))
+		
+	else if(istype(src, /mob/living/simple_animal/hostile/imp/slaughter/laughter) && is_mime_job(victim.mind?.assigned_role))
+		var/mob/living/simple_animal/hostile/imp/slaughter/mime_tastes_dreadful = new demon_type(loc, src)
+		
+		/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
+		var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
+		var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
+		S.key = C.key
+		S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+		S.mind.special_role = ROLE_SLAUGHTER_DEMON
+		S.mind.add_antag_datum(antag_type)
+		to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
+		Ctrl+Click a blood pool to manifest.</B>")
+		
+		playsound(get_turf(src), mime_tastes_dreadful.feast_sound, 50, TRUE)
+		to_chat(src, span_danger("You devour [victim]. Your health is fully restored."))
+
+	else	
+		to_chat(src, span_danger("You devour [victim]. Your health is fully restored."))
+		
 	revive(full_heal = TRUE, admin_revive = FALSE)
 
 	// No defib possible after laughter
