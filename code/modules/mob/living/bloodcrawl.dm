@@ -104,46 +104,41 @@
 			victim.exit_blood_effect()
 		return TRUE
 
-	if(istype(src, /mob/living/simple_animal/hostile/imp/slaughter) && is_clown_job(victim.mind?.assigned_role))
-		var/mob/living/simple_animal/hostile/imp/slaughter/laughter/clown_tastes_funny = new demon_type(loc, src)
-	
-		/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-
-		var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
-		var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
-		S.key = C.key
-		S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
-		S.mind.special_role = ROLE_SLAUGHTER_DEMON
-		S.mind.add_antag_datum(antag_type)
-		
-		playsound(get_turf(src), clown_tastes_funny.feast_sound, 50, TRUE)
-		to_chat(src, span_danger("You devour [victim]. Your health is fully restored."))
-		
-	else if(istype(src, /mob/living/simple_animal/hostile/imp/slaughter/laughter) && is_mime_job(victim.mind?.assigned_role))
-		var/mob/living/simple_animal/hostile/imp/slaughter/mime_tastes_dreadful = new demon_type(loc, src)
-		
-		/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-		var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
-		var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
-		S.key = C.key
-		S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
-		S.mind.special_role = ROLE_SLAUGHTER_DEMON
-		S.mind.add_antag_datum(antag_type)
-		to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
-		Ctrl+Click a blood pool to manifest.</B>")
-		
-		playsound(get_turf(src), mime_tastes_dreadful.feast_sound, 50, TRUE)
-		to_chat(src, span_danger("You devour [victim]. Your health is fully restored."))
-
-	else	
-		to_chat(src, span_danger("You devour [victim]. Your health is fully restored."))
-		
+	to_chat(src, span_danger("You devour [victim]. Your health is fully restored."))
 	revive(full_heal = TRUE, admin_revive = FALSE)
-
 	// No defib possible after laughter
 	victim.adjustBruteLoss(1000)
 	victim.death()
 	bloodcrawl_swallow(victim)
+
+	var/slaughter_demon_devour_clown = istype(src, /mob/living/simple_animal/hostile/imp/slaughter) && is_clown_job(victim.mind?.assigned_role)
+	var/laughter_demon_devour_mime = istype(src, /mob/living/simple_animal/hostile/imp/slaughter/laughter) && is_mime_job(victim.mind?.assigned_role)
+
+	// don't forget to add "contents" arg to slaughter Initaliaze proc
+	if(slaughter_demon_devour_clown)
+		var/mob/living/simple_animal/hostile/imp/slaughter/laughter/clown_tastes_funny = new /mob/living/simple_animal/hostile/imp/slaughter/laughter(loc, src)
+
+		clown_tastes_funny.key = src.client.key
+		clown_tastes_funny.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+		clown_tastes_funny.mind.special_role = ROLE_SLAUGHTER_DEMON
+		clown_tastes_funny.mind.add_antag_datum(/datum/antagonist/slaughter/laughter)
+
+		playsound(get_turf(clown_tastes_funny), clown_tastes_funny.feast_sound, 50, TRUE)
+		to_chat(clown_tastes_funny, span_clown("That tasted funny... you feel your form changing as you lose your bloodlust. HONK!")
+		qdel(src)
+
+	else if(istype(src, /mob/living/simple_animal/hostile/imp/slaughter/laughter) && is_mime_job(victim.mind?.assigned_role))
+		var/mob/living/simple_animal/hostile/imp/slaughter/mime_tastes_agonising = new /mob/living/simple_animal/hostile/imp/slaughter(loc, src)
+
+		mime_tastes_agonising.key = src.client.key
+		mime_tastes_agonising.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+		mime_tastes_agonising.mind.special_role = ROLE_SLAUGHTER_DEMON
+		mime_tastes_agonising.mind.add_antag_datum(/datum/antagonist/slaughter)
+
+		playsound(get_turf(mime_tastes_agonising), mime_tastes_agonising.feast_sound, 50, TRUE)
+		to_chat(mime_tastes_agonising, span_redtext("That tasted bitter... you feel your form changing as you gain bloodlust. PLAYTIME IS OVER! ")
+		qdel(src)
+
 	return TRUE
 
 /mob/living/proc/bloodcrawl_swallow(mob/living/victim)
