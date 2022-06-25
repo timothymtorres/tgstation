@@ -2,14 +2,26 @@
 #define MAJOR_INSANITY_PEN 10
 
 /datum/component/mood
-	var/mood //Real happiness
-	var/sanity = SANITY_NEUTRAL //Current sanity
-	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
-	var/mood_level = 5 //To track what stage of moodies they're on
-	var/sanity_level = SANITY_LEVEL_NEUTRAL //To track what stage of sanity they're on
-	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
+	/// The total combined value of all moodlets for the mob
+	var/mood
+	/// The total combined value of all moodlets excluding hidden moodlets
+	/// This is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
+	var/shown_mood
+	/// To track what stage of moodies they're on and used to update the mood icon (levels are from 1-9)
+	var/mood_level = MOOD_LEVEL_NEUTRAL
+	/// Current sanity for the mob (from 0-150)
+	var/sanity = SANITY_NEUTRAL
+	/// To track what stage of sanity they're on (levels are from 1-6)
+	var/sanity_level = SANITY_LEVEL_NEUTRAL
+	/// Modifier to allow certain mobs to be more or less affected by moodlets
+	/// A modifier of 0.5 means both positive and negative mood effects results in half mood value (50%)
+	/// A modifier of 2 means both positive and negative mood effects results in double mood value (200%)
+	var/mood_modifier = 1
+	/// A list of moodlets that are currently affecting the mob
 	var/list/datum/mood_event/mood_events = list()
-	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
+	/// Is the owner being punished for low mood? If so, how much?
+	var/insanity_effect = 0
+	/// The mood HUD that changes color and expression based on mood level (can also be clicked on)
 	var/atom/movable/screen/mood/screen_obj
 
 /datum/component/mood/Initialize()
@@ -66,40 +78,39 @@
 
 	msg += span_notice("My current mood: ") //Short term
 	switch(mood_level)
-		if(1)
+		if(MOOD_LEVEL_SAD4)
 			msg += "[span_boldwarning("I wish I was dead!")]\n"
-		if(2)
+		if(MOOD_LEVEL_SAD3)
 			msg += "[span_boldwarning("I feel terrible...")]\n"
-		if(3)
+		if(MOOD_LEVEL_SAD2)
 			msg += "[span_boldwarning("I feel very upset.")]\n"
-		if(4)
+		if(MOOD_LEVEL_SAD1)
 			msg += "[span_warning("I'm a bit sad.")]\n"
-		if(5)
+		if(MOOD_LEVEL_NEUTRAL)
 			msg += "[span_grey("I'm alright.")]\n"
-		if(6)
+		if(MOOD_LEVEL_HAPPY1)
 			msg += "[span_nicegreen("I feel pretty okay.")]\n"
-		if(7)
+		if(MOOD_LEVEL_HAPPY2)
 			msg += "[span_boldnicegreen("I feel pretty good.")]\n"
-		if(8)
+		if(MOOD_LEVEL_HAPPY3)
 			msg += "[span_boldnicegreen("I feel amazing!")]\n"
-		if(9)
+		if(MOOD_LEVEL_HAPPY4)
 			msg += "[span_boldnicegreen("I love life!")]\n"
 
 	msg += "[span_notice("Moodlets:")]\n"//All moodlets
 	if(mood_events.len)
-		for(var/i in mood_events)
-			var/datum/mood_event/event = mood_events[i]
-			switch(event.mood_change)
-				if(-INFINITY to MOOD_LEVEL_SAD2)
-					msg += span_boldwarning(event.description + "\n")
-				if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD1)
-					msg += span_warning(event.description + "\n")
-				if(MOOD_LEVEL_SAD1 to MOOD_LEVEL_HAPPY1)
-					msg += span_grey(event.description + "\n")
-				if(MOOD_LEVEL_HAPPY1 to MOOD_LEVEL_HAPPY2)
-					msg += span_nicegreen(event.description + "\n")
-				if(MOOD_LEVEL_HAPPY2 to INFINITY)
-					msg += span_boldnicegreen(event.description + "\n")
+		for(var/datum/mood_event/moodlet in mood_events)
+			switch(moodlet.mood_change)
+				if(-INFINITY to MOOD_SAD2)
+					msg += span_boldwarning(moodlet.description + "\n")
+				if(MOOD_SAD2 to MOOD_SAD1)
+					msg += span_warning(moodlet.description + "\n")
+				if(MOOD_SAD1 to MOOD_HAPPY1)
+					msg += span_grey(moodlet.description + "\n")
+				if(MOOD_HAPPY1 to MOOD_HAPPY2)
+					msg += span_nicegreen(moodlet.description + "\n")
+				if(MOOD_HAPPY2 to INFINITY)
+					msg += span_boldnicegreen(moodlet.description + "\n")
 	else
 		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"
 	to_chat(user, msg)
@@ -108,33 +119,32 @@
 /datum/component/mood/proc/update_mood()
 	mood = 0
 	shown_mood = 0
-	for(var/i in mood_events)
-		var/datum/mood_event/event = mood_events[i]
-		mood += event.mood_change
-		if(!event.hidden)
-			shown_mood += event.mood_change
+	for(var/datum/mood_event/moodlet in mood_events)
+		mood += moodlet.mood_change
+		if(!moodlet.hidden)
+			shown_mood += moodlet.mood_change
 	mood *= mood_modifier
 	shown_mood *= mood_modifier
 
 	switch(mood)
-		if(-INFINITY to MOOD_LEVEL_SAD4)
-			mood_level = 1
-		if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
-			mood_level = 2
-		if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
-			mood_level = 3
-		if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD1)
-			mood_level = 4
-		if(MOOD_LEVEL_SAD1 to MOOD_LEVEL_HAPPY1)
-			mood_level = 5
-		if(MOOD_LEVEL_HAPPY1 to MOOD_LEVEL_HAPPY2)
-			mood_level = 6
-		if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-			mood_level = 7
-		if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-			mood_level = 8
-		if(MOOD_LEVEL_HAPPY4 to INFINITY)
-			mood_level = 9
+		if(-INFINITY to MOOD_SAD4)
+			mood_level = MOOD_LEVEL_SAD4
+		if(MOOD_SAD4 to MOOD_SAD3)
+			mood_level = MOOD_LEVEL_SAD3
+		if(MOOD_SAD3 to MOOD_SAD2)
+			mood_level = MOOD_LEVEL_SAD2
+		if(MOOD_SAD2 to MOOD_SAD1)
+			mood_level = MOOD_LEVEL_SAD1
+		if(MOOD_SAD1 to MOOD_HAPPY1)
+			mood_level = MOOD_LEVEL_NEUTRAL
+		if(MOOD_HAPPY1 to MOOD_HAPPY2)
+			mood_level = MOOD_LEVEL_HAPPY1
+		if(MOOD_HAPPY2 to MOOD_HAPPY3)
+			mood_level = MOOD_LEVEL_HAPPY2
+		if(MOOD_HAPPY3 to MOOD_HAPPY4)
+			mood_level = MOOD_LEVEL_HAPPY3
+		if(MOOD_HAPPY4 to INFINITY)
+			mood_level = MOOD_LEVEL_HAPPY4
 	update_mood_icon()
 
 /datum/component/mood/proc/update_mood_icon()
@@ -146,40 +156,38 @@
 	//lets see if we have any special icons to show instead of the normal mood levels
 	var/list/conflicting_moodies = list()
 	var/highest_absolute_mood = 0
-	for(var/i in mood_events) //adds overlays and sees which special icons need to vie for which one gets the icon_state
-		var/datum/mood_event/event = mood_events[i]
-		if(!event.special_screen_obj)
+	for(var/datum/mood_event/moodlet in mood_events) //adds overlays and sees which special icons need to vie for which one gets the icon_state
+		if(!moodlet.special_screen_obj)
 			continue
-		if(!event.special_screen_replace)
-			screen_obj.add_overlay(event.special_screen_obj)
+		if(!moodlet.special_screen_replace)
+			screen_obj.add_overlay(moodlet.special_screen_obj)
 		else
-			conflicting_moodies += event
-			var/absmood = abs(event.mood_change)
+			conflicting_moodies += moodlet
+			var/absmood = abs(moodlet.mood_change)
 			if(absmood > highest_absolute_mood)
 				highest_absolute_mood = absmood
 
 	switch(sanity_level)
-		if(1)
+		if(SANITY_LEVEL_GREAT)
 			screen_obj.color = "#2eeb9a"
-		if(2)
+		if(SANITY_LEVEL_NEUTRAL)
 			screen_obj.color = "#86d656"
-		if(3)
+		if(SANITY_LEVEL_DISTURBED)
 			screen_obj.color = "#4b96c4"
-		if(4)
+		if(SANITY_LEVEL_UNSTABLE)
 			screen_obj.color = "#dfa65b"
-		if(5)
+		if(SANITY_LEVEL_CRAZY)
 			screen_obj.color = "#f38943"
-		if(6)
+		if(SANITY_LEVEL_INSANE)
 			screen_obj.color = "#f15d36"
 
 	if(!conflicting_moodies.len) //no special icons- go to the normal icon states
 		screen_obj.icon_state = "mood[mood_level]"
 		return
 
-	for(var/i in conflicting_moodies)
-		var/datum/mood_event/event = i
-		if(abs(event.mood_change) == highest_absolute_mood)
-			screen_obj.icon_state = "[event.special_screen_obj]"
+	for(var/datum/mood_event/moodlet in conflicting_moodies)
+		if(abs(moodlet.mood_change) == highest_absolute_mood)
+			screen_obj.icon_state = "[moodlet.special_screen_obj]"
 			break
 
 ///Called on SSmood process
@@ -188,23 +196,23 @@
 	if(moody_fellow.stat == DEAD)
 		return //updating sanity during death leads to people getting revived and being completely insane for simply being dead for a long time
 	switch(mood_level)
-		if(1)
+		if(MOOD_LEVEL_SAD4)
 			setSanity(sanity-0.3*delta_time, SANITY_INSANE)
-		if(2)
+		if(MOOD_LEVEL_SAD3)
 			setSanity(sanity-0.15*delta_time, SANITY_INSANE)
-		if(3)
+		if(MOOD_LEVEL_SAD2)
 			setSanity(sanity-0.1*delta_time, SANITY_CRAZY)
-		if(4)
+		if(MOOD_LEVEL_SAD1)
 			setSanity(sanity-0.05*delta_time, SANITY_UNSTABLE)
-		if(5)
+		if(MOOD_LEVEL_NEUTRAL)
 			setSanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
-		if(6)
+		if(MOOD_LEVEL_HAPPY1)
 			setSanity(sanity+0.2*delta_time, SANITY_UNSTABLE)
-		if(7)
+		if(MOOD_LEVEL_HAPPY2)
 			setSanity(sanity+0.3*delta_time, SANITY_UNSTABLE)
-		if(8)
+		if(MOOD_LEVEL_HAPPY3)
 			setSanity(sanity+0.4*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
-		if(9)
+		if(MOOD_LEVEL_HAPPY4)
 			setSanity(sanity+0.6*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
 
@@ -269,52 +277,49 @@
 	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
 
-/datum/component/mood/proc/add_event(datum/source, category, type, ...) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
+/datum/component/mood/proc/add_event(datum/source, datum/mood_event/moodlet, ...)
 	SIGNAL_HANDLER
 
-	var/datum/mood_event/the_event
-	if(!ispath(type, /datum/mood_event))
+	if(!ispath(moodlet, /datum/mood_event))
+		CRASH("[moodlet] is not a valid datum/mood_event path")
 		return
-	if(!istext(category))
-		category = REF(category)
-	if(mood_events[category])
-		the_event = mood_events[category]
-		if(the_event.type != type)
-			clear_event(null, category)
-		else
-			if(the_event.timeout)
-				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
-			return //Don't have to update the event.
+
+	// if event is currently active
+	if(mood_events[moodlet])
+		if(moodlet.renewal_reset_timer)
+			addtimer(CALLBACK(src, .proc/clear_event, null, moodlet), moodlet.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+		if(moodlet.renewal_retrigger_effect)
+			clear_event(null, moodlet)
+		else // do not have to readd the event
+			return
+
 	var/list/params = args.Copy(4)
 	params.Insert(1, parent)
-	the_event = new type(arglist(params))
 
-	mood_events[category] = the_event
-	the_event.category = category
+	// should mood_events[moodlet] need to be REF(moodlet)?
+	mood_events[moodlet] = new moodlet(arglist(params))
 	update_mood()
 
-	if(the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+	if(moodlet.timeout)
+		addtimer(CALLBACK(src, .proc/clear_event, null, moodlet), moodlet.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-/datum/component/mood/proc/clear_event(datum/source, category)
+/datum/component/mood/proc/clear_event(datum/source, moodlet)
 	SIGNAL_HANDLER
 
-	if(!istext(category))
-		category = REF(category)
-	var/datum/mood_event/event = mood_events[category]
-	if(!event)
+	if(!ispath(moodlet, /datum/mood_event))
+		CRASH("[moodlet] is not a valid datum/mood_event path")
 		return
 
-	mood_events -= category
-	qdel(event)
+	mood_events -= moodlet
+	qdel(moodlet)
 	update_mood()
 
 /datum/component/mood/proc/remove_temp_moods() //Removes all temp moods
-	for(var/i in mood_events)
-		var/datum/mood_event/moodlet = mood_events[i]
+	for(var/datum/mood_event/moodlet in mood_events)
 		if(!moodlet || !moodlet.timeout)
 			continue
-		mood_events -= moodlet.category
+		mood_events -= moodlet
 		qdel(moodlet)
 	update_mood()
 
@@ -373,9 +378,9 @@
 
 	update_beauty(A)
 	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
-		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
+		add_event(null, /datum/mood_event/area, A.mood_bonus, A.mood_message)
 	else
-		clear_event(null, "area")
+		clear_event(null, /datum/mood_event/area)
 
 /datum/component/mood/proc/update_beauty(area/A)
 	if(A.outdoors) //if we're outside, we don't care.
