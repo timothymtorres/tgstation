@@ -1,12 +1,18 @@
 /datum/mood_event
-	var/description
-	var/mood_change = 0
-	var/timeout = 0
-	var/hidden = FALSE//Not shown on examine
-	var/category //string of what category this mood was added in as
-	var/special_screen_obj //if it isn't null, it will replace or add onto the mood icon with this (same file). see happiness drug for example
-	var/special_screen_replace = TRUE //if false, it will be an overlay instead
+	/// The mob that is being affected by the mood event
 	var/mob/owner
+	/// The text description the player will see when the mood is active
+	var/description
+	/// A positive (good mood) or negative (bad mood) value that affects overall sanity over time
+	var/mood_change = 0
+	/// The length of time the mood affects the mob
+	var/timeout = 0
+	/// Not shown on examine
+	var/hidden = FALSE
+	/// If it isn't null, it will replace or add onto the mood icon with this (same file). see happiness drug for example
+	var/special_screen_obj
+	/// If false, it will be an overlay instead
+	var/special_screen_replace = TRUE
 
 /datum/mood_event/New(mob/M, ...)
 	owner = M
