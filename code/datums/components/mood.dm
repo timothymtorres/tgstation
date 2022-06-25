@@ -297,7 +297,7 @@
 	var/list/params = args.Copy(4)
 	params.Insert(1, parent)
 
-	// should mood_events[moodlet] need to be REF(moodlet)?
+	// should mood_events[moodlet] need to be REF(moodlet)? (plz delete this comment later in case I forget -TimT)
 	mood_events[moodlet] = new moodlet(arglist(params))
 	update_mood()
 
@@ -373,36 +373,50 @@
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
 
-/datum/component/mood/proc/check_area_mood(datum/source, area/A)
+/datum/component/mood/proc/check_area_mood(datum/source, area/target_area)
 	SIGNAL_HANDLER
 
-	update_beauty(A)
-	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
-		add_event(null, /datum/mood_event/area, A.mood_bonus, A.mood_message)
+	update_beauty(target_area)
+	if(target_area.mood_bonus && (!target_area.mood_trait || HAS_TRAIT(source, target_area.mood_trait)))
+		add_event(null, /datum/mood_event/area, target_area.mood_bonus, target_area.mood_message)
 	else
 		clear_event(null, /datum/mood_event/area)
 
-/datum/component/mood/proc/update_beauty(area/A)
-	if(A.outdoors) //if we're outside, we don't care.
-		clear_event(null, "area_beauty")
-		return FALSE
+// Mood bonus for /datum/mood_events/location_beauty
+#define BEAUTY_HORRID_MOOD_BONUS -5
+#define BEAUTY_BAD_MOOD_BONUS -3
+#define BEAUTY_DECENT_MOOD_BONUS 1
+#define BEAUTY_GOOD_MOOD_BONUS 3
+#define BEAUTY_GREAT_MOOD_BONUS 5
+
+/datum/component/mood/proc/update_beauty(area/target_area)
+	if(target_area.outdoors) // if we're outside, we don't care.
+		clear_event(null, /datum/mood_event/location_beauty)
+		return
+
 	if(HAS_TRAIT(parent, TRAIT_SNOB))
-		switch(A.beauty)
+		switch(target_area.beauty)
 			if(-INFINITY to BEAUTY_LEVEL_HORRID)
-				add_event(null, "area_beauty", /datum/mood_event/horridroom)
+				add_event(null, /datum/mood_event/location_beauty, BEAUTY_HORRID_MOOD_BONUS, "This room looks terrible!")
 				return
 			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
-				add_event(null, "area_beauty", /datum/mood_event/badroom)
+				add_event(null, /datum/mood_event/location_beauty, BEAUTY_BAD_MOOD_BONUS, "This room looks really bad.")
 				return
-	switch(A.beauty)
+	switch(target_area.beauty)
 		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
-			clear_event(null, "area_beauty")
+			clear_event(null, /datum/mood_event/location_beauty)
 		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
-			add_event(null, "area_beauty", /datum/mood_event/decentroom)
+			add_event(null, /datum/mood_event/location_beauty, BEAUTY_DECENT_MOOD_BONUS, "This room looks alright.")
 		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
-			add_event(null, "area_beauty", /datum/mood_event/goodroom)
+			add_event(null, /datum/mood_event/location_beauty, BEAUTY_GOOD_MOOD_BONUS, "This room looks really pretty!")
 		if(BEAUTY_LEVEL_GREAT to INFINITY)
-			add_event(null, "area_beauty", /datum/mood_event/greatroom)
+			add_event(null, /datum/mood_event/location_beauty, BEAUTY_GREAT_MOOD_BONUS, "This room is beautiful!")
+
+#undef BEAUTY_HORRID_MOOD_BONUS
+#undef BEAUTY_BAD_MOOD_BONUS
+#undef BEAUTY_DECENT_MOOD_BONUS
+#undef BEAUTY_GOOD_MOOD_BONUS
+#undef BEAUTY_GREAT_MOOD_BONUS
 
 ///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
@@ -412,7 +426,6 @@
 		return
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
-
 
 ///Causes direct drain of someone's sanity, call it with a numerical value corresponding how badly you want to hurt their sanity
 /datum/component/mood/proc/direct_sanity_drain(datum/source, amount)

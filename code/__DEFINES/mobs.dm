@@ -227,15 +227,15 @@
 #define MOOD_SAD4 -20
 
 //Moods levels for humans
-#define MOOD_ICON_HAPPY4 9
-#define MOOD_ICON_HAPPY3 8
-#define MOOD_ICON_HAPPY2 7
-#define MOOD_ICON_HAPPY1 6
-#define MOOD_ICON_NEUTRAL 5
-#define MOOD_ICON_SAD1 4
-#define MOOD_ICON_SAD2 3
-#define MOOD_ICON_SAD3 2
-#define MOOD_ICON_SAD4 1
+#define MOOD_LEVEL_HAPPY4 9
+#define MOOD_LEVEL_HAPPY3 8
+#define MOOD_LEVEL_HAPPY2 7
+#define MOOD_LEVEL_HAPPY1 6
+#define MOOD_LEVEL_NEUTRAL 5
+#define MOOD_LEVEL_SAD1 4
+#define MOOD_LEVEL_SAD2 3
+#define MOOD_LEVEL_SAD3 2
+#define MOOD_LEVEL_SAD4 1
 
 //Sanity values for humans
 #define SANITY_MAXIMUM 150
