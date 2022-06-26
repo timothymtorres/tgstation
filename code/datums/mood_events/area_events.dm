@@ -15,13 +15,3 @@
 /datum/mood_event/area/add_effects(mood_bonus, mood_message)
 	description = mood_message
 	mood_change = mood_bonus
-
-/// The beauty of an area can affect our mood
-/datum/mood_event/location_beauty
-	description = ""
-	mood_change = 0
-	renewal_retrigger_effect = TRUE
-
-/datum/mood_event/location_beauty/add_effects(mood_bonus, mood_message)
-	description = mood_message
-	mood_change = mood_bonus
