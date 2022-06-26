@@ -141,10 +141,6 @@
 	description = "I hate it in the light...I need to find a darker place..."
 	mood_change = -12
 
-/datum/mood_event/family_heirloom_missing
-	description = "I'm missing my family heirloom..."
-	mood_change = -4
-
 /datum/mood_event/healsbadman
 	description = "I feel like I'm held together by flimsy string, and could fall apart at any moment!"
 	mood_change = -4
@@ -179,24 +175,6 @@
 	mood_change = -3
 	timeout = 2 MINUTES
 
-/datum/mood_event/notcreeping
-	description = "The voices are not happy, and they painfully contort my thoughts into getting back on task."
-	mood_change = -6
-	timeout = 3 SECONDS
-	hidden = TRUE
-
-/datum/mood_event/notcreepingsevere//not hidden since it's so severe
-	description = "THEY NEEEEEEED OBSESSIONNNN!!"
-	mood_change = -30
-	timeout = 3 SECONDS
-
-/datum/mood_event/notcreepingsevere/add_effects(name)
-	var/list/unstable = list(name)
-	for(var/i in 1 to rand(3,5))
-		unstable += copytext_char(name, -1)
-	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
-	description = "THEY NEEEEEEED [unhinged]!!"
-
 /datum/mood_event/sapped
 	description = "Some unexplainable sadness is consuming me..."
 	mood_change = -15
@@ -217,11 +195,6 @@
 /datum/mood_event/sacrifice_bad
 	description = "Those darn savages!"
 	mood_change = -5
-	timeout = 2 MINUTES
-
-/datum/mood_event/artbad
-	description = "I've produced better art than that from my ass."
-	mood_change = -2
 	timeout = 2 MINUTES
 
 /datum/mood_event/graverobbing
@@ -252,37 +225,6 @@
 	mood_change = -25
 	timeout = 4 MINUTES
 
-/datum/mood_event/high_five_alone
-	description = "I tried getting a high-five with no one around, how embarassing!"
-	mood_change = -2
-	timeout = 60 SECONDS
-
-/datum/mood_event/high_five_full_hand
-	description = "Oh god, I don't even know how to high-five correctly..."
-	mood_change = -1
-	timeout = 45 SECONDS
-
-/datum/mood_event/left_hanging
-	description = "But everyone loves high fives! Maybe people just... hate me?"
-	mood_change = -2
-	timeout = 90 SECONDS
-
-/datum/mood_event/too_slow
-	description = "NO! HOW COULD I BE... TOO SLOW???"
-	mood_change = -2 // multiplied by how many people saw it happen, up to 8, so potentially massive. the ULTIMATE prank carries a lot of weight
-	timeout = 2 MINUTES
-
-/datum/mood_event/too_slow/add_effects(param)
-	var/people_laughing_at_you = 1 // start with 1 in case they're on the same tile or something
-	for(var/mob/living/carbon/iter_carbon in oview(owner, 7))
-		if(iter_carbon.stat == CONSCIOUS)
-			people_laughing_at_you++
-			if(people_laughing_at_you > 7)
-				break
-
-	mood_change *= people_laughing_at_you
-	return ..()
-
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "THEY'RE CUTTING ME OPEN!!"
@@ -291,16 +233,6 @@
 /datum/mood_event/bald
 	description = "I need something to cover my head..."
 	mood_change = -3
-
-/datum/mood_event/bad_touch
-	description = "I don't like when people touch me."
-	mood_change = -3
-	timeout = 4 MINUTES
-
-/datum/mood_event/very_bad_touch
-	description = "I really don't like when people touch me."
-	mood_change = -5
-	timeout = 4 MINUTES
 
 /datum/mood_event/noogie
 	description = "Ow! This is like space high school all over again..."
@@ -338,16 +270,6 @@
 
 /datum/mood_event/burnt_wings
 	description = "MY PRECIOUS WINGS!!"
-	mood_change = -10
-	timeout = 10 MINUTES
-
-/datum/mood_event/holy_smite //punished
-	description = "I have been punished by my deity!"
-	mood_change = -5
-	timeout = 5 MINUTES
-
-/datum/mood_event/banished //when the chaplain is sus! (and gets forcably de-holy'd)
-	description = "I have been excommunicated!"
 	mood_change = -10
 	timeout = 10 MINUTES
 

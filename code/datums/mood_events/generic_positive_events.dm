@@ -1,29 +1,3 @@
-/datum/mood_event/hug
-	description = "Hugs are nice."
-	mood_change = 1
-	timeout = 2 MINUTES
-
-/datum/mood_event/betterhug
-	description = "Someone was very nice to me."
-	mood_change = 3
-	timeout = 4 MINUTES
-
-/datum/mood_event/betterhug/add_effects(mob/friend)
-	description = "[friend.name] was very nice to me."
-
-/datum/mood_event/besthug
-	description = "Someone is great to be around, they make me feel so happy!"
-	mood_change = 5
-	timeout = 4 MINUTES
-
-/datum/mood_event/besthug/add_effects(mob/friend)
-	description = "[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!"
-
-/datum/mood_event/warmhug
-	description = "Warm cozy hugs are the best!"
-	mood_change = 1
-	timeout = 2 MINUTES
-
 /datum/mood_event/tailpulled
 	description = "I love getting my tail pulled!"
 	mood_change = 1
@@ -96,12 +70,6 @@
 	special_screen_obj = "badass_sun"
 	special_screen_replace = FALSE
 
-/datum/mood_event/creeping
-	description = "The voices have released their hooks on my mind! I feel free again!" //creeps get it when they are around their obsession
-	mood_change = 18
-	timeout = 3 SECONDS
-	hidden = TRUE
-
 /datum/mood_event/revolution
 	description = "VIVA LA REVOLUTION!"
 	mood_change = 3
@@ -116,10 +84,6 @@
 	description = "THE HIGHER I RISE, THE MORE I SEE."
 	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
-
-/datum/mood_event/family_heirloom
-	description = "My family heirloom is safe with me."
-	mood_change = 1
 
 /datum/mood_event/clown_enjoyer_pin
 	description = "I love showing off my clown pin!"
@@ -162,21 +126,6 @@
 	mood_change = 5
 	timeout = 3 MINUTES
 
-/datum/mood_event/artok
-	description = "It's nice to see people are making art around here."
-	mood_change = 2
-	timeout = 5 MINUTES
-
-/datum/mood_event/artgood
-	description = "What a thought-provoking piece of art. I'll remember that for a while."
-	mood_change = 4
-	timeout = 5 MINUTES
-
-/datum/mood_event/artgreat
-	description = "That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this."
-	mood_change = 6
-	timeout = 5 MINUTES
-
 /datum/mood_event/pet_borg
 	description = "I just love my robotic friends!"
 	mood_change = 3
@@ -200,21 +149,6 @@
 	mood_change = 1 // 1 + 5 from it being liked food makes it as good as jolly
 	timeout = 3 MINUTES
 
-/datum/mood_event/high_five
-	description = "I love getting high fives!"
-	mood_change = 2
-	timeout = 45 SECONDS
-
-/datum/mood_event/high_ten
-	description = "AMAZING! A HIGH-TEN!"
-	mood_change = 3
-	timeout = 45 SECONDS
-
-/datum/mood_event/down_low
-	description = "HA! What a rube, they never stood a chance..."
-	mood_change = 4
-	timeout = 90 SECONDS
-
 /datum/mood_event/aquarium_positive
 	description = "Watching fish in an aquarium is calming."
 	mood_change = 3
@@ -236,10 +170,6 @@
 		description = "[beau.name] gave me a kiss, ahh!!"
 	else
 		description = "[beau.name] blew a kiss at me, I must be a real catch!"
-
-/datum/mood_event/honorbound
-	description = "Following my honorbound code is fulfilling!"
-	mood_change = 4
 
 /datum/mood_event/et_pieces
 	description = "Mmm... I love peanut butter..."

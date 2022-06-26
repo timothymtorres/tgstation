@@ -16,7 +16,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/storage/backpack/equipped_backpack = human_holder.back
 	if(istype(equipped_backpack))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "back_pain", /datum/mood_event/back_pain)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/back_pain)
 		RegisterSignal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
 	else
 		RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
@@ -36,7 +36,7 @@
 	if((slot != ITEM_SLOT_BACK) || !istype(equipped_item, /obj/item/storage/backpack))
 		return
 
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "back_pain", /datum/mood_event/back_pain)
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/back_pain)
 	RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
 	backpack = WEAKREF(equipped_item)
@@ -46,7 +46,7 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(source, COMSIG_ITEM_POST_UNEQUIP)
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "back_pain")
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/back_pain)
 	backpack = null
 	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
@@ -214,15 +214,12 @@
 	var/obj/family_heirloom = heirloom?.resolve()
 
 	if(family_heirloom && (family_heirloom in quirk_holder.get_all_contents()))
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/family_heirloom)
 	else
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/family_heirloom_missing)
 
 /datum/quirk/item_quirk/family_heirloom/remove()
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_CATEGORY, MOOD_CATEGORY_HEIRLOOM)
 
 /datum/quirk/frail
 	name = "Frail"
@@ -349,7 +346,7 @@
 	if(quirk_holder.m_intent == MOVE_INTENT_RUN)
 		to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
 		quirk_holder.toggle_move_intent()
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/nyctophobia)
 
 /datum/quirk/nonviolent
 	name = "Pacifist"
@@ -598,7 +595,7 @@
 			quirk_holder.Stun(2 SECONDS)
 			msg += "causing you to freeze up!"
 
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/anxiety_eyecontact)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, span_userdanger("[msg]")), 3) // so the examine signal has time to fire and this will print after
 	return COMSIG_BLOCK_EYECONTACT
 
@@ -736,9 +733,9 @@
 	if (istype(mask_item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/cigarettes = drug_container_type
 		if(istype(mask_item, initial(cigarettes.spawn_type)))
-			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
+			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/wrong_brand)
 			return
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/wrong_brand)
 
 /datum/quirk/unstable
 	name = "Unstable"
@@ -841,9 +838,9 @@
 	new /obj/effect/temp_visual/annoyed(quirk_holder.loc)
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	if(mood.sanity <= SANITY_NEUTRAL)
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/very_bad_touch)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/very_bad_touch)
 	else
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/bad_touch)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/bad_touch)
 
 /datum/quirk/claustrophobia
 	name = "Claustrophobia"
@@ -855,7 +852,7 @@
 	processing_quirk = TRUE
 
 /datum/quirk/claustrophobia/remove()
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia")
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/claustrophobia)
 
 /datum/quirk/claustrophobia/process(delta_time)
 	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
@@ -869,10 +866,10 @@
 			break
 
 	if(!nick_spotted && isturf(quirk_holder.loc))
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia", /datum/mood_event/claustrophobia)
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/claustrophobia)
 		return
 
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "claustrophobia")
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/claustrophobia)
 	quirk_holder.losebreath += 0.25 // miss a breath one in four times
 	if(DT_PROB(25, delta_time))
 		if(nick_spotted)

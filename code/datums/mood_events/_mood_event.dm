@@ -13,10 +13,10 @@
 	var/special_screen_obj
 	/// If false, it will be an overlay instead
 	var/special_screen_replace = TRUE
-	/// Retriggers the mood effects when the same event is added while still active (See: mood_event/honorbound)
-	var/renewal_retrigger_effect = FALSE
-	/// Resets the timer when the same event is added while still active
-	var/renewal_reset_timer = TRUE
+	/// A category to put multiple mood events. If one of the mood events in the category
+	/// is active while another mood event (from the same category) is triggered it will remove
+	/// the effects of the current mood event and replace it with the new one
+	var/category
 
 /datum/mood_event/New(mob/M, ...)
 	owner = M

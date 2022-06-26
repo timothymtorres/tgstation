@@ -417,7 +417,7 @@
 			var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
 			mood.remove_temp_moods() //New you, new moods.
 			var/mob/living/carbon/human/human_mob = owner
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/eigentrip)
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey

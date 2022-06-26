@@ -321,7 +321,7 @@
 
 	if(!open_hands_taker)
 		to_chat(taker, span_warning("You can't high-five [offerer] with no open hands!"))
-		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/high_five_full_hand) // not so successful now!
 		return
 
 	for(var/i in offerer.held_items)
@@ -335,16 +335,16 @@
 		playsound(offerer, 'sound/weapons/slap.ogg', 100, TRUE, 1)
 		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
 		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
-		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_ten)
+		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/high_ten)
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/high_ten)
 	else
 		offerer.visible_message(span_notice("[taker] high-fives [offerer]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
 		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
 		playsound(offerer, 'sound/weapons/slap.ogg', 50, TRUE, -1)
 		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
 		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_PROTAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
-		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
+		SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/high_five)
+		SEND_SIGNAL(taker, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/high_five)
 	qdel(src)
 
 /// Gangster secret handshakes.

@@ -131,7 +131,7 @@
 			var/other_players = english_list(card_players - player)
 			var/obj/item/toy/held_card_item = card_players[player]
 
-			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "playing_cards", /datum/mood_event/playing_cards)
+			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/playing_cards)
 			player.mind?.add_memory(
 				MEMORY_PLAYING_CARDS,
 				list(
