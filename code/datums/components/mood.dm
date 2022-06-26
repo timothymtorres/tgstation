@@ -32,6 +32,7 @@
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
+	RegisterSignal(parent, COMSIG_CLEAR_MOOD_CATEGORY, .proc/clear_category)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
@@ -219,10 +220,10 @@
 	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
 	// mood runtime, so 50% average uptime across the hour.
 	if(HAS_TRAIT(parent, TRAIT_DEPRESSION) && DT_PROB(0.416, delta_time))
-		add_event(null, "depression_mild", /datum/mood_event/depression_mild)
+		add_event(null, /datum/mood_event/depression_mild)
 
 	if(HAS_TRAIT(parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
-		add_event(null, "jolly", /datum/mood_event/jolly)
+		add_event(null, /datum/mood_event/jolly)
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
@@ -284,15 +285,12 @@
 		CRASH("[moodlet] is not a valid datum/mood_event path")
 		return
 
-	// if event is currently active
-	if(mood_events[moodlet])
-		if(moodlet.renewal_reset_timer)
-			addtimer(CALLBACK(src, .proc/clear_event, null, moodlet), moodlet.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+	if(moodlet.category) // if moodlet is apart of a category
+		clear_category(null, moodlet.category) // remove any active moodlets from the same category
 
-		if(moodlet.renewal_retrigger_effect)
-			clear_event(null, moodlet)
-		else // do not have to readd the event
-			return
+	if(mood_events[moodlet]) // if moodlet is already active
+		addtimer(CALLBACK(src, .proc/clear_event, null, moodlet), moodlet.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+		return // just reset the timer
 
 	var/list/params = args.Copy(4)
 	params.Insert(1, parent)
@@ -314,6 +312,16 @@
 	mood_events -= moodlet
 	qdel(moodlet)
 	update_mood()
+
+/datum/component/mood/proc/clear_category(datum/source, category)
+	SIGNAL_HANDLER
+
+	if(!category)
+		return
+
+	for(var/datum/mood_event/moodlet in mood_events)
+		if(moodlet.category == category)
+			clear_event(null, moodlet)
 
 /datum/component/mood/proc/remove_temp_moods() //Removes all temp moods
 	for(var/datum/mood_event/moodlet in mood_events)
@@ -359,19 +367,19 @@
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			if (!HAS_TRAIT(L, TRAIT_VORACIOUS))
-				add_event(null, "nutrition", /datum/mood_event/fat)
+				add_event(null, /datum/mood_event/fat) // muh fatshaming
 			else
-				add_event(null, "nutrition", /datum/mood_event/wellfed) // round and full
+				add_event(null, /datum/mood_event/wellfed) // round and full
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			add_event(null, "nutrition", /datum/mood_event/wellfed)
+			add_event(null, /datum/mood_event/wellfed)
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			add_event(null, "nutrition", /datum/mood_event/fed)
+			add_event(null, /datum/mood_event/fed)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			clear_event(null, "nutrition")
+			clear_category(null, MOOD_CATEGORY_NUTRITION)
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			add_event(null, "nutrition", /datum/mood_event/hungry)
+			add_event(null, /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			add_event(null, "nutrition", /datum/mood_event/starving)
+			add_event(null, /datum/mood_event/starving)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/target_area)
 	SIGNAL_HANDLER
@@ -382,41 +390,29 @@
 	else
 		clear_event(null, /datum/mood_event/area)
 
-// Mood bonus for /datum/mood_events/location_beauty
-#define BEAUTY_HORRID_MOOD_BONUS -5
-#define BEAUTY_BAD_MOOD_BONUS -3
-#define BEAUTY_DECENT_MOOD_BONUS 1
-#define BEAUTY_GOOD_MOOD_BONUS 3
-#define BEAUTY_GREAT_MOOD_BONUS 5
-
 /datum/component/mood/proc/update_beauty(area/target_area)
 	if(target_area.outdoors) // if we're outside, we don't care.
-		clear_event(null, /datum/mood_event/location_beauty)
+		clear_category(null, MOOD_CATEGORY_BEAUTY)
 		return
 
 	if(HAS_TRAIT(parent, TRAIT_SNOB))
 		switch(target_area.beauty)
 			if(-INFINITY to BEAUTY_LEVEL_HORRID)
-				add_event(null, /datum/mood_event/location_beauty, BEAUTY_HORRID_MOOD_BONUS, "This room looks terrible!")
+				add_event(null, /datum/mood_event/horrid_room)
 				return
 			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
-				add_event(null, /datum/mood_event/location_beauty, BEAUTY_BAD_MOOD_BONUS, "This room looks really bad.")
+				add_event(null, /datum/mood_event/bad_room)
 				return
+
 	switch(target_area.beauty)
 		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
-			clear_event(null, /datum/mood_event/location_beauty)
+			clear_category(null, MOOD_CATEGORY_BEAUTY)
 		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
-			add_event(null, /datum/mood_event/location_beauty, BEAUTY_DECENT_MOOD_BONUS, "This room looks alright.")
+			add_event(null, /datum/mood_event/decent_room)
 		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
-			add_event(null, /datum/mood_event/location_beauty, BEAUTY_GOOD_MOOD_BONUS, "This room looks really pretty!")
+			add_event(null, /datum/mood_event/good_room)
 		if(BEAUTY_LEVEL_GREAT to INFINITY)
-			add_event(null, /datum/mood_event/location_beauty, BEAUTY_GREAT_MOOD_BONUS, "This room is beautiful!")
-
-#undef BEAUTY_HORRID_MOOD_BONUS
-#undef BEAUTY_BAD_MOOD_BONUS
-#undef BEAUTY_DECENT_MOOD_BONUS
-#undef BEAUTY_GOOD_MOOD_BONUS
-#undef BEAUTY_GREAT_MOOD_BONUS
+			add_event(null, /datum/mood_event/great_room)
 
 ///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
@@ -436,7 +432,7 @@
 /datum/component/mood/proc/on_slip(datum/source)
 	SIGNAL_HANDLER
 
-	add_event(null, "slipped", /datum/mood_event/slipped)
+	add_event(null, /datum/mood_event/slipped)
 
 /datum/component/mood/proc/HandleAddictions()
 	if(!iscarbon(parent))
