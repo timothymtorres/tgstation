@@ -21,3 +21,9 @@
 	mood_change = 2
 	timeout = 10 MINUTES
 	category = MOOD_CATEGORY_FOOD
+
+/datum/mood_event/amazing_taste
+	description = "Amazing taste!"
+	mood_change = 50
+	timeout = 10 MINUTES
+	category = MOOD_CATEGORY_FOOD

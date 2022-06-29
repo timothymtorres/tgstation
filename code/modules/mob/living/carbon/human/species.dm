@@ -1485,9 +1485,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/bodytemp = humi.bodytemperature
 	// Body temperature is too hot, and we do not have resist traits
 	if(bodytemp > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
-		// Clear cold mood and apply hot mood
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+		// Apply hot mood
+		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/hot)
 
 		//Remove any slowdown from the cold.
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
@@ -1502,9 +1501,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Body temperature is too cold, and we do not have resist traits
 	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
-		// clear any hot moods and apply cold mood
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+		// Apply cold mood
+		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/cold)
 		// Apply cold slow down
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based how cold it is
@@ -1522,8 +1520,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else if (old_bodytemp > bodytemp_heat_damage_limit || old_bodytemp < bodytemp_cold_damage_limit)
 		humi.clear_alert(ALERT_TEMPERATURE)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_CATEGORY, MOOD_CATEGORY_TEMPERATURE)
 
 	// Store the old bodytemp for future checking
 	humi.old_bodytemperature = bodytemp

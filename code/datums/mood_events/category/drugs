@@ -1,0 +1,18 @@
+/datum/mood_event/happiness_drug
+	description = "Can't feel a thing..."
+	mood_change = 50
+	category = MOOD_CATEGORY_DRUG
+
+/datum/mood_event/happiness_drug_good_od
+	description = "YES! YES!! YES!!!"
+	mood_change = 100
+	timeout = 30 SECONDS
+	special_screen_obj = "mood_happiness_good"
+	category = MOOD_CATEGORY_DRUG
+
+/datum/mood_event/happiness_drug_bad_od
+	description = "NO! NO!! NO!!!"
+	mood_change = -100
+	timeout = 30 SECONDS
+	special_screen_obj = "mood_happiness_bad"
+	category = MOOD_CATEGORY_DRUG

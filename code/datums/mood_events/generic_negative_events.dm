@@ -10,22 +10,10 @@
 	description = "I'M ON FIRE!!!"
 	mood_change = -12
 
-/datum/mood_event/suffocation
-	description = "CAN'T... BREATHE..."
-	mood_change = -12
-
 /datum/mood_event/burnt_thumb
 	description = "I shouldn't play with lighters..."
 	mood_change = -1
 	timeout = 2 MINUTES
-
-/datum/mood_event/cold
-	description = "It's way too cold in here."
-	mood_change = -5
-
-/datum/mood_event/hot
-	description = "It's getting hot in here."
-	mood_change = -5
 
 /datum/mood_event/creampie
 	description = "I've been creamed. Tastes like pie flavor."
@@ -90,27 +78,6 @@
 /datum/mood_event/embedded
 	description = "Pull it out!"
 	mood_change = -7
-
-/datum/mood_event/table
-	description = "Someone threw me on a table!"
-	mood_change = -2
-	timeout = 2 MINUTES
-
-/datum/mood_event/table/add_effects()
-	if(isfelinid(owner)) //Holy snowflake batman!
-		var/mob/living/carbon/human/H = owner
-		SEND_SIGNAL(H, COMSIG_ORGAN_WAG_TAIL, TRUE, 3 SECONDS)
-		description = "They want to play on the table!"
-		mood_change = 2
-
-/datum/mood_event/table_limbsmash
-	description = "That fucking table, man that hurts..."
-	mood_change = -3
-	timeout = 3 MINUTES
-
-/datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
-	if(banged_limb)
-		description = "My fucking [banged_limb.name], man that hurts..."
 
 /datum/mood_event/brain_damage
 	mood_change = -3
@@ -192,11 +159,6 @@
 /datum/mood_event/sad_empath/add_effects(mob/sadtarget)
 	description = "[sadtarget.name] seems upset..."
 
-/datum/mood_event/sacrifice_bad
-	description = "Those darn savages!"
-	mood_change = -5
-	timeout = 2 MINUTES
-
 /datum/mood_event/graverobbing
 	description = "I just desecrated someone's grave... I can't believe I did that..."
 	mood_change = -8
@@ -229,25 +191,6 @@
 /datum/mood_event/surgery
 	description = "THEY'RE CUTTING ME OPEN!!"
 	mood_change = -8
-
-/datum/mood_event/bald
-	description = "I need something to cover my head..."
-	mood_change = -3
-
-/datum/mood_event/noogie
-	description = "Ow! This is like space high school all over again..."
-	mood_change = -2
-	timeout = 60 SECONDS
-
-/datum/mood_event/noogie_harsh
-	description = "OW!! That was even worse than a regular noogie!"
-	mood_change = -4
-	timeout = 60 SECONDS
-
-/datum/mood_event/aquarium_negative
-	description = "All the fish are dead..."
-	mood_change = -3
-	timeout = 90 SECONDS
 
 /datum/mood_event/tail_lost
 	description = "My tail!! Why?!"
@@ -287,15 +230,6 @@
 	description = "I hate being sprayed with water!"
 	mood_change = -1
 	timeout = 30 SECONDS
-
-/datum/mood_event/gamer_withdrawal
-	description = "I wish I was gaming right now..."
-	mood_change = -5
-
-/datum/mood_event/gamer_lost
-	description = "If I'm not good at video games, can I truly call myself a gamer?"
-	mood_change = -10
-	timeout = 10 MINUTES
 
 /datum/mood_event/lost_52_card_pickup
 	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."

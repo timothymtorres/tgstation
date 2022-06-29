@@ -8,6 +8,18 @@
 #define MOOD_CATEGORY_ART "art"
 #define MOOD_CATEGORY_HEIRLOOM "family_heirloom"
 #define MOOD_CATEGORY_BAD_TOUCH "bad_touch"
+#define MOOD_CATEGORY_BALD "bald"
+#define MOOD_CATEGORY_GAMER "gamer"
+#define MOOD_CATEGORY_NOOGIE "noogie"
+#define MOOD_CATEGORY_TABLE_SMASH "table_smash"
+#define MOOD_CATEGORY_ASHWALKER "ashwalker"
+#define MOOD_CATEGORY_AQUARIUM "aquarium"
+#define MOOD_CATEGORY_SMELL "smell"
+#define MOOD_CATEGORY_TEMPERATURE "temperature"
+#define MOOD_CATEGORY_DISGUST "disgust"
+#define MOOD_CATEGORY_CHARGE "charge"
+#define MOOD_CATEGORY_DRINK "drink"
+#define MOOD_CATEGORY_DRUG "drug"
 
 //Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66

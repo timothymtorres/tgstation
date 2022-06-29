@@ -20,13 +20,13 @@
 		if(enabled_waddle)
 			user.AddElement(/datum/element/waddling)
 		if(is_clown_job(user.mind?.assigned_role))
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/clownshoes)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
 	user.RemoveElement(/datum/element/waddling)
 	if(is_clown_job(user.mind?.assigned_role))
-		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/clownshoes)
 
 /obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
 	if(!isliving(user))

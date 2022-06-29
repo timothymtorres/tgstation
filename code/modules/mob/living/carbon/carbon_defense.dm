@@ -433,7 +433,7 @@
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
 			to_chat(helper, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
 		else
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/tailpulled)
 
 	else
 		helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \

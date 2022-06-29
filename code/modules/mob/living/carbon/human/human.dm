@@ -532,7 +532,7 @@
 			return FALSE
 
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))

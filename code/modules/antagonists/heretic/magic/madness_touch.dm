@@ -29,4 +29,4 @@
 				return
 		if(target.mind && !IS_HERETIC(target))
 			to_chat(user, span_warning("[target.name] has been cursed!"))
-			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/gates_of_mansus)

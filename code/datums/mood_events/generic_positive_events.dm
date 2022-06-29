@@ -3,11 +3,6 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
-/datum/mood_event/arcade
-	description = "I beat the arcade game!"
-	mood_change = 3
-	timeout = 8 MINUTES
-
 /datum/mood_event/blessing
 	description = "I've been blessed."
 	mood_change = 3
@@ -98,10 +93,6 @@
 	mood_change = 3
 	timeout = 60 SECONDS
 
-/datum/mood_event/chemical_euphoria
-	description = "Heh...hehehe...hehe..."
-	mood_change = 4
-
 /datum/mood_event/chemical_laughter
 	description = "Laughter really is the best medicine! Or is it?"
 	mood_change = 4
@@ -121,11 +112,6 @@
 	description = "The shoes are a clown's legacy, I never want to take them off!"
 	mood_change = 5
 
-/datum/mood_event/sacrifice_good
-	description = "The gods are pleased with this offering!"
-	mood_change = 5
-	timeout = 3 MINUTES
-
 /datum/mood_event/pet_borg
 	description = "I just love my robotic friends!"
 	mood_change = 3
@@ -140,19 +126,10 @@
 	description = "What a peculiar emblem.  It makes me feel hopeful for my future."
 	mood_change = 10
 
-/datum/mood_event/confident_mane
-	description = "I'm feeling confident with a head full of hair."
-	mood_change = 2
-
 /datum/mood_event/holy_consumption
 	description = "Truly, that was the food of the Divine!"
 	mood_change = 1 // 1 + 5 from it being liked food makes it as good as jolly
 	timeout = 3 MINUTES
-
-/datum/mood_event/aquarium_positive
-	description = "Watching fish in an aquarium is calming."
-	mood_change = 3
-	timeout = 90 SECONDS
 
 /datum/mood_event/gondola
 	description = "I feel at peace and feel no need to make any sudden or rash actions."
@@ -191,16 +168,6 @@
 		return
 
 	description = "Ahaha! [spilled_mob] spilled [spilled_mob.p_their()] [soda_can ? soda_can.name : "soda"] all over [spilled_mob.p_them()]self! Classic."
-
-/datum/mood_event/gaming
-	description = "I'm enjoying a nice gaming session!"
-	mood_change = 2
-	timeout = 30 SECONDS
-
-/datum/mood_event/gamer_won
-	description = "I love winning videogames!"
-	mood_change = 10
-	timeout = 5 MINUTES
 
 /datum/mood_event/won_52_card_pickup
 	description = "HA! That loser will be picking cards up for a long time!"

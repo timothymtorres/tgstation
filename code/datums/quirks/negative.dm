@@ -27,7 +27,7 @@
 	var/obj/item/storage/equipped_backpack = backpack?.resolve()
 	if(equipped_backpack)
 		UnregisterSignal(equipped_backpack, COMSIG_ITEM_POST_UNEQUIP)
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "back_pain")
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/back_pain)
 
 /// Signal handler for when the quirk_holder equips an item. If it's a backpack, adds the back_pain mood event.
 /datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
@@ -318,7 +318,7 @@
 
 /datum/quirk/nyctophobia/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/nyctophobia)
 
 /// Called when the quirk holder moves. Updates the quirk holder's mood.
 /datum/quirk/nyctophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
@@ -340,7 +340,7 @@
 	var/lums = holder_turf.get_lumcount()
 
 	if(lums > LIGHTING_TILE_IS_DARK)
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/nyctophobia)
 		return
 
 	if(quirk_holder.m_intent == MOVE_INTENT_RUN)

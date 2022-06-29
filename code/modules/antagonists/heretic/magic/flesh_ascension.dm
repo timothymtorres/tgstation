@@ -27,7 +27,7 @@
 		for(var/mob/living/carbon/human/nearby_human in view(9, outside) - target)
 			if(IS_HERETIC_OR_MONSTER(nearby_human))
 				continue
-			SEND_SIGNAL(nearby_human, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+			SEND_SIGNAL(nearby_human, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/gates_of_mansus)
 			///They see the very reality uncoil before their eyes.
 			if(prob(25))
 				var/trauma = pick(subtypesof(BRAIN_TRAUMA_MILD) + subtypesof(BRAIN_TRAUMA_SEVERE))

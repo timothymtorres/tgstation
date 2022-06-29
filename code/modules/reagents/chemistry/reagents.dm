@@ -174,7 +174,7 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
-	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "[type]_overdose")
+	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, /datum/mood_event/overdose)
 	return
 
 /// Called when this reagent first starts being metabolized by a liver
@@ -218,7 +218,12 @@ Primarily used in reagents/reaction_agents
 /// Called when an overdose starts
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You feel like you took too much of [name]!"))
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
+
+	// need to make sure this works properly 💊
+	var/datum/mood_event/overdose/OD
+	OD.category = "[type]"
+
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/overdose, name)
 	return
 
 /**

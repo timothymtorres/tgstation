@@ -60,9 +60,7 @@
 	if((times_fired % next_breath) == 0 || failed_last_breath)
 		breathe(delta_time, times_fired) //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
 		if(failed_last_breath)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
-		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/suffocation)
 	else
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
@@ -219,7 +217,6 @@
 		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
 				Sleeping(max(AmountSleeping() + 40, 200))
@@ -227,12 +224,10 @@
 			clear_alert(ALERT_TOO_MUCH_N2O)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/chemical_euphoria)
 		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 			clear_alert(ALERT_TOO_MUCH_N2O)
 	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 		clear_alert(ALERT_TOO_MUCH_N2O)
 
 	//BZ (Facepunch port of their Agent B)
@@ -269,32 +264,25 @@
 		switch(miasma_partialpressure)
 			if(0.25 to 5)
 				// At lower pp, give out a little warning
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 				if(prob(5))
 					to_chat(src, span_notice("There is an unpleasant smell in the air."))
 			if(5 to 20)
 				//At somewhat higher pp, warning becomes more obvious
 				if(prob(15))
 					to_chat(src, span_warning("You smell something horribly decayed inside this room."))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/disgust/bad_smell)
 			if(15 to 30)
 				//Small chance to vomit. By now, people have internals on anyway
 				if(prob(5))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/disgust/nauseating_stench)
 					vomit()
 			if(30 to INFINITY)
 				//Higher chance to vomit. Let the horror start
 				if(prob(25))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, /datum/mood_event/disgust/nauseating_stench)
 					vomit()
-			else
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
-	//Clear all moods if no miasma at all
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
 	breath.garbage_collect()
 
