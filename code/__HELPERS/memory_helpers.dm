@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_IRRADIATED = list("glowing", "radioactive"),
 	TRAIT_HULK = list("hulking"),
 	TRAIT_NEARSIGHT = list("nearsighted"),
+	TRAIT_MUTE = list("silent", "mute", "quiet"),
 	TRAIT_BLIND = list("blind"),
 	TRAIT_DEAF = list("deaf"),
 	TRAIT_CLUMSY = list("clumsy"),
@@ -88,7 +89,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_BLUSHING = list("blushing"),
 	TRAIT_MOVE_FLYING = list("flying"),
 	TRAIT_MOVE_FLOATING = list("floating", "drifting"),
-	TRAIT_FLOORED = list("crawling", "resting")
+	TRAIT_FLOORED = list("crawling", "resting", "fallen"),
 	TRAIT_BLOODSHOT_EYES = list("drugged"),
 	TRAIT_HARDLY_WOUNDED = list("tough"),
 	TRAIT_FEARLESS = list("fearless"),
@@ -139,22 +140,36 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		var/mob/living/carbon/human/human_target = target
 
 		if(human_target.stat == DEAD)
-			possible_descriptions += pick("dead", "killed", "murdered")
+			possible_descriptions += pick("dead", "deceased", "lifeless", "slain")
+			
+			var/obj/item/bodypart/head/head = human_target.get_bodypart(BODY_ZONE_HEAD)
+			if(!head)
+				possible_descriptions += pick("headless", "decapitated", "beheaded")
+			
+			if(human_target.suiciding)
+				possible_descriptions += "suicidal"
 
 		if(HAS_TRAIT(human_target, TRAIT_PARALYSIS_L_LEG) && HAS_TRAIT(human_target, TRAIT_PARALYSIS_R_LEG))
-			possible_descriptions += "crippled"
+			possible_descriptions += pick("crippled", "paraplegic")
+		
+		if(human_target.failed_last_breath)
+			possible_descriptions += pick("suffocating", "gasping", "choking")
 		
 		switch(human_target.nutrition)
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				possible_descriptions += "hungry"
+				possible_descriptions += pick("hungry", "malnourished")
 			if(0 to NUTRITION_LEVEL_STARVING)
 				possible_descriptions += pick("starving", "drooling")
 		
-		// pretty sure this code doesn't work and needs to be double checked
-		for(var/obj/bloody_item in human_target.get_all_slots() | human_target.held_items)
-			if(!QDELETED(bloody_item) && HAS_BLOOD_DNA(bloody_item))
-				possible_descriptions += "bloody"
-				break
+		// if hands are bloody
+		if(!human_target.gloves && human_target.blood_in_hands && (human_target.num_hands > 0))
+			possible_descriptions += "bloody"
+		else // or if clothes are covered in blood
+			// pretty sure this code doesn't work and needs to be double checked
+			for(var/obj/bloody_item in human_target.get_all_slots() | human_target.held_items)
+				if(!QDELETED(bloody_item) && HAS_BLOOD_DNA(bloody_item))
+					possible_descriptions += "bloody"
+					break
 
 		// is our mob naked?
 		if(isnull(human_target.wear_suit) && isnull(human_target.w_uniform))
@@ -168,7 +183,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		if(human_target.buckled)
 			possible_descriptions += "sitting"
 
-		if(human_target.has_light_nearby())
+		if(!human_target.has_light_nearby())
 			possible_descriptions += pick("shadowy", "dark")
 
 		if(human_target.is_bleeding())
