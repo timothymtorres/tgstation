@@ -184,7 +184,10 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 			possible_descriptions += "sitting"
 
 		if(!human_target.has_light_nearby())
-			possible_descriptions += pick("shadowy", "dark")
+			possible_descriptions += pick("shadowy", "dark", "lurking", "sneaking", "creeping")
+
+		if(!isturf(human_target.loc) || human_target.is_holding(/obj/item/kirbyplants))
+			possible_descriptions += pick("hidden", "concealed")
 
 		if(human_target.is_bleeding())
 			possible_descriptions += "bleeding"
