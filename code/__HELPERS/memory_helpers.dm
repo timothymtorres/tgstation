@@ -69,6 +69,7 @@
 	return memories[memory_type]
 
 GLOBAL_LIST_INIT(mob_trait_adjectives, list(
+	// appearance
 	TRAIT_DWARF = list("dwarf", "small", "tiny"),
 	TRAIT_GIANT = list("giant", "huge", "large"),
 	TRAIT_FAT = list("fat", "chubby", "obese"),
@@ -95,6 +96,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_FEARLESS = list("fearless"),
 	TRAIT_KNOCKEDOUT = list("unconcious"),
 	TRAIT_CRITICAL_CONDITION = list("dying"),
+	// quirks
 	TRAIT_PACIFISM = list("gentle", "harmless", "innocent"),
 	TRAIT_DEPRESSION = list("depressed", "sad", "moody"),
 	TRAIT_JOLLY = list("happy", "smiling", "cheerful"),
@@ -121,14 +123,14 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_INSANITY = list("insane"),
 	TRAIT_UNSTABLE = list("erratic"),
 	TRAIT_PHOTOGRAPHER = list("photogenic"),
+	TRAIT_APATHETIC = list("apathetic", "emotionless", "bored"),
+	TRAIT_HYPERSENSITIVE = list("bipolar"),
+	TRAIT_BLOOD_DEFICIENCY = list("pale"),
+	TRAIT_BAD_BACK = list("hunched", "crooked"),
+	TRAIT_FAMILY_HEIRLOOM = list("possessive"),
+	TRAIT_FOREIGNER = list("exotic"),
 	//berserk is the trait source? BERSERK_TRAIT = list("harmful", "dangerious", "violent"),
-	// these trait doesn't exist yet, plz don't forget to add
-	//TRAIT_APATHETIC = list("apathetic"
-	//TRAIT_HYPERSENSITIVE = list("bipolar"
-	//TRAIT_BLOOD_DEFICIENCY = list("pale"
-	//TRAIT_BAD_BACK = list("hunched"
-	//TRAIT_FAMILY_HEIRLOOM = list("possessive"
-	//TRAIT_FOREIGNER = list("exotic"
+	// these trait doesn't exist yet, plz don't forget to add	
 	//TRAIT_AFRAID = list("terrified", "panicking", "trembling"
 ))
 
