@@ -5,6 +5,7 @@
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
 	icon = "hiking"
 	value = -8
+	mob_trait = TRAIT_BAD_BACK
 	mood_quirk = TRUE
 	gain_text = "<span class='danger'>Your back REALLY hurts!</span>"
 	lose_text = "<span class='notice'>Your back feels better.</span>"
@@ -55,6 +56,7 @@
 	desc = "Your body can't produce enough blood to sustain itself."
 	icon = "tint"
 	value = -8
+	mob_trait = TRAIT_BLOOD_DEFICIENCY
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
@@ -156,6 +158,7 @@
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
 	icon = "toolbox"
 	value = -2
+	mob_trait = TRAIT_FAMILY_HEIRLOOM
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
@@ -251,6 +254,7 @@
 	desc = "For better or worse, everything seems to affect your mood more than it should."
 	icon = "flushed"
 	value = -2
+	mob_trait = TRAIT_HYPERSENSITIVE
 	gain_text = "<span class='danger'>You seem to make a big deal out of everything.</span>"
 	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
@@ -367,6 +371,7 @@
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
 	icon = "wheelchair"
 	value = -12
+	mob_trait = TRAIT_PARAPLEGIC
 	human_only = TRUE
 	gain_text = null // Handled by trauma.
 	lose_text = null
@@ -612,6 +617,7 @@
 	desc = "You can't get enough of hard drugs."
 	icon = "pills"
 	value = -6
+	mob_trait = TRAIT_JUNKIE
 	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
@@ -760,6 +766,7 @@
 	lose_text = "<span class='notice'>You feel your immune system phase back into perfect shape.</span>"
 	medical_record_text = "Patient's immune system responds violently to certain chemicals."
 	hardcore_value = 3
+	mob_trait = TRAIT_ALLERGIC
 	processing_quirk = TRUE
 	var/list/allergies = list()
 	var/list/blacklist = list(/datum/reagent/medicine/c2,/datum/reagent/medicine/epinephrine,/datum/reagent/medicine/adminordrazine,/datum/reagent/medicine/omnizine/godblood,/datum/reagent/medicine/cordiolis_hepatico,/datum/reagent/medicine/synaphydramine,/datum/reagent/medicine/diphenhydramine)
@@ -850,6 +857,7 @@
 	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breathe."
 	icon = "box-open"
 	value = -4
+	mob_trait = TRAIT_CLAUSTROPHOBIC
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
 	hardcore_value = 5
 	processing_quirk = TRUE
