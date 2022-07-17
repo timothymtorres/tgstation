@@ -554,6 +554,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
 
 //quirk traits
+#define TRAIT_PARAPLEGIC "paraplegic"
+#define TRAIT_JUNKIE "junkie"
+#define TRAIT_CLAUSTROPHOBIC "claustrophobic"
 #define TRAIT_FOREIGNER "foreigner"
 #define TRAIT_FAMILY_HEIRLOOM "family_heirloom"
 #define TRAIT_BAD_BACK "bad_back"
