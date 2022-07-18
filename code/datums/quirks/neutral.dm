@@ -36,6 +36,7 @@
 	desc = "You're not from around here. You don't know Galactic Common!"
 	icon = "language"
 	value = 0
+	mob_trait = TRAIT_FOREIGNER
 	gain_text = "<span class='notice'>The words being spoken around you don't make any sense."
 	lose_text = "<span class='notice'>You've developed fluency in Galactic Common."
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
@@ -88,10 +89,10 @@
 	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
 	icon = "user-tie"
 	value = 0
+	mob_trait = TRAIT_SNOB
 	gain_text = "<span class='notice'>You feel like you understand what things should look like.</span>"
 	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
 	medical_record_text = "Patient seems to be rather stuck up."
-	mob_trait = TRAIT_SNOB
 
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
@@ -250,6 +251,7 @@
 	desc = "You are irrationally afraid of something."
 	icon = "spider"
 	value = 0
+	mob_trait = TRAIT_PHOBIA
 	medical_record_text = "Patient has an irrational fear of something."
 	var/phobia
 
@@ -338,6 +340,7 @@
 	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
 	icon = "sign-language"
 	value = 0
+	mob_trait = TRAIT_TONGUE_TIED
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
 
 /datum/quirk/item_quirk/tongue_tied/add_unique()

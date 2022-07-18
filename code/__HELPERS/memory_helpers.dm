@@ -71,13 +71,13 @@
 GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	// appearance
 	TRAIT_DWARF = list("dwarf", "small", "tiny"),
-	TRAIT_GIANT = list("giant", "huge", "large"),
+	TRAIT_GIANT = list("giant", "tall", "large"),
 	TRAIT_FAT = list("fat", "chubby", "obese"),
-	TRAIT_HOLY = list("divine", "holy", "devout"),
-	TRAIT_CULT_HALO = list("sinster", "unholy", "corrupted"),
+	TRAIT_HOLY = list("divine", "holy", "devout", "heavenly"),
+	TRAIT_CULT_HALO = list("sinster", "unholy", "corrupted", "hellish"),
 	TRAIT_HUSKED = list("husked"),
-	TRAIT_IRRADIATED = list("glowing", "radioactive"),
-	TRAIT_XRAY_VISION = list("peering", "leering",)
+	TRAIT_IRRADIATED = list("glowing", "radioactive", "luminous", "radiant"),
+	TRAIT_XRAY_VISION = list("peering", "leering", "watchful")
 	TRAIT_HULK = list("hulking", "muscular", "strong"),
 	TRAIT_NEARSIGHT = list("nearsighted"),
 	TRAIT_MUTE = list("silent", "mute", "quiet"),
@@ -92,41 +92,42 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_MOVE_FLYING = list("flying"),
 	TRAIT_MOVE_FLOATING = list("floating", "drifting"),
 	TRAIT_FLOORED = list("crawling", "resting", "fallen"),
-	TRAIT_BLOODSHOT_EYES = list("drugged", "restless"),
+	TRAIT_BLOODSHOT_EYES = list("drugged", "restless", "shaky"),
 	TRAIT_HARDLY_WOUNDED = list("tough"),
 	TRAIT_FEARLESS = list("fearless"),
 	TRAIT_KNOCKEDOUT = list("unconcious"),
 	TRAIT_CRITICAL_CONDITION = list("dying"),
+	TRAIT_DISEASED = list("sick", "ill", "diseased"), // needs
 	// quirks
 	TRAIT_PACIFISM = list("gentle", "harmless", "innocent"),
 	TRAIT_DEPRESSION = list("depressed", "sad", "moody"),
 	TRAIT_JOLLY = list("happy", "smiling", "cheerful"),
-	TRAIT_HEAVY_SLEEPER = list("sleepy"),
+	TRAIT_HEAVY_SLEEPER = list("sleepy", "tired"),
 	TRAIT_SPIRITUAL = list("spiritual"),
 	TRAIT_VORACIOUS = list("voracious"),
 	TRAIT_FREERUNNING = list("athletic"),
-	TRAIT_SKITTISH = list("scared"),
-	TRAIT_FRIENDLY = list("friendly"),
-	TRAIT_SNOB = list("rude", "pretentious"),
+	TRAIT_SKITTISH = list("skittish", "frisky", "fidgetey"),
+	TRAIT_FRIENDLY = list("friendly", "compassionate", "pleasant"),
+	TRAIT_SNOB = list("rude", "pretentious", "obnoxious"),
 	TRAIT_BALD = list("bald"),
-	TRAIT_EXTROVERT = list("extroverted"),
-	TRAIT_INTROVERT = list("introverted"),
-	TRAIT_ANXIOUS = list("anxious", "stammering", "stuttering", "nervous", "mumbling", "fidgeting", "shy"), // put some of these into other quirks/traits
-	TRAIT_EMPATH = list("empathetic"),
-	TRAIT_GRABWEAKNESS = list("feeble"),
+	TRAIT_EXTROVERT = list("extroverted", "outgoing"),
+	TRAIT_INTROVERT = list("introverted", "shy"),
+	TRAIT_ANXIOUS = list("anxious", "stammering", "stuttering", "nervous", "mumbling"), // put some of these into other quirks/traits
+	TRAIT_EMPATH = list("empathetic", "sympathetic"),
+	TRAIT_GRABWEAKNESS = list("feeble", "wimpy", "weak"),
 	TRAIT_CLOWN_ENJOYER = list("goofy", "silly"),
 	TRAIT_MIME_FAN = list("serious", "stern"),
-	TRAIT_LIGHT_STEP = list("careful"),
-	TRAIT_SELF_AWARE = list("observant"),
-	TRAIT_TAGGER = list("delinquent", "mischievous"),
+	TRAIT_LIGHT_STEP = list("cautious", "careful"),
+	TRAIT_SELF_AWARE = list("observant", "perceptive", "attentive"),
+	TRAIT_TAGGER = list("delinquent", "mischievous", "miscreant"),
 	TRAIT_BADTOUCH = list("evasive"),
-	TRAIT_EASILY_WOUNDED = list("fragile"),
-	TRAIT_INSANITY = list("insane"),
-	TRAIT_UNSTABLE = list("erratic"),
+	TRAIT_EASILY_WOUNDED = list("fragile", "frail"),
+	TRAIT_INSANITY = list("insane", "delirious", "crazy"),
+	TRAIT_UNSTABLE = list("erratic", "deranged", "demented", "psychotic"),
 	TRAIT_PHOTOGRAPHER = list("photogenic"),
 	TRAIT_APATHETIC = list("apathetic", "emotionless", "bored", "heartless"),
-	TRAIT_HYPERSENSITIVE = list("bipolar"),
-	TRAIT_BLOOD_DEFICIENCY = list("pale"),
+	TRAIT_HYPERSENSITIVE = list("bipolar", "hysterical"),
+	TRAIT_BLOOD_DEFICIENCY = list("pale", "ailing"),
 	TRAIT_BAD_BACK = list("hunched", "crooked"),
 	TRAIT_FAMILY_HEIRLOOM = list("possessive"),
 	TRAIT_FOREIGNER = list("exotic"),
@@ -134,9 +135,12 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_JUNKIE = list("twitchy", "jittery", "jumpy"),
 	TRAIT_ALLERGIC = list("allergic"),
 	TRAIT_CLAUSTROPHOBIC = list("claustrophobic"),
-	
+	TRAIT_PHOBIA = list("fearful", "afraid"),
+	TRAIT_TONGUE_TIED = list("speechless", "inarticulate", "incoherent"),
+	TRAIT_GAMER = list("nerdy", "geeky"),
+
 	//berserk is the trait source? BERSERK_TRAIT = list("harmful", "dangerious", "violent"),
-	// these trait doesn't exist yet, plz don't forget to add	
+	// these trait doesn't exist yet, plz don't forget to add
 	//TRAIT_AFRAID = list("terrified", "panicking", "trembling"
 	//TRAIT_IS_SMOKING? = list("smoking")
 	// GIVES GOOD HUGS = list("touchy")
@@ -145,32 +149,29 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 ///returns an adjective for a human mob
 /datum/mind/proc/get_mob_adjective(mob/living/target)
 	var/list/possible_descriptions = list()
-	
+
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 
 		if(human_target.stat == DEAD)
 			possible_descriptions += pick("dead", "deceased", "lifeless", "slain")
-			
+
 			var/obj/item/bodypart/head/head = human_target.get_bodypart(BODY_ZONE_HEAD)
 			if(!head)
 				possible_descriptions += pick("headless", "decapitated", "beheaded")
-			
+
 			if(human_target.suiciding)
 				possible_descriptions += "suicidal"
 
-		if(HAS_TRAIT(human_target, TRAIT_PARALYSIS_L_LEG) && HAS_TRAIT(human_target, TRAIT_PARALYSIS_R_LEG))
-			possible_descriptions += pick("crippled", "paraplegic")
-		
 		if(human_target.failed_last_breath)
 			possible_descriptions += pick("suffocating", "gasping", "choking")
-		
+
 		switch(human_target.nutrition)
 			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 				possible_descriptions += pick("hungry", "malnourished")
 			if(0 to NUTRITION_LEVEL_STARVING)
 				possible_descriptions += pick("starving", "drooling")
-		
+
 		// if hands are bloody
 		if(!human_target.gloves && human_target.blood_in_hands && (human_target.num_hands > 0))
 			possible_descriptions += "bloody"
@@ -184,7 +185,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		// is our mob naked?
 		if(isnull(human_target.wear_suit) && isnull(human_target.w_uniform))
 			possible_descriptions += pick("naked", "nude", "undressed")
-			
+
 		if(human_target.handcuffed)
 			possible_descriptions += pick("handcuffed", "restrained", "shackled")
 		if(human_target.legcuffed)
@@ -202,28 +203,28 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		if(human_target.is_bleeding())
 			possible_descriptions += "bleeding"
 		if(human_target.on_fire())
-			possible_descriptions += "burning"		
+			possible_descriptions += "burning"
 
 		// status effects
 		if(human_target.IsSleeping())
 			possible_descriptions += "sleeping"
 		if(human_target.IsStun())
-			possible_descriptions += "stunned"
+			possible_descriptions += pick("stunned", "exhausted")
 		if(human_target.IsImmobilized())
 			possible_descriptions += "immoblized"
 		if(human_target.IsParalyzed())
 			possible_descriptions += "paralyzed"
 		if(human_target.IsFrozen())
 			possible_descriptions += "frozen"
-			
+
 		if(human_target.has_status_effect(/datum/status_effect/inebriated/tipsy))
 			possible_descriptions += "tipsy"
 		if(human_target.has_status_effect(/datum/status_effect/inebriated/drunk))
-			possible_descriptions += "drunk"		
+			possible_descriptions += "drunk"
 		if(human_target.has_status_effect(/datum/status_effect/eldritch))
 			possible_descriptions += "marked"
 		if(human_target.has_status_effect(/datum/status_effect/trance))
-			possible_descriptions += "hypnotized"
+			possible_descriptions += pick("hypnotized", "mesmerized")
 		if(human_target.has_status_effect(/datum/status_effect/convulsing))
 			possible_descriptions += "convulsing"
 		if(human_target.has_status_effect(/datum/status_effect/stagger))
@@ -248,17 +249,17 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 			possible_descriptions += "stabbed"
 		if(human_target.has_status_effect(/datum/status_effect/wound/burn))
 			possible_descriptions += "burned"
-		
+
 		if(human_target.has_status_effect(/datum/status_effect/grouped/heldup))
 			possible_descriptions += "captive"
 		if(human_target.has_status_effect(/datum/status_effect/holdup))
 			possible_descriptions += "threatening"
 		if(human_target.has_status_effect(/datum/status_effect/grouped/surrender))
 			possible_descriptions += "surrendering"
-		
 
-		
-			
+
+
+
 
 ///returns the story name of a mob
 /datum/mind/proc/build_story_mob(mob/living/target)

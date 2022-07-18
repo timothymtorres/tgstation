@@ -16,6 +16,7 @@
 	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
 	icon = "meh"
 	value = 4
+	mob_trait = TRAIT_APATHETIC
 	mood_quirk = TRUE
 	medical_record_text = "Patient was administered the Apathy Evaluation Scale but did not bother to complete it."
 
