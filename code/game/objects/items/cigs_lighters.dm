@@ -180,6 +180,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/clothing/mask/cigarette/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_MASK || !lit)
+		return
+
+	ADD_TRAIT(user, TRAIT_SMOKING, MASK_TRAIT)
+	// someone should move all the reagent processing code here
+	// see: /obj/item/clothing/mask/vape/equipped(mob/user, slot)
+
+/obj/item/clothing/mask/cigarette/dropped(mob/user)
+	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
+		REMOVE_TRAIT(user, TRAIT_SMOKING, MASK_TRAIT)
+
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
@@ -266,9 +280,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	//can't think of any other way to update the overlays :<
 	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_wear_mask()
-		M.update_inv_hands()
+		var/mob/living/carbon/smoker = loc
+		if(!istype(smoker))
+			return
+
+		smoker.update_inv_wear_mask()
+		smoker.update_inv_hands()
+
+		if(src == smoker.wear_mask)
+			ADD_TRAIT(smoker, TRAIT_SMOKING, MASK_TRAIT)
 
 /obj/item/clothing/mask/cigarette/extinguish()
 	if(!lit)
@@ -284,10 +304,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	update_icon()
 
 	if(ismob(loc))
-		var/mob/living/M = loc
-		to_chat(M, span_notice("Your [name] goes out."))
-		M.update_inv_wear_mask()
-		M.update_inv_hands()
+		var/mob/living/carbon/smoker = loc
+		if(!istype(smoker))
+			return
+
+		to_chat(smoker, span_notice("Your [name] goes out."))
+		smoker.update_inv_wear_mask()
+		smoker.update_inv_hands()
+
+		if(src == smoker.wear_mask)
+			REMOVE_TRAIT(smoker, TRAIT_SMOKING, MASK_TRAIT)
 
 /// Handles processing the reagents in the cigarette.
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()

@@ -309,6 +309,8 @@
 		if(pill)
 			pill.forceMove(src)
 
+	ADD_TRAIT(owner, TRAIT_HEADLESS, ORGAN_TRAIT)
+
 	name = "[owner.real_name]'s head"
 	..()
 
@@ -417,6 +419,8 @@
 			pill.forceMove(new_head_owner)
 			pill_action.Grant(new_head_owner)
 			break
+
+	REMOVE_TRAIT(new_head_owner, TRAIT_HEADLESS, ORGAN_TRAIT)
 
 	new_head_owner.updatehealth()
 	new_head_owner.update_body()

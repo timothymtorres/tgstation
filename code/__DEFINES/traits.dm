@@ -119,6 +119,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
+/// When a mob is dead from any means
+#define TRAIT_DEAD "dead"
 /// Forces the user to stay unconscious.
 #define TRAIT_KNOCKEDOUT "knockedout"
 /// Prevents voluntary movement.
@@ -150,6 +152,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DEAF "deaf"
 #define TRAIT_NEARSIGHT "nearsighted"
 #define TRAIT_FAT "fat"
+#define TRAIT_HUNGRY "hungry"
+#define TRAIT_STARVING "starving"
 #define TRAIT_HUSK "husk"
 ///Blacklisted from being revived via defibrilator
 #define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
@@ -396,6 +400,27 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 * When present in the mob's mind, they will always love donuts.
 */
 #define TRAIT_DONUT_LOVER "donut_lover"
+
+/// When someone is actively smoking a cigarette, cigar, or pipe
+#define TRAIT_SMOKING "smoking"
+
+/// When someone is suffocating
+#define TRAIT_SUFFOCATING "suffocating"
+
+/// When someone has a harmful disease
+#define TRAIT_DISEASED "diseased"
+
+/// When someone loses or has no head
+#define TRAIT_HEADLESS "headless"
+
+/// When someone loses the will to live and suicides
+#define TRAIT_SUICIDAL "suicidal"
+
+/// When someone isn't wearing a jumpsuit or armor (human.w_uniform and human.wear_suit slots)
+#define TRAIT_NAKED "naked"
+
+/// When someone gets buckled to something (chair, vehicle, etc.)
+#define TRAIT_BUCKLED "buckled"
 
 /// `do_teleport` will not allow this atom to teleport
 #define TRAIT_NO_TELEPORT "no-teleport"
@@ -664,6 +689,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define EAR_DAMAGE "ear_damage"
 #define GENETIC_MUTATION "genetic"
 #define OBESITY "obesity"
+/// Traits related to hunger (OBESITY is seperate source)
+#define SATIETY_TRAIT "satiety"
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
 #define FLIGHTPOTION_TRAIT "flightpotion"

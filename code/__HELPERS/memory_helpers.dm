@@ -69,10 +69,13 @@
 	return memories[memory_type]
 
 GLOBAL_LIST_INIT(mob_trait_adjectives, list(
+	TRAIT_DEAD = list("dead", "deceased", "lifeless"),
 	// appearance
 	TRAIT_DWARF = list("dwarf", "small", "tiny"),
 	TRAIT_GIANT = list("giant", "tall", "large"),
 	TRAIT_FAT = list("fat", "chubby", "obese"),
+	TRAIT_HUNGRY = list("hungry", "drooling"),
+	TRAIT_STARVING = list("starving", "malnourished"),
 	TRAIT_HOLY = list("divine", "holy", "devout", "heavenly"),
 	TRAIT_CULT_HALO = list("sinster", "unholy", "corrupted", "hellish"),
 	TRAIT_HUSKED = list("husked"),
@@ -87,7 +90,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_ILLITERATE = list("illiterate", "dumb"),
 	TRAIT_DISFIGURED = list("disfigured"),
 	TRAIT_SILENT_FOOTSTEPS = list("stealthy"),
-	TRAIT_NO_SOUL = list("soulless"),
+	TRAIT_NO_SOUL = list("soulless", "forsaken", "tainted", "defiled", "desecrated", "undead"),
 	TRAIT_BLUSHING = list("blushing"),
 	TRAIT_MOVE_FLYING = list("flying"),
 	TRAIT_MOVE_FLOATING = list("floating", "drifting"),
@@ -97,7 +100,15 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_FEARLESS = list("fearless"),
 	TRAIT_KNOCKEDOUT = list("unconcious"),
 	TRAIT_CRITICAL_CONDITION = list("dying"),
-	TRAIT_DISEASED = list("sick", "ill", "diseased"), // needs
+
+	TRAIT_HEADLESS = list("headless", "decapitated", "beheaded"),
+	TRAIT_SMOKING = list("smoking"),
+	TRAIT_DISEASED = list("sick", "infected", "diseased"),
+	TRAIT_SUICIDAL = list("suicidal"),
+	TRAIT_SUFFOCATING = list("suffocating", "gasping", "choking"),
+	TRAIT_NAKED = list("naked", "nude", "undressed"),
+	TRAIT_BUCKLED = list("buckled", "sitting"), // at some point make traits for riding vehicles (scooters, borgs, skateboard, etc.)
+
 	// quirks
 	TRAIT_PACIFISM = list("gentle", "harmless", "innocent"),
 	TRAIT_DEPRESSION = list("depressed", "sad", "moody"),
@@ -105,9 +116,9 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_HEAVY_SLEEPER = list("sleepy", "tired"),
 	TRAIT_SPIRITUAL = list("spiritual"),
 	TRAIT_VORACIOUS = list("voracious"),
-	TRAIT_FREERUNNING = list("athletic"),
+	TRAIT_FREERUNNING = list("athletic", "nimble"),
 	TRAIT_SKITTISH = list("skittish", "frisky", "fidgetey"),
-	TRAIT_FRIENDLY = list("friendly", "compassionate", "pleasant"),
+	TRAIT_FRIENDLY = list("friendly", "compassionate", "pleasant", "tender"),
 	TRAIT_SNOB = list("rude", "pretentious", "obnoxious"),
 	TRAIT_BALD = list("bald"),
 	TRAIT_EXTROVERT = list("extroverted", "outgoing"),
@@ -120,10 +131,10 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_LIGHT_STEP = list("cautious", "careful"),
 	TRAIT_SELF_AWARE = list("observant", "perceptive", "attentive"),
 	TRAIT_TAGGER = list("delinquent", "mischievous", "miscreant"),
-	TRAIT_BADTOUCH = list("evasive"),
+	TRAIT_BADTOUCH = list("evasive", "shunned", "alienated", "lonely"),
 	TRAIT_EASILY_WOUNDED = list("fragile", "frail"),
-	TRAIT_INSANITY = list("insane", "delirious", "crazy"),
-	TRAIT_UNSTABLE = list("erratic", "deranged", "demented", "psychotic"),
+	TRAIT_INSANITY = list("insane", "delirious", "crazy", "psychotic"),
+	TRAIT_UNSTABLE = list("unstable", "erratic", "deranged", "demented"),
 	TRAIT_PHOTOGRAPHER = list("photogenic"),
 	TRAIT_APATHETIC = list("apathetic", "emotionless", "bored", "heartless"),
 	TRAIT_HYPERSENSITIVE = list("bipolar", "hysterical"),
@@ -142,8 +153,6 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	//berserk is the trait source? BERSERK_TRAIT = list("harmful", "dangerious", "violent"),
 	// these trait doesn't exist yet, plz don't forget to add
 	//TRAIT_AFRAID = list("terrified", "panicking", "trembling"
-	//TRAIT_IS_SMOKING? = list("smoking")
-	// GIVES GOOD HUGS = list("touchy")
 ))
 
 ///returns an adjective for a human mob
@@ -152,25 +161,6 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-
-		if(human_target.stat == DEAD)
-			possible_descriptions += pick("dead", "deceased", "lifeless", "slain")
-
-			var/obj/item/bodypart/head/head = human_target.get_bodypart(BODY_ZONE_HEAD)
-			if(!head)
-				possible_descriptions += pick("headless", "decapitated", "beheaded")
-
-			if(human_target.suiciding)
-				possible_descriptions += "suicidal"
-
-		if(human_target.failed_last_breath)
-			possible_descriptions += pick("suffocating", "gasping", "choking")
-
-		switch(human_target.nutrition)
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				possible_descriptions += pick("hungry", "malnourished")
-			if(0 to NUTRITION_LEVEL_STARVING)
-				possible_descriptions += pick("starving", "drooling")
 
 		// if hands are bloody
 		if(!human_target.gloves && human_target.blood_in_hands && (human_target.num_hands > 0))
@@ -182,17 +172,10 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 					possible_descriptions += "bloody"
 					break
 
-		// is our mob naked?
-		if(isnull(human_target.wear_suit) && isnull(human_target.w_uniform))
-			possible_descriptions += pick("naked", "nude", "undressed")
-
 		if(human_target.handcuffed)
 			possible_descriptions += pick("handcuffed", "restrained", "shackled")
 		if(human_target.legcuffed)
 			possible_descriptions += pick("legcuffed", "restrained", "shackled")
-
-		if(human_target.buckled)
-			possible_descriptions += "sitting"
 
 		if(!human_target.has_light_nearby())
 			possible_descriptions += pick("shadowy", "dark", "lurking", "sneaking", "creeping")

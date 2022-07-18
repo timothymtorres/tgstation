@@ -61,8 +61,10 @@
 		breathe(delta_time, times_fired) //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
 		if(failed_last_breath)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+			ADD_TRAIT(src, TRAIT_SUFFOCATING, OXYLOSS_TRAIT)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
+			REMOVE_TRAIT(src, TRAIT_SUFFOCATING, OXYLOSS_TRAIT)
 	else
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc

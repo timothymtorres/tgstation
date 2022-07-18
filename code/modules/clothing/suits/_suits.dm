@@ -14,6 +14,20 @@
 	. = ..()
 	setup_shielding()
 
+/obj/item/clothing/suit/equipped(mob/user, slot)
+	..()
+	if(slot == ITEM_SLOT_OCLOTHING)
+		REMOVE_TRAIT(user, TRAIT_NAKED, CLOTHING_TRAIT)
+
+/obj/item/clothing/suit/dropped(mob/user)
+	var/mob/living/carbon/human/target = user
+
+	// need to test and see if dropping a jumpsuit in hands will bypass this
+	if(ishuman(target) && !target.w_uniform)
+		ADD_TRAIT(target, TRAIT_NAKED, CLOTHING_TRAIT)
+
+	..()
+
 /obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
 	if(isinhands)

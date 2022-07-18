@@ -58,9 +58,12 @@
 	D.after_add()
 	infectee.med_hud_set_status()
 
+	// needs testing to make sure it works (remove before PR gets merged)
+	if(get_disease_severity_value(severity) >= get_disease_severity_value(DISEASE_SEVERITY_MINOR))
+		ADD_TRAIT(infectee, TRAIT_DISEASED, DISEASE_TRAIT)
+
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
-
 
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(delta_time, times_fired)
@@ -77,7 +80,6 @@
 		update_stage(min(stage + 1, max_stages))
 
 	return !carrier
-
 
 /datum/disease/proc/update_stage(new_stage)
 	stage = new_stage
@@ -127,7 +129,6 @@
 			return FALSE
 		end = Temp
 
-
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
@@ -138,7 +139,6 @@
 	if(istype(D, type))
 		return TRUE
 	return FALSE
-
 
 /datum/disease/proc/Copy()
 	//note that stage is not copied over - the copy starts over at stage 1
@@ -159,7 +159,6 @@
 /datum/disease/proc/after_add()
 	return
 
-
 /datum/disease/proc/GetDiseaseID()
 	return "[type]"
 
@@ -167,6 +166,10 @@
 	LAZYREMOVE(affected_mob.diseases, src) //remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
+
+	// needs testing to make sure it works (remove before PR gets merged)
+	if(get_disease_severity_value(severity) >= get_disease_severity_value(DISEASE_SEVERITY_MINOR))
+		REMOVE_TRAIT(affected_mob, TRAIT_DISEASED, DISEASE_TRAIT)
 
 /**
  * Checks the given typepath against the list of viable mobtypes.

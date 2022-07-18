@@ -751,6 +751,8 @@
 	else if(admin_revive)
 		updatehealth()
 		get_up(TRUE)
+
+	REMOVE_TRAIT(src, TRAIT_DEAD, STAT_TRAIT)
 	// The signal is called after everything else so components can properly check the updated values
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 

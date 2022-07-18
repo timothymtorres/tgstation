@@ -185,6 +185,9 @@
 	if(CONFIG_GET(flag/disable_human_mood))
 		handle_hunger_slowdown(human)
 
+	// reset the satiety traits
+	REMOVE_TRAITS_IN(human, SATIETY_TRAIT)
+
 	// If we did anything more then just set and throw alerts here I would add bracketing
 	// But well, it is all we do, so there's not much point bothering with it you get me?
 	switch(nutrition)
@@ -194,8 +197,10 @@
 			human.clear_alert(ALERT_NUTRITION)
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/hungry)
+			ADD_TRAIT(human, TRAIT_HUNGRY, SATIETY_TRAIT)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/starving)
+			ADD_TRAIT(human, TRAIT_STARVING, SATIETY_TRAIT)
 
 ///for when mood is disabled and hunger should handle slowdowns
 /obj/item/organ/internal/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)

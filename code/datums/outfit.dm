@@ -265,6 +265,9 @@
 				if(activate_msg)
 					CRASH("Failed to activate [H]'s [skillchip_instance], on job [src]. Failure message: [activate_msg]")
 
+	// don't forget to test this before PR is merged
+	if(!H.wear_suit && !H.w_uniform))
+		ADD_TRAIT(H, TRAIT_NAKED, CLOTHING_TRAIT)
 
 	H.update_body()
 	return TRUE

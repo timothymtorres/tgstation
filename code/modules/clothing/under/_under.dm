@@ -111,18 +111,26 @@
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
-	if(slot == ITEM_SLOT_ICLOTHING && freshly_laundered)
-		freshly_laundered = FALSE
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
+	if(slot == ITEM_SLOT_ICLOTHING)
+		REMOVE_TRAIT(user, TRAIT_NAKED, CLOTHING_TRAIT)
+		if(freshly_laundered)
+			freshly_laundered = FALSE
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
 
 /obj/item/clothing/under/dropped(mob/user)
+	var/mob/living/carbon/human/target = user
+
 	if(attached_accessory)
 		attached_accessory.on_uniform_dropped(src, user)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.fan_hud_set_fandom()
+		if(ishuman(target))
+			target.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
-				H.update_inv_wear_suit()
+				target.update_inv_wear_suit()
+
+	// need to test and see if dropping a armor suit in hands will bypass this
+	if(ishuman(target) && !user.wear_suit)
+		ADD_TRAIT(user, TRAIT_NAKED, CLOTHING_TRAIT)
+
 	..()
 
 /mob/living/carbon/human/update_suit_sensors()
