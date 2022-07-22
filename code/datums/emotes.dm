@@ -1,5 +1,6 @@
 #define EMOTE_VISIBLE 1
 #define EMOTE_AUDIBLE 2
+#define EMOTE_TRAIT_DURATION 10 SECONDS
 
 /**
  * # Emote
@@ -61,6 +62,8 @@
 	var/can_message_change = FALSE
 	/// How long is the cooldown on the audio of the emote, if it has one?
 	var/audio_cooldown = 2 SECONDS
+	/// The trait a mob gains when they call the emote (the trait is only temporary and then removed)
+	var/emote_trait
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -119,7 +122,16 @@
 	else
 		user.visible_message(msg, blind_message = "<span class='emote'>You hear how <b>[user]</b> [msg]</span>", visible_message_flags = EMOTE_MESSAGE)
 
+	if(emote_trait)
+		ADD_TRAIT(user, emote_trait, EMOTE_TRAIT)
+		// test this to see if a mob gets deleted if this will still runtime?  (blushing checks if mob is QDELETED so yea)
+		addtimer(CALLBACK(user, .proc/remove_trait, user, emote_trait, EMOTE_TRAIT), EMOTE_TRAIT_DURATION, TIMER_UNIQUE|TIMER_OVERRIDE);
+
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
+
+/// Removes the trait from the mob
+/datum/emote/proc/remove_trait(mob/user, trait, source)
+	REMOVE_TRAIT(user, trait, source)
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
@@ -299,3 +311,5 @@
 				ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
 
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
+
+#undef EMOTE_TRAIT_DURATION
