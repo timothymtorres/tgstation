@@ -8,7 +8,7 @@
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
-	emote_trait = TRAIT_EMOTE_BLUSHING
+	emote_trait = TRAIT_EMOTE_BLUSH
 
 /datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -27,6 +27,7 @@
 	message = "bows."
 	message_param = "bows to %t."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_BOW
 
 /datum/emote/living/burp
 	key = "burp"
