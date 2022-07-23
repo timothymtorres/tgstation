@@ -124,14 +124,15 @@
 
 	if(emote_trait)
 		ADD_TRAIT(user, emote_trait, EMOTE_TRAIT)
-		// test this to see if a mob gets deleted if this will still runtime?  (blushing checks if mob is QDELETED so yea)
+		// Emote traits expire after 10 seconds. This helps keep track of a mob's actions before, during, and after a memory is triggered
 		addtimer(CALLBACK(user, .proc/remove_trait, user, emote_trait, EMOTE_TRAIT), EMOTE_TRAIT_DURATION, TIMER_UNIQUE|TIMER_OVERRIDE);
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
 
 /// Removes the trait from the mob
 /datum/emote/proc/remove_trait(mob/user, trait, source)
-	REMOVE_TRAIT(user, trait, source)
+	if(!QDELETED(user))
+		REMOVE_TRAIT(user, trait, source)
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
@@ -311,5 +312,3 @@
 				ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
 
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
-
-#undef EMOTE_TRAIT_DURATION
