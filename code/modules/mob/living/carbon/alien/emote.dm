@@ -5,6 +5,7 @@
 	key = "gnarl"
 	key_third_person = "gnarls"
 	message = "gnarls and shows its teeth..."
+	emote_trait = TRAIT_EMOTE_GNARL
 
 /datum/emote/living/alien/hiss
 	key = "hiss"
@@ -12,6 +13,7 @@
 	message_alien = "hisses."
 	message_larva = "hisses softly."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_HISS
 
 /datum/emote/living/alien/hiss/get_sound(mob/living/user)
 	if(isalienhumanoid(user))
@@ -24,6 +26,7 @@
 	message_larva = "softly roars."
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
+	emote_trait = TRAIT_EMOTE_ROAR
 
 /datum/emote/living/alien/roar/get_sound(mob/living/user)
 	if(isalienhumanoid(user))
