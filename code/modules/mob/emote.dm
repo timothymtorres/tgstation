@@ -67,6 +67,7 @@
 	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
+	emote_trait = TRAIT_EMOTE_FLIP
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
@@ -101,6 +102,7 @@
 	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
+	emote_trait = TRAIT_EMOTE_SPIN
 
 /datum/emote/spin/run_emote(mob/user, params ,  type_override, intentional)
 	. = ..()
