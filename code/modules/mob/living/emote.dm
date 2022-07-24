@@ -34,30 +34,35 @@
 	key_third_person = "burps"
 	message = "burps."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_BURP
 
 /datum/emote/living/choke
 	key = "choke"
 	key_third_person = "chokes"
 	message = "chokes!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_CHOKE
 
 /datum/emote/living/cross
 	key = "cross"
 	key_third_person = "crosses"
 	message = "crosses their arms."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_CROSS
 
 /datum/emote/living/chuckle
 	key = "chuckle"
 	key_third_person = "chuckles"
 	message = "chuckles."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_CHUCKLE
 
 /datum/emote/living/collapse
 	key = "collapse"
 	key_third_person = "collapses"
 	message = "collapses!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_COLLAPSE
 
 /datum/emote/living/collapse/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -70,6 +75,7 @@
 	key_third_person = "coughs"
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_COUGH
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
 	. = ..()
@@ -81,6 +87,7 @@
 	key_third_person = "dances"
 	message = "dances around happily."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_DANCE
 
 /datum/emote/living/deathgasp
 	key = "deathgasp"
@@ -94,6 +101,7 @@
 	message_simple = "stops moving..."
 	cooldown = (15 SECONDS)
 	stat_allowed = HARD_CRIT
+	emote_trait = TRAIT_EMOTE_DEATHGASP
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params, type_override, intentional)
 	var/mob/living/simple_animal/S = user
@@ -112,11 +120,13 @@
 	key = "drool"
 	key_third_person = "drools"
 	message = "drools."
+	emote_trait = TRAIT_EMOTE_DROOL
 
 /datum/emote/living/faint
 	key = "faint"
 	key_third_person = "faints"
 	message = "faints."
+	emote_trait = TRAIT_EMOTE_FAINT
 
 /datum/emote/living/faint/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -130,6 +140,7 @@
 	message = "flaps their wings."
 	hands_use_check = TRUE
 	var/wing_time = 20
+	emote_trait = TRAIT_EMOTE_FLAP
 
 /datum/emote/living/flap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -151,17 +162,20 @@
 	message = "flaps their wings ANGRILY!"
 	hands_use_check = TRUE
 	wing_time = 10
+	emote_trait = TRAIT_EMOTE_AFLAP
 
 /datum/emote/living/frown
 	key = "frown"
 	key_third_person = "frowns"
 	message = "frowns."
+	emote_trait = TRAIT_EMOTE_FROWN
 
 /datum/emote/living/gag
 	key = "gag"
 	key_third_person = "gags"
 	message = "gags."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_GAG
 
 /datum/emote/living/gasp
 	key = "gasp"
@@ -169,6 +183,7 @@
 	message = "gasps!"
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = HARD_CRIT
+	emote_trait = TRAIT_EMOTE_GASP
 
 /datum/emote/living/giggle
 	key = "giggle"
@@ -176,17 +191,20 @@
 	message = "giggles."
 	message_mime = "giggles silently!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_GIGGLE
 
 /datum/emote/living/glare
 	key = "glare"
 	key_third_person = "glares"
 	message = "glares."
 	message_param = "glares at %t."
+	emote_trait = TRAIT_EMOTE_GLARE
 
 /datum/emote/living/grin
 	key = "grin"
 	key_third_person = "grins"
 	message = "grins."
+	emote_trait = TRAIT_EMOTE_GRIN
 
 /datum/emote/living/groan
 	key = "groan"
@@ -194,22 +212,26 @@
 	message = "groans!"
 	message_mime = "appears to groan!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_
 
 /datum/emote/living/grimace
 	key = "grimace"
 	key_third_person = "grimaces"
 	message = "grimaces."
+	emote_trait = TRAIT_EMOTE_GRIMACE
 
 /datum/emote/living/jump
 	key = "jump"
 	key_third_person = "jumps"
 	message = "jumps!"
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_JUMP
 
 /datum/emote/living/kiss
 	key = "kiss"
 	key_third_person = "kisses"
 	cooldown = 3 SECONDS
+	emote_trait = TRAIT_EMOTE_KISS
 
 /datum/emote/living/kiss/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -235,6 +257,7 @@
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 5 SECONDS
 	vary = TRUE
+	emote_trait = TRAIT_EMOTE_LAUGH
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
@@ -256,12 +279,14 @@
 	key_third_person = "looks"
 	message = "looks."
 	message_param = "looks at %t."
+	emote_trait = TRAIT_EMOTE_LOOK
 
 /datum/emote/living/nod
 	key = "nod"
 	key_third_person = "nods"
 	message = "nods."
 	message_param = "nods at %t."
+	emote_trait = TRAIT_EMOTE_NOD
 
 /datum/emote/living/point
 	key = "point"
@@ -269,6 +294,7 @@
 	message = "points."
 	message_param = "points at %t."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_POINT
 
 /datum/emote/living/point/run_emote(mob/user, params, type_override, intentional)
 	message_param = initial(message_param) // reset
@@ -287,6 +313,7 @@
 	key = "pout"
 	key_third_person = "pouts"
 	message = "pouts."
+	emote_trait = TRAIT_EMOTE_POUT
 
 /datum/emote/living/scream
 	key = "scream"
@@ -295,6 +322,7 @@
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
 	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized scream.
+	emote_trait = TRAIT_EMOTE_SCREAM
 
 /datum/emote/living/scream/select_message_type(mob/user, intentional)
 	. = ..()
@@ -305,49 +333,58 @@
 	key = "scowl"
 	key_third_person = "scowls"
 	message = "scowls."
+	emote_trait = TRAIT_EMOTE_SCOWL
 
 /datum/emote/living/shake
 	key = "shake"
 	key_third_person = "shakes"
 	message = "shakes their head."
+	emote_trait = TRAIT_EMOTE_SHAKE
 
 /datum/emote/living/shiver
 	key = "shiver"
 	key_third_person = "shiver"
 	message = "shivers."
+	emote_trait = TRAIT_EMOTE_SHIVER
 
 /datum/emote/living/sigh
 	key = "sigh"
 	key_third_person = "sighs"
 	message = "sighs."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_SIGH
 
 /datum/emote/living/sit
 	key = "sit"
 	key_third_person = "sits"
 	message = "sits down."
+	emote_trait = TRAIT_EMOTE_SIT
 
 /datum/emote/living/smile
 	key = "smile"
 	key_third_person = "smiles"
 	message = "smiles."
+	emote_trait = TRAIT_EMOTE_SMILE
 
 /datum/emote/living/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"
 	message = "sneezes."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_SNEEZE
 
 /datum/emote/living/smug
 	key = "smug"
 	key_third_person = "smugs"
 	message = "grins smugly."
+	emote_trait = TRAIT_EMOTE_SMUG
 
 /datum/emote/living/sniff
 	key = "sniff"
 	key_third_person = "sniffs"
 	message = "sniffs."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_SNIFF
 
 /datum/emote/living/snore
 	key = "snore"
@@ -356,28 +393,33 @@
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
+	emote_trait = TRAIT_EMOTE_SNORE
 
 /datum/emote/living/stare
 	key = "stare"
 	key_third_person = "stares"
 	message = "stares."
 	message_param = "stares at %t."
+	emote_trait = TRAIT_EMOTE_STARE
 
 /datum/emote/living/strech
 	key = "stretch"
 	key_third_person = "stretches"
 	message = "stretches their arms."
+	emote_trait = TRAIT_EMOTE_STRECH
 
 /datum/emote/living/sulk
 	key = "sulk"
 	key_third_person = "sulks"
 	message = "sulks down sadly."
+	emote_trait = TRAIT_EMOTE_SULK
 
 /datum/emote/living/surrender
 	key = "surrender"
 	key_third_person = "surrenders"
 	message = "puts their hands on their head and falls to the ground, they surrender%s!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_SURRENDER
 
 /datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -390,30 +432,36 @@
 	key = "sway"
 	key_third_person = "sways"
 	message = "sways around dizzily."
+	emote_trait = TRAIT_EMOTE_SWAY
 
 /datum/emote/living/tilt
 	key = "tilt"
 	key_third_person = "tilts"
 	message = "tilts their head to the side."
+	emote_trait = TRAIT_EMOTE_TILT
 
 /datum/emote/living/tremble
 	key = "tremble"
 	key_third_person = "trembles"
 	message = "trembles in fear!"
+	emote_trait = TRAIT_EMOTE_TREMBLE
 
 /datum/emote/living/twitch
 	key = "twitch"
 	key_third_person = "twitches"
 	message = "twitches violently."
+	emote_trait = TRAIT_EMOTE_TWITCH
 
 /datum/emote/living/twitch_s
 	key = "twitch_s"
 	message = "twitches."
+	emote_trait = TRAIT_EMOTE_TWITCH_S
 
 /datum/emote/living/wave
 	key = "wave"
 	key_third_person = "waves"
 	message = "waves."
+	emote_trait = TRAIT_EMOTE_WAVE
 
 /datum/emote/living/whimper
 	key = "whimper"
@@ -421,11 +469,13 @@
 	message = "whimpers."
 	message_mime = "appears hurt."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_WHIMPER
 
 /datum/emote/living/wsmile
 	key = "wsmile"
 	key_third_person = "wsmiles"
 	message = "smiles weakly."
+	emote_trait = TRAIT_EMOTE_WSMILE
 
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
 #define YAWN_PROPAGATE_CHANCE_BASE 60
@@ -438,7 +488,8 @@
 	message = "yawns."
 	emote_type = EMOTE_AUDIBLE
 	cooldown = 3 SECONDS
-
+	emote_trait = TRAIT_EMOTE_YAWN
+	
 /datum/emote/living/yawn/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!. || !isliving(user))
@@ -485,6 +536,7 @@
 	key_third_person = "gurgles"
 	message = "makes an uncomfortable gurgle."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_GURGLE
 
 /datum/emote/living/custom
 	key = "me"
@@ -547,21 +599,25 @@
 	sound = 'sound/machines/twobeep.ogg'
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_BEEP
 
 /datum/emote/living/inhale
 	key = "inhale"
 	key_third_person = "inhales"
 	message = "breathes in."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_INHALE
 
 /datum/emote/living/exhale
 	key = "exhale"
 	key_third_person = "exhales"
 	message = "breathes out."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_EXHALE
 
 /datum/emote/living/swear
 	key = "swear"
 	key_third_person = "swears"
 	message = "says a swear word!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_SWEAR
