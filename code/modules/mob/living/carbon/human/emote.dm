@@ -6,6 +6,7 @@
 	key_third_person = "cries"
 	message = "cries."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_CRY
 
 /datum/emote/living/carbon/human/dap
 	key = "dap"
@@ -13,16 +14,19 @@
 	message = "sadly can't find anybody to give daps to, and daps themself. Shameful."
 	message_param = "give daps to %t."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_DAP
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"
 	message = "raises an eyebrow."
+	emote_trait = TRAIT_EMOTE_EYEBROW
 
 /datum/emote/living/carbon/human/grumble
 	key = "grumble"
 	key_third_person = "grumbles"
 	message = "grumbles!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_GRUMBLE
 
 /datum/emote/living/carbon/human/handshake
 	key = "handshake"
@@ -30,6 +34,7 @@
 	message_param = "shakes hands with %t."
 	hands_use_check = TRUE
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_HANDSHAKE
 
 /datum/emote/living/carbon/human/hug
 	key = "hug"
@@ -37,12 +42,14 @@
 	message = "hugs themself."
 	message_param = "hugs %t."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_HUG
 
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
 	key_third_person = "mumbles"
 	message = "mumbles!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_MUMBLE
 
 /datum/emote/living/carbon/human/scream
 	key = "scream"
@@ -52,6 +59,7 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	vary = TRUE
+	emote_trait = TRAIT_EMOTE_SCREAM
 
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/user)
 	if(!ishuman(user))
@@ -67,6 +75,7 @@
 	message = "screeches."
 	emote_type = EMOTE_AUDIBLE
 	vary = FALSE
+	emote_trait = TRAIT_EMOTE_SCREECH
 
 /datum/emote/living/carbon/human/scream/screech/should_play_sound(mob/user, intentional)
 	if(ismonkey(user))
@@ -76,12 +85,14 @@
 /datum/emote/living/carbon/human/pale
 	key = "pale"
 	message = "goes pale for a second."
+	emote_trait = TRAIT_EMOTE_PALE
 
 /datum/emote/living/carbon/human/raise
 	key = "raise"
 	key_third_person = "raises"
 	message = "raises a hand."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_RAISE
 
 /datum/emote/living/carbon/human/salute
 	key = "salute"
@@ -89,16 +100,19 @@
 	message = "salutes."
 	message_param = "salutes to %t."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_SALUTE
 
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"
 	key_third_person = "shrugs"
 	message = "shrugs."
+	emote_trait = TRAIT_EMOTE_SHRUG
 
 /datum/emote/living/carbon/human/wag
 	key = "wag"
 	key_third_person = "wags"
 	message = "wags their tail."
+	emote_trait = TRAIT_EMOTE_WAG
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -115,10 +129,12 @@
 	if(tail?.wag_flags & WAG_ABLE)
 		return ..()
 	return FALSE
+	
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"
 	message = "their wings."
+	emote_trait = TRAIT_EMOTE_WING
 
 /datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -157,31 +173,37 @@
 	key = "gnarl"
 	key_third_person = "gnarls"
 	message = "gnarls and shows its teeth..."
+	emote_trait = TRAIT_EMOTE_GNARL
 
 /datum/emote/living/carbon/human/monkey/roll
 	key = "roll"
 	key_third_person = "rolls"
 	message = "rolls."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_ROLL
 
 /datum/emote/living/carbon/human/monkey/scratch
 	key = "scratch"
 	key_third_person = "scratches"
 	message = "scratches."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_SCRATCH
 
 /datum/emote/living/carbon/human/monkey/screech/roar
 	key = "roar"
 	key_third_person = "roars"
 	message = "roars."
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_ROAR
 
 /datum/emote/living/carbon/human/monkey/tail
 	key = "tail"
 	message = "waves their tail."
+	emote_trait = TRAIT_EMOTE_TAIL
 
 /datum/emote/living/carbon/human/monkeysign
 	key = "sign"
 	key_third_person = "signs"
 	message_param = "signs the number %t."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_SIGN
