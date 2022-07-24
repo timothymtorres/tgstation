@@ -5,15 +5,18 @@
 	key = "airguitar"
 	message = "is strumming the air and headbanging like a safari chimp."
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_AIRGUITAR
 
 /datum/emote/living/carbon/blink
 	key = "blink"
 	key_third_person = "blinks"
 	message = "blinks."
+	emote_trait = TRAIT_EMOTE_BLINK
 
 /datum/emote/living/carbon/blink_r
 	key = "blink_r"
 	message = "blinks rapidly."
+	emote_trait = TRAIT_EMOTE_BLINK_R
 
 /datum/emote/living/carbon/clap
 	key = "clap"
@@ -24,6 +27,7 @@
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 5 SECONDS
 	vary = TRUE
+	emote_trait = TRAIT_EMOTE_CLAP
 
 /datum/emote/living/carbon/clap/get_sound(mob/living/user)
 	if(ishuman(user))
@@ -41,6 +45,7 @@
 	message = "cracks their knuckles."
 	sound = 'sound/misc/knuckles.ogg'
 	cooldown = 6 SECONDS
+	emote_trait = TRAIT_EMOTE_CRACK
 
 /datum/emote/living/carbon/crack/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
 	if(!iscarbon(user) || user.usable_hands < 2)
@@ -51,6 +56,7 @@
 	key = "circle"
 	key_third_person = "circles"
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_CIRCLE
 
 /datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -67,11 +73,13 @@
 	message = "moans!"
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE
+	emote_trait = TRAIT_EMOTE_MOAN
 
 /datum/emote/living/carbon/noogie
 	key = "noogie"
 	key_third_person = "noogies"
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_NOOGIE
 
 /datum/emote/living/carbon/noogie/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -90,6 +98,7 @@
 	message = "rolls."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_ROLL
 
 /datum/emote/living/carbon/scratch
 	key = "scratch"
@@ -97,6 +106,7 @@
 	message = "scratches."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_SCRATCH
 
 /datum/emote/living/carbon/sign
 	key = "sign"
@@ -104,6 +114,7 @@
 	message_param = "signs the number %t."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_SIGN
 
 /datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
@@ -116,12 +127,14 @@
 	message_param = "raises %t fingers."
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 	hands_use_check = TRUE
+	emote_trait = TRAIT_EMOTE_SIGNAL
 
 /datum/emote/living/carbon/slap
 	key = "slap"
 	key_third_person = "slaps"
 	hands_use_check = TRUE
 	cooldown = 3 SECONDS // to prevent endless table slamming
+	emote_trait = TRAIT_EMOTE_SLAP
 
 /datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -138,8 +151,10 @@
 	key = "tail"
 	message = "waves their tail."
 	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+	emote_trait = TRAIT_EMOTE_TAIL
 
 /datum/emote/living/carbon/wink
 	key = "wink"
 	key_third_person = "winks"
 	message = "winks."
+	emote_trait = TRAIT_EMOTE_WINK
