@@ -135,6 +135,12 @@
 
 	alarm_manager = new(src)
 	my_area = get_area(src)
+
+	if(my_area)
+		if(my_area.air_alarm)
+			log_mapping("Duplicate air alarm created at [AREACOORD(src)]. Original at [AREACOORD(area.air_alarm)].")
+		my_area.air_alarm = src
+
 	update_appearance()
 
 	set_frequency(frequency)
@@ -143,9 +149,9 @@
 		/obj/item/circuit_component/air_alarm,
 	))
 
-
-
 /obj/machinery/airalarm/Destroy()
+	if(my_area.air_alarm && my_area.air_alarm == src)
+		my_area.air_alarm = null
 	if(my_area)
 		my_area = null
 	SSradio.remove_object(src, frequency)

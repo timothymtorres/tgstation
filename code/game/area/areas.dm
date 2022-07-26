@@ -60,6 +60,7 @@
 	var/always_unpowered = FALSE
 
 	var/obj/machinery/power/apc/apc = null
+	var/obj/machinery/airalarm/air_alarm = null
 
 	var/power_equip = TRUE
 	var/power_light = TRUE
