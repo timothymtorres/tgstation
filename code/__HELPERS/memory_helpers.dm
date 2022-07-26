@@ -317,12 +317,39 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		else if(!location.powered(AREA_USAGE_ENVIRON) || !location.air_alarm || location.air_alarm.mode == AALARM_MODE_OFF || location.air_alarm.shorted)
 			location_descriptions += "unventilated"
 
-	var/turf/current_turf = get_turf(human_target)
+		// time to check environemental hazards
+		var/turf/current_turf = get_turf(human_target)
 
-	if(current_turf.has_gravity())
-		location_descriptions += "zero-gravity"
-	if(current_turf.)
+		if(current_turf.has_gravity())
+			location_descriptions += "zero-gravity"
 
+		var/datum/gas_mixture/environment = current_turf.return_air()
+		if(isfloorturf(current_turf) && environment)
+			var/list/env_gases = environment.gases
+			var/list/gases_to_check = list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide)
+			var/toxic_gases
+			for(var/id in env_gases)
+				if(id in gases_to_check)
+					continue
+				toxic_gases = TRUE
+				break
+
+			if(toxic_gases || (env_gases[/datum/gas/carbon_dioxide] && env_gases[/datum/gas/carbon_dioxide][MOLES] >= 10))
+				location_descriptions += pick("polluted", "contaminated", "noxious", "nauseous")
+			if(!(env_gases[/datum/gas/oxygen] && env_gases[/datum/gas/oxygen][MOLES] >= 16))
+				location_descriptions += "asphyxiating"
+
+			var/env_temperature = enviornment.temperature
+			if(env_temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+				location_descriptions += pick("frigid", "frozen", "freezing")
+			else if(env_temperature >= BODYTEMP_HEAT_DAMAGE_LIMIT)
+				location_descriptions += pick("searing", "scorching", "burning")
+
+			var/env_pressure = environment.return_pressure()
+			if(env_pressure <= HAZARD_LOW_PRESSURE)
+				location_descriptions += pick("depressurized", "decompressed")
+			else if (env_pressure >= HAZARD_HIGH_PRESSURE)
+				location_descriptions += pick("overpressurized", "compressed")
 
 ///returns the story name of a mob
 /datum/mind/proc/build_story_mob(mob/living/target)
