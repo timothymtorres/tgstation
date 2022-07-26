@@ -172,6 +172,16 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 					possible_descriptions += "bloody"
 					break
 
+		// if the person is a masked "Unknown"
+		if(human_target.get_visible_name() == "Unknown")
+			possible_descriptions += pick("unknown", "anonymous", "disguised", "masked", "clandestine", "covert", "suspicious")
+
+		// if there is a mismatch between their ID and face ie. "John Doe (as George Melons)"
+		var/face_name = human_target.get_face_name("")
+		var/id_name = human_target.get_id_name("")
+		if(face_name && id_name && (id_name != face_name))
+			possible_descriptions += pick("imitated", "fake", "deceitful", "deceptive")
+
 		if(human_target.handcuffed)
 			possible_descriptions += pick("handcuffed", "restrained", "shackled")
 		if(human_target.legcuffed)
@@ -240,8 +250,78 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		if(human_target.has_status_effect(/datum/status_effect/grouped/surrender))
 			possible_descriptions += "surrendering"
 
+	/// location related descriptions
+	var/list/location_descriptions = list()
+	var/area/location = get_area(human_target)
 
+	// double check this logic to make sure it's valid
+	if(location.requires_power && !location.always_unpowered)
+		var/list/location_turfs = get_area_turfs(location)
+		var/is_area_breached = FALSE
+		var/lit_turfs = 0
+		var/ignored_turfs = 0
 
+		// we are going to count all the turfs in our area and see if they are lit
+		for(var/turf/area_turf in location_turfs)
+			if(area_turf.density || isgroundlessturf(area_turf)) // stuff like walls & openspace don't count
+				ignored_turfs += 1
+			else if(area_turf.get_lumcount() > LIGHTING_TILE_IS_DARK) // if turf has enough lighting then we tally it
+				lit_turfs += 1
+
+			if(isspaceturf(area_turf))
+				is_area_breached = TRUE
+
+		// power is pretty simple to check (Hey double check what happens if we short or destroy the areas APC)
+		location_descriptions += location.powered(AREA_USAGE_EQUIP) ? "powered" : "unpowered"
+
+		// lighting descriptions
+		if(location.powered(AREA_USAGE_LIGHT) && location.lightswitch)
+			var/night_lighting = FALSE
+			var/blinking = FALSE
+
+			if(location.fire)
+				blinking = TRUE
+			for(var/obj/machinery/light/area_light in location)
+				if(area_light.nightshift_enabled)
+					night_lighting = TRUE
+				if(area_light.low_power_mode || area_light.major_emergency || area_light.flickering)
+					blinking = TRUE
+
+			var/lit_area_percent = 0
+			if(lit_turfs && (length(location_turfs) - ignored_turfs)) // we don't wanna accidentally divide by zero
+				lit_area_percent = lit_turfs / (length(location_turfs) - ignored_turfs)
+
+			if(lit_area_percent <= 0.20) // 0%-20% lighting
+				location_descriptions += "dark"
+			else if(lit_area_percent <= 0.60) // 20%-60% lighting
+				location_descriptions += "dim"
+			else // 60%-100% lighting
+				location_descriptions += "lit"
+				if(blinking)
+					location_descriptions += pick("blinking", "flickering", "flashing")
+				else if(night_lighting)
+					location_descriptions += "tinted"
+		else // APC light switch is off
+			location_descriptions += "dark"
+
+		if(is_area_breached)
+			location_descriptions += "breached"
+		else if(location.powered(AREA_USAGE_ENVIRON) && location.air_alarm)
+			if(location.air_alarm.mode == AALARM_MODE_SCRUBBING)
+				location_descriptions += "ventilated"
+			else if(location.air_alarm.mode == AALARM_MODE_SCRUBBING || location.air_alarm.mode == AALARM_MODE_PANIC)
+				location_descriptions += "siphoned"
+			else if(location.air_alarm.mode == AALARM_MODE_REFILL || location.air_alarm.mode == AALARM_MODE_FLOOD)
+				location_descriptions += "inflating"
+		// if APC environment switch off, no air alarm present, air alarm turned off, or air alarm shorted by cut wire
+		else if(!location.powered(AREA_USAGE_ENVIRON) || !location.air_alarm || location.air_alarm.mode == AALARM_MODE_OFF || location.air_alarm.shorted)
+			location_descriptions += "unventilated"
+
+	var/turf/current_turf = get_turf(human_target)
+
+	if(current_turf.has_gravity())
+		location_descriptions += "zero-gravity"
+	if(current_turf.)
 
 
 ///returns the story name of a mob
