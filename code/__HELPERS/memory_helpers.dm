@@ -100,6 +100,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_FEARLESS = list("fearless"),
 	TRAIT_KNOCKEDOUT = list("unconcious"),
 	TRAIT_CRITICAL_CONDITION = list("dying"),
+	TRAIT_PERMANENTLY_ONFIRE = list("melting"), // for people in lava
 
 	TRAIT_HEADLESS = list("headless", "decapitated", "beheaded"),
 	TRAIT_SMOKING = list("smoking"),
@@ -254,6 +255,10 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	var/list/location_descriptions = list()
 	var/area/location = get_area(human_target)
 
+	// area is too big to be considered a room
+	if(location.areasize > AREASIZE_TOO_BIG_FOR_ROOM)
+		return
+
 	// double check this logic to make sure it's valid
 	if(location.requires_power && !location.always_unpowered)
 		var/list/location_turfs = get_area_turfs(location)
@@ -320,8 +325,22 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		// time to check environemental hazards
 		var/turf/current_turf = get_turf(human_target)
 
-		if(current_turf.has_gravity())
+		if(!current_turf.has_gravity())
 			location_descriptions += "zero-gravity"
+
+		switch(location.beauty)
+			if(-INFINITY to BEAUTY_LEVEL_HORRID)
+				location_descriptions += pick("nasty", "filthy", "trashy", "littered")
+			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
+				location_descriptions += pick("untidy", "messy", "unkempt")
+			if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
+				// plain jane room gets no description
+			if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
+				location_descriptions += pick("organized", "furnished", "tidy")
+			if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
+				location_descriptions += pick("spotless", "clean", "sanitary")
+			if(BEAUTY_LEVEL_GREAT to INFINITY)
+				location_descriptions += pick("luxurious", "immaculate", "elegant", "polished")
 
 		var/datum/gas_mixture/environment = current_turf.return_air()
 		if(isfloorturf(current_turf) && environment)

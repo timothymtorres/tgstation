@@ -38,8 +38,6 @@
 	var/totalbeauty = 0
 	/// Beauty average per open turf in the area
 	var/beauty = 0
-	/// If a room is too big it doesn't have beauty.
-	var/beauty_threshold = 150
 
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
@@ -460,7 +458,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!areasize)
 		beauty = 0
 		return FALSE
-	if(areasize >= beauty_threshold)
+	if(areasize >= AREASIZE_TOO_BIG_FOR_ROOM)
 		beauty = 0
 		return FALSE //Too big
 	beauty = totalbeauty / areasize
