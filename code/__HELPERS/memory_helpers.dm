@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_DISFIGURED = list("disfigured"),
 	TRAIT_SILENT_FOOTSTEPS = list("stealthy"),
 	TRAIT_NO_SOUL = list("soulless", "forsaken", "tainted", "defiled", "desecrated", "undead"),
+	TRAIT_NAIVE = list("naive"),
 	TRAIT_BLUSHING = list("blushing"),
 	TRAIT_MOVE_FLYING = list("flying"),
 	TRAIT_MOVE_FLOATING = list("floating", "drifting"),
