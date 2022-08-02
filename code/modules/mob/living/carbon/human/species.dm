@@ -1499,6 +1499,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
+		// double check to make sure this doesn't happen for dead mobs
+		if(prob(20))
+			humi.emote("sweat")
+
 		//Remove any slowdown from the cold.
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		// display alerts based on how hot it is
@@ -1515,6 +1519,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// clear any hot moods and apply cold mood
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+
+		// double check to make sure this doesn't happen for dead mobs
+		if(prob(20))
+			humi.emote("shiver")
+
 		// Apply cold slow down
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based how cold it is

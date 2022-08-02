@@ -102,8 +102,6 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_KNOCKEDOUT = list("unconcious"),
 	TRAIT_CRITICAL_CONDITION = list("dying"),
 	TRAIT_PERMANENTLY_ONFIRE = list("melting"), // for people in lava
-
-
 	TRAIT_HEADLESS = list("headless", "decapitated", "beheaded"),
 	TRAIT_SMOKING = list("smoking"),
 	TRAIT_DISEASED = list("sick", "infected", "diseased"),
@@ -113,8 +111,6 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_BUCKLED = list("buckled", "sitting"), // at some point make traits for riding vehicles (scooters, borgs, skateboard, etc.)
 	TRAIT_TATTOOED = list("tattooed"),
 	TRAIT_SCARRED = list("scarred", "grotesque"),
-
-
 	// quirks
 	TRAIT_PACIFISM = list("gentle", "harmless", "innocent"),
 	TRAIT_DEPRESSION = list("depressed", "sad", "moody"),
@@ -234,6 +230,8 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 				if(!QDELETED(bloody_item) && HAS_BLOOD_DNA(bloody_item))
 					possible_descriptions += "bloody"
 					break
+
+
 
 		// make this into a trait
 		// if the person is a masked "Unknown"

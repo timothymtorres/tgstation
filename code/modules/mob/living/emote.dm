@@ -212,7 +212,7 @@
 	message = "groans!"
 	message_mime = "appears to groan!"
 	emote_type = EMOTE_AUDIBLE
-	emote_trait = TRAIT_EMOTE_
+	emote_trait = TRAIT_EMOTE_GROAN
 
 /datum/emote/living/grimace
 	key = "grimace"
@@ -434,6 +434,12 @@
 	message = "sways around dizzily."
 	emote_trait = TRAIT_EMOTE_SWAY
 
+/datum/emote/living/sweat
+	key = "sweat"
+	key_third_person = "sweats"
+	message = "sweats heavily."
+	emote_trait = TRAIT_EMOTE_SWEAT
+
 /datum/emote/living/tilt
 	key = "tilt"
 	key_third_person = "tilts"
@@ -489,7 +495,7 @@
 	emote_type = EMOTE_AUDIBLE
 	cooldown = 3 SECONDS
 	emote_trait = TRAIT_EMOTE_YAWN
-	
+
 /datum/emote/living/yawn/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!. || !isliving(user))
