@@ -412,6 +412,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// When someone has a harmful disease
 #define TRAIT_DISEASED "diseased"
 
+/// When someone has a tattoo
+#define TRAIT_TATTOOED "tattooed"
+
+/// When someone has a scar
+#define TRAIT_SCARRED "scarred"
+
 /// When someone loses or has no head
 #define TRAIT_HEADLESS "headless"
 

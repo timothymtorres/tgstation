@@ -103,6 +103,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_CRITICAL_CONDITION = list("dying"),
 	TRAIT_PERMANENTLY_ONFIRE = list("melting"), // for people in lava
 
+
 	TRAIT_HEADLESS = list("headless", "decapitated", "beheaded"),
 	TRAIT_SMOKING = list("smoking"),
 	TRAIT_DISEASED = list("sick", "infected", "diseased"),
@@ -110,6 +111,9 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_SUFFOCATING = list("suffocating", "gasping", "choking"),
 	TRAIT_NAKED = list("naked", "nude", "undressed"),
 	TRAIT_BUCKLED = list("buckled", "sitting"), // at some point make traits for riding vehicles (scooters, borgs, skateboard, etc.)
+	TRAIT_TATTOOED = list("tattooed"),
+	TRAIT_SCARRED = list("scarred", "grotesque"),
+
 
 	// quirks
 	TRAIT_PACIFISM = list("gentle", "harmless", "innocent"),
@@ -119,7 +123,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_SPIRITUAL = list("spiritual"),
 	TRAIT_VORACIOUS = list("voracious"),
 	TRAIT_FREERUNNING = list("athletic", "nimble"),
-	TRAIT_SKITTISH = list("skittish", "frisky", "fidgetey"),
+	TRAIT_SKITTISH = list("skittish", "frisky", "fidgetey", "panicky", "jumpy"),
 	TRAIT_FRIENDLY = list("friendly", "compassionate", "pleasant", "tender"),
 	TRAIT_SNOB = list("rude", "pretentious", "obnoxious"),
 	TRAIT_BALD = list("bald"),
@@ -151,14 +155,71 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	TRAIT_PHOBIA = list("fearful", "afraid"),
 	TRAIT_TONGUE_TIED = list("speechless", "inarticulate", "incoherent"),
 	TRAIT_GAMER = list("nerdy", "geeky"),
-
-	//berserk is the trait source? BERSERK_TRAIT = list("harmful", "dangerious", "violent"),
-	// these trait doesn't exist yet, plz don't forget to add
-	//TRAIT_AFRAID = list("terrified", "panicking", "trembling"
 ))
 
+GLOBAL_LIST_INIT(mob_status_adjectives, list(
+	/datum/status_effect/incapacitating/immobilized = list("immoblized"),
+	/datum/status_effect/incapacitating/stun = list("stunned", "exhausted"),
+	/datum/status_effect/incapacitating/paralyzed = list("paralyzed"),
+	/datum/status_effect/incapacitating/incapacitated = list("incapacitated"),
+	/datum/status_effect/incapacitating/unconscious = list("unconscious"),
+	/datum/status_effect/incapacitating/sleeping = list("sleeping", "snoring"),
+	/datum/status_effect/grouped/stasis = list("comatose"),
+	/datum/status_effect/spasms = list("spasming"),
+	/datum/status_effect/dna_melt = list("mutating"),
+	/datum/status_effect/amok = list("violent", "deadly", "rabid"),
+	/datum/status_effect/mayhem = list("murderous", "enranged", "wrathful"),
+	/datum/status_effect/blooddrunk = list("invulnerable", "invincible"),
+	/datum/status_effect/fleshmend = list("regenerating"),
+	/datum/status_effect/regenerative_core = list("rejuvenating"),
+	/datum/status_effect/marshal = list("regenerating", "rejuvenating", "painless"),
+	/datum/status_effect/exercised = list("robust", "vigorous", "healthy"),
+	/datum/status_effect/crucible_soul = list("incorporeal", "ethereal", "ghostly"),
+	/datum/status_effect/ghoul = list("ghoulish", "ghastly", "fiendish"),
+	/datum/status_effect/freezing_blast = list("chilled", "icy", "frozen"),
+	/datum/status_effect/freon = list("chilled", "icy", "frozen"),
+	/datum/status_effect/discoordinated = list("discoordinated"),
+	/datum/status_effect/woozy = list("woozy"),
+	/datum/status_effect/in_love = list("infatuated"),
+	/datum/status_effect/grouped/heldup = list("coerced", "captive", "detained"),
+	/datum/status_effect/holdup = list("threatening", "abducting", "subjugating"),
+	/datum/status_effect/grouped/surrender = list("surrendering", "subdued"),
+	/datum/status_effect/determined = list("determined", "persistent"),
+	/datum/status_effect/stacking/saw_bleed = list("mutilated"),
+	/datum/status_effect/necropolis_curse = list("cursed"),
+	/datum/status_effect/speech/stutter = list("stuttering"),
+	/datum/status_effect/speech/slurring = list("slurring"),
+	/datum/status_effect/wish_granters_gift = list("reincarnated"),
+	/datum/status_effect/good_music = list("soothed"),
+	/datum/status_effect/stoned = list("stoned"),
+	/datum/status_effect/inebriated/tipsy = list("tipsy"),
+	/datum/status_effect/inebriated/drunk = list("drunk", "hammered"),
+	/datum/status_effect/eldritch = list("marked"),
+	/datum/status_effect/trance = list("hypnotized", "mesmerized"),
+	/datum/status_effect/convulsing = list("convulsing"),
+	/datum/status_effect/stagger = list("staggering"),
+	/datum/status_effect/dizziness = list("dizzy"),
+	/datum/status_effect/jitter = list("jittery"),
+	/datum/status_effect/confusion = list("confused"),
+	/datum/status_effect/drugginess = list("stoned"),
+	/datum/status_effect/limp = list("limping"),
+	// these need to be tested properly
+	/datum/status_effect/wound/blunt = list("bruised"),
+	/datum/status_effect/wound/slash = list("slashed"),
+	/datum/status_effect/wound/pierce = list("stabbed"),
+	/datum/status_effect/wound/burn = list("burned"),
+))
+
+/datum/mind/proc/create_memory(mob/living/target)
+	var/area/location = get_area(human_target)
+	var/turf/current_turf = get_turf(human_target)
+
+	var/list/mob_adjectives = get_mob_adjectives(mob/living/target)
+	var/list/location_adjectives = get_location_adjectives(turf/current_turf)
+
+
 ///returns an adjective for a human mob
-/datum/mind/proc/get_mob_adjective(mob/living/target)
+/datum/mind/proc/get_mob_adjectives(mob/living/target)
 	var/list/possible_descriptions = list()
 
 	if(ishuman(target))
@@ -174,10 +235,12 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 					possible_descriptions += "bloody"
 					break
 
+		// make this into a trait
 		// if the person is a masked "Unknown"
 		if(human_target.get_visible_name() == "Unknown")
 			possible_descriptions += pick("unknown", "anonymous", "disguised", "masked", "clandestine", "covert", "suspicious")
 
+		// make this into a trait
 		// if there is a mismatch between their ID and face ie. "John Doe (as George Melons)"
 		var/face_name = human_target.get_face_name("")
 		var/id_name = human_target.get_id_name("")
@@ -195,66 +258,18 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		if(!isturf(human_target.loc) || human_target.is_holding(/obj/item/kirbyplants))
 			possible_descriptions += pick("hidden", "concealed")
 
+		if(human_target.status_flags & GODMODE)
+			possible_descriptions += "immortal"
+
 		if(human_target.is_bleeding())
 			possible_descriptions += "bleeding"
 		if(human_target.on_fire())
 			possible_descriptions += "burning"
 
-		// status effects
-		if(human_target.IsSleeping())
-			possible_descriptions += "sleeping"
-		if(human_target.IsStun())
-			possible_descriptions += pick("stunned", "exhausted")
-		if(human_target.IsImmobilized())
-			possible_descriptions += "immoblized"
-		if(human_target.IsParalyzed())
-			possible_descriptions += "paralyzed"
-		if(human_target.IsFrozen())
-			possible_descriptions += "frozen"
-
-		if(human_target.has_status_effect(/datum/status_effect/inebriated/tipsy))
-			possible_descriptions += "tipsy"
-		if(human_target.has_status_effect(/datum/status_effect/inebriated/drunk))
-			possible_descriptions += "drunk"
-		if(human_target.has_status_effect(/datum/status_effect/eldritch))
-			possible_descriptions += "marked"
-		if(human_target.has_status_effect(/datum/status_effect/trance))
-			possible_descriptions += pick("hypnotized", "mesmerized")
-		if(human_target.has_status_effect(/datum/status_effect/convulsing))
-			possible_descriptions += "convulsing"
-		if(human_target.has_status_effect(/datum/status_effect/stagger))
-			possible_descriptions += "staggering"
-		if(human_target.has_status_effect(/datum/status_effect/dizziness))
-			possible_descriptions += "dizzy"
-		if(human_target.has_status_effect(/datum/status_effect/jitter))
-			possible_descriptions += "jittery"
-		if(human_target.has_status_effect(/datum/status_effect/confusion))
-			possible_descriptions += "confused"
-		if(human_target.has_status_effect(/datum/status_effect/drugginess))
-			possible_descriptions += "stoned"
-		if(human_target.has_status_effect(/datum/status_effect/limp))
-			possible_descriptions += "limping"
-
-		// these need to be tested properly
-		if(human_target.has_status_effect(/datum/status_effect/wound/blunt))
-			possible_descriptions += "bruised"
-		if(human_target.has_status_effect(/datum/status_effect/wound/slash))
-			possible_descriptions += "slashed"
-		if(human_target.has_status_effect(/datum/status_effect/wound/pierce))
-			possible_descriptions += "stabbed"
-		if(human_target.has_status_effect(/datum/status_effect/wound/burn))
-			possible_descriptions += "burned"
-
-		if(human_target.has_status_effect(/datum/status_effect/grouped/heldup))
-			possible_descriptions += "captive"
-		if(human_target.has_status_effect(/datum/status_effect/holdup))
-			possible_descriptions += "threatening"
-		if(human_target.has_status_effect(/datum/status_effect/grouped/surrender))
-			possible_descriptions += "surrendering"
-
-	/// location related descriptions
+///returns a list of adjectives for the location the event takes place
+/datum/mind/proc/get_location_adjectives(turf/current_turf)
 	var/list/location_descriptions = list()
-	var/area/location = get_area(human_target)
+	var/area/location = get_area(current_turf)
 
 	// area is too big to be considered a room
 	if(location.areasize > AREASIZE_TOO_BIG_FOR_ROOM)
@@ -277,6 +292,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 			if(isspaceturf(area_turf))
 				is_area_breached = TRUE
 
+		// may want to add a check to prevent maintanence areas from being "powered"
 		// power is pretty simple to check (Hey double check what happens if we short or destroy the areas APC)
 		location_descriptions += location.powered(AREA_USAGE_EQUIP) ? "powered" : "unpowered"
 
@@ -323,9 +339,6 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 		else if(!location.powered(AREA_USAGE_ENVIRON) || !location.air_alarm || location.air_alarm.mode == AALARM_MODE_OFF || location.air_alarm.shorted)
 			location_descriptions += "unventilated"
 
-		// time to check environemental hazards
-		var/turf/current_turf = get_turf(human_target)
-
 		if(!current_turf.has_gravity())
 			location_descriptions += "zero-gravity"
 
@@ -343,6 +356,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 			if(BEAUTY_LEVEL_GREAT to INFINITY)
 				location_descriptions += pick("luxurious", "immaculate", "elegant", "polished")
 
+		// time to check environemental hazards
 		var/datum/gas_mixture/environment = current_turf.return_air()
 		if(isfloorturf(current_turf) && environment)
 			var/list/env_gases = environment.gases

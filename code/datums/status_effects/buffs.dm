@@ -147,7 +147,6 @@
 	tick_interval = 8
 	alert_type = null
 
-
 /datum/status_effect/sword_spin/on_apply()
 	owner.visible_message(span_danger("[owner] begins swinging the sword with inhuman strength!"))
 	var/oldcolor = owner.color
@@ -159,7 +158,6 @@
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
-
 /datum/status_effect/sword_spin/tick()
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	var/obj/item/slashy
@@ -169,7 +167,6 @@
 
 /datum/status_effect/sword_spin/on_remove()
 	owner.visible_message(span_warning("[owner]'s inhuman strength dissipates and the sword's runes grow cold!"))
-
 
 //Used by changelings to rapidly heal
 //Heals 10 brute and oxygen damage every second, and 5 fire
@@ -307,7 +304,6 @@
 	new /obj/effect/decal/cleanable/ash(owner.loc)
 	new /obj/item/rod_of_asclepius(owner.loc)
 	qdel(owner)
-
 
 /datum/status_effect/good_music
 	id = "Good Music"

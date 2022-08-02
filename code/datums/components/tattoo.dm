@@ -23,6 +23,7 @@
 	tatted_limb.AddElement(/datum/element/art/commoner, 15)
 
 	if(tatted_limb.owner)
+		ADD_TRAIT(tatted_limb.owner, TRAIT_TATTOOED, REF(tatted_limb))
 		setup_tatted_owner(tatted_limb.owner)
 
 /datum/component/tattoo/Destroy(force, silent)
@@ -31,6 +32,7 @@
 	var/obj/item/bodypart/tatted_limb = parent
 	if(tatted_limb.owner)
 		clear_tatted_owner(tatted_limb.owner)
+		REMOVE_TRAIT(tatted_limb.owner, TRAIT_TATTOOED, REF(tatted_limb))
 	parent.RemoveElement(/datum/element/art/commoner)
 	return ..()
 

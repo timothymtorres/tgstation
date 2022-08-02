@@ -30,8 +30,10 @@
 /datum/scar/Destroy(force, ...)
 	if(limb)
 		LAZYREMOVE(limb.scars, src)
+		REMOVE_TRAIT(victim, TRAIT_SCARRED, REF(limb))
 	if(victim)
 		LAZYREMOVE(victim.all_scars, src)
+		REMOVE_TRAIT(victim, TRAIT_SCARRED)
 	limb = null
 	victim = null
 	. = ..()
@@ -54,6 +56,7 @@
 	if(limb.owner)
 		victim = limb.owner
 		persistent_character_slot = victim.mind?.original_character_slot_index
+		ADD_TRAIT(victim, TRAIT_SCARRED, REF(limb))
 	if(add_to_scars)
 		LAZYADD(limb.scars, src)
 		if(victim)
@@ -98,6 +101,7 @@
 		if(victim.get_biological_state() != biology)
 			qdel(src)
 			return
+		ADD_TRAIT(victim, TRAIT_SCARRED, REF(limb))
 		LAZYADD(victim.all_scars, src)
 
 	src.severity = severity
