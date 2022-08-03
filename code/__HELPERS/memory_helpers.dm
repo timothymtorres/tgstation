@@ -331,56 +331,63 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 	var/list/mob_adjectives = get_mob_adjectives(mob/living/target)
 	var/list/location_adjectives = get_location_adjectives(turf/current_turf)
 
-
 ///returns an adjective for a human mob
 /datum/mind/proc/get_mob_adjectives(mob/living/target)
-	var/list/possible_descriptions = list()
+	var/list/mob_adjectives = list()
+
+	// this needs to be tested
+	for(var/trait in target.status_traits)
+		if(GLOB.mob_trait_adjectives[trait])
+			mob_adjectives += pick(GLOB.mob_trait_adjectives[trait])
+
+	// and this needs testing as well
+	for(var/datum/status_effect/present_effect as anything in target.status_effects)
+		if(GLOB.mob_status_adjectives[present_effect])
+			mob_adjectives += pick(GLOB.mob_status_adjectives[present_effect])
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 
-		// if hands are bloody
+		// if hands are bloody (tbh this should be a trait)
 		if(!human_target.gloves && human_target.blood_in_hands && (human_target.num_hands > 0))
-			possible_descriptions += "bloody"
+			mob_adjectives += "bloody"
 		else // or if clothes are covered in blood
 			// pretty sure this code doesn't work and needs to be double checked
 			for(var/obj/bloody_item in human_target.get_all_slots() | human_target.held_items)
 				if(!QDELETED(bloody_item) && HAS_BLOOD_DNA(bloody_item))
-					possible_descriptions += "bloody"
+					mob_adjectives += "bloody"
 					break
-
-
 
 		// make this into a trait
 		// if the person is a masked "Unknown"
 		if(human_target.get_visible_name() == "Unknown")
-			possible_descriptions += pick("unknown", "anonymous", "disguised", "masked", "clandestine", "covert", "suspicious")
+			mob_adjectives += pick("unknown", "anonymous", "disguised", "masked", "clandestine", "covert", "suspicious")
 
 		// make this into a trait
 		// if there is a mismatch between their ID and face ie. "John Doe (as George Melons)"
 		var/face_name = human_target.get_face_name("")
 		var/id_name = human_target.get_id_name("")
 		if(face_name && id_name && (id_name != face_name))
-			possible_descriptions += pick("imitated", "fake", "deceitful", "deceptive")
+			mob_adjectives += pick("imitated", "fake", "deceitful", "deceptive")
 
 		if(human_target.handcuffed)
-			possible_descriptions += pick("handcuffed", "restrained", "shackled")
+			mob_adjectives += pick("handcuffed", "restrained", "shackled")
 		if(human_target.legcuffed)
-			possible_descriptions += pick("legcuffed", "restrained", "shackled")
+			mob_adjectives += pick("legcuffed", "restrained", "shackled")
 
 		if(!human_target.has_light_nearby())
-			possible_descriptions += pick("shadowy", "dark", "lurking", "sneaking", "creeping")
+			mob_adjectives += pick("shadowy", "dark", "lurking", "sneaking", "creeping")
 
 		if(!isturf(human_target.loc) || human_target.is_holding(/obj/item/kirbyplants))
-			possible_descriptions += pick("hidden", "concealed")
+			mob_adjectives += pick("hidden", "concealed")
 
 		if(human_target.status_flags & GODMODE)
-			possible_descriptions += "immortal"
+			mob_adjectives += "immortal"
 
 		if(human_target.is_bleeding())
-			possible_descriptions += "bleeding"
+			mob_adjectives += "bleeding"
 		if(human_target.on_fire())
-			possible_descriptions += "burning"
+			mob_adjectives += "burning"
 
 ///returns a list of adjectives for the location the event takes place
 /datum/mind/proc/get_location_adjectives(turf/current_turf)
