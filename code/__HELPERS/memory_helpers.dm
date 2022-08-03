@@ -389,9 +389,11 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 		if(human_target.on_fire())
 			mob_adjectives += "burning"
 
+	return mob_adjectives
+
 ///returns a list of adjectives for the location the event takes place
 /datum/mind/proc/get_location_adjectives(turf/current_turf)
-	var/list/location_descriptions = list()
+	var/list/location_adjectives = list()
 	var/area/location = get_area(current_turf)
 
 	// area is too big to be considered a room
@@ -417,7 +419,7 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 
 		// may want to add a check to prevent maintanence areas from being "powered"
 		// power is pretty simple to check (Hey double check what happens if we short or destroy the areas APC)
-		location_descriptions += location.powered(AREA_USAGE_EQUIP) ? "powered" : "unpowered"
+		location_adjectives += location.powered(AREA_USAGE_EQUIP) ? "powered" : "unpowered"
 
 		// lighting descriptions
 		if(location.powered(AREA_USAGE_LIGHT) && location.lightswitch)
@@ -437,47 +439,49 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 				lit_area_percent = lit_turfs / (length(location_turfs) - ignored_turfs)
 
 			if(lit_area_percent <= 0.20) // 0%-20% lighting
-				location_descriptions += "dark"
+				location_adjectives += "dark"
 			else if(lit_area_percent <= 0.60) // 20%-60% lighting
-				location_descriptions += "dim"
+				location_adjectives += "dim"
 			else // 60%-100% lighting
-				location_descriptions += "lit"
+				location_adjectives += "lit"
 				if(blinking)
-					location_descriptions += pick("blinking", "flickering", "flashing")
+					location_adjectives += pick("blinking", "flickering", "flashing")
 				else if(night_lighting)
-					location_descriptions += "tinted"
+					location_adjectives += "tinted"
 		else // APC light switch is off
-			location_descriptions += "dark"
+			location_adjectives += "dark"
 
 		if(is_area_breached)
-			location_descriptions += "breached"
+			location_adjectives += "breached"
 		else if(location.powered(AREA_USAGE_ENVIRON) && location.air_alarm)
 			if(location.air_alarm.mode == AALARM_MODE_SCRUBBING)
-				location_descriptions += "ventilated"
+				location_adjectives += "ventilated"
 			else if(location.air_alarm.mode == AALARM_MODE_SCRUBBING || location.air_alarm.mode == AALARM_MODE_PANIC)
-				location_descriptions += "siphoned"
+				location_adjectives += "siphoned"
 			else if(location.air_alarm.mode == AALARM_MODE_REFILL || location.air_alarm.mode == AALARM_MODE_FLOOD)
-				location_descriptions += "inflating"
+				location_adjectives += "inflating"
 		// if APC environment switch off, no air alarm present, air alarm turned off, or air alarm shorted by cut wire
 		else if(!location.powered(AREA_USAGE_ENVIRON) || !location.air_alarm || location.air_alarm.mode == AALARM_MODE_OFF || location.air_alarm.shorted)
-			location_descriptions += "unventilated"
+			location_adjectives += "unventilated"
+
+	if(!istype(location, /area/space))
 
 		if(!current_turf.has_gravity())
-			location_descriptions += "zero-gravity"
+			location_adjectives += "zero-gravity"
 
 		switch(location.beauty)
 			if(-INFINITY to BEAUTY_LEVEL_HORRID)
-				location_descriptions += pick("nasty", "filthy", "trashy", "littered")
+				location_adjectives += pick("nasty", "filthy", "trashy", "littered")
 			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
-				location_descriptions += pick("untidy", "messy", "unkempt")
+				location_adjectives += pick("untidy", "messy", "unkempt")
 			if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
 				// plain jane room gets no description
 			if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
-				location_descriptions += pick("organized", "furnished", "tidy")
+				location_adjectives += pick("organized", "furnished", "tidy")
 			if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
-				location_descriptions += pick("spotless", "clean", "sanitary")
+				location_adjectives += pick("spotless", "clean", "sanitary")
 			if(BEAUTY_LEVEL_GREAT to INFINITY)
-				location_descriptions += pick("luxurious", "immaculate", "elegant", "polished")
+				location_adjectives += pick("luxurious", "immaculate", "elegant", "polished")
 
 		// time to check environemental hazards
 		var/datum/gas_mixture/environment = current_turf.return_air()
@@ -492,21 +496,23 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 				break
 
 			if(toxic_gases || (env_gases[/datum/gas/carbon_dioxide] && env_gases[/datum/gas/carbon_dioxide][MOLES] >= 10))
-				location_descriptions += pick("polluted", "contaminated", "noxious", "nauseous")
+				location_adjectives += pick("polluted", "contaminated", "noxious", "nauseous")
 			if(!(env_gases[/datum/gas/oxygen] && env_gases[/datum/gas/oxygen][MOLES] >= 16))
-				location_descriptions += "asphyxiating"
+				location_adjectives += "asphyxiating"
 
 			var/env_temperature = enviornment.temperature
 			if(env_temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
-				location_descriptions += pick("frigid", "frozen", "freezing")
+				location_adjectives += pick("frigid", "frozen", "freezing")
 			else if(env_temperature >= BODYTEMP_HEAT_DAMAGE_LIMIT)
-				location_descriptions += pick("searing", "scorching", "burning")
+				location_adjectives += pick("searing", "scorching", "burning")
 
 			var/env_pressure = environment.return_pressure()
 			if(env_pressure <= HAZARD_LOW_PRESSURE)
-				location_descriptions += pick("depressurized", "decompressed")
+				location_adjectives += pick("depressurized", "decompressed")
 			else if (env_pressure >= HAZARD_HIGH_PRESSURE)
-				location_descriptions += pick("overpressurized", "compressed")
+				location_adjectives += pick("overpressurized", "compressed")
+
+	return location_adjectives
 
 ///returns the story name of a mob
 /datum/mind/proc/build_story_mob(mob/living/target)
