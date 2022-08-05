@@ -264,6 +264,7 @@ GLOBAL_LIST_INIT(mob_trait_adjectives, list(
 	// TRAIT_EMOTE_RAISE = list(""),
 	TRAIT_EMOTE_SALUTE = list("saluting"),
 	TRAIT_EMOTE_SHRUG = list("shrugging"),
+	TRAIT_EMOTE_SWEAT = list("sweating"),
 	TRAIT_EMOTE_WAG = list("wagging"),
 	TRAIT_EMOTE_WING = list("flapping"), // same as flapping
 /// Emote traits (for monkey mobs) ///
@@ -325,13 +326,47 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 ))
 
 /datum/mind/proc/create_memory(mob/living/target)
-	var/area/location = get_area(human_target)
-	var/turf/current_turf = get_turf(human_target)
+	var/area/location = get_area(target)
+	var/turf/current_turf = get_turf(target)
 
-	var/list/mob_adjectives = get_mob_adjectives(mob/living/target)
-	var/list/location_adjectives = get_location_adjectives(turf/current_turf)
+	var/list/mob_adjectives = get_mob_adjectives(target)
+	var/list/mob_nouns = get_mob_nouns(target)
+	var/list/location_adjectives = get_location_adjectives(current_turf)
 
-///returns an adjective for a human mob
+
+///returns a noun for the mob
+/datum/mind/proc/get_mob_nouns(mob/living/target)
+	var/list/mob_nouns = list()
+
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		var/visible_name = human_target.get_visible_name()
+		// make this into a trait
+		// if the person is a masked "Unknown"
+		if(visible_name != "Unknown")
+			// species types (human, plasmamen, moth, etc.)
+			if(human_target.dna && human_target.dna.species.id)
+				mob_nouns += human_target.dna.species.id
+
+			// we should probably segregate this, since actual names have different grammar rules
+			mob_nouns += visible_name
+
+		var/job_assignment = human_target.get_assignment(if_no_id = FALSE, if_no_job = FALSE, hand_first = FALSE)
+		if(job_assignment)
+			mob_nouns += job_assignment
+
+		// we also want a bunch of snowflake checks for antags
+		// is someone wearing wizard robes?
+		// is a chanegling absorbing someone or have an arm blade?
+		// is someone holding nuke ops weapons and gear?
+		// then we want their noun to be - the changeling, the nuclear operative, the wizard, etc.
+
+	return mob_nouns
+
+
+
+
+///returns an adjective for the mob
 /datum/mind/proc/get_mob_adjectives(mob/living/target)
 	var/list/mob_adjectives = list()
 
@@ -357,6 +392,24 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 				if(!QDELETED(bloody_item) && HAS_BLOOD_DNA(bloody_item))
 					mob_adjectives += "bloody"
 					break
+
+		// if they're holding a gun
+		for(var/obj/item/possible_weapon in list(human_target.held_items[RIGHT_HANDS], human_target.held_items[LEFT_HANDS], human_target.belt, human_target.back))
+			if(possible_weapon.item_flags & NEEDS_PERMIT)
+				mob_adjectives += "armed"
+				break
+
+		// also these just aren't for humans, it could be for simple mobs or silicons
+		if(prob(10)) // these should be a low chance since they are common
+			if(human_target.m_intent == MOVE_INTENT_WALK)
+				mob_adjectives += "walking"
+			else if(human_target.m_intent == MOVE_INTENT_RUN)
+				mob_adjectives += "running"
+
+			if(human_target.combat_mode)
+				mob_adjectives += "adverse"
+			else
+				mob_adjectives += "helpful"
 
 		// make this into a trait
 		// if the person is a masked "Unknown"
@@ -398,7 +451,7 @@ GLOBAL_LIST_INIT(mob_status_adjectives, list(
 
 	// area is too big to be considered a room
 	if(location.areasize > AREASIZE_TOO_BIG_FOR_ROOM)
-		return
+		return location_adjectives
 
 	// double check this logic to make sure it's valid
 	if(location.requires_power && !location.always_unpowered)

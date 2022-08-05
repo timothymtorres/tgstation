@@ -1500,7 +1500,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
 		// double check to make sure this doesn't happen for dead mobs
-		if(prob(20))
+		if(humi.stat < UNCONSCIOUS && prob(5))
 			humi.emote("sweat")
 
 		//Remove any slowdown from the cold.
@@ -1521,7 +1521,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 
 		// double check to make sure this doesn't happen for dead mobs
-		if(prob(20))
+		if(humi.stat < UNCONSCIOUS && prob(5))
 			humi.emote("shiver")
 
 		// Apply cold slow down
