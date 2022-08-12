@@ -299,6 +299,23 @@
 	if((machine_stat & NOPOWER) && self_sustaining)
 		set_self_sustaining(FALSE)
 
+/obj/machinery/hydroponics/proc/handle_environment(datum/gas_mixture/environment)
+	if(!environment)
+		return
+
+	if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+		to_chat(user, span_notice("Your [name] needs a source of oxygen to burn."))
+		return ..()
+
+
+	environment.gases[/datum/gas/miasma]
+	var/miasma_percentage = environment.gases[/datum/gas/miasma][MOLES] / environment.total_moles()
+	if(miasma_percentage>=0.25)
+		heal_bodypart_damage(1)
+	
+	if(environment.has_gas(/datum/gas/carbon_dioxide, 1))
+		
+
 /obj/machinery/hydroponics/process(delta_time)
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
 
