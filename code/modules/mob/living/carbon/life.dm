@@ -18,9 +18,6 @@
 		if(QDELETED(src))
 			return
 
-		if(.) //not dead
-			handle_blood(delta_time, times_fired)
-
 		if(stat != DEAD)
 			handle_brain_damage(delta_time, times_fired)
 
