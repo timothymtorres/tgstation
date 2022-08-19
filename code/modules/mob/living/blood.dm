@@ -35,8 +35,10 @@
 		var/obj/item/organ/internal/heart/host_heart = getorganslot(ORGAN_SLOT_HEART)
 		if(!host_heart)
 			CRASH("[src] is pumping blood without a heart present.")
+			
+		var/regen_rate = host_heart.blood_regen_rate * ((host_heart.maxHealth - host_heart.damage) / host_heart.maxHealth)
 
-		blood_volume = min(blood_volume + (host_heart.blood_regen_rate * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
+		blood_volume = min(blood_volume + (regen_rate * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
 
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")
