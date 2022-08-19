@@ -14,23 +14,29 @@
 		return
 
 	//Blood regeneration if there is some space
-	if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
-		var/nutrition_ratio = 0
-		switch(nutrition)
-			if(0 to NUTRITION_LEVEL_STARVING)
-				nutrition_ratio = 0.2
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				nutrition_ratio = 0.4
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				nutrition_ratio = 0.6
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				nutrition_ratio = 0.8
-			else
-				nutrition_ratio = 1
-		if(satiety > 80)
-			nutrition_ratio *= 1.25
-		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
-		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
+	if(blood_volume < BLOOD_VOLUME_NORMAL)
+		var/nutrition_ratio = 1
+		if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
+			switch(nutrition)
+				if(0 to NUTRITION_LEVEL_STARVING)
+					nutrition_ratio = 0.2
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					nutrition_ratio = 0.4
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					nutrition_ratio = 0.6
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					nutrition_ratio = 0.8
+				else
+					nutrition_ratio = 1
+			if(satiety > 80)
+				nutrition_ratio *= 1.25
+			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time) // shouldn't this belong in stomach code?!
+		
+		var/obj/item/organ/internal/heart/host_heart = getorganslot(ORGAN_SLOT_HEART)
+		if(!host_heart)
+			CRASH("[src] is pumping blood without a heart present.")
+
+		blood_volume = min(blood_volume + (host_heart.blood_regen_rate * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
 
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")
