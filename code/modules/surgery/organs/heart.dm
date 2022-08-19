@@ -15,6 +15,9 @@
 	now_fixed = "<span class='info'>Your heart begins to beat again.</span>"
 	high_threshold_cleared = "<span class='info'>The pain in your chest has died down, and your breathing becomes more relaxed.</span>"
 
+	/// How much blood is pumped per tick
+	var/blood_regen_rate = BLOOD_REGEN_FACTOR
+
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = TRUE
 	attack_verb_continuous = list("beats", "thumps")
@@ -88,7 +91,10 @@
 			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-	if(organ_flags & ORGAN_FAILING && owner.can_heartattack() && !(HAS_TRAIT(src, TRAIT_STABLEHEART))) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart
+	if(owner.stat != DEAD && !(organ_flags & ORGAN_FAILING) && beating)
+		owner.handle_blood(delta_time, times_fired)
+
+	if(organ_flags & ORGAN_FAILING && owner.can_heartattack())) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
 				span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
@@ -184,7 +190,7 @@
 	icon_state = "heart-c"
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
-
+	blood_regen_rate = 0.75 * BLOOD_REGEN_FACTOR
 	var/dose_available = FALSE
 	var/rid = /datum/reagent/medicine/epinephrine
 	var/ramount = 10
@@ -195,6 +201,7 @@
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
 	icon_state = "heart-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	blood_regen_rate = 2 * BLOOD_REGEN_FACTOR
 	dose_available = TRUE
 	emp_vulnerability = 40
 
@@ -203,6 +210,7 @@
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
 	icon_state = "heart-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	blood_regen_rate = 3 * BLOOD_REGEN_FACTOR
 	dose_available = TRUE
 	emp_vulnerability = 20
 
