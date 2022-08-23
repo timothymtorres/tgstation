@@ -115,123 +115,115 @@
 	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
 	return BRUTELOSS
 
-/obj/item/razor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
-	if(location == BODY_ZONE_PRECISE_MOUTH)
-		H.facial_hairstyle = "Shaved"
-	else
-		H.hairstyle = "Skinhead"
+/obj/item/razor/proc/shave(mob/living/carbon/human/target, location = BODY_ZONE_PRECISE_MOUTH)
+	if(!ishuman(target) || !(location in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH)))
+		CRASH("Attempting to shave a mob that isn't human or shaving wrong body zone")
 
-	H.update_body_parts()
+	if(location == BODY_ZONE_PRECISE_MOUTH)
+		target.facial_hairstyle = "Shaved"
+	else if(location == BODY_ZONE_HEAD)
+		target.hairstyle = "Skinhead"
+
+	target.update_body_parts()
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 
 
-/obj/item/razor/attack(mob/M, mob/living/user)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/location = user.zone_selected
-		if((location in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !H.get_bodypart(BODY_ZONE_HEAD))
-			to_chat(user, span_warning("[H] doesn't have a head!"))
+/obj/item/razor/attack(mob/living/carbon/human/target, mob/living/user)
+	if(!ishuman(target))
+		return ..()
+
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+
+	var/location = user.zone_selected
+	if((location in list(BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !target.get_bodypart(BODY_ZONE_HEAD))
+		to_chat(user, span_warning("[target] doesn't have a head!"))
+		return
+
+	if(location == BODY_ZONE_PRECISE_MOUTH)
+		if(!(FACEHAIR in target.dna.species.species_traits))
+			to_chat(user, span_warning("There is no facial hair to shave!"))
 			return
-		if(location == BODY_ZONE_PRECISE_MOUTH)
-			if(!user.combat_mode)
-				if(H.gender == MALE)
-					if (H == user)
-						to_chat(user, span_warning("You need a mirror to properly style your own facial hair!"))
-						return
-					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-						return
-					var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
-					if(isnull(new_style))
-						return
-					if(!get_location_accessible(H, location))
-						to_chat(user, span_warning("The mask is in the way!"))
-						return
-					user.visible_message(span_notice("[user] tries to change [H]'s facial hairstyle using [src]."), span_notice("You try to change [H]'s facial hairstyle using [src]."))
-					if(new_style && do_after(user, 60, target = H))
-						user.visible_message(span_notice("[user] successfully changes [H]'s facial hairstyle using [src]."), span_notice("You successfully change [H]'s facial hairstyle using [src]."))
-						H.facial_hairstyle = new_style
-						H.update_body_parts()
-						return
-				else
-					return
+		if(!get_location_accessible(target, location))
+			to_chat(user, span_warning("The mask is in the way!"))
+			return
+		if(target.facial_hairstyle == "Shaved")
+			to_chat(user, span_warning("Already clean-shaven!"))
+			return
 
-			else
-				if(!(FACEHAIR in H.dna.species.species_traits))
-					to_chat(user, span_warning("There is no facial hair to shave!"))
-					return
-				if(!get_location_accessible(H, location))
-					to_chat(user, span_warning("The mask is in the way!"))
-					return
-				if(H.facial_hairstyle == "Shaved")
-					to_chat(user, span_warning("Already clean-shaven!"))
-					return
+	if(location == BODY_ZONE_HEAD)
+		if(!(HAIR in target.dna.species.species_traits))
+			to_chat(user, span_warning("There is no hair to shave!"))
+			return
+		if(!get_location_accessible(target, location))
+			to_chat(user, span_warning("The headgear is in the way!"))
+			return
+		if(target.hairstyle == "Bald" || target.hairstyle == "Balding Hair" || target.hairstyle == "Skinhead")
+			to_chat(user, span_warning("There is not enough hair left to shave!"))
+			return
+		if(HAS_TRAIT(target, TRAIT_BALD))
+			to_chat(target, span_warning("[target] is just way too bald. Like, really really bald."))
+			return
 
-				if(H == user) //shaving yourself
-					user.visible_message(span_notice("[user] starts to shave [user.p_their()] facial hair with [src]."), \
-						span_notice("You take a moment to shave your facial hair with [src]..."))
-					if(do_after(user, 50, target = H))
-						user.visible_message(span_notice("[user] shaves [user.p_their()] facial hair clean with [src]."), \
-							span_notice("You finish shaving with [src]. Fast and clean!"))
-						shave(H, location)
-				else
-					user.visible_message(span_warning("[user] tries to shave [H]'s facial hair with [src]."), \
-						span_notice("You start shaving [H]'s facial hair..."))
-					if(do_after(user, 50, target = H))
-						user.visible_message(span_warning("[user] shaves off [H]'s facial hair with [src]."), \
-							span_notice("You shave [H]'s facial hair clean off."))
-						shave(H, location)
+	// used to make our strings simple
+	var/hair = location == BODY_ZONE_HEAD ? "hair" : "facial hair"
 
-		else if(location == BODY_ZONE_HEAD)
-			if(!user.combat_mode)
-				if (H == user)
-					to_chat(user, span_warning("You need a mirror to properly style your own hair!"))
-					return
-				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-					return
-				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
-				if(isnull(new_style))
-					return
-				if(!get_location_accessible(H, location))
-					to_chat(user, span_warning("The headgear is in the way!"))
-					return
-				if(HAS_TRAIT(H, TRAIT_BALD))
-					to_chat(H, span_warning("[H] is just way too bald. Like, really really bald."))
-					return
-				user.visible_message(span_notice("[user] tries to change [H]'s hairstyle using [src]."), span_notice("You try to change [H]'s hairstyle using [src]."))
-				if(new_style && do_after(user, 60, target = H))
-					user.visible_message(span_notice("[user] successfully changes [H]'s hairstyle using [src]."), span_notice("You successfully change [H]'s hairstyle using [src]."))
-					H.hairstyle = new_style
-					H.update_body_parts()
-					return
+	if(target == user && !user.combat_mode)
+		to_chat(user, span_warning("You need a mirror to properly style your own [hair]!"))
+		return
 
-			else
-				if(!(HAIR in H.dna.species.species_traits))
-					to_chat(user, span_warning("There is no hair to shave!"))
-					return
-				if(!get_location_accessible(H, location))
-					to_chat(user, span_warning("The headgear is in the way!"))
-					return
-				if(H.hairstyle == "Bald" || H.hairstyle == "Balding Hair" || H.hairstyle == "Skinhead")
-					to_chat(user, span_warning("There is not enough hair left to shave!"))
-					return
-
-				if(H == user) //shaving yourself
-					user.visible_message(span_notice("[user] starts to shave [user.p_their()] head with [src]."), \
-						span_notice("You start to shave your head with [src]..."))
-					if(do_after(user, 5, target = H))
-						user.visible_message(span_notice("[user] shaves [user.p_their()] head with [src]."), \
-							span_notice("You finish shaving with [src]."))
-						shave(H, location)
-				else
-					var/turf/H_loc = H.loc
-					user.visible_message(span_warning("[user] tries to shave [H]'s head with [src]!"), \
-						span_notice("You start shaving [H]'s head..."))
-					if(do_after(user, 50, target = H))
-						if(H_loc == H.loc)
-							user.visible_message(span_warning("[user] shaves [H]'s head bald with [src]!"), \
-								span_notice("You shave [H]'s head bald."))
-							shave(H, location)
+	if(user.combat_mode) // time to shave everything off
+		if(target == user) // no mirror needed since we aren't styling anything
+			user.visible_message( \
+				span_notice("[user] starts to shave [user.p_their()] [hair] with [src]."), \
+				span_notice("You take a moment to shave your [hair] with [src]..."))
+			if(do_after(user, 50, target = target))
+				user.visible_message( \
+					span_notice("[user] shaves [user.p_their()] [hair] clean with [src]."), \
+					span_notice("You finish shaving with [src]. Fast and clean!"))
 		else
-			..()
-	else
-		..()
+			var/turf/H_loc = target.loc
+			user.visible_message( \
+				span_warning("[user] tries to shave [target]'s [hair] with [src]."), \
+				span_notice("You start shaving [target]'s [hair]..."))
+			if(do_after(user, 50, target = target))
+				if(H_loc != target.loc)
+					return
+
+				user.visible_message( \
+					span_warning("[user] shaves off [target]'s [hair] with [src]."), \
+					span_notice("You shave [target]'s [hair] clean off."))
+
+		shave(target, location)
+		return
+
+	// only males can get their hair done with a razor
+	if(location == BODY_ZONE_PRECISE_MOUTH && target.gender == MALE)
+		var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+		if(isnull(new_style))
+			return
+		if(!get_location_accessible(target, location))
+			to_chat(user, span_warning("The mask is in the way!"))
+			return
+
+		user.visible_message(span_notice("[user] tries to change [target]'s facial hairstyle using [src]."), span_notice("You try to change [target]'s facial hairstyle using [src]."))
+		if(new_style && do_after(user, 60, target = target))
+			user.visible_message(span_notice("[user] successfully changes [target]'s facial hairstyle using [src]."), span_notice("You successfully change [target]'s facial hairstyle using [src]."))
+			target.facial_hairstyle = new_style
+			target.update_body_parts()
+			return
+
+	else if(location == BODY_ZONE_HEAD)
+		var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+		if(isnull(new_style))
+			return
+		if(!get_location_accessible(target, location))
+			to_chat(user, span_warning("The headgear is in the way!"))
+			return
+
+		user.visible_message(span_notice("[user] tries to change [target]'s hairstyle using [src]."), span_notice("You try to change [target]'s hairstyle using [src]."))
+		if(new_style && do_after(user, 60, target = target))
+			user.visible_message(span_notice("[user] successfully changes [target]'s hairstyle using [src]."), span_notice("You successfully change [target]'s hairstyle using [src]."))
+			target.hairstyle = new_style
+			target.update_body_parts()
+			return
