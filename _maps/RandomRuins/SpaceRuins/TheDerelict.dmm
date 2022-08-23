@@ -6550,7 +6550,7 @@
 "Sf" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/beaker{
-	list_reagents = list(/datum/reagent/toxin/acid=50)
+	list_reagents = list(/datum/reagent/acid=50)
 	},
 /obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished,
 /obj/item/pen,

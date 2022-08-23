@@ -111,7 +111,7 @@
 
 	first_batch.add_reagent(/datum/reagent/aluminium, 75)
 	second_batch.add_reagent(/datum/reagent/smart_foaming_agent, 25)
-	second_batch.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
+	second_batch.add_reagent(/datum/reagent/acid/fluacid, 25)
 	reactants += first_batch
 	reactants += second_batch
 

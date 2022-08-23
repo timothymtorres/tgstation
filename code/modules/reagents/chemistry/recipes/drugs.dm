@@ -99,24 +99,24 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_TOXIN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/maint_tar1
-	results = list(/datum/reagent/toxin/acid = 1 ,/datum/reagent/drug/maint/tar = 3)
+	results = list(/datum/reagent/acid = 1 ,/datum/reagent/drug/maint/tar = 3)
 	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/yuck = 1 , /datum/reagent/fuel = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_TOXIN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/maint_tar2
-	results = list(/datum/reagent/toxin/acid = 1 ,/datum/reagent/drug/maint/tar = 3)
+	results = list(/datum/reagent/acid = 1 ,/datum/reagent/drug/maint/tar = 3)
 	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/consumable/enzyme = 3 , /datum/reagent/fuel = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_TOXIN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/maint_sludge
 	results = list(/datum/reagent/drug/maint/sludge = 1)
-	required_reagents = list(/datum/reagent/drug/maint/tar = 3 , /datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/drug/maint/tar = 3 , /datum/reagent/acid/fluacid = 1)
 	required_catalysts = list(/datum/reagent/hydrogen_peroxide = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_TOXIN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/maint_powder
 	results = list(/datum/reagent/drug/maint/powder = 1)
-	required_reagents = list(/datum/reagent/drug/maint/sludge = 6 , /datum/reagent/toxin/acid/nitracid = 1 , /datum/reagent/consumable/enzyme = 1)
+	required_reagents = list(/datum/reagent/drug/maint/sludge = 6 , /datum/reagent/acid/nitracid = 1 , /datum/reagent/consumable/enzyme = 1)
 	required_catalysts = list(/datum/reagent/acetone_oxide = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 

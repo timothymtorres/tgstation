@@ -35,7 +35,7 @@
 	connector_type = "leadacid"
 	rating = 2 //Kind of a mid-tier battery
 	w_class = WEIGHT_CLASS_NORMAL
-	grind_results = list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)
+	grind_results = list(/datum/reagent/lead = 15, /datum/reagent/acid = 15, /datum/reagent/water = 20)
 
 //starts partially discharged
 /obj/item/stock_parts/cell/lead/Initialize(mapload)

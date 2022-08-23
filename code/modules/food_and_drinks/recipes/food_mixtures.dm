@@ -81,11 +81,11 @@
 
 /datum/chemical_reaction/food/soysauce
 	results = list(/datum/reagent/consumable/soysauce = 5)
-	required_reagents = list(/datum/reagent/consumable/soymilk = 4, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/consumable/soymilk = 4, /datum/reagent/acid = 1)
 
 /datum/chemical_reaction/food/corn_syrup
 	results = list(/datum/reagent/consumable/corn_syrup = 5)
-	required_reagents = list(/datum/reagent/consumable/corn_starch = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/consumable/corn_starch = 1, /datum/reagent/acid = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/food/caramel

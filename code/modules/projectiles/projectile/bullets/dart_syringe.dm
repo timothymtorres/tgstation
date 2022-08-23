@@ -32,7 +32,7 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/aluminium, 15)
 	reagents.add_reagent(/datum/reagent/foaming_agent, 5)
-	reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 5)
+	reagents.add_reagent(/datum/reagent/acid/fluacid, 5)
 
 /obj/projectile/bullet/dart/syringe
 	name = "syringe"

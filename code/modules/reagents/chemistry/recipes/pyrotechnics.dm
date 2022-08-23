@@ -10,7 +10,7 @@
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
-	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/acid/nitracid = 1, /datum/reagent/acid = 1)
 	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -27,7 +27,7 @@
 
 /datum/chemical_reaction/reagent_explosion/rdx
 	results = list(/datum/reagent/rdx= 2)
-	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
+	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
 	required_catalysts = list(/datum/reagent/gold) //royal explosive
 	required_temp = 404
 	strengthdiv = 8
@@ -73,7 +73,7 @@
 
 /datum/chemical_reaction/reagent_explosion/tatp
 	results = list(/datum/reagent/tatp= 1)
-	required_reagents = list(/datum/reagent/acetone_oxide = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/pentaerythritol = 1 )
+	required_reagents = list(/datum/reagent/acetone_oxide = 1, /datum/reagent/acid/nitracid = 1, /datum/reagent/pentaerythritol = 1 )
 	required_temp = 450
 	strengthdiv = 3
 
@@ -386,7 +386,7 @@
 
 /datum/chemical_reaction/phlogiston
 	results = list(/datum/reagent/phlogiston = 3)
-	required_reagents = list(/datum/reagent/phosphorus = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/stable_plasma = 1)
+	required_reagents = list(/datum/reagent/phosphorus = 1, /datum/reagent/acid = 1, /datum/reagent/stable_plasma = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/phlogiston/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)

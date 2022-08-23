@@ -379,7 +379,7 @@
 	name = "hardware cake"
 	desc = "A quote on quote cake that is made with electronic boards and leaks acid..."
 	icon_state = "hardware_cake"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/toxin/acid = 15, /datum/reagent/fuel/oil = 15)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/acid = 15, /datum/reagent/fuel/oil = 15)
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtypes = GRAIN | GROSS
 
@@ -391,7 +391,7 @@
 	desc = "A slice of electronic boards and some acid."
 	icon_state = "hardware_cake_slice"
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/toxin/acid = 3, /datum/reagent/fuel/oil = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/acid = 3, /datum/reagent/fuel/oil = 3)
 	foodtypes = GRAIN | GROSS
 
 /obj/item/food/cake/vanilla_cake

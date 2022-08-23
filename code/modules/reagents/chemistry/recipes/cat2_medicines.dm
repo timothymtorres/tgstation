@@ -109,7 +109,7 @@
 
 /datum/chemical_reaction/medicine/aiuri
 	results = list(/datum/reagent/medicine/c2/aiuri = 4)
-	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/hydrogen = 2)
+	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/acid = 1, /datum/reagent/hydrogen = 2)
 	required_temp = 50
 	optimal_temp = 300
 	overheat_temp = 315
@@ -209,7 +209,7 @@
 /datum/chemical_reaction/medicine/tirimol
 	results = list(/datum/reagent/medicine/c2/tirimol = 5)
 	required_reagents = list(/datum/reagent/nitrogen = 3, /datum/reagent/acetone = 2)
-	required_catalysts = list(/datum/reagent/toxin/acid = 1)
+	required_catalysts = list(/datum/reagent/acid = 1)
 	mix_message = "The mixture turns into a tired reddish pink liquid."
 	optimal_temp = 1
 	optimal_temp = 900
@@ -333,7 +333,7 @@
 
 /datum/chemical_reaction/medicine/penthrite
 	results = list(/datum/reagent/medicine/c2/penthrite = 3)
-	required_reagents = list(/datum/reagent/pentaerythritol = 1, /datum/reagent/acetone = 1,  /datum/reagent/toxin/acid/nitracid = 1 , /datum/reagent/wittel = 1)
+	required_reagents = list(/datum/reagent/pentaerythritol = 1, /datum/reagent/acetone = 1,  /datum/reagent/acid/nitracid = 1 , /datum/reagent/wittel = 1)
 	required_temp = 255
 	optimal_temp = 350
 	overheat_temp = 450

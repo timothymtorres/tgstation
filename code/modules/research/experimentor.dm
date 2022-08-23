@@ -322,7 +322,7 @@
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff))
 			visible_message(span_danger("[src]'s chemical chamber has sprung a leak!"))
-			chosenchem = pick(/datum/reagent/mutationtoxin/classic,/datum/reagent/cyborg_mutation_nanomachines,/datum/reagent/toxin/acid)
+			chosenchem = pick(/datum/reagent/mutationtoxin/classic,/datum/reagent/cyborg_mutation_nanomachines,/datum/reagent/acid)
 			var/datum/reagents/tmp_holder = new/datum/reagents(50)
 			tmp_holder.my_atom = src
 			tmp_holder.add_reagent(chosenchem , 50)

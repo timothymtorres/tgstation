@@ -103,7 +103,7 @@
 /obj/item/reagent_containers/cup/bottle/facid
 	name = "Fluorosulfuric Acid Bottle"
 	desc = "A small bottle. Contains a small amount of fluorosulfuric acid."
-	list_reagents = list(/datum/reagent/toxin/acid/fluacid = 30)
+	list_reagents = list(/datum/reagent/acid/fluacid = 30)
 
 /obj/item/reagent_containers/cup/bottle/adminordrazine
 	name = "Adminordrazine Bottle"
@@ -404,7 +404,7 @@
 
 /obj/item/reagent_containers/cup/bottle/sacid
 	name = "sulfuric acid bottle"
-	list_reagents = list(/datum/reagent/toxin/acid = 30)
+	list_reagents = list(/datum/reagent/acid = 30)
 
 /obj/item/reagent_containers/cup/bottle/welding_fuel
 	name = "welding fuel bottle"
