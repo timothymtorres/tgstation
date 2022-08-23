@@ -165,7 +165,7 @@
 			to_chat(target, span_warning("[target] is just way too bald. Like, really really bald."))
 			return
 
-	// used to make our strings simple
+	// to make our hair strings simple
 	var/hair = location == BODY_ZONE_HEAD ? "hair" : "facial hair"
 
 	if(target == user && !user.combat_mode)
