@@ -299,11 +299,49 @@
 	if((machine_stat & NOPOWER) && self_sustaining)
 		set_self_sustaining(FALSE)
 
-/obj/machinery/hydroponics/proc/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
+// 1/8th of a mole of gas is needed to trigger plant breath effects
+#define MIN_MOLES_FOR_REACTION (MOLES/8)
+
+/obj/machinery/hydroponics/proc/handle_environment(datum/gas_mixture/air)
+	if(!air) // plants suffer if there is no air
 		return
 
-	if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+	var/datum/gas_mixture/plant_breath = air.remove(air.total_moles() * PLANT_BREATH_PERCENTAGE)	
+	var/list/plant_breath_gases = plant_breath.gases
+	
+	plant_breath_gases.assert_gases(
+		/datum/gas/oxygen,
+		/datum/gas/plasma,
+		/datum/gas/carbon_dioxide,
+		/datum/gas/nitrogen,
+		/datum/gas/bz,
+		/datum/gas/miasma,	
+	)
+
+	var/oxygen_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/oxygen][MOLES])
+	var/nitrogen_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/nitrogen][MOLES])
+	var/plasma_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/plasma][MOLES])
+	var/carbon_dioxide_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/carbon_dioxide][MOLES])
+	var/bz_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/bz][MOLES])
+	var/miasma_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/miasma][MOLES])
+
+	// used to keep track of how much of each gas we breath
+	var/gas_breathed = 0
+
+	if(carbon_dioxide_pp > MIN_MOLES_FOR_REACTION)
+		if(prob(carbon_dioxide_pp/3))
+			adjust_plant_health(rand(0,2)  rating)
+			
+
+	gas_breathed = plant_breath_gases[/datum/gas/carbon_dioxide][MOLES]
+	// CO2 gets converted to oxygen
+	plant_breath_gases[/datum/gas/carbon_dioxide][MOLES] -= gas_breathed
+	plant_breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
+		
+	
+	
+
+	if(air[/datum/gas/oxygen] && )) //or oxygen on a tile to burn
 		to_chat(user, span_notice("Your [name] needs a source of oxygen to burn."))
 		return ..()
 
@@ -315,6 +353,8 @@
 	
 	if(environment.has_gas(/datum/gas/carbon_dioxide, 1))
 		
+
+#undef MIN_MOLES_FOR_REACTION
 
 /obj/machinery/hydroponics/process(delta_time)
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
