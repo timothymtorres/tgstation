@@ -299,14 +299,30 @@
 	if((machine_stat & NOPOWER) && self_sustaining)
 		set_self_sustaining(FALSE)
 
-// 1/8th of a mole of gas is needed to trigger plant breath effects
-#define MIN_MOLES_FOR_REACTION (MOLES/8)
+// plants must breath at least 0.25 kPA to trigger a gas effect
+// this is about 1% of a regular rooms partial pressure using PLANT_BREATH_PERCENTAGE
+#define MIN_KPA_FOR_REACTION 0.25
 
 /obj/machinery/hydroponics/proc/handle_environment(datum/gas_mixture/air)
+/// THIS code needs to be inserted into the proc before handle_environment()
+	if(isnull(local_turf))// We have a null turf...something is wrong, stop processing this entity.
+		return PROCESS_KILL
+
+	if(!istype(local_turf))//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
+		return  //Yeah just stop.
+
+	if(isclosedturf(local_turf))
+		var/turf/did_it_melt = local_turf.Melt()
+		if(!isclosedturf(did_it_melt)) //In case some joker finds way to place these on indestructible walls
+			visible_message(span_warning("[src] melts through [local_turf]!"))
+		return
+/// THIS code needs to be inserted into the proc before handle_environment()
+
 	if(!air) // plants suffer if there is no air
 		return
 
-	var/datum/gas_mixture/plant_breath = air.remove(air.total_moles() * PLANT_BREATH_PERCENTAGE)	
+	var/datum/gas_mixture/plant_breath = air.remove(air.total_moles() * PLANT_BREATH_PERCENTAGE)
+	var/plant_breath_total_pressure = plant_breath.total_moles()
 	var/list/plant_breath_gases = plant_breath.gases
 	
 	plant_breath_gases.assert_gases(
@@ -315,7 +331,7 @@
 		/datum/gas/carbon_dioxide,
 		/datum/gas/nitrogen,
 		/datum/gas/bz,
-		/datum/gas/miasma,	
+		/datum/gas/miasma,
 	)
 
 	var/oxygen_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/oxygen][MOLES])
@@ -328,10 +344,10 @@
 	// used to keep track of how much of each gas we breath
 	var/gas_breathed = 0
 
-	if(carbon_dioxide_pp > MIN_MOLES_FOR_REACTION)
-		if(prob(carbon_dioxide_pp/3))
-			adjust_plant_health(rand(0,2)  rating)
-			
+	if(carbon_dioxide_pp > MIN_KPA_FOR_REACTION)
+		var/co2_heal_chance = clamp(carbon_dioxide_pp / plant_breath_total_pressure, 1, 10) // CO2 is helpful but it maxes out at 10%
+		if(prob(co2_heal_chance))
+			adjust_plant_health(1)
 
 	gas_breathed = plant_breath_gases[/datum/gas/carbon_dioxide][MOLES]
 	// CO2 gets converted to oxygen
@@ -354,7 +370,7 @@
 	if(environment.has_gas(/datum/gas/carbon_dioxide, 1))
 		
 
-#undef MIN_MOLES_FOR_REACTION
+#undef MIN_KPA_FOR_REACTION
 
 /obj/machinery/hydroponics/process(delta_time)
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
