@@ -11,6 +11,11 @@
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE (BREATH_VOLUME/CELL_VOLUME)
 
+/// The volume of air plants breath (it's 1/8th of humans)
+#define PLANT_BREATH_VOLUME 0.25
+/// Amount of air to take from a tile for plants
+#define PLANT_BREATH_PERCENTAGE (PLANT_BREATH_VOLUME/CELL_VOLUME)
+
 //Defines for N2O and Healium euphoria moodlets
 #define EUPHORIA_INACTIVE 0
 #define EUPHORIA_ACTIVE 1
