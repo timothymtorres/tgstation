@@ -47,10 +47,10 @@
 
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
-/datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/curator/post_equip(mob/living/carbon/human/owner, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
 		return
 
-	H.grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_CURATOR)
+	owner.grant_all_languages(source = LANGUAGE_CURATOR)
