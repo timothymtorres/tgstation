@@ -79,25 +79,25 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 	var/spawned_animals = 0
 	while(spawned_animals < animals && candidates.len && potential.len)
-		var/mob/living/simple_animal/SA = popleft(potential)
-		var/mob/dead/observer/SG = pick_n_take(candidates)
+		var/mob/living/simple_animal/target = popleft(potential)
+		var/mob/dead/observer/ghost = pick_n_take(candidates)
 
 		spawned_animals++
 
-		SA.key = SG.key
+		target.key = ghost.key
 
-		SA.grant_all_languages(TRUE, FALSE, FALSE)
+		target.grant_all_languages(spoken = FALSE, grant_omnitongue = FALSE)
 
-		SA.sentience_act()
+		target.sentience_act()
 
-		SA.maxHealth = max(SA.maxHealth, 200)
-		SA.health = SA.maxHealth
-		SA.del_on_death = FALSE
+		target.maxHealth = max(target.maxHealth, 200)
+		target.health = target.maxHealth
+		target.del_on_death = FALSE
 
-		spawned_mobs += SA
+		spawned_mobs += target
 
-		to_chat(SA, span_userdanger("Hello world!"))
-		to_chat(SA, "<span class='warning'>Due to freak radiation and/or chemicals \
+		to_chat(target, span_userdanger("Hello world!"))
+		to_chat(target, "<span class='warning'>Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \
 			and the ability to speak and understand human language!</span>")
 
