@@ -73,7 +73,7 @@
 	bound_spirit.status_flags |= GODMODE
 	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
 	bound_spirit.update_atom_languages()
-	bound_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
+	bound_spirit.grant_all_languages(understood = FALSE, spoken = FALSE) //Grants omnitongue
 	var/input = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
 	if(parent && input)
 		parent = input
