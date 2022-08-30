@@ -211,6 +211,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
 	return removed
 
+///Checks the composition of gas in a mixture
+///Returns: the ratio of the gas in the gas mixture
+///Will return zero if the gas mixture has zero moles
+/datum/gas_mixture/proc/return_ratio(gas_id)
+	assert_gas(gas_id)
+	var/ratio = gases[gas_id][MOLES]
+	garbage_collect(list(gas_id))
+	var/moles = total_moles()
+	// we don't want to if total_moles() is zero since it will divide by zero
+	return moles ? (ratio / moles) : 0
+
 ///Removes an amount of a specific gas from the gas_mixture.
 ///Returns: gas_mixture with the gas removed
 /datum/gas_mixture/proc/remove_specific(gas_id, amount)
