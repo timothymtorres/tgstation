@@ -1,30 +1,136 @@
-// plants must breath at least 0.25 kPA to trigger a gas effect
+// Plants must breath at least 0.25 kPA to trigger a gas effect
 // this is about 1% of a regular rooms partial pressure using PLANT_BREATH_PERCENTAGE
 #define MIN_KPA_FOR_REACTION 0.25
 
+// Plants die under 1/10th of regular pressure (~10 kPa)
+// https://biology.stackexchange.com/questions/1242/what-is-the-lowest-pressure-at-which-plants-can-survive
+#define PLANT_HAZARD_LOW_PRESSURE 10
+
+// Plants die over 7.5 GPa pressure (~750 kPa)
+// https://biology.stackexchange.com/questions/37464/what-is-the-highest-pressure-at-which-plants-can-survive
+#define PLANT_HAZARD_HIGH_PRESSURE 750
+
+// Max heat before plants start dying regardless of climate
+#define PLANT_HEAT_MAX
+// Max heat before plants start dying for tropical climates
+#define PLANT_HEAT_HIGH
+// Max heat before plants start dying for temperate climates
+#define PLANT_HEAT_NORMAL
+
+// Min cold before plants start dying for temperate climates
+#define PLANT_COLD_NORMAL
+// Min cold before plants start dying for polar climates
+#define PLANT_COLD_LOW
+// Min cold before plants start dying regardless of climate
+#define PLANT_COLD_MIN
+
+
+
+// y=a\left(x-h\right)^{2}+k  our starting forumla for prob()
+
+/**
+ * Method for gases to affect hydroponics trays.
+ * Can affect plant's health, stats, or cause the plant to react in certain ways.
+ * Args:
+ */
+/obj/machinery/hydroponics/proc/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	return
+
+// H2O tastes juicy and makes plants happy
+/obj/machinery/hydroponics/water_vapor/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/water_vapor), delta_time))
+		adjust_waterlevel(1)
+
+	// H2O -> oxygen
+	pressure = plant_breath.gases[/datum/gas/water_vapor][MOLES]
+	plant_breath.gases[/datum/gas/water_vapor][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/oxygen][MOLES] += pressure
+
 /obj/machinery/hydroponics/proc/handle_environment(datum/gas_mixture/air, delta_time)
-/// THIS code needs to be inserted into the proc before handle_environment()
-	if(isnull(local_turf))// We have a null turf...something is wrong, stop processing this entity.
-		return PROCESS_KILL
-
-	if(!istype(local_turf))//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
-		return  //Yeah just stop.
-
-	if(isclosedturf(local_turf))
-		var/turf/did_it_melt = local_turf.Melt()
-		if(!isclosedturf(did_it_melt)) //In case some joker finds way to place these on indestructible walls
-			visible_message(span_warning("[src] melts through [local_turf]!"))
-		return
-/// THIS code needs to be inserted into the proc before handle_environment()
-
-	if(!air) // plants suffer if there is no air
+	// don't process dead or empty trays
+	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD)
 		return
 
-	// don't forget to check if the plant is dead before doing all these calculations
+	// plant is in a crate or wall so just ignore atmos code
+	if(!isopenturf(src.loc))
+		return
+
+	// plants die quickly if exposed to space or in a hard vaccum
+	if(!air)
+		if(!myseed.get_gene(/datum/plant_gene/trait/space_plant))
+			adjust_plant_health(-rand(1,5) / rating)
+		return
+
+	var/pressure = air.return_pressure()
+	if(pressure > PLANT_HAZARD_HIGH_PRESSURE || pressure < PLANT_HAZARD_LOW_PRESSURE)
+		if(!myseed.get_gene(/datum/plant_gene/trait/space_plant))
+			adjust_plant_health(-rand(1,5) / rating)
+
+
+	var/temperature = air.temperature
+	var/climate_damage = 0
+	var/climate = myseed.climate
+
+	switch(temperature)
+		if(PLANT_HEAT_MAX to INFINITY) // Death plant zone
+			if(climate & TROPICAL_CLIMATE)
+				climate_damage = 3
+			else
+				climate_damage = 5
+		if(PLANT_HEAT_HIGH to PLANT_HEAT_MAX) // Tropical plant zone
+			if(climate & POLAR_CLIMATE)
+				climate_damage = 3
+			else if(climate & TEMPERATE_CLIMATE)
+				climate_damage = 1
+		if(PLANT_HEAT_NORMAL to PLANT_HEAT_HIGH) // Temperate plant zone
+			if(climate & POLAR_CLIMATE)
+				climate_damage = 2
+			else if(climate & TROPICAL_CLIMATE)
+				climate_damage = 1
+
+		if(PLANT_COLD_NORMAL to PLANT_HEAT_NORMAL) // Temperate plant zone
+			if(climate & POLAR_CLIMATE|TROPICAL_CLIMATE)
+				climate_damage = 1
+
+		if(PLANT_COLD_LOW to PLANT_COLD_NORMAL) // Temperate plant zone
+			if(climate & TROPICAL_CLIMATE)
+				climate_damage = 2
+			else if(climate & POLAR_CLIMATE)
+				climate_damage = 1
+		if(PLANT_COLD_MIN to PLANT_COLD_LOW) // Polar plant zone
+			if(climate & TROPICAL_CLIMATE)
+				climate_damage = 3
+			else if(climate & TEMPERATE_CLIMATE)
+				climate_damage = 1
+		else // Death plant zone
+			if(climate & POLAR_CLIMATE)
+				climate_damage = 3
+			else
+				climate_damage = 5
+
+		if(climate_damage)
+			adjust_plant_health(-rand(1, climate_damage) / rating)
+
+/datum/plant_gene/trait/fire_resistance
+/datum/plant_gene/trait/cold_resistance
+
 
 	var/datum/gas_mixture/plant_breath = air.remove(air.total_moles() * PLANT_BREATH_PERCENTAGE)
-	var/plant_breath_total_pressure = plant_breath.total_moles()
 	var/list/plant_breath_gases = plant_breath.gases
+
+	for(var/gas_id in GLOB.meta_gas_info)
+		plant_breath.assert_gas(gas_id)
+
+	for(var/plant_gas in plant_breath_gases)
+		if(plant_gas[MOLES] >= MIN_KPA_FOR_REACTION)
+			src.breath[plant_gas](plant_breath, delta_time)
+
+	plant_breath.garbage_collect()
+	air.merge(plant_breath)
+
+
+/// CUT AND PASTE THE CODE BELOW
+
 
 	plant_breath_gases.assert_gases(
 		/datum/gas/oxygen,
@@ -47,6 +153,7 @@
 	var/miasma_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/miasma][MOLES])
 	var/tritium_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/tritium][MOLES])
 	var/zauker_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/zauker][MOLES])
+	var/nitrium_pp = breath.get_breath_partial_pressure(plant_breath_gases[/datum/gas/nitrium][MOLES])
 
 	// used to keep track of how much of each gas we breath
 	var/gas_breathed = 0
@@ -85,8 +192,19 @@
 			adjust_weedlevel(-0.25)
 
 	// BZ -> nitrogen
-	gas_breathed = plant_breath_gases[/datum/gas/bz][MOLES]
-	plant_breath_gases[/datum/gas/bz][MOLES] -= gas_breathed
+	gas_breathed = plant_breath_gases[/datum/gas/nitrium][MOLES]
+	plant_breath_gases[/datum/gas/nitrium][MOLES] -= gas_breathed
+	plant_breath_gases[/datum/gas/nitrogen][MOLES] += gas_breathed
+
+	// Nitrium tastes nutritious and makes plants energized
+	if(nitrium_pp > MIN_KPA_FOR_REACTION)
+		var/nitrium_percentage = min(nitrium_pp / plant_breath_total_pressure, 10)
+		if(DT_PROB(nitrium_percentage, delta_time))
+			myseed.adjust_production(-0.5)
+
+	// Nitrium-> nitrogen
+	gas_breathed = plant_breath_gases[/datum/gas/nitrium][MOLES]
+	plant_breath_gases[/datum/gas/nitrium][MOLES] -= gas_breathed
 	plant_breath_gases[/datum/gas/nitrogen][MOLES] += gas_breathed
 
 	/////////////////////////////////
@@ -151,5 +269,9 @@
 	gas_breathed = plant_breath_gases[/datum/gas/zauker][MOLES]
 	plant_breath_gases[/datum/gas/zauker][MOLES] -= gas_breathed
 	plant_breath_gases[/datum/gas/hypernoblium][MOLES] += gas_breathed
+/// CUT AND PASTE CODE ABOVE
+///
 
 #undef MIN_KPA_FOR_REACTION
+#undef PLANT_HAZARD_LOW_PRESSURE
+#undef PLANT_HAZARD_HIGH_PRESSURE
