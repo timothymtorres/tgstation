@@ -11,20 +11,18 @@
 #define PLANT_HAZARD_HIGH_PRESSURE 750
 
 // Max heat before plants start dying regardless of climate
-#define PLANT_HEAT_MAX
-// Max heat before plants start dying for tropical climates
-#define PLANT_HEAT_HIGH
+#define PLANT_HEAT_MAX T20C + 17.5 // 310.65K (99F)
+// Max heat before plants start dying for tropical climates 75F
+#define PLANT_HEAT_HIGH T20C + 7.5 // 300.65K (82F)
 // Max heat before plants start dying for temperate climates
-#define PLANT_HEAT_NORMAL
+#define PLANT_HEAT_NORMAL T20C + 2.5 // 295.65K (72F)
 
 // Min cold before plants start dying for temperate climates
-#define PLANT_COLD_NORMAL
+#define PLANT_COLD_NORMAL T20C - 2.5 // 290.65K (64F)
 // Min cold before plants start dying for polar climates
-#define PLANT_COLD_LOW
+#define PLANT_COLD_LOW T20C - 7.5 // 285.65K (55F)
 // Min cold before plants start dying regardless of climate
-#define PLANT_COLD_MIN
-
-
+#define PLANT_COLD_MIN T20C - 17.5 // 275.65K (45F)
 
 // y=a\left(x-h\right)^{2}+k  our starting forumla for prob()
 
@@ -72,37 +70,42 @@
 	var/climate = myseed.climate
 
 	switch(temperature)
-		if(PLANT_HEAT_MAX to INFINITY) // Death plant zone
+		// Death plant zone (+99F)
+		if(PLANT_HEAT_MAX to INFINITY)
 			if(climate & TROPICAL_CLIMATE)
 				climate_damage = 3
 			else
 				climate_damage = 5
-		if(PLANT_HEAT_HIGH to PLANT_HEAT_MAX) // Tropical plant zone
+		// Tropical plant zone (82F-99F)
+		if(PLANT_HEAT_HIGH to PLANT_HEAT_MAX)
 			if(climate & POLAR_CLIMATE)
 				climate_damage = 3
 			else if(climate & TEMPERATE_CLIMATE)
 				climate_damage = 1
-		if(PLANT_HEAT_NORMAL to PLANT_HEAT_HIGH) // Temperate plant zone
+		// Tropical/Temperate plant zone (72F-82F)
+		if(PLANT_HEAT_NORMAL to PLANT_HEAT_HIGH)
 			if(climate & POLAR_CLIMATE)
 				climate_damage = 2
 			else if(climate & TROPICAL_CLIMATE)
 				climate_damage = 1
-
-		if(PLANT_COLD_NORMAL to PLANT_HEAT_NORMAL) // Temperate plant zone
+		// Temperate plant zone (64F-72F)
+		if(PLANT_COLD_NORMAL to PLANT_HEAT_NORMAL)
 			if(climate & POLAR_CLIMATE|TROPICAL_CLIMATE)
 				climate_damage = 1
-
-		if(PLANT_COLD_LOW to PLANT_COLD_NORMAL) // Temperate plant zone
+		// Polar/Temperate plant zone (55F-64F)
+		if(PLANT_COLD_LOW to PLANT_COLD_NORMAL)
 			if(climate & TROPICAL_CLIMATE)
 				climate_damage = 2
 			else if(climate & POLAR_CLIMATE)
 				climate_damage = 1
-		if(PLANT_COLD_MIN to PLANT_COLD_LOW) // Polar plant zone
+		// Polar plant zone (36F-55F)
+		if(PLANT_COLD_MIN to PLANT_COLD_LOW)
 			if(climate & TROPICAL_CLIMATE)
 				climate_damage = 3
 			else if(climate & TEMPERATE_CLIMATE)
 				climate_damage = 1
-		else // Death plant zone
+		// Death plant zone (-36F)
+		else
 			if(climate & POLAR_CLIMATE)
 				climate_damage = 3
 			else
@@ -111,8 +114,8 @@
 		if(climate_damage)
 			adjust_plant_health(-rand(1, climate_damage) / rating)
 
-/datum/plant_gene/trait/fire_resistance
-/datum/plant_gene/trait/cold_resistance
+			if(climate_damage > 1) // more bad effects
+				adjust_potency(climate_damage-1)
 
 
 	var/datum/gas_mixture/plant_breath = air.remove(air.total_moles() * PLANT_BREATH_PERCENTAGE)

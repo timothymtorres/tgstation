@@ -16,6 +16,8 @@
 #define WEED_HARDY_YIELD_MIN 3
 /// Carnivory potency can only reduce potency to 30.
 #define CARNIVORY_POTENCY_MIN 30
+/// Climate potency can only reduce potency to 20.
+#define CLIMATE_POTENCY_MIN 20
 /// Fungle megabolism plants have a min yield of 1.
 #define FUNGAL_METAB_YIELD_MIN 1
 
