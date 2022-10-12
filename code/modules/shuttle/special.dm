@@ -6,7 +6,7 @@
 /obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/engine/singularity.dmi'
 	icon_state = "emitter_+a"
 	base_icon_state = "emitter_+a"
 	anchored = TRUE
@@ -328,11 +328,11 @@
 
 	if(account)
 		if(account.account_balance < threshold - payees[AM])
-			account.adjust_money(-account.account_balance)
+			account.adjust_money(-account.account_balance, "Scanner Gate: Entry Fee")
 			payees[AM] += account.account_balance
 		else
 			var/money_owed = threshold - payees[AM]
-			account.adjust_money(-money_owed)
+			account.adjust_money(-money_owed, "Scanner Gate: Partial Entry Fee")
 			payees[AM] += money_owed
 
 	//Here is all the possible paygate payment methods.

@@ -20,7 +20,7 @@
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
 	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam, override = TRUE)
-	if(slot == ITEM_SLOT_FEET)
+	if(slot & ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in contents)
 			var/target_zone = user.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), even_weights = TRUE, bypass_warning = TRUE)
 			if(!target_zone) //we broke their legs right on off!
@@ -48,7 +48,7 @@
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
-	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !isliving(target) || !user.Adjacent(target) || target.stat == DEAD)
 		return
 	if(contents.len >= max_occupants)
 		to_chat(user, span_warning("[src] are full!"))

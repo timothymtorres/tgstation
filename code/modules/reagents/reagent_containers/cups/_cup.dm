@@ -7,8 +7,8 @@
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
-	lefthand_file = 'icons/mob/inhands/misc/drinks_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/drinks_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 
 	///Like Edible's food type, what kind of drink is this?
 	var/drink_type = NONE
@@ -98,9 +98,9 @@
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
 
-/obj/item/reagent_containers/cup/afterattack(obj/target, mob/living/user, proximity)
+/obj/item/reagent_containers/cup/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if((!proximity) || !check_allowed_items(target,target_self=1))
+	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
 		return
 
 	if(!spillable)
@@ -133,7 +133,7 @@
 	target.update_appearance()
 
 /obj/item/reagent_containers/cup/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if((!proximity_flag) || !check_allowed_items(target,target_self=1))
+	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!spillable)
@@ -154,16 +154,16 @@
 	target.update_appearance()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/reagent_containers/cup/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.get_temperature()
+/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, params)
+	var/hotness = attacking_item.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, span_notice("You heat [name] with [I]!"))
+		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
 		return
 
 	//Cooling method
-	if(istype(I, /obj/item/extinguisher))
-		var/obj/item/extinguisher/extinguisher = I
+	if(istype(attacking_item, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extinguisher = attacking_item
 		if(extinguisher.safety)
 			return
 		if (extinguisher.reagents.total_volume < 1)
@@ -171,22 +171,21 @@
 			return
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
-		to_chat(user, span_notice("You cool the [name] with the [I]!"))
+		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
 		return
 
-	if(istype(I, /obj/item/food/egg)) //breaking eggs
-		var/obj/item/food/egg/E = I
+	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
+		var/obj/item/food/egg/attacking_egg = attacking_item
 		if(!reagents)
 			return
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, span_notice("[src] is full."))
 		else
-			to_chat(user, span_notice("You break [E] in [src]."))
-			for(var/datum/reagent/consumable/egg_reagents in E.food_reagents)
-				reagents.add_reagent(egg_reagents)
-			qdel(E)
+			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
+			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
+			qdel(attacking_egg)
 		return
 
 	return ..()
@@ -202,9 +201,11 @@
 /obj/item/reagent_containers/cup/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "beaker"
 	inhand_icon_state = "beaker"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
@@ -219,7 +220,7 @@
 /obj/item/reagent_containers/cup/beaker/jar
 	name = "honey jar"
 	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "vapour"
 
 /obj/item/reagent_containers/cup/beaker/large
@@ -305,6 +306,7 @@
 	name = "bucket"
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "bucket"
 	inhand_icon_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -357,7 +359,7 @@
 
 /obj/item/reagent_containers/cup/bucket/equipped(mob/user, slot)
 	. = ..()
-	if (slot == ITEM_SLOT_HEAD)
+	if (slot & ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, span_userdanger("[src]'s contents spill all over you!"))
 			reagents.expose(user, TOUCH)
@@ -381,7 +383,7 @@
 	name = "pestle"
 	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
 
@@ -430,7 +432,8 @@
 							else
 								grinded.on_grind()
 								reagents.add_reagent_list(grinded.grind_results)
-								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
 								QDEL_NULL(grinded)
 								return
@@ -438,7 +441,8 @@
 							if(grinded.grind_results)
 								grinded.on_grind()
 								reagents.add_reagent_list(grinded.grind_results)
-								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You break [grinded] into powder."))
 								QDEL_NULL(grinded)
 								return

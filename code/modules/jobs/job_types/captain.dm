@@ -12,7 +12,7 @@
 	selection_color = "#ccccff"
 	req_admin_notify = 1
 	minimal_player_age = 14
-	exp_requirements = 3 HOURS
+	exp_requirements = 180
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
@@ -66,8 +66,8 @@
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain
-	head = /obj/item/clothing/head/caphat
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	head = /obj/item/clothing/head/hats/caphat
+	shoes = /obj/item/clothing/shoes/laceup
 
 
 	backpack = /obj/item/storage/backpack/captain

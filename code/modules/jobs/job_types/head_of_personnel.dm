@@ -12,7 +12,7 @@
 	selection_color = "#ddddff"
 	req_admin_notify = 1
 	minimal_player_age = 10
-	exp_requirements = 3 HOURS
+	exp_requirements = 180
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SERVICE
 	exp_granted_type = EXP_TYPE_CREW
@@ -61,7 +61,7 @@
 		)
 	belt = /obj/item/modular_computer/tablet/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
-	head = /obj/item/clothing/head/hopcap
+	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/armor/vest/hop
 
