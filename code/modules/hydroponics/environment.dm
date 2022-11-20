@@ -34,6 +34,11 @@
 /obj/machinery/hydroponics/proc/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
 	return
 
+
+/////////////////////////////////
+/// H E L P F U L   G A S E S ///
+/////////////////////////////////
+
 // H2O tastes juicy and makes plants happy
 /obj/machinery/hydroponics/water_vapor/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
 	if(DT_PROB(plant_breath.return_ratio(/datum/gas/water_vapor), delta_time))
@@ -43,6 +48,67 @@
 	pressure = plant_breath.gases[/datum/gas/water_vapor][MOLES]
 	plant_breath.gases[/datum/gas/water_vapor][MOLES] -= pressure
 	plant_breath.gases[/datum/gas/oxygen][MOLES] += pressure
+
+// CO2 tastes healthy and makes plants robust
+/obj/machinery/hydroponics/co2/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/carbon_dioxide), delta_time))
+		adjust_plant_health(1)
+
+	// CO2 -> oxygen
+	pressure = plant_breath.gases[/datum/gas/carbon_dioxide][MOLES]
+	plant_breath.gases[/datum/gas/carbon_dioxide][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/oxygen][MOLES] += pressure
+
+// BZ tastes sweet and makes plants safe
+/obj/machinery/hydroponics/bz/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/bz), delta_time))
+		adjust_pestlevel(-0.25)
+		adjust_weedlevel(-0.25)
+
+	// BZ -> N2O
+	pressure = plant_breath.gases[/datum/gas/bz][MOLES]
+	plant_breath.gases[/datum/gas/bz][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/nitrous_oxide][MOLES] += pressure
+
+// Nitrium tastes nutritious and makes plants energized
+/obj/machinery/hydroponics/bz/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/nitrium), delta_time))
+		myseed.adjust_production(-0.5)
+
+	// Nitrium-> nitrogen
+	pressure = plant_breath.gases[/datum/gas/nitrium][MOLES]
+	plant_breath.gases[/datum/gas/nitrium][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/nitrogen][MOLES] += pressure
+	
+/////////////////////////////////
+/// H A R M F U L   G A S E S ///
+/////////////////////////////////
+
+	// rename gas_production trait to something else
+	if(myseed.get_gene(/datum/plant_gene/trait/gas_production))
+		// O2 -> miasma (only by corpse flowers)
+		gas_breathed = plant_breath_gases[/datum/gas/oxygen][MOLES]
+		plant_breath_gases[/datum/gas/oxygen][MOLES] -= gas_breathed
+		plant_breath_gases[/datum/gas/miasma][MOLES] += gas_breathed
+	else
+		// Miasma tastes rotten and makes plants depressed
+		if(miasma_pp > MIN_KPA_FOR_REACTION)
+			var/miasma_percentage = min(miasma_pp / plant_breath_total_pressure, 25)
+			if(DT_PROB(miasma_percentage, delta_time))
+				adjust_pestlevel(0.25) // bugs love miasma
+
+		// Miasma -> O2
+		gas_breathed = plant_breath_gases[/datum/gas/miasma][MOLES]
+		plant_breath_gases[/datum/gas/miasma][MOLES] -= gas_breathed
+		plant_breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
+
+
+
+
+
+
+
+
 
 /obj/machinery/hydroponics/proc/handle_environment(datum/gas_mixture/air, delta_time)
 	// don't process dead or empty trays
@@ -124,9 +190,9 @@
 	for(var/gas_id in GLOB.meta_gas_info)
 		plant_breath.assert_gas(gas_id)
 
-	for(var/plant_gas in plant_breath_gases)
+	for(var/datum/gas/plant_gas in plant_breath_gases)
 		if(plant_gas[MOLES] >= MIN_KPA_FOR_REACTION)
-			src.breath[plant_gas](plant_breath, delta_time)
+			src.breath[plant_gas.id](plant_breath, delta_time)
 
 	plant_breath.garbage_collect()
 	air.merge(plant_breath)
