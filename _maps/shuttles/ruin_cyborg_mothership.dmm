@@ -538,7 +538,7 @@
 "zn" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/spacevine,
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/cyborg_mothership)
 "zD" = (
 /obj/structure/spacevine,
@@ -925,7 +925,7 @@
 /area/shuttle/cyborg_mothership)
 "Vb" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/shuttle/cyborg_mothership)
 "VC" = (
 /obj/structure/cable,
@@ -972,7 +972,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "Yl" = (
 /obj/machinery/conveyor/inverted{
