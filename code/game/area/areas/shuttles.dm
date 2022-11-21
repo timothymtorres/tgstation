@@ -105,6 +105,11 @@
 	name = "Abandoned Ship Pod"
 
 ////////////////////////////Single-area shuttles////////////////////////////
+/area/shuttle/cyborg_mothership
+	name = "Cyborg Mothership"
+	desc = "why are you examining this"
+
+
 /area/shuttle/transit
 	name = "Hyperspace"
 	desc = "Weeeeee"
