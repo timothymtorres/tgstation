@@ -71,7 +71,7 @@
 	plant_breath.gases[/datum/gas/nitrous_oxide][MOLES] += pressure
 
 // Nitrium tastes nutritious and makes plants energized
-/obj/machinery/hydroponics/bz/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+/obj/machinery/hydroponics/nitrium/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
 	if(DT_PROB(plant_breath.return_ratio(/datum/gas/nitrium), delta_time))
 		myseed.adjust_production(-0.5)
 
@@ -84,23 +84,70 @@
 /// H A R M F U L   G A S E S ///
 /////////////////////////////////
 
+// Oxygen is ignored for all plants but corpse flowers
+/obj/machinery/hydroponics/o2/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	// rename gas_production trait to something else
+	if(!myseed.get_gene(/datum/plant_gene/trait/gas_production))
+		return
+
+	// O2 -> miasma (only by corpse flowers)
+	pressure = plant_breath.gases[/datum/gas/oxygen][MOLES]
+	plant_breath.gases[/datum/gas/oxygen][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/miasma][MOLES] += pressure
+		
+// Miasma tastes rotten and makes plants depressed
+/obj/machinery/hydroponics/miasma/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
 	// rename gas_production trait to something else
 	if(myseed.get_gene(/datum/plant_gene/trait/gas_production))
-		// O2 -> miasma (only by corpse flowers)
-		gas_breathed = plant_breath_gases[/datum/gas/oxygen][MOLES]
-		plant_breath_gases[/datum/gas/oxygen][MOLES] -= gas_breathed
-		plant_breath_gases[/datum/gas/miasma][MOLES] += gas_breathed
-	else
-		// Miasma tastes rotten and makes plants depressed
-		if(miasma_pp > MIN_KPA_FOR_REACTION)
-			var/miasma_percentage = min(miasma_pp / plant_breath_total_pressure, 25)
-			if(DT_PROB(miasma_percentage, delta_time))
-				adjust_pestlevel(0.25) // bugs love miasma
+		return
+		
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/miasma), delta_time))
+		adjust_pestlevel(0.25) // bugs love miasma
 
-		// Miasma -> O2
-		gas_breathed = plant_breath_gases[/datum/gas/miasma][MOLES]
-		plant_breath_gases[/datum/gas/miasma][MOLES] -= gas_breathed
-		plant_breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
+	// Miasma -> O2
+	pressure = plant_breath.gases[/datum/gas/miasma][MOLES]
+	plant_breath.gases[/datum/gas/miasma][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/oxygen][MOLES] += pressure
+
+// Tritium tastes rad and makes plants wild
+/obj/machinery/hydroponics/tritium/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/tritium), delta_time))
+		myseed.adjust_instability(-0.5)
+		
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/tritium), delta_time)) // divide by 2? 3?
+		mutation_roll()
+		// consider adding radiation component here?
+
+	// Tritium -> H2O
+	pressure = plant_breath.gases[/datum/gas/tritium][MOLES]
+	plant_breath.gases[/datum/gas/tritium][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/water_vapor][MOLES] += pressure
+
+
+// Plasma tastes gross and makes plants angry
+/obj/machinery/hydroponics/plasma/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/plasma), delta_time))
+		adjust_toxic(1)
+			
+	// Plasma -> Nitrogen
+	pressure = plant_breath.gases[/datum/gas/plasma][MOLES]
+	plant_breath.gases[/datum/gas/plasma][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/nitrogen][MOLES] += pressure
+
+// Zauker tastes awful and makes plants VERY angry
+/obj/machinery/hydroponics/zauker/breath(/datum/gas_mixture/plant_breath, delta_time, pressure = 0)
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/zauker), delta_time))
+		adjust_plant_health(-5)
+		adjust_toxic(5)
+		adjust_pestlevel(-0.25)
+		adjust_weedlevel(-0.25)
+	if(DT_PROB(plant_breath.return_ratio(/datum/gas/zauker), delta_time)) // 1/8th chance?
+		plantdies()
+
+	// Zauker -> Hyper-Noblium
+	pressure = plant_breath.gases[/datum/gas/zauker][MOLES]
+	plant_breath.gases[/datum/gas/zauker][MOLES] -= pressure
+	plant_breath.gases[/datum/gas/hypernoblium][MOLES] += pressure
 
 
 
