@@ -118,10 +118,10 @@
 		mutation_roll()
 		// consider adding radiation component here?
 
-	// Tritium -> H2O
+	// Tritium -> Plux
 	pressure = plant_breath.gases[/datum/gas/tritium][MOLES]
 	plant_breath.gases[/datum/gas/tritium][MOLES] -= pressure
-	plant_breath.gases[/datum/gas/water_vapor][MOLES] += pressure
+	plant_breath.gases[/datum/gas/pluoxium][MOLES] += pressure
 
 
 // Plasma tastes gross and makes plants angry
