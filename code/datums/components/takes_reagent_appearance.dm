@@ -77,6 +77,8 @@
 		. |= update_name(main_style)
 	if(updates & UPDATE_DESC)
 		. |= update_desc(main_style)
+	if(updates & UPDATE_OVERLAYS)
+		. |= update_overlays(main_style)
 	if(updates & UPDATE_ICON)
 		. |= update_icon(main_style)
 	return .
@@ -137,6 +139,25 @@
 		item_parent.icon_state = style.icon_state
 		on_icon_changed?.InvokeAsync(style)
 		return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+
+	// Reset gets invoked regardless, as further updates may "reset" the icon yet
+	on_icon_reset?.InvokeAsync()
+	return NONE
+
+/**
+ * Performs the overlays update.
+ *
+ * * Returns [COMSIG_ATOM_NO_UPDATE_ICON] if an icon or icon state ocurred
+ * * Returns [NONE] if the icon or icon state was reset to base state
+ */
+/datum/component/takes_reagent_appearance/proc/update_overlays(datum/glass_style/style)
+	var/obj/item/item_parent = parent
+
+	if(style && style.icon_emission_state)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state, src)
+		. += emissive_overlay
+
+		return COMSIG_ATOM_NO_UPDATE_OVERLAY_STATE
 
 	// Reset gets invoked regardless, as further updates may "reset" the icon yet
 	on_icon_reset?.InvokeAsync()

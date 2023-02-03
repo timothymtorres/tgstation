@@ -63,6 +63,8 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 	var/icon
 	/// Suggested - What icon state is used for this glass style
 	var/icon_state
+	/// Optional - If the glass has a emission effect (glow in the dark)
+	var/icon_emission_state
 
 /datum/glass_style/drinking_glass
 	required_container_type = /obj/item/reagent_containers/cup/glass/drinkingglass

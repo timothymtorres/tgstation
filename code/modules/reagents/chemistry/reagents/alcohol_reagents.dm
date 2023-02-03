@@ -971,6 +971,7 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/toxins_special
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "toxinsspecialglass"
+	emission_icon = "toxinspecialglass_light_mask"
 
 /datum/glass_style/drinking_glass/toxins_special
 	required_drink_type = /datum/reagent/consumable/ethanol/toxins_special
@@ -1966,6 +1967,7 @@
 	desc = "Like having your brain smashed out by a slice of lemon wrapped around a large gold brick."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "gargleblasterglass"
+	emission_icon = "gargleblasterglass_light_mask"
 
 /datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.adjust_dizzy(3 SECONDS * REM * delta_time)
