@@ -242,6 +242,8 @@
 			comments = candidate.comments,
 			description = candidate.description,
 			name = candidate.name,
+			holochassis = candidate.holochassis,
+			portrait = candidate.portrait,
 		))
 	return candidates
 

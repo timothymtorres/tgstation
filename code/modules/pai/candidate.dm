@@ -13,6 +13,10 @@
 	var/ckey
 	/// User's pAI name. If blank, ninja name.
 	var/name
+	/// User's pAI holochassis appearance
+	var/holochassis = "repairbot"
+	/// User's pAI card emotion appearance
+	var/portrait
 	/// If the user has hit "submit"
 	var/ready = FALSE
 

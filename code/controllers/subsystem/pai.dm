@@ -29,6 +29,10 @@ SUBSYSTEM_DEF(pai)
 	data["comments"] = candidate.comments
 	data["description"] = candidate.description
 	data["name"] = candidate.name
+
+	data["holochassis"] = candidate.holochassis
+	data["portrait"] = candidate.portrait
+
 	return data
 
 /datum/controller/subsystem/pai/ui_act(action, list/params, datum/tgui/ui)
@@ -49,6 +53,10 @@ SUBSYSTEM_DEF(pai)
 			candidate.comments = trim(params["comments"], MAX_BROADCAST_LEN)
 			candidate.description = trim(params["description"], MAX_BROADCAST_LEN)
 			candidate.name = trim(params["name"], MAX_NAME_LEN)
+
+			candidate.holochassis = trim(params["holochassis"], MAX_NAME_LEN)
+			candidate.portrait = trim(params["portrait"], MAX_NAME_LEN)
+
 			candidate.ckey = usr.ckey
 			candidate.ready = TRUE
 			ui.close()
@@ -58,6 +66,10 @@ SUBSYSTEM_DEF(pai)
 			candidate.comments = params["comments"]
 			candidate.description = params["description"]
 			candidate.name = params["name"]
+
+			candidate.holochassis = params["holochassis"]
+			candidate.portrait = params["portrait"]
+
 			candidate.savefile_save(usr)
 			return TRUE
 		if("load")

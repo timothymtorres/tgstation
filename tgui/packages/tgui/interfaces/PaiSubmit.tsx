@@ -2,6 +2,19 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { logger } from '../logging';
+import { FeatureIconnedDropdownInput, FeatureWithIcons } from './PreferencesMenu/preferences/features/base';
+
+export const preferred_ai_core_display: FeatureWithIcons<string> = {
+  name: 'AI core display',
+  component: FeatureIconnedDropdownInput,
+};
+
+import { FeatureChoiced, FeatureIconnedDropdownInput } from '../base';
+
+export const favorite_drink: FeatureChoiced = {
+  name: 'Favorite drink',
+  component: FeatureIconnedDropdownInput,
+};
 
 type Data = {
   comments: string;
