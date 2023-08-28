@@ -2,7 +2,7 @@
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "adv_spectrometer"
+	icon_state = "slime_scanner"
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -11,10 +11,10 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.30, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.20)
 
 /obj/item/slime_scanner/attack(mob/living/M, mob/living/user)
-	if(user.stat || user.is_blind())
+	if(user.stat || !user.can_read(src) || user.is_blind())
 		return
 	if (!isslime(M))
 		to_chat(user, span_warning("This device can only scan slimes!"))
@@ -23,8 +23,7 @@
 	slime_scan(T, user)
 
 /proc/slime_scan(mob/living/simple_animal/slime/T, mob/living/user)
-	var/to_render = "========================\
-					\n<b>Slime scan results:</b>\
+	var/to_render = "<b>Slime scan results:</b>\
 					\n[span_notice("[T.colour] [T.is_adult ? "adult" : "baby"] slime")]\
 					\nNutrition: [T.nutrition]/[T.get_max_nutrition()]"
 	if (T.nutrition < T.get_starve_nutrition())
@@ -51,4 +50,4 @@
 	if(T.effectmod)
 		to_render += "\n[span_notice("Core mutation in progress: [T.effectmod]")]\
 					  \n[span_notice("Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]")]"
-	to_chat(user, to_render + "\n========================")
+	to_chat(user, examine_block(to_render))

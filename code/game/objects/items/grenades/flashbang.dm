@@ -6,6 +6,12 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
+/obj/item/grenade/flashbang/apply_grenade_fantasy_bonuses(quality)
+	flashbang_range = modify_fantasy_variable("flashbang_range", flashbang_range, quality)
+
+/obj/item/grenade/flashbang/remove_grenade_fantasy_bonuses(quality)
+	flashbang_range = reset_fantasy_variable("flashbang_range", flashbang_range)
+
 /obj/item/grenade/flashbang/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)
@@ -34,7 +40,7 @@
 		living_mob.Knockdown(max(200/max(1, distance), 60))
 
 //Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc) //Stop allahu akbarring rooms with this.
+	if(!distance || loc == living_mob || loc == living_mob.loc)
 		living_mob.Paralyze(20)
 		living_mob.Knockdown(200)
 		living_mob.soundbang_act(1, 200, 10, 15)
@@ -53,7 +59,7 @@
 	var/flashbang_range = 1 //how many tiles away the mob will be stunned.
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 	shrapnel_radius = 5
-	custom_premium_price = PAYCHECK_HARD * 3.5 // mostly gotten through cargo, but throw in one for the sec vendor ;)
+	custom_premium_price = PAYCHECK_COMMAND * 3.5 // mostly gotten through cargo, but throw in one for the sec vendor ;)
 
 /obj/item/grenade/stingbang/mega
 	name = "mega stingbang"
@@ -71,7 +77,7 @@
 		var/obj/item/bodypart/bodypart = user.get_holding_bodypart_of_item(src)
 		if(bodypart)
 			forceMove(get_turf(user))
-			user.visible_message("<b>[span_danger("[src] goes off in [user]'s hand, blowing [user.p_their()] [bodypart.name] to bloody shreds!")]</b>", span_userdanger("[src] goes off in your hand, blowing your [bodypart.name] to bloody shreds!"))
+			user.visible_message("<b>[span_danger("[src] goes off in [user]'s hand, blowing [user.p_their()] [bodypart.plaintext_zone] to bloody shreds!")]</b>", span_userdanger("[src] goes off in your hand, blowing your [bodypart.plaintext_zone] to bloody shreds!"))
 			bodypart.dismember()
 
 	. = ..()

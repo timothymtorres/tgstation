@@ -16,7 +16,6 @@
 
 /** Mob related */
 #define ALERT_SUCCUMB "succumb"
-#define ALERT_BLIND "blind"
 #define ALERT_BUCKLED "buckled"
 #define ALERT_HANDCUFFED "handcuffed"
 #define ALERT_LEGCUFFED "legcuffed"
@@ -24,6 +23,7 @@
 #define ALERT_IRRADIATED "irradiated"
 #define ALERT_EMBEDDED_OBJECT "embeddedobject"
 #define ALERT_SHOES_KNOT "shoealert"
+#define ALERT_RADIOACTIVE_AREA "radioactive_area"
 
 //antag related
 #define ALERT_HYPNOSIS "hypnosis"
@@ -32,10 +32,6 @@
 //ethereal alerts
 #define ALERT_ETHEREAL_CHARGE "ethereal_charge"
 #define ALERT_ETHEREAL_OVERCHARGE "ethereal_overcharge"
-
-//drunk alerts
-#define ALERT_DRUNK "drunk"
-#define ALERT_HIGH "high"
 
 /** Alien related */
 #define ALERT_XENO_FIRE "alien_fire"

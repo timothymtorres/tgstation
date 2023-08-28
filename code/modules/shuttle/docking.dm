@@ -46,7 +46,7 @@
 		rotation = SIMPLIFY_DEGREES(rotation)
 
 	if(!movement_direction)
-		movement_direction = turn(preferred_direction, 180)
+		movement_direction = REVERSE_DIR(preferred_direction)
 
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
 	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved
@@ -152,7 +152,7 @@
 
 
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/moved_atoms, rotation, movement_direction, area/underlying_old_area)
-	underlying_old_area.afterShuttleMove()
+	underlying_old_area.afterShuttleMove(0)
 
 	// Parallax handling
 	// This needs to be done before the atom after move

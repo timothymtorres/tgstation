@@ -10,18 +10,31 @@
 /proc/cmp_text_dsc(a,b)
 	return sorttext(a,b)
 
+/proc/cmp_embed_text_asc(a,b)
+	if(isdatum(a))
+		a = REF(a)
+	if(isdatum(b))
+		b = REF(b)
+	return sorttext("[b]", "[a]")
+
+/proc/cmp_embed_text_dsc(a,b)
+	if(isdatum(a))
+		a = REF(a)
+	if(isdatum(b))
+		b = REF(b)
+	return sorttext("[a]", "[b]")
+
 /proc/cmp_name_asc(atom/a, atom/b)
 	return sorttext(b.name, a.name)
 
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
-GLOBAL_VAR_INIT(cmp_field, "name")
-/proc/cmp_records_asc(datum/data/record/a, datum/data/record/b)
-	return sorttext(b.fields[GLOB.cmp_field], a.fields[GLOB.cmp_field])
+/proc/cmp_records_asc(datum/record/a, datum/record/b)
+	return sorttext(b.name, a.name)
 
-/proc/cmp_records_dsc(datum/data/record/a, datum/data/record/b)
-	return sorttext(a.fields[GLOB.cmp_field], b.fields[GLOB.cmp_field])
+/proc/cmp_records_dsc(datum/record/a, datum/record/b)
+	return sorttext(a.name, b.name)
 
 // Datum cmp with vars is always slower than a specialist cmp proc, use your judgement.
 /proc/cmp_datum_numeric_asc(datum/a, datum/b, variable)
@@ -128,17 +141,21 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
 
-/proc/cmp_pdaname_asc(obj/item/pda/A, obj/item/pda/B)
-	return sorttext(B.owner, A.owner)
+/proc/cmp_pdaname_asc(datum/computer_file/program/messenger/A, datum/computer_file/program/messenger/B)
+	return sorttext(B?.computer?.saved_identification, A?.computer?.saved_identification)
 
-/proc/cmp_pdajob_asc(obj/item/pda/A, obj/item/pda/B)
-	return sorttext(B.ownjob, A.ownjob)
+/proc/cmp_pdajob_asc(datum/computer_file/program/messenger/A, datum/computer_file/program/messenger/B)
+	return sorttext(B?.computer?.saved_job, A?.computer?.saved_job)
 
 /proc/cmp_num_string_asc(A, B)
 	return text2num(A) - text2num(B)
 
 /proc/cmp_mob_realname_dsc(mob/A,mob/B)
 	return sorttext(A.real_name,B.real_name)
+
+/// Orders bodyparts by their body_part value, ascending.
+/proc/cmp_bodypart_by_body_part_asc(obj/item/bodypart/limb_one, obj/item/bodypart/limb_two)
+	return limb_one.body_part - limb_two.body_part
 
 /// Orders by integrated circuit weight
 /proc/cmp_port_order_asc(datum/port/compare1, datum/port/compare2)
@@ -167,3 +184,13 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /// Orders heretic knowledge by priority
 /proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
 	return initial(knowledge_b.priority) - initial(knowledge_a.priority)
+
+/// Passed a list of assoc lists, sorts them by the list's "name" keys.
+/proc/cmp_assoc_list_name(list/A, list/B)
+	return sorttext(B["name"], A["name"])
+
+/// Used by /datum/achievement_data/load_all_achievements() to determine in which order awards have to be loaded.
+/proc/cmp_award_priority(type_a, type_b)
+	var/datum/award/award_a = SSachievements.awards[type_a]
+	var/datum/award/award_b = SSachievements.awards[type_b]
+	return award_b?.load_priority - award_a?.load_priority

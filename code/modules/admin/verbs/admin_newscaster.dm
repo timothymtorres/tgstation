@@ -45,7 +45,7 @@
 /datum/newspanel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Newscaster")
+		ui = new(user, src, "PhysicalNewscaster")
 		ui.open()
 
 /datum/newspanel/ui_static_data(mob/user)
@@ -65,6 +65,7 @@
 	data["user"]["job"] = "Official"
 	data["user"]["department"] = "Department of News"
 
+	data["admin_mode"] = TRUE
 	data["security_mode"] = TRUE
 	data["photo_data"] = !isnull(current_image)
 	data["creating_channel"] = creating_channel
