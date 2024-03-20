@@ -1,4 +1,3 @@
-#define SUBSYSTEM_INIT_SOURCE "subsystem init"
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = INIT_ORDER_ATOMS
@@ -41,11 +40,16 @@ SUBSYSTEM_DEF(atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
-	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, SUBSYSTEM_INIT_SOURCE)
+	// Generate a unique mapload source for this run of InitializeAtoms
+	var/static/uid = 0
+	uid = (uid + 1) % (SHORT_REAL_LIMIT - 1)
+	var/source = "subsystem init [uid]"
+	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, source)
 
 	// This may look a bit odd, but if the actual atom creation runtimes for some reason, we absolutely need to set initialized BACK
-	CreateAtoms(atoms, atoms_to_return)
-	clear_tracked_initalize(SUBSYSTEM_INIT_SOURCE)
+	CreateAtoms(atoms, atoms_to_return, source)
+	clear_tracked_initalize(source)
+	SSicon_smooth.free_deferred(source)
 
 	if(late_loaders.len)
 		for(var/I in 1 to late_loaders.len)
@@ -72,7 +76,7 @@ SUBSYSTEM_DEF(atoms)
 	#endif
 
 /// Actually creates the list of atoms. Exists soley so a runtime in the creation logic doesn't cause initalized to totally break
-/datum/controller/subsystem/atoms/proc/CreateAtoms(list/atoms, list/atoms_to_return = null)
+/datum/controller/subsystem/atoms/proc/CreateAtoms(list/atoms, list/atoms_to_return = null, mapload_source = null)
 	if (atoms_to_return)
 		LAZYINITLIST(created_atoms)
 
@@ -90,7 +94,12 @@ SUBSYSTEM_DEF(atoms)
 		for(var/I in 1 to atoms.len)
 			var/atom/A = atoms[I]
 			if(!(A.flags_1 & INITIALIZED_1))
-				CHECK_TICK
+				// Unrolled CHECK_TICK setup to let us enable/disable mapload based off source
+				if(TICK_CHECK)
+					clear_tracked_initalize(mapload_source)
+					stoplag()
+					if(mapload_source)
+						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
 				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, TRUE, mapload_arg)
 				PROFILE_INIT_ATOM_END(A)
@@ -107,72 +116,26 @@ SUBSYSTEM_DEF(atoms)
 				#ifdef TESTING
 				++count
 				#endif
-				CHECK_TICK
+				if(TICK_CHECK)
+					clear_tracked_initalize(mapload_source)
+					stoplag()
+					if(mapload_source)
+						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
 
 	testing("Initialized [count] atoms")
-
-/// Init this specific atom
-/datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
-	var/the_type = A.type
-
-	if(QDELING(A))
-		// Check init_start_time to not worry about atoms created before the atoms SS that are cleaned up before this
-		if (A.gc_destroyed > init_start_time)
-			BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
-		return TRUE
-
-	// This is handled and battle tested by dreamchecker. Limit to UNIT_TESTS just in case that ever fails.
-	#ifdef UNIT_TESTS
-	var/start_tick = world.time
-	#endif
-
-	var/result = A.Initialize(arglist(arguments))
-
-	#ifdef UNIT_TESTS
-	if(start_tick != world.time)
-		BadInitializeCalls[the_type] |= BAD_INIT_SLEPT
-	#endif
-
-	var/qdeleted = FALSE
-
-	switch(result)
-		if (INITIALIZE_HINT_NORMAL)
-			// pass
-		if(INITIALIZE_HINT_LATELOAD)
-			if(arguments[1]) //mapload
-				late_loaders += A
-			else
-				A.LateInitialize()
-		if(INITIALIZE_HINT_QDEL)
-			qdel(A)
-			qdeleted = TRUE
-		else
-			BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
-
-	if(!A) //possible harddel
-		qdeleted = TRUE
-	else if(!(A.flags_1 & INITIALIZED_1))
-		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
-	else
-		SEND_SIGNAL(A, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ATOM_AFTER_POST_INIT, A)
-		var/atom/location = A.loc
-		if(location)
-			/// Sends a signal that the new atom `src`, has been created at `loc`
-			SEND_SIGNAL(location, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, A, arguments[1])
-			var/area/atom_area = get_area(location)
-			if(atom_area)
-				SEND_SIGNAL(atom_area, COMSIG_AREA_INITIALIZED_IN, A)
-		if(created_atoms && from_template && ispath(the_type, /atom/movable))//we only want to populate the list with movables
-			created_atoms += A.get_all_contents()
-
-	return qdeleted || QDELING(A)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin(source)
 	set_tracked_initalized(INITIALIZATION_INSSATOMS, source)
 
 /datum/controller/subsystem/atoms/proc/map_loader_stop(source)
 	clear_tracked_initalize(source)
+
+/// Returns the source currently modifying SSatom's init behavior
+/datum/controller/subsystem/atoms/proc/get_initialized_source()
+	var/state_length = length(initialized_state)
+	if(!state_length)
+		return null
+	return initialized_state[state_length][1]
 
 /// Use this to set initialized to prevent error states where the old initialized is overriden, and we end up losing all context
 /// Accepts a state and a source, the most recent state is used, sources exist to prevent overriding old values accidentially
@@ -240,7 +203,7 @@ SUBSYSTEM_DEF(atoms)
 		if(fails & BAD_INIT_NO_HINT)
 			. += "- Didn't return an Initialize hint\n"
 		if(fails & BAD_INIT_QDEL_BEFORE)
-			. += "- Qdel'd in New()\n"
+			. += "- Qdel'd before Initialize proc ran\n"
 		if(fails & BAD_INIT_SLEPT)
 			. += "- Slept during Initialize()\n"
 
@@ -256,5 +219,3 @@ SUBSYSTEM_DEF(atoms)
 	var/initlog = InitLog()
 	if(initlog)
 		text2file(initlog, "[GLOB.log_directory]/initialize.log")
-
-#undef SUBSYSTEM_INIT_SOURCE

@@ -44,7 +44,7 @@
 
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
-	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
 	ammo_type = /obj/item/ammo_casing/c38/trac
 	ammo_band_color = "#7b6383"
 
@@ -117,18 +117,18 @@
 /obj/item/ammo_box/rocket/can_load(mob/user)
 	return FALSE
 
-/obj/item/ammo_box/a762
-	name = "stripper clip (7.62mm)"
+/obj/item/ammo_box/strilka310
+	name = "stripper clip (.310 Strilka)"
 	desc = "A stripper clip."
-	icon_state = "762"
-	ammo_type = /obj/item/ammo_casing/a762
+	icon_state = "310_strip"
+	ammo_type = /obj/item/ammo_casing/strilka310
 	max_ammo = 5
-	caliber = CALIBER_A762
+	caliber = CALIBER_STRILKA310
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
-/obj/item/ammo_box/a762/surplus
-	name = "stripper clip (7.62mm Surplus)"
-	ammo_type = /obj/item/ammo_casing/a762/surplus
+/obj/item/ammo_box/strilka310/surplus
+	name = "stripper clip (.310 Surplus)"
+	ammo_type = /obj/item/ammo_casing/strilka310/surplus
 
 /obj/item/ammo_box/n762
 	name = "ammo box (7.62x38mmR)"

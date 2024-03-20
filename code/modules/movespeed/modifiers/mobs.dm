@@ -81,11 +81,8 @@
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
 
-/datum/movespeed_modifier/shove
-	multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH
-
-/datum/movespeed_modifier/borg_throw
-	multiplicative_slowdown = 0.9
+/datum/movespeed_modifier/staggered
+	multiplicative_slowdown = STAGGERED_SLOWDOWN_STRENGTH
 
 /datum/movespeed_modifier/human_carry
 	multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN
@@ -111,6 +108,9 @@
 
 /datum/movespeed_modifier/average_web
 	multiplicative_slowdown = 1.2
+
+/datum/movespeed_modifier/below_average_web
+	multiplicative_slowdown = 2.5
 
 /datum/movespeed_modifier/slow_web
 	multiplicative_slowdown = 5
@@ -167,3 +167,10 @@
 
 /datum/movespeed_modifier/goliath_mount
 	multiplicative_slowdown = -26
+
+/datum/movespeed_modifier/settler
+	multiplicative_slowdown = 0.2
+	blacklisted_movetypes = FLOATING|FLYING
+
+/datum/movespeed_modifier/basilisk_overheat
+	multiplicative_slowdown = -18

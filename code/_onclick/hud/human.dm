@@ -70,6 +70,10 @@
 	using.icon = ui_style
 	static_inventory += using
 
+	using = new /atom/movable/screen/floor_menu(null, src)
+	using.icon = ui_style
+	static_inventory += using
+
 	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
 	action_intent.icon = ui_style
 	action_intent.screen_loc = ui_combat_toggle
@@ -78,7 +82,7 @@
 
 	using = new /atom/movable/screen/mov_intent(null, src)
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
+	using.icon_state = (owner.move_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
 
@@ -267,6 +271,9 @@
 
 	healths = new /atom/movable/screen/healths(null, src)
 	infodisplay += healths
+
+	hunger = new /atom/movable/screen/hunger(null, src)
+	infodisplay += hunger
 
 	healthdoll = new /atom/movable/screen/healthdoll(null, src)
 	infodisplay += healthdoll

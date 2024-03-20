@@ -84,6 +84,10 @@
 	var/obj/item/mod/module/selected_module
 	/// AI or pAI mob inhabiting the MOD.
 	var/mob/living/silicon/ai_assistant
+	/// The MODlink datum, letting us call people from the suit.
+	var/datum/mod_link/mod_link
+	/// The starting MODlink frequency, overridden on subtypes that want it to be something.
+	var/starting_frequency = null
 	/// Delay between moves as AI.
 	var/static/movedelay = 0
 	/// Cooldown for AI moves.
@@ -141,10 +145,10 @@
 	for(var/obj/item/mod/module/module as anything in theme.inbuilt_modules)
 		module = new module(src)
 		install(module)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mod/control/Destroy()
-	if(active)
-		STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSobj, src)
 	for(var/obj/item/mod/module/module as anything in modules)
 		uninstall(module, deleting = TRUE)
 	for(var/obj/item/part as anything in mod_parts)
@@ -173,6 +177,7 @@
 	if(core)
 		QDEL_NULL(core)
 	QDEL_NULL(wires)
+	QDEL_NULL(mod_link)
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
@@ -217,6 +222,7 @@
 			. += span_notice("You could install an AI or pAI using their <b>storage card</b>.")
 		else if(isAI(ai_assistant))
 			. += span_notice("You could remove [ai_assistant] with an <b>intellicard</b>.")
+	. += span_notice("You could copy/set link frequency with a <b>multitool</b>.")
 	. += span_notice("<i>You could examine it more thoroughly...</i>")
 
 /obj/item/mod/control/examine_more(mob/user)
@@ -226,14 +232,17 @@
 /obj/item/mod/control/process(seconds_per_tick)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
+	if(mod_link.link_call)
+		subtract_charge((DEFAULT_CHARGE_DRAIN * 0.25) * seconds_per_tick)
+	if(!active)
+		return
 	if(!get_charge() && active && !activating)
 		power_off()
-		return PROCESS_KILL
+		return
 	var/malfunctioning_charge_drain = 0
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
-	subtract_charge((charge_drain + malfunctioning_charge_drain)*seconds_per_tick)
-	update_charge_alert()
+	subtract_charge((charge_drain + malfunctioning_charge_drain) * seconds_per_tick)
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && SPT_PROB(5, seconds_per_tick))
 			module.on_deactivation(display_message = TRUE)
@@ -258,9 +267,9 @@
 
 // Grant pinned actions to pin owners, gives AI pinned actions to the AI and not the wearer
 /obj/item/mod/control/grant_action_to_bearer(datum/action/action)
-	if (!istype(action, /datum/action/item_action/mod/pinned_module))
+	if (!istype(action, /datum/action/item_action/mod/pinnable))
 		return ..()
-	var/datum/action/item_action/mod/pinned_module/pinned = action
+	var/datum/action/item_action/mod/pinnable/pinned = action
 	give_item_action(action, pinned.pinner, slot_flags)
 
 /obj/item/mod/control/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
@@ -309,7 +318,6 @@
 		wrench.play_tool_sound(src, 100)
 		balloon_alert(user, "core removed")
 		core.forceMove(drop_location())
-		update_charge_alert()
 		return TRUE
 	return ..()
 
@@ -392,7 +400,6 @@
 		attacking_core.install(src)
 		balloon_alert(user, "core installed")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		update_charge_alert()
 		return TRUE
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
@@ -477,8 +484,8 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN))
-	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
+	wearer.update_spacesuit_hud_icon("0")
 	wearer = null
 
 /obj/item/mod/control/proc/clean_up()
@@ -493,6 +500,7 @@
 		retract(null, part)
 	if(active)
 		finish_activation(on = FALSE)
+		mod_link?.end_call()
 	var/mob/old_wearer = wearer
 	unset_wearer()
 	old_wearer.temporarilyRemoveItemFromInventory(src)
@@ -587,6 +595,10 @@
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
 
+/// Intended for callbacks, don't use normally, just get wearer by itself.
+/obj/item/mod/control/proc/get_wearer()
+	return wearer
+
 /obj/item/mod/control/proc/update_access(mob/user, obj/item/card/id/card)
 	if(!allowed(user))
 		balloon_alert(user, "insufficient access!")
@@ -616,13 +628,21 @@
 /obj/item/mod/control/proc/check_charge(amount)
 	return core?.check_charge(amount) || FALSE
 
+/**
+ * Updates the wearer's hud according to the current state of the MODsuit
+ */
 /obj/item/mod/control/proc/update_charge_alert()
-	if(!wearer)
+	if(isnull(wearer))
 		return
-	if(!core)
-		wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocore)
-		return
-	core.update_charge_alert()
+	var/state_to_use
+	if(!active)
+		state_to_use = "0"
+	else if(isnull(core))
+		state_to_use = "coreless"
+	else
+		state_to_use = core.get_charge_icon_state()
+
+	wearer.update_spacesuit_hud_icon(state_to_use || "0")
 
 /obj/item/mod/control/proc/update_speed()
 	var/list/all_parts = mod_parts + src
@@ -688,7 +708,6 @@
 		return
 	if(part == core)
 		core.uninstall()
-		update_charge_alert()
 		return
 	if(part.loc == wearer)
 		return
@@ -744,3 +763,11 @@
 	update_speed()
 	qdel(speed_potion)
 	return SPEED_POTION_STOP
+
+/// Disables the mod link frequency attached to this unit.
+/obj/item/mod/control/proc/disable_modlink()
+	if(isnull(mod_link))
+		return
+
+	mod_link.end_call()
+	mod_link.frequency = null

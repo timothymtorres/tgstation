@@ -54,6 +54,22 @@
 
 	return TRUE
 
+// If accessory is being worn, make sure it updates on the player
+/obj/item/clothing/accessory/update_greyscale()
+	. = ..()
+
+	var/obj/item/clothing/under/attached_to = loc
+
+	if(!istype(attached_to))
+		return
+
+	var/mob/living/carbon/human/wearer = attached_to.loc
+
+	if(!istype(wearer))
+		return
+
+	attached_to.update_accessory_overlay()
+
 /**
  * Actually attach this accessory to the passed clothing article.
  *
@@ -63,8 +79,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(atom_storage)
+		atom_storage.close_all()
 		attach_to.clone_storage(atom_storage)
 		attach_to.atom_storage.set_real_location(src)
+		attach_to.atom_storage.rustle_sound = TRUE // it's on the suit now
 
 	var/num_other_accessories = LAZYLEN(attach_to.attached_accessories)
 	layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
@@ -102,9 +120,8 @@
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(IS_WEAKREF_OF(src, detach_from.atom_storage?.real_location))
+	if(detach_from.atom_storage?.real_location == src)
 		// Ensure void items do not stick around
-		atom_storage.close_all()
 		detach_from.atom_storage.close_all()
 		// And clean up the storage we made
 		QDEL_NULL(detach_from.atom_storage)
@@ -145,10 +162,12 @@
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	dropped(user)
 	return
 
 /// Signal proc for [COMSIG_CLOTHING_UNDER_ADJUSTED] on the uniform we're pinned to

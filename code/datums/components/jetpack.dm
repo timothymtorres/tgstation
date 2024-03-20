@@ -63,10 +63,10 @@
 	if(trail && trail.effect_type != effect_type)
 		setup_trail(trail.holder)
 
-/datum/component/jetpack/Destroy()
+/datum/component/jetpack/Destroy(force)
 	if(trail)
 		QDEL_NULL(trail)
-	QDEL_NULL(check_on_move)
+	check_on_move = null
 	return ..()
 
 /datum/component/jetpack/proc/setup_trail(mob/user)
@@ -116,7 +116,7 @@
 		return
 	if(user.throwing)//You don't must use jet if you thrown
 		return
-	if(length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
+	if(user.client.intended_direction)//You use jet when press keys. yes.
 		thrust()
 
 /datum/component/jetpack/proc/pre_move_react(mob/user)

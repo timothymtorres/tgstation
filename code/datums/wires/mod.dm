@@ -52,6 +52,11 @@
 
 /datum/wires/mod/ui_act(action, params)
 	var/obj/item/mod/control/mod = holder
-	if(!issilicon(usr) && mod.seconds_electrified && mod.shock(usr))
+	if(!HAS_SILICON_ACCESS(usr) && mod.seconds_electrified && mod.shock(usr))
 		return FALSE
+	return ..()
+
+/datum/wires/mod/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		return TRUE
 	return ..()

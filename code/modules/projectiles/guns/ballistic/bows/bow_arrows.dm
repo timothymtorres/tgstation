@@ -11,12 +11,13 @@
 	throwforce = 1
 	firing_effect_type = null
 	caliber = CALIBER_ARROW
-	is_cased_ammo = FALSE
+	///Whether the bullet type spawns another casing of the same type or not.
+	var/reusable = TRUE
 
 /obj/item/ammo_casing/arrow/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/envenomable_casing)
-	AddElement(/datum/element/caseless)
+	AddElement(/datum/element/caseless, reusable)
 
 /obj/item/ammo_casing/arrow/update_icon_state()
 	. = ..()
@@ -31,6 +32,7 @@
 	damage = 50
 	speed = 1
 	range = 25
+	shrapnel_type = null
 	embedding = list(
 		embed_chance = 90,
 		fall_chance = 2,
@@ -41,7 +43,6 @@
 		jostle_pain_mult = 3,
 		rip_time = 1 SECONDS
 	)
-	shrapnel_type = /obj/item/ammo_casing/arrow
 
 /// holy arrows
 /obj/item/ammo_casing/arrow/holy
@@ -58,7 +59,6 @@
 	desc = "Here it comes, cultist scum!"
 	icon_state = "holy_arrow_projectile"
 	damage = 20 //still a lot but this is roundstart gear so far less
-	shrapnel_type =/obj/projectile/bullet/arrow/holy
 	embedding = list(
 		embed_chance = 50,
 		fall_chance = 2,
@@ -72,7 +72,7 @@
 /obj/projectile/bullet/arrow/holy/Initialize(mapload)
 	. = ..()
 	//50 damage to revenants
-	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 30)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 30)
 
 /// special pyre sect arrow
 /// in the future, this needs a special sprite, but bows don't support non-hardcoded arrow sprites
@@ -80,6 +80,7 @@
 	name = "blazing star arrow"
 	desc = "A holy diver seeking its target, blessed with fire. Will ignite on hit, destroying the arrow. But if you hit an already ignited target...?"
 	projectile_type = /obj/projectile/bullet/arrow/blazing
+	reusable = FALSE
 
 /obj/projectile/bullet/arrow/blazing
 	name = "blazing arrow"

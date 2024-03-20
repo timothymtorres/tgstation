@@ -30,13 +30,11 @@
 	icon_state = "track"
 
 /atom/movable/screen/ai/camera_track/Click()
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/ai/AI = usr
-	var/target_name = tgui_input_list(AI, "Select a target", "Tracking", AI.trackable_mobs())
-	if(isnull(target_name))
-		return
-	AI.ai_camera_track(target_name)
+	AI.ai_camera_track()
 
 /atom/movable/screen/ai/camera_light
 	name = "Toggle Camera Light"
@@ -186,6 +184,11 @@
 // Language menu
 	using = new /atom/movable/screen/language_menu(null, src)
 	using.screen_loc = ui_ai_language_menu
+	static_inventory += using
+
+// Z-level floor change
+	using = new /atom/movable/screen/floor_menu(null, src)
+	using.screen_loc = ui_ai_floor_menu
 	static_inventory += using
 
 //AI core
