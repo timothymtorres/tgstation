@@ -631,6 +631,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	AddElement(/datum/element/rust/heretic)
 	new /obj/effect/glowing_rune(src)
 
+/// Over time turfs in space will rust and get destroyed (except for full tile glass)
+/// Do not use rust_turf() since that is reserved for rust hertics
+/turf/proc/space_rust()
+	return
+
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
 		playsound(src, SFX_BODYFALL, 50, TRUE)

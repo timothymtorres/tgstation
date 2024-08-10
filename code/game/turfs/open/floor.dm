@@ -369,6 +369,64 @@
 	ChangeTurf(/turf/open/floor/plating)
 	return ..()
 
+/turf/open/floor/space_rust()
+	var/obj/structure/window/window = locate(/obj/structure/window) in src
+
+	// full tile windows are immune to rust effects
+	if(window && window.fulltile && window.anchored)
+		return
+
+	// rust proof material (indestructable/admin stuff)
+	if(rust_resistance == RUST_RESISTANCE_ABSOLUTE)
+		return
+
+	// rust resistance material has a chance to skip rusting
+	if(rust_resistance != RUST_RESISTANCE_BASIC && prob(1/rust_resistance))
+		return
+
+	var/obj/structure/grille/grille = locate(/obj/structure/grille) in src
+	var/obj/structure/girder = locate(/obj/structure/girder) in src
+	var/was_rust_applied = FALSE
+
+	// apply rust to all support sturctures
+	if(girder && !HAS_TRAIT(girder, TRAIT_RUSTY))
+		girder.AddElement(/datum/element/rust)
+		was_rust_applied = TRUE
+
+	if(grille && !HAS_TRAIT(grille, TRAIT_RUSTY))
+		grille.AddElement(/datum/element/rust)
+		was_rust_applied = TRUE
+
+	if(!HAS_TRAIT(src, TRAIT_RUSTY))
+		AddElement(/datum/element/rust)
+		was_rust_applied = TRUE
+
+	if(was_rust_applied) // since rust was just applied we skip deletion
+		return
+
+	// start from top down and only delete one then stop
+	if(girder)
+		girder.deconstruct()
+		return
+
+	if(grille)
+		grille.deconstruct()
+		return
+
+	if(isplatingturf(src)) // since plating will get deconstructed into a lattice or space
+		for(var/obj/structure/cable/cable in src)
+			cable.deconstruct()
+
+		for(var/obj/structure/disposalpipe/disposalpipe in src)
+			disposalpipe.deconstruct()
+
+		for(var/obj/machinery/atmospherics/pipe/pipe in src)
+			pipe.deconstruct()
+
+	// if nothing else was deleted time to scrape the ground
+	var/turf/new_turf = attempt_lattice_replacement(amount=1)
+	new_turf.space_rust() // make sure our new turf/lattice is covered in rust as well
+
 /turf/open/floor/material
 	name = "floor"
 	icon_state = "materialfloor"

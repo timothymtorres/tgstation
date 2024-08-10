@@ -326,6 +326,26 @@
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
 
+/turf/closed/wall/space_rust()
+	// rust proof material (indestructable/admin stuff)
+	if(rust_resistance == RUST_RESISTANCE_ABSOLUTE)
+		return
+
+	// rust resistance material has a chance to skip rusting
+	if(rust_resistance != RUST_RESISTANCE_BASIC && prob(1/rust_resistance))
+		return
+
+	if(!HAS_TRAIT(src, TRAIT_RUSTY))
+		AddElement(/datum/element/rust)
+		return // since rust was just applied we skip deletion
+
+	dismantle_wall()
+
+	// apply rust to all support sturctures
+	var/obj/structure/girder = locate(/obj/structure/girder) in src
+	if(girder)
+		girder.AddElement(/datum/element/rust)
+
 /turf/closed/wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)

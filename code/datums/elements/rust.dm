@@ -6,19 +6,66 @@
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	argument_hash_start_idx = 2
 	/// The rust image itself, since the icon and icon state are only used as an argument
-	var/image/rust_overlay
+	//var/image/rust_overlay
+	//cached_texture_filter_icon = icon('icons/turf/composite.dmi', texture_layer_icon_state)
+	var/rust_overlay
 
 /datum/element/rust/Attach(atom/target, rust_icon = 'icons/effects/rust_overlay.dmi', rust_icon_state = "rust_default")
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	if(!rust_overlay)
-		rust_overlay = image(rust_icon, rust_icon_state)
+		rust_overlay = icon(rust_icon, rust_icon_state)
 	ADD_TRAIT(target, TRAIT_RUSTY, ELEMENT_TRAIT(type))
-	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_rust_overlay))
+	//RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_rust_overlay))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examine))
 	RegisterSignal (target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_interaction))
 	RegisterSignals(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), PROC_REF(secondary_tool_act))
+
+	if(rust_overlay)
+		//target.add_filter("rust_texture_overlay", 1, alpha_mask_filter(icon = rust_icon))
+
+		//target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
+
+
+		//ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
+		//source.add_filter("material_texture_[name]",1,layering_filter(icon=cached_texture_filter_icon,blend_mode=BLEND_INSET_OVERLAY))
+
+		//target.add_overlay(new_crack_overlay)
+		//ADD_KEEP_TOGETHER(target, ELEMENT_TRAIT(src))
+		//target.add_filter("rust_texture_overlay", 1, layering_filter(icon=rust_icon, blend_mode=BLEND_INSET_OVERLAY))
+		//overlays += food_image // To be below filters applied to src
+
+
+		//var/mutable_appearance/new_crack_overlay = new(pick(crack_appearances))
+		//var/mutable_appearance/rust_overlay = mutable_appearance(rust_icon, rust_icon_state)
+		// Now that we have our overlay, we need to give it a unique render source so we can use a filter against it
+		//var/static/uuid = 0
+		//uuid++
+		// * so it doesn't render on its own
+		//new_crack_overlay.render_target = "*cracked_overlay_[uuid]"
+		//var/render_source = new_crack_overlay.render_target
+		//add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))
+		//var/icon/mask = icon(target.icon, target.icon_state)
+		ADD_KEEP_TOGETHER(target, ELEMENT_TRAIT(src))
+		target.add_filter("blahblah",1,layering_filter(icon=rust_overlay, blend_mode=BLEND_INSET_OVERLAY))
+
+
+		//rust_overlay.add_filter("rust_mask", 1, alpha_mask_filter(render_source=target, flags=MASK_SWAP))
+		//target.add_overlay(rust_overlay)
+
+		//var/list/new_filter_data = alpha_mask_filter(icon=mask, flags=MASK_INVERSE)
+		//applied_cracks[target] = new_crack_overlay
+
+		// We need to add it as an overlay so the render target from the filter knows what to point at
+
+		//target.add_filter(target, 1, new_filter_data)
+
+
+		//var/config_path = get_greyscale_config_for(target.greyscale_config)
+		//var/greyscale_colors = "#735b4d"
+		//target.set_greyscale(greyscale_colors)
+
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	target.update_appearance()
 
@@ -29,6 +76,11 @@
 	UnregisterSignal(source, COMSIG_ATOM_ITEM_INTERACTION)
 	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
 	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
+
+	if(rust_overlay)
+		source.remove_filter("rust_texture_overlay")
+		REMOVE_KEEP_TOGETHER(source, ELEMENT_TRAIT(src))
+
 	source.update_appearance()
 
 /datum/element/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)
@@ -39,8 +91,20 @@
 /datum/element/rust/proc/apply_rust_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	if(rust_overlay)
+
+/**
+/proc/getHologramIcon(icon/A, safety = TRUE, opacity = 0.5)//If safety is on, a new icon is not created.
+	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
+	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
+	flat_icon.ChangeOpacity(opacity)
+	var/icon/alpha_mask = new('icons/effects/effects.dmi', "scanline")//Scanline effect.
+	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
+	return flat_icon
+
 		overlays += rust_overlay
+**/
+
+
 
 /// Because do_after sleeps we register the signal here and defer via an async call
 /datum/element/rust/proc/secondary_tool_act(atom/source, mob/user, obj/item/item)

@@ -276,9 +276,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 /// Attempts to replace a tile with lattice. Amount is the amount of tiles to scrape away.
 /turf/proc/attempt_lattice_replacement(amount = 2)
+	var/turf/new_turf
+
 	if(lattice_underneath)
-		var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
+		new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
 		if(!istype(new_turf, /turf/open/floor))
 			new /obj/structure/lattice(src)
 	else
-		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
+		new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
+	return new_turf

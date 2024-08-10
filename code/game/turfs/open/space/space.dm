@@ -200,6 +200,57 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return FALSE
 
+/turf/open/space/space_rust()
+	var/obj/structure/girder = locate(/obj/structure/girder) in src
+	var/obj/structure/grille/grille = locate(/obj/structure/grille) in src
+	var/obj/structure/lattice/catwalk/catwalk = locate(/obj/structure/lattice/catwalk) in src
+	var/obj/structure/lattice/lattice = locate(/obj/structure/lattice) in src
+
+	// minor optimization since space is always empty
+	if(!grille && !catwalk && !lattice && !girder)
+		return
+
+	var/was_rust_applied = FALSE
+
+	// apply rust to all support sturctures
+	if(girder && !HAS_TRAIT(girder, TRAIT_RUSTY))
+		girder.AddElement(/datum/element/rust)
+		was_rust_applied = TRUE
+
+	if(grille && !HAS_TRAIT(grille, TRAIT_RUSTY))
+		grille.AddElement(/datum/element/rust)
+		was_rust_applied = TRUE
+
+	if(catwalk && !HAS_TRAIT(catwalk, TRAIT_RUSTY))
+		catwalk.AddElement(/datum/element/rust)
+		was_rust_applied = TRUE
+
+	if(lattice && !HAS_TRAIT(lattice, TRAIT_RUSTY))
+		lattice.AddElement(/datum/element/rust)
+		was_rust_applied = TRUE
+
+	if(was_rust_applied) // since rust was just applied we skip deletion
+		return
+
+	// start from top down and only delete one then stop
+	if(girder)
+		girder.deconstruct()
+		return
+
+	if(grille)
+		grille.deconstruct()
+		return
+
+	if(catwalk)
+		catwalk.deconstruct()
+		var/obj/structure/lattice/new_lattice = new /obj/structure/lattice(src)
+		new_lattice.AddElement(/datum/element/rust)
+		return
+
+	if(lattice)
+		lattice.deconstruct()
+		return
+
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	generate_space_underlay(underlay_appearance, asking_turf)
 	return TRUE
