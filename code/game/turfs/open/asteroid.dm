@@ -125,7 +125,7 @@
 /turf/open/misc/asteroid/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/misc/asteroid/lavaland_atmos
+	baseturfs = /turf/open/openspace/lavaland
 
 /// Used by ashstorms to replenish basalt tiles that have been dug up without going through all of them.
 GLOBAL_LIST_EMPTY(dug_up_basalt)
@@ -138,6 +138,15 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "basalt"
 	floor_variance = 15
 	dig_result = /obj/item/stack/ore/glass/basalt
+
+/// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
+/turf/open/misc/asteroid/basalt/do_not_chasm
+	flags_1 = CAN_BE_DIRTY_1
+	turf_flags = IS_SOLID | NO_RUST | NO_RUINS
+
+/turf/open/misc/asteroid/basalt/do_not_scrape
+	flags_1 = CAN_BE_DIRTY_1
+	turf_flags = IS_SOLID | NO_RUST | NO_CLEARING
 
 /turf/open/misc/asteroid/basalt/getDug()
 	set_light(0)

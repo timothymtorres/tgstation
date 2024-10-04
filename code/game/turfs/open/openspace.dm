@@ -210,3 +210,41 @@
 
 /turf/open/openspace/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+/turf/open/openspace/lavaland
+	name = "lava chasm"
+	baseturfs = /turf/open/openspace/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	/// Replaces itself with replacement_turf if the turf has the no ruins allowed flag (usually ruins themselves)
+	var/protect_ruin = TRUE
+	/// The turf that will replace this one if the turf below has the no ruins allowed flag. we use this one so we don't get any potential double whammies
+	var/replacement_turf = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	/// If true mineral turfs below this openspace turf will be mined automatically
+	var/drill_below = TRUE
+
+/turf/open/openspace/lavaland/Initialize(mapload)
+	. = ..()
+	var/turf/T = GET_TURF_BELOW(src)
+	//I wonder if I should error here
+	if(!T)
+		return
+	if(T.turf_flags & NO_RUINS && protect_ruin)
+		var/turf/newturf = ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
+		if(!isopenspaceturf(newturf)) // only openspace turfs should be returning INITIALIZE_HINT_LATELOAD
+			return INITIALIZE_HINT_NORMAL
+		return
+	if(!ismineralturf(T) || !drill_below)
+		return
+	var/turf/closed/mineral/M = T
+	M.mineralAmt = 0
+	M.gets_drilled()
+	baseturfs = /turf/open/openspace/lavaland //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
+
+/turf/open/openspace/lavaland/keep_below
+	drill_below = FALSE
+
+/turf/open/openspace/lavaland/ruins
+	protect_ruin = FALSE
+	drill_below = FALSE
+
