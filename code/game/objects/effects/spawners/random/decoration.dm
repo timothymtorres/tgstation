@@ -150,3 +150,84 @@
 		/obj/item/food/grown/sunflower,
 		/obj/item/food/grown/rose,
 	)
+
+/obj/effect/spawner/random/decoration/flora
+	name = "random flora spawner"
+	icon_state = "flower"
+	spawn_loot_chance = 10
+	spawn_random_offset = TRUE
+	loot = list(
+		/obj/structure/flora/bush/style_random,
+		/obj/structure/flora/bush/flowers_br/style_random,
+		/obj/structure/flora/bush/flowers_pp/style_random,
+		/obj/structure/flora/bush/flowers_yw/style_random,
+		/obj/structure/flora/bush/fullgrass/style_random,
+		/obj/structure/flora/bush/generic/style_random,
+		/obj/structure/flora/bush/grassy/style_random,
+		/obj/structure/flora/bush/jungle/a/style_random,
+		/obj/structure/flora/bush/jungle/b/style_random,
+		/obj/structure/flora/bush/jungle/c/style_random,
+		/obj/structure/flora/bush/large/style_random,
+		/obj/structure/flora/bush/lavendergrass/style_random,
+		/obj/structure/flora/bush/leavy/style_random,
+		/obj/structure/flora/bush/pale/style_random,
+		/obj/structure/flora/bush/pointy/style_random,
+		/obj/structure/flora/bush/reed/style_random,
+		/obj/structure/flora/bush/sparsegrass/style_random,
+		/obj/structure/flora/bush/stalky/style_random,
+		/obj/structure/flora/bush/style_random,
+		/obj/structure/flora/bush/sunny/style_random,
+		/obj/structure/flora/grass/style_random,
+		/obj/structure/flora/grass/jungle/a/style_random,
+		/obj/structure/flora/grass/jungle/b/style_random,
+	)
+
+/obj/effect/spawner/random/decoration/tree
+	name = "random tree spawner"
+	icon_state = "flower"
+	loot = list(
+		/obj/structure/flora/tree/jungle/small/style_random,
+		/obj/structure/flora/tree/jungle/style_random,
+	)
+
+/obj/effect/spawner/random/decoration/rocks
+	name = "random rock spawner"
+	icon_state = "flower"
+	loot = list(
+		/obj/structure/flora/rock/style_random,
+		/obj/structure/flora/rock/pile/style_random,
+		/obj/structure/flora/rock/pile/jungle/style_random,
+		/obj/structure/flora/rock/pile/jungle/large/style_random,
+	)
+
+/obj/effect/spawner/random/decoration/mushroom
+	name = "random mushroom spawner"
+	icon_state = "flower"
+	loot = list(
+		/obj/structure/flora/ash/leaf_shroom = 2,
+		/obj/structure/flora/ash/cap_shroom = 2,
+		/obj/structure/flora/ash/stem_shroom = 2,
+		/obj/structure/flora/ash/tall_shroom = 2,
+		/obj/structure/flora/ash/seraka = 2,
+		/obj/structure/flora/ash/cacti = 1,
+	)
+
+/obj/effect/spawner/random/decoration/plant
+	name = "random plant spawner"
+	icon_state = "flower"
+	loot = list(
+		/obj/item/seeds/reishi,
+		/obj/item/seeds/nettle,
+		/obj/item/seeds/harebell,
+		/obj/item/seeds/amanita,
+		/obj/item/seeds/chanter,
+		/obj/item/seeds/tower,
+		/obj/item/seeds/plump,
+		/obj/item/seeds/starthistle,
+	)
+
+/obj/effect/spawner/random/decoration/plant/make_item(spawn_loc, type_path_to_make)
+	var/obj/item/seeds/seed = ..()
+	soil = new /obj/machinery/hydroponics/soil(spawn_loc)
+	soil.set_seed(seed)
+	return soil
