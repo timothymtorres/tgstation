@@ -270,6 +270,125 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 			contents += "\"}"
 	return "//[DMM2TGM_MESSAGE]\n[header.Join()][contents.Join()]"
 
+/// list of turfs to spawn from matching df ascii
+GLOBAL_LIST_INIT(df_chars_to_turf, list(
+	"X" = /turf/open/indestructible/boss/air,
+	"#" = /turf/closed/mineral/random/volcanic, // random for now but later we need to import all the different ore veins and types directly
+	"=" = /turf/closed/mineral/asteroid/porous, // red clay rock (needs to be adjusted to be easier to mine later)
+	"M" = /turf/open/lava/smooth,
+	"~" = /turf/open/water,
+	"'" = /turf/open/misc/grass,
+	'"' = /turf/open/misc/grass,
+	"^" = /turf/open/floor/iron/stairs,
+	"T" = /turf/open/misc/grass,
+	"B" = /turf/open/misc/grass,
+	"." = /turf/open/misc/asteroid/basalt,
+	"," = /turf/open/misc/dirt,
+	" " = /turf/open/openspace,
+	":" = /turf/open/misc/asteroid/basalt,
+))
+
+/// list of objects to spawn on top of turf from matching df ascii
+GLOBAL_LIST_INIT(df_chars_to_objs, list(
+	"'" = /obj/effect/spawner/random/decoration/flora,
+	'"' = /obj/effect/spawner/random/decoration/plant,
+	"T" = /obj/effect/spawner/random/decoration/tree,
+	"B" = /obj/effect/spawner/random/decoration/rocks,
+	":" = /obj/effect/spawner/random/decoration/mushroom,
+))
+
+/**
+ *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
+ */
+/proc/convert_df_map_to_dmi(df_map_txt, width, height, depth)
+	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
+	var/turfs_needed = width * height
+	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfs_needed) + 0.999, 1)
+
+	//Step 1: Run through the area and generate file data
+	var/list/header_data = list() //holds the data of a header -> to its key
+	var/list/header = list() //The actual header in text
+	var/list/contents = list() //The contents in text (bit at the end)
+	var/key_index = 1 // How many keys we've generated so far
+	for(var/z in 0 to depth)
+		for(var/x in 0 to width)
+			contents += "\n([x + 1],1,[z + 1]) = {\"\n"
+			for(var/y in height to 0 step -1)
+				CHECK_TICK
+				//====Get turfs Data====
+				var/turf/place
+				var/area/location
+				var/turf/pull_from = locate((minx + x), (miny + y), (minz + z))
+				//If there is nothing there, save as a noop (For odd shapes)
+				if(isnull(pull_from))
+					place = /turf/template_noop
+					location = /area/template_noop
+				//Ignore things in space, must be a space turf
+				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_SPACE))
+					place = /turf/template_noop
+					location = /area/template_noop
+					pull_from = null
+				//Stuff to add
+				else
+					var/area/place_area = get_area(pull_from)
+					location = place_area.type
+					place = pull_from.type
+
+				//====Saving shuttles only / non shuttles only====
+				var/is_shuttle_area = ispath(location, /area/shuttle)
+				if((is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_IGNORE) || (!is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_ONLY))
+					place = /turf/template_noop
+					location = /area/template_noop
+					pull_from = null
+				//====For toggling not saving areas and turfs====
+				if(!(save_flag & SAVE_AREAS))
+					location = /area/template_noop
+				if(!(save_flag & SAVE_TURFS))
+					place = /turf/template_noop
+				//====Generate Header Character====
+				// Info that describes this turf and all its contents
+				// Unique, will be checked for existing later
+				var/list/current_header = list()
+				current_header += "(\n"
+				//Add objects to the header file
+				var/empty = TRUE
+				//====SAVING OBJECTS====
+				if(save_flag & SAVE_OBJECTS)
+					for(var/obj/thing in pull_from)
+						CHECK_TICK
+						if(obj_blacklist[thing.type])
+							continue
+						var/metadata = generate_tgm_metadata(thing)
+						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
+						empty = FALSE
+						//====SAVING SPECIAL DATA====
+						//This is what causes lockers and machines to save stuff inside of them
+						if(save_flag & SAVE_OBJECT_PROPERTIES)
+							var/custom_data = thing.on_object_saved()
+							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
+				//====SAVING MOBS====
+				if(save_flag & SAVE_MOBS)
+					for(var/mob/living/thing in pull_from)
+						CHECK_TICK
+						if(istype(thing, /mob/living/carbon)) //Ignore people, but not animals
+							continue
+						var/metadata = generate_tgm_metadata(thing)
+						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
+						empty = FALSE
+				current_header += "[empty ? "" : ",\n"][place],\n[location])\n"
+				//====Fill the contents file====
+				var/textiftied_header = current_header.Join()
+				// If we already know this header just use its key, otherwise we gotta make a new one
+				var/key = header_data[textiftied_header]
+				if(!key)
+					key = calculate_tgm_header_index(key_index, layers)
+					key_index++
+					header += "\"[key]\" = [textiftied_header]"
+					header_data[textiftied_header] = key
+				contents += "[key]\n"
+			contents += "\"}"
+	return "//[DMM2TGM_MESSAGE]\n[header.Join()][contents.Join()]"
+
 /proc/generate_tgm_metadata(atom/object)
 	var/list/data_to_add = list()
 
