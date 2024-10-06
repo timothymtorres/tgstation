@@ -177,7 +177,7 @@
 		/obj/structure/flora/bush/stalky/style_random,
 		/obj/structure/flora/bush/style_random,
 		/obj/structure/flora/bush/sunny/style_random,
-		/obj/structure/flora/grass/style_random,
+		/obj/structure/flora/grass/green/style_random,
 		/obj/structure/flora/grass/jungle/a/style_random,
 		/obj/structure/flora/grass/jungle/b/style_random,
 	)
@@ -228,6 +228,6 @@
 
 /obj/effect/spawner/random/decoration/plant/make_item(spawn_loc, type_path_to_make)
 	var/obj/item/seeds/seed = ..()
-	soil = new /obj/machinery/hydroponics/soil(spawn_loc)
+	var/obj/machinery/hydroponics/soil/soil = new /obj/machinery/hydroponics/soil(spawn_loc)
 	soil.set_seed(seed)
 	return soil
