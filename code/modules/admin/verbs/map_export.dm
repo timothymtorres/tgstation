@@ -18,6 +18,22 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	log_admin("Build Mode: [key_name(user)] is exporting the map area from ([start_x], [start_y], [z_level]) through ([end_x], [end_y], [z_level])")
 	send_exported_map(user, file_name, map_text)
 
+ADMIN_VERB(df_map_export, R_DEBUG, "Dwarf Fortress Map Export", "Upload a dwarf fortress ascii map and convert it to dmm.", ADMIN_CATEGORY_DEBUG)
+	var/df_ascii_map = input(user, "Choose a dwarf fortress ascii map to convert","Convert df map") as null|file
+	if(!df_ascii_map)
+		return
+
+	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
+	var/file_name = sanitize_filename(tgui_input_text(user, "Filename?", "Map Exporter", "exported_map_[date]"))
+	var/confirm = tgui_alert(user, "Are you sure you want to do this? This will cause extreme lag!", "Dwarf Fortress Map Export", list("Yes", "No"))
+
+	if(confirm != "Yes")
+		return
+
+	var/map_text = convert_df_map_to_dmi(df_ascii_map, 255, 255, 66) // hardcode this shit for now
+	log_admin("Exporting dwarf fortress map now")
+	send_exported_map(user, file_name, map_text)
+
 /**
  * A procedure for saving DMM text to a file and then sending it to the user.
  * Arguments:
@@ -300,10 +316,12 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
  */
-/proc/convert_df_map_to_dmi(df_map_txt, width, height, depth)
+/proc/convert_df_map_to_dmi(df_map_ascii, width, height, depth)
 	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
 	var/turfs_needed = width * height
 	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfs_needed) + 0.999, 1)
+
+	var/df_map_string = file2text(df_map_ascii)
 
 	//Step 1: Run through the area and generate file data
 	var/list/header_data = list() //holds the data of a header -> to its key
@@ -315,36 +333,13 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 			contents += "\n([x + 1],1,[z + 1]) = {\"\n"
 			for(var/y in height to 0 step -1)
 				CHECK_TICK
-				//====Get turfs Data====
-				var/turf/place
-				var/area/location
-				var/turf/pull_from = locate((minx + x), (miny + y), (minz + z))
-				//If there is nothing there, save as a noop (For odd shapes)
-				if(isnull(pull_from))
-					place = /turf/template_noop
-					location = /area/template_noop
-				//Ignore things in space, must be a space turf
-				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_SPACE))
-					place = /turf/template_noop
-					location = /area/template_noop
-					pull_from = null
-				//Stuff to add
-				else
-					var/area/place_area = get_area(pull_from)
-					location = place_area.type
-					place = pull_from.type
 
-				//====Saving shuttles only / non shuttles only====
-				var/is_shuttle_area = ispath(location, /area/shuttle)
-				if((is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_IGNORE) || (!is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_ONLY))
-					place = /turf/template_noop
-					location = /area/template_noop
-					pull_from = null
-				//====For toggling not saving areas and turfs====
-				if(!(save_flag & SAVE_AREAS))
-					location = /area/template_noop
-				if(!(save_flag & SAVE_TURFS))
-					place = /turf/template_noop
+				//====Get turfs Data====
+				var/tile_char = df_map_string[x + ((y-1) * width) + ((z-1)*width*height)]
+				var/turf/df_turf = GLOB.df_chars_to_turf[tile_char]
+				var/area/df_area = /area/template_noop
+
+
 				//====Generate Header Character====
 				// Info that describes this turf and all its contents
 				// Unique, will be checked for existing later
@@ -352,30 +347,16 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 				current_header += "(\n"
 				//Add objects to the header file
 				var/empty = TRUE
+
+				var/obj/df_object = GLOB.df_chars_to_objs[tile_char]
 				//====SAVING OBJECTS====
-				if(save_flag & SAVE_OBJECTS)
-					for(var/obj/thing in pull_from)
-						CHECK_TICK
-						if(obj_blacklist[thing.type])
-							continue
-						var/metadata = generate_tgm_metadata(thing)
-						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
-						empty = FALSE
-						//====SAVING SPECIAL DATA====
-						//This is what causes lockers and machines to save stuff inside of them
-						if(save_flag & SAVE_OBJECT_PROPERTIES)
-							var/custom_data = thing.on_object_saved()
-							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
-				//====SAVING MOBS====
-				if(save_flag & SAVE_MOBS)
-					for(var/mob/living/thing in pull_from)
-						CHECK_TICK
-						if(istype(thing, /mob/living/carbon)) //Ignore people, but not animals
-							continue
-						var/metadata = generate_tgm_metadata(thing)
-						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
-						empty = FALSE
-				current_header += "[empty ? "" : ",\n"][place],\n[location])\n"
+				if(df_object)
+					CHECK_TICK
+					var/metadata = generate_tgm_metadata(df_object)
+					current_header += "[empty ? "" : ",\n"][df_object.type][metadata]"
+					empty = FALSE
+
+				current_header += "[empty ? "" : ",\n"][df_turf],\n[df_area])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
 				// If we already know this header just use its key, otherwise we gotta make a new one
@@ -388,6 +369,7 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 				contents += "[key]\n"
 			contents += "\"}"
 	return "//[DMM2TGM_MESSAGE]\n[header.Join()][contents.Join()]"
+
 
 /proc/generate_tgm_metadata(atom/object)
 	var/list/data_to_add = list()
