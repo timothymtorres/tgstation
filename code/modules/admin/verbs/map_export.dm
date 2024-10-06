@@ -23,6 +23,10 @@ ADMIN_VERB(df_map_export, R_DEBUG, "Dwarf Fortress Map Export", "Upload a dwarf 
 	if(!df_ascii_map)
 		return
 
+	var/max_z = tgui_input_number(user, "Max Z", "Map Exporter", 66)
+	var/max_x = tgui_input_number(user, "Max X", "Map Exporter", 255)
+	var/max_y = tgui_input_number(user, "Max Y", "Map Exporter", 255)
+
 	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
 	var/file_name = sanitize_filename(tgui_input_text(user, "Filename?", "Map Exporter", "exported_map_[date]"))
 	var/confirm = tgui_alert(user, "Are you sure you want to do this? This will cause extreme lag!", "Dwarf Fortress Map Export", list("Yes", "No"))
@@ -30,7 +34,7 @@ ADMIN_VERB(df_map_export, R_DEBUG, "Dwarf Fortress Map Export", "Upload a dwarf 
 	if(confirm != "Yes")
 		return
 
-	var/map_text = convert_df_map_to_dmi(df_ascii_map, 255, 255, 66) // hardcode this shit for now
+	var/map_text = convert_df_map_to_dmi(df_ascii_map, max_x, max_y, max_z) // hardcode this shit for now
 	log_admin("Exporting dwarf fortress map now")
 	send_exported_map(user, file_name, map_text)
 
@@ -294,7 +298,7 @@ GLOBAL_LIST_INIT(df_chars_to_turf, list(
 	"M" = /turf/open/lava/smooth,
 	"~" = /turf/open/water,
 	"'" = /turf/open/misc/grass,
-	'"' = /turf/open/misc/grass,
+	"\"" = /turf/open/misc/grass,
 	"^" = /turf/open/floor/iron/stairs,
 	"T" = /turf/open/misc/grass,
 	"B" = /turf/open/misc/grass,
@@ -307,7 +311,7 @@ GLOBAL_LIST_INIT(df_chars_to_turf, list(
 /// list of objects to spawn on top of turf from matching df ascii
 GLOBAL_LIST_INIT(df_chars_to_objs, list(
 	"'" = /obj/effect/spawner/random/decoration/flora,
-	'"' = /obj/effect/spawner/random/decoration/plant,
+	"\"" = /obj/effect/spawner/random/decoration/plant,
 	"T" = /obj/effect/spawner/random/decoration/tree,
 	"B" = /obj/effect/spawner/random/decoration/rocks,
 	":" = /obj/effect/spawner/random/decoration/mushroom,
@@ -322,6 +326,7 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfs_needed) + 0.999, 1)
 
 	var/df_map_string = file2text(df_map_ascii)
+	var/amount = lentext(df_map_string)
 
 	//Step 1: Run through the area and generate file data
 	var/list/header_data = list() //holds the data of a header -> to its key
@@ -332,10 +337,9 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 		for(var/x in 0 to width)
 			contents += "\n([x + 1],1,[z + 1]) = {\"\n"
 			for(var/y in height to 0 step -1)
-				CHECK_TICK
-
 				//====Get turfs Data====
-				var/tile_char = df_map_string[x + ((y-1) * width) + ((z-1)*width*height)]
+				var/pos = (x+1) + ((y) * width) + ((z)*width*height)
+				var/tile_char = df_map_string[pos]
 				var/turf/df_turf = GLOB.df_chars_to_turf[tile_char]
 				var/area/df_area = /area/template_noop
 
@@ -351,9 +355,8 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 				var/obj/df_object = GLOB.df_chars_to_objs[tile_char]
 				//====SAVING OBJECTS====
 				if(df_object)
-					CHECK_TICK
-					var/metadata = generate_tgm_metadata(df_object)
-					current_header += "[empty ? "" : ",\n"][df_object.type][metadata]"
+					//var/metadata = generate_tgm_metadata(df_object)
+					current_header += "[empty ? "" : ",\n"][df_object.type]"
 					empty = FALSE
 
 				current_header += "[empty ? "" : ",\n"][df_turf],\n[df_area])\n"
