@@ -19,13 +19,9 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	send_exported_map(user, file_name, map_text)
 
 ADMIN_VERB(df_map_export, R_DEBUG, "Dwarf Fortress Map Export", "Upload a dwarf fortress ascii map and convert it to dmm.", ADMIN_CATEGORY_DEBUG)
-	var/df_ascii_map = input(user, "Choose a dwarf fortress ascii map to convert","Convert df map") as null|file
-	if(!df_ascii_map)
+	var/df_json_map = input(user, "Choose a dwarf fortress ascii map to convert","Convert df map") as null|file
+	if(!df_json_map)
 		return
-
-	var/max_z = tgui_input_number(user, "Max Z", "Map Exporter", 66)
-	var/max_x = tgui_input_number(user, "Max X", "Map Exporter", 255)
-	var/max_y = tgui_input_number(user, "Max Y", "Map Exporter", 255)
 
 	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
 	var/file_name = sanitize_filename(tgui_input_text(user, "Filename?", "Map Exporter", "exported_map_[date]"))
@@ -34,7 +30,7 @@ ADMIN_VERB(df_map_export, R_DEBUG, "Dwarf Fortress Map Export", "Upload a dwarf 
 	if(confirm != "Yes")
 		return
 
-	var/map_text = convert_df_map_to_dmi(df_ascii_map, max_x, max_y, max_z) // hardcode this shit for now
+	var/map_text = convert_df_map_to_dmi(df_json_map) // hardcode this shit for now
 	log_admin("Exporting dwarf fortress map now")
 	send_exported_map(user, file_name, map_text)
 
@@ -317,16 +313,31 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 	":" = /obj/effect/spawner/random/decoration/mushroom,
 ))
 
+/proc/convert_df_tile_to_area()
+
+
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
  */
-/proc/convert_df_map_to_dmi(df_map_ascii, width, height, depth)
+/proc/convert_df_map_to_dmi(df_json_map)
 	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
 	var/turfs_needed = width * height
 	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfs_needed) + 0.999, 1)
 
-	var/df_map_string = file2text(df_map_ascii)
-	var/amount = lentext(df_map_string)
+	var/df_map_string = file2text(df_json_map)
+	//var/amount = lentext(df_map_string)
+
+	if(!fexists(df_json_map))
+		return
+
+	var/list/raw_data = json_decode(file2text(df_json_map)))
+	var/list/options = raw_data["ARGUMENT_OPTION_ORDER"] // it's a list [],
+
+	var/width = raw_data["MAP_SIZE"]["x"]
+	var/height = raw_data["MAP_SIZE"]["y"]
+	var/depth = raw_data["MAP_SIZE"]["z"]
+	//raw_data["MAP_SIZE"]["evilness"] // convert this into threat level
+	//raw_data["KEYS"] reference
 
 	//Step 1: Run through the area and generate file data
 	var/list/header_data = list() //holds the data of a header -> to its key
@@ -339,9 +350,32 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 			for(var/y in height to 0 step -1)
 				//====Get turfs Data====
 				var/pos = (x+1) + ((y) * width) + ((z)*width*height)
-				var/tile_char = df_map_string[pos]
+
+
+local ordered_options = {
+    "tiletype",
+    "shape",
+    "material",
+    "outside",
+
+    "special",
+    "variant",
+    "hidden",
+    "light",
+    "subterranean",
+    "aquifer",
+
+
+				var/tile_data = raw_data["map"][z][y][x]
+				tile_data[options.tiletype]
+				tile_data[options.shape]
+
+
+				var/tile_char = //df_map_string[pos]
 				var/turf/df_turf = GLOB.df_chars_to_turf[tile_char]
-				var/area/df_area = /area/template_noop
+
+				// double check this (also need to make a custom planet area)
+				var/area/df_area = tile_data[options.outside] ? /area/lavaland/surface/outdoors : /area/lavaland/surface
 
 
 				//====Generate Header Character====
