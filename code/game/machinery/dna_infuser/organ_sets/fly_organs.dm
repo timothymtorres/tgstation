@@ -53,6 +53,64 @@
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/proc/fly_noise(text)
+	// First replace "z" and "Z"
+	var/regex/lower_z = new /regex("z", "g")
+	var/regex/upper_z = new /regex("Z", "g")
+	text = lower_z.Replace(text, "zzz")
+	text = upper_z.Replace(text, "ZZZ")
+
+	// next replace "s" and "S"
+	text = replacetextEx(text, "s", "z")
+	text = replacetextEx(text, "S", "Z")
+
+	//text = regex_replace(text, "z", "zzz")
+	//text = regex_replace(text, "Z", "ZZZ")
+
+	return text
+
+/mob/verb/buzz_chat()
+	set name = "Buzz Chat"
+
+	var/input_text = input("Enter your message:") as text
+	if(!input_text) return
+
+	var/buzz_text = fly_noise(input_text)
+	usr << "Buzzing: [buzz_text]"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /obj/item/organ/internal/tongue/fly/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
