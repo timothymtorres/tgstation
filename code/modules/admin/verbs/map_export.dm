@@ -313,69 +313,217 @@ GLOBAL_LIST_INIT(df_chars_to_objs, list(
 	":" = /obj/effect/spawner/random/decoration/mushroom,
 ))
 
-/proc/convert_df_tile_to_area()
+GLOBAL_LIST_EMPTY(df_keys_shapes)
+GLOBAL_LIST_EMPTY(df_keys_tiletypes)
+GLOBAL_LIST_EMPTY(plant_materials)
+
+#define IS_WALL(material, shape) \
+	(shape == text2num(GLOB.df_keys_shapes["WALL"]) \
+	&& !(GLOB.plant_materials[material]) \
+	);
+
+#define IS_BOULDER(shape) \
+	(shape == text2num(GLOB.df_keys_shapes["BOULDER"]))
+
+#define IS_TREE(material, shape) \
+	((shape == text2num(GLOB.df_keys_shapes["FLOOR"])) && (material == text2num(GLOB.df_keys_materials["TREE"])))
+
+#define IS_WALL(material, shape) \
+	(shape == text2num(GLOB.df_keys_shapes["WALL"]) && !(GLOB.plant_materials[material]))
+
+#define IS_HARD(material) \
+	(GLOB.hard_natural_materials[material])
+
+#define IS_MAGMA(material, liquid_type, flow_size) \
+	(liquid_type && (flow_size > 0) || material == text2num(GLOB.df_keys_materials["HFS"]))
+
+#define IS_WATER(material) \
+	(material == text2num(GLOB.df_keys_materials["RIVER"]) \
+	|| material == text2num(GLOB.df_keys_materials["BROOK"]) \
+	|| material == text2num(GLOB.df_keys_materials["POOL"]) \
+	|| material == text2num(GLOB.df_keys_materials["FROZEN_LIQUID"]))
+
+#define IS_GRASS(material) \
+	(material == text2num(GLOB.df_keys_materials["GRASS_LIGHT"]) \
+	|| material == text2num(GLOB.df_keys_materials["GRASS_DARK"]) \
+	|| material == text2num(GLOB.df_keys_materials["GRASS_DRY"]) \
+	|| material == text2num(GLOB.df_keys_materials["GRASS_DEAD"]))
+
+#define IS_PLANT(material) \
+	(material == text2num(GLOB.df_keys_materials["PLANT"]))
+
+#define IS_RAMP(shape) \
+	(shape == text2num(GLOB.df_keys_shapes["RAMP"]))
+
+#define IS_STONE_FLOOR(material, shape) \
+	((shape == text2num(GLOB.df_keys_shapes["FLOOR"])) && (material == text2num(GLOB.df_keys_materials["STONE"])))
+
+#define IS_DIRT_FLOOR(material, shape) \
+	((shape == text2num(GLOB.df_keys_shapes["FLOOR"])) && (material == text2num(GLOB.df_keys_materials["SOIL"])))
+
+#define IS_AIR(material, shape) \
+	(material == text2num(GLOB.df_keys_materials["AIR"]) \
+	|| shape == text2num(GLOB.df_keys_shapes["NONE"]) \
+	|| (GLOB.plant_materials[material] && !(shape == text2num(GLOB.df_keys_shapes["FLOOR"]))))
+
+#define IS_MUSHROOM(material, shape) \
+	((shape == text2num(GLOB.df_keys_shapes["FLOOR"])) && (material == text2num(GLOB.df_keys_materials["MUSHROOM"])))
+
+#define IS_BEDROCK(material) \
+	(material == text2num(GLOB.df_keys_materials["MAGMA"]))
+
+#define IS_HELL(material) \
+	(material == text2num(GLOB.df_keys_materials["HFS"]))
+
+#define IS_OUTSIDE(skyview) \
+	(skyview)
+
+
+/**
+local function is_wall(tileattrs, tileflags)
+    -- from quickfort
+    return (tileattrs.shape == df.tiletype_shape.WALL and not plant_materials[tileattrs.material])
+end
+*/
+
+/proc/determine_turf_type(tiletype, shape, material)
+	var/turf/selected_turf
+
+/**
+	"SHAPE": [
+		"-1": "NONE",
+		"0": "EMPTY",
+		"1": "FLOOR",
+		"2": "BOULDER",
+		"3": "PEBBLES",
+		"4": "WALL",
+		"5": "FORTIFICATION",
+		"6": "STAIR_UP",
+		"7": "STAIR_DOWN",
+		"8": "STAIR_UPDOWN",
+		"9": "RAMP",
+		"10": "RAMP_TOP",
+		"11": "BROOK_BED",
+		"12": "BROOK_TOP",
+		"13": "BRANCH",
+		"14": "TRUNK_BRANCH",
+		"15": "TWIG",
+		"16": "SAPLING",
+		"17": "SHRUB",
+		"18": "ENDLESS_PIT"
+	]
+	"TILETYPE": [
+		"-1": "NONE",
+		"0": "AIR",
+		"1": "SOIL",
+		"2": "STONE",
+		"3": "FEATURE",
+		"4": "LAVA_STONE",
+		"5": "MINERAL",
+		"6": "FROZEN_LIQUID",
+		"7": "CONSTRUCTION",
+		"8": "GRASS_LIGHT",
+		"9": "GRASS_DARK",
+		"10": "GRASS_DRY",
+		"11": "GRASS_DEAD",
+		"12": "PLANT",
+		"13": "HFS",
+		"14": "CAMPFIRE",
+		"15": "FIRE",
+		"16": "ASHES",
+		"17": "MAGMA",
+		"18": "DRIFTWOOD",
+		"19": "POOL",
+		"20": "BROOK",
+		"21": "RIVER",
+		"22": "ROOT",
+		"23": "TREE",
+		"24": "MUSHROOM",
+		"25": "UNDERWORLD_GATE"
+	]
+
+
+	if is_wall(tiletype, shape)
+
+	elseif is_magma(tiletype, shape)
+
+*/
+
+	if(IS_WALL(tiletype, shape))
+		selected_turf = /turf/closed/mineral/random/volcanic
+	else
+		selected_turf = /turf/open/misc/dirt
+
+	return selected_turf
 
 
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
  */
 /proc/convert_df_map_to_dmi(df_json_map)
-	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
-	var/turfs_needed = width * height
-	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfs_needed) + 0.999, 1)
-
-	var/df_map_string = file2text(df_json_map)
-	//var/amount = lentext(df_map_string)
-
-	if(!fexists(df_json_map))
-		return
-
-	var/list/raw_data = json_decode(file2text(df_json_map)))
-	var/list/options = raw_data["ARGUMENT_OPTION_ORDER"] // it's a list [],
+	var/list/raw_data = json_decode(file2text(df_json_map))
 
 	var/width = raw_data["MAP_SIZE"]["x"]
 	var/height = raw_data["MAP_SIZE"]["y"]
 	var/depth = raw_data["MAP_SIZE"]["z"]
+	var/list/options = raw_data["ARGUMENT_OPTION_ORDER"] // it's a list [],
 	//raw_data["MAP_SIZE"]["evilness"] // convert this into threat level
-	//raw_data["KEYS"] reference
+
+	// swap the key/value for lists
+	for(var/id in raw_data["KEYS"]["SHAPE"])
+		var/shape = raw_data["KEYS"]["SHAPE"][id]
+		//raw_data["KEYS"]["SHAPE"][shape] = id
+		GLOB.df_keys_shapes[shape] = id
+		//GLOB.df_keys_shapes[id] = shape
+
+	//for(var/num in raw_data["KEYS"]["SHAPE"])
+		//GLOB.df_keys_shape
+
+	//raw_data["KEYS"]["TILETYPE"]
+	// GLOBAL_LIST_EMPTY(df_keys_tiletypes)
+
+	//GLOB.df_keys_tiletype += src
+	//GLOB.df_keys_shape += src
+
+	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
+	var/turfs_needed = width * height
+	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfs_needed) + 0.999, 1)
 
 	//Step 1: Run through the area and generate file data
 	var/list/header_data = list() //holds the data of a header -> to its key
 	var/list/header = list() //The actual header in text
 	var/list/contents = list() //The contents in text (bit at the end)
 	var/key_index = 1 // How many keys we've generated so far
-	for(var/z in 0 to depth)
-		for(var/x in 0 to width)
-			contents += "\n([x + 1],1,[z + 1]) = {\"\n"
-			for(var/y in height to 0 step -1)
+
+	for(var/z in 1 to 2) //depth)
+		for(var/x in 1 to width)
+			contents += "\n([x],1,[z]) = {\"\n"
+			for(var/y in height to 1 step -1) // might need height to 0 but double check
+
+				var/turf/df_turf
+				var/area/df_area
+				var/obj/df_object = FALSE //= GLOB.df_chars_to_objs[tile_char]
+
+
+
 				//====Get turfs Data====
-				var/pos = (x+1) + ((y) * width) + ((z)*width*height)
+				if((length(raw_data["map"][z]) >= y) && (length(raw_data["map"][z][y]) >= x) )
+					var/tile = raw_data["map"][z][y][x]
+
+					var/tiletype = tile[options["tiletype"]]
+					var/shape = tile[options["shape"]]
+					var/outside = tile[options["outside"]]
+					//var/material = length(tile) >= 4 tile[options["material"]]
+
+					df_turf = determine_turf_type(tiletype, shape)//, material)
+					// double check this (also need to make a custom planet area)
+					df_area = outside ? /area/lavaland/surface/outdoors : /area/lavaland/surface
+				else // the lower hell z-levels have gaps in their x/y grids
+					df_turf = /turf/closed/indestructible/necropolis
+					df_area = /area/space
 
 
-local ordered_options = {
-    "tiletype",
-    "shape",
-    "material",
-    "outside",
 
-    "special",
-    "variant",
-    "hidden",
-    "light",
-    "subterranean",
-    "aquifer",
-
-
-				var/tile_data = raw_data["map"][z][y][x]
-				tile_data[options.tiletype]
-				tile_data[options.shape]
-
-
-				var/tile_char = //df_map_string[pos]
-				var/turf/df_turf = GLOB.df_chars_to_turf[tile_char]
-
-				// double check this (also need to make a custom planet area)
-				var/area/df_area = tile_data[options.outside] ? /area/lavaland/surface/outdoors : /area/lavaland/surface
 
 
 				//====Generate Header Character====
@@ -386,7 +534,6 @@ local ordered_options = {
 				//Add objects to the header file
 				var/empty = TRUE
 
-				var/obj/df_object = GLOB.df_chars_to_objs[tile_char]
 				//====SAVING OBJECTS====
 				if(df_object)
 					//var/metadata = generate_tgm_metadata(df_object)
