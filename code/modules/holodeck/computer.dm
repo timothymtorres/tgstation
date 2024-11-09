@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
  * yet need to be added to the list of spawned objects. (e.g. holographic fishes)
  */
 /obj/machinery/computer/holodeck/proc/add_to_spawned(atom/holo_atom)
-	spawned |= holo_atom
+	spawned += holo_atom
 	if(!(obj_flags & EMAGGED) && isitem(holo_atom))
 		var/obj/item/to_be_nerfed = holo_atom
 		to_be_nerfed.damtype = STAMINA
