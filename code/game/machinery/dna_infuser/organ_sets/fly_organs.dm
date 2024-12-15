@@ -8,6 +8,8 @@
 	bonus_activate_text = null
 	bonus_deactivate_text = null
 
+	balooney
+
 /datum/status_effect/organ_set_bonus/fly/enable_bonus()
 	. = ..()
 	if(!. || !ishuman(owner))
