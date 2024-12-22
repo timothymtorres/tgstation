@@ -112,7 +112,7 @@
 	desc = "Weeeeee"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-
+	default_gravity = ZERO_GRAVITY
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
