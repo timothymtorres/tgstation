@@ -182,7 +182,7 @@
 	return MARTIAL_ATTACK_INVALID // normal disarm
 
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user)
-	if(!can_use(carp_user) || !carp_user.combat_mode)
+	if(!can_use(carp_user) || !carp_user.combat_mode || carp_user.get_num_held_items())
 		return FALSE
 	if(INCAPACITATED_IGNORING(carp_user, INCAPABLE_GRAB)) //NO STUN
 		return FALSE
