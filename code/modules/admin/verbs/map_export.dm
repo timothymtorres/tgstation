@@ -318,6 +318,7 @@ GLOBAL_LIST_EMPTY(df_keys_tiletypes)
 GLOBAL_LIST_EMPTY(df_keys_materials)
 GLOBAL_LIST_EMPTY(df_plant_materials)
 GLOBAL_LIST_EMPTY(df_hard_natural_materials)
+GLOBAL_LIST_EMPTY(df_liquid_types)
 
 #define IS_BOULDER(material, shape) \
 	(shape == text2num(GLOB.df_keys_shapes["BOULDER"]))
@@ -331,15 +332,15 @@ GLOBAL_LIST_EMPTY(df_hard_natural_materials)
 #define IS_HARD(material, shape) \
 	(LAZYACCESS(GLOB.df_hard_natural_materials, material))
 
-// need to add liquid and flow tileflags to export-map.lua
-#define IS_MAGMA(material, shape, liquid_type, flow_size) \
-	(liquid_type && (flow_size > 0) || material == text2num(GLOB.df_keys_tiletypes["HFS"]))
+#define IS_MAGMA(material, shape, liquid) \
+	(liquid == text2num(GLOB.df_liquid_types["MAGMA"]))
 
-#define IS_WATER(material, shape) \
+#define IS_WATER(material, shape, liquid) \
 	(material == text2num(GLOB.df_keys_tiletypes["RIVER"]) \
 	|| material == text2num(GLOB.df_keys_tiletypes["BROOK"]) \
 	|| material == text2num(GLOB.df_keys_tiletypes["POOL"]) \
-	|| material == text2num(GLOB.df_keys_tiletypes["FROZEN_LIQUID"]))
+	|| material == text2num(GLOB.df_keys_tiletypes["FROZEN_LIQUID"]) \
+	|| liquid == text2num(GLOB.df_liquid_types["WATER"]))
 
 #define IS_GRASS(material, shape) \
 	(material == text2num(GLOB.df_keys_tiletypes["GRASS_LIGHT"]) \
@@ -384,21 +385,22 @@ local function is_wall(tileattrs, tileflags)
 end
 */
 
-/proc/determine_turf_type(tiletype, shape, material)
+/proc/determine_turf_type(tiletype, shape, liquid, material)
 	var/turf/selected_turf
 
-	if(IS_BEDROCK(tiletype, shape))
+	if(IS_AIR(tiletype, shape))
+		selected_turf = /turf/open/openspace
+	else if(IS_WATER(tiletype, shape, liquid))
+		selected_turf = /turf/open/water
+	else if(IS_MAGMA(tiletype, shape, liquid))
+		selected_turf = /turf/open/lava/smooth
+	else if(IS_BEDROCK(tiletype, shape))
 		selected_turf = /turf/closed/indestructible/necropolis
 	else if(IS_WALL(tiletype, shape))
 		if(IS_HARD(tiletype, shape))
 			selected_turf = /turf/closed/mineral/random/volcanic
 		else
 			selected_turf = /turf/closed/mineral/asteroid/porous
-	else if(IS_WATER(tiletype, shape))
-		selected_turf = /turf/open/water
-	//else if(IS_MAGMA(tiletype, shape))
-	//	selected_turf = /turf/open/lava/smooth
-
 	// probably need stairs
 	else if(IS_RAMP(tiletype, shape))
 		selected_turf = /obj/structure/stairs/stone
@@ -408,15 +410,10 @@ end
 		selected_turf = /turf/open/misc/dirt
 	else if(IS_STONE_FLOOR(tiletype, shape))
 		selected_turf = /turf/open/misc/basalt
-
-	else if(IS_AIR(tiletype, shape))
-		selected_turf = /turf/open/openspace
-
 	// this might need to be before air or after, idk not sure
 	else if(IS_HELL(tiletype, shape))
 		// remember it's using lavaland atmos
-		// we need to switch to chasms after we add liquid_type & flow_size tileflags to export-map.lua
-		selected_turf = /turf/open/lava/smooth //turf/open/chasm/lavaland
+		selected_turf = /turf/open/chasm/lavaland
 	else // needs error type
 		selected_turf = /turf/open/misc
 
@@ -478,6 +475,15 @@ end
 		GLOB.df_keys_tiletypes[tiletype] = id
 		GLOB.df_keys_tiletypes[id] = tiletype
 
+	if(!raw_data["KEYS"]["LIQUID"])
+		log_admin("Invalid JSON! Missing JSON Dwarf Fortress 'LIQUID' object")
+		CRASH("Invalid JSON! Missing JSON Dwarf Fortress 'LIQUID' object")
+
+	for(var/id in raw_data["KEYS"]["LIQUID"])
+		var/liquid_type = raw_data["KEYS"]["LIQUID"][id]
+		GLOB.df_liquid_types[liquid_type] = id
+		GLOB.df_liquid_types[id] = liquid_type
+
 /**
 	if(!raw_data["KEYS"]["MATERIAL"])
 		log_admin("Invalid JSON! Missing JSON Dwarf Fortress 'MATERIAL' object")
@@ -529,6 +535,7 @@ end
 				var/tiletype
 				var/shape
 				var/outside
+				var/liquid
 
 				//====Get turfs Data====
 				if((length(raw_data["map"][z]) >= y) && (length(raw_data["map"][z][y]) >= x) )
@@ -537,10 +544,11 @@ end
 					tiletype = tile[options["tiletype"]]
 					shape = tile[options["shape"]]
 					outside = tile[options["outside"]]
+					liquid = LAZYACCESS(tile, options["liquid"])
 
 					//var/material = length(tile) >= 4 tile[options["material"]]
 
-					df_turf = determine_turf_type(tiletype, shape)//, material)
+					df_turf = determine_turf_type(tiletype, shape, liquid)//, material)
 					// double check this (also need to make a custom planet area)
 					df_area = outside ? /area/lavaland/surface/outdoors : /area/lavaland/surface
 				else // the lower hell z-levels have gaps in their x/y grids
