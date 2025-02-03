@@ -224,6 +224,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	var/client_max_file_size = CONFIG_GET(number/upload_limit)
+/*
 	if (holder)
 		var/admin_max_file_size = CONFIG_GET(number/upload_limit_admin)
 		if(filelength > admin_max_file_size)
@@ -232,6 +233,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else if(filelength > client_max_file_size)
 		to_chat(src, span_warning("Error: AllowUpload(): File Upload too large. Upload Limit: [client_max_file_size/1024]KiB."))
 		return FALSE
+*/
 	return TRUE
 
 
