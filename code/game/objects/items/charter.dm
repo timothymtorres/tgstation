@@ -119,3 +119,81 @@
 	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
+
+#define MANDATE_COOLDOWN (15 MINUTES)
+
+/datum/armor/fortress_mandate
+	bomb = 30
+	fire = 100
+	acid = 100
+
+/obj/item/fortress_mandate
+	name = "fortress mandate"
+	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "blankscroll"
+	desc = "An official document entrusting the governance of the fortress."
+	max_integrity = 250
+	armor_type = /datum/armor/fortress_mandate
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	var/mandate_pos = 1
+	var/mandate_max_lenth = 5
+	var/list/mandates = list()
+	COOLDOWN_DECLARE(mandate_cooldown)
+
+/obj/item/fortress_mandate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/stationloving)
+
+/obj/item/fortress_mandate/attack_self(mob/living/user)
+	if(!COOLDOWN_FINISHED(src, mandate_cooldown))
+		to_chat(user, span_notice("You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, mandate_cooldown))] before declaring another mandate!"))
+		return ..()
+
+	var/examine_mandates = display_mandates()
+	if(examine_mandates)
+		priority_announce(examine_mandates, "[user.real_name] ([user.mind.assigned_role.title]) has imposed a mandate:", 'sound/announcer/announcement/announce.ogg', ANNOUNCEMENT_TYPE_PRIORITY, has_important_message = TRUE)
+		COOLDOWN_START(src, mandate_cooldown, MANDATE_COOLDOWN)
+		user.log_talk(examine_mandates, LOG_SAY, tag="priority announcement")
+		message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
+	else
+		to_chat(user, span_notice("No mandates detected, use a pen to make some."))
+
+	..()
+
+/obj/item/fortress_mandate/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/pen))
+		var/max_pos = min(mandates.len + 1, mandate_max_lenth)
+		var/newpos = tgui_input_number(user, "Please enter the priority for your new mandate.", "Mandate Priority ", mandate_pos, max_pos, 1)
+		if(!newpos || !user.is_holding(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+			return
+		mandate_pos = newpos
+		var/mandate_text = LAZYACCESS(mandates, mandate_pos)
+		var/new_mandate = tgui_input_text(user, "Enter a new mandate for the fortress.", "Mandate Entry", mandate_text, max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
+		if(!new_mandate || !user.is_holding(src))
+			return
+		if(!mandate_text)
+			mandates.Insert(mandate_pos, new_mandate)
+		else
+			mandates[mandate_pos] = new_mandate
+		icon_state = "charter"
+	return ..()
+
+/obj/item/fortress_mandate/examine(mob/user as mob)
+	. = ..()
+	var/assembled_mandates = display_mandates()
+	if(assembled_mandates)
+		. += span_bold("Current Mandate:")
+		. += span_bold(assembled_mandates)
+	else
+		. += span_notice("No mandates detected, use a pen to make some.")
+
+/obj/item/fortress_mandate/proc/display_mandates()
+	var/assembled_mandates = ""
+
+	if(mandates.len)
+		for(var/i in 1 to mandates.len)
+			assembled_mandates += "[i]: [mandates[i]]\n"
+
+	return assembled_mandates
+
+#undef MANDATE_COOLDOWN
