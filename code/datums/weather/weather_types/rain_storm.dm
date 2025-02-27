@@ -177,6 +177,7 @@
 	end_duration = 0 SECONDS
 	target_trait = ZTRAIT_STATION
 
+	turf_weather_chance = 0.02 // double the turf chance
 	whitelist_weather_reagents = list()
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_INDOORS | WEATHER_BAROMETER) // disable thunder and reagent notifications
 
@@ -192,13 +193,12 @@
 		/datum/reagent/medicine/c2/synthflesh,
 		/datum/reagent/medicine/adminordrazine,
 		/datum/reagent/medicine/strange_reagent,
-		/datum/reagent/medicine/polypyr, // purple hair coloring is funny
 		// include a random medicine
 		pick(subtypesof(/datum/reagent/medicine)),
 	)
 	GLOB.wizard_rain_reagents |= allowed_medicine
 
-	// For these subtypes, one randomized subtype is allowed while the rest get blacklisted
+	// One randomized type is allowed so the whitelist isn't spammed with subtypes
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/glitter))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/carpet))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/mutationtoxin))
@@ -206,9 +206,13 @@
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/uranium))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/luminescent_fluid))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/impurity))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/drug))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/water))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/fuel))
-	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/drug))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/colorful_reagent))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/ants))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/lube))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/space_cleaner))
 
 	// lots of toxins do nothing so we need to be picky
 	var/list/allowed_toxins = list(
@@ -228,6 +232,7 @@
 	var/list/allowed_food_drinks = list(
 		/datum/reagent/consumable/ethanol/wizz_fizz,
 		/datum/reagent/consumable/condensedcapsaicin,
+		/datum/reagent/consumable/frostoil,
 		// include a random food or drink
 		pick(subtypesof(/datum/reagent/consumable)),
 		// include a random regular drink (vodka, wine, beer, etc.)
@@ -236,14 +241,6 @@
 	GLOB.wizard_rain_reagents |= allowed_food_drinks
 
 	var/list/allowed_exotic_reagents = list(
-		// pain
-		/datum/reagent/ants,
-		/datum/reagent/ants/fire,
-		/datum/reagent/lube,
-		/datum/reagent/lube/superlube,
-		// clean
-		/datum/reagent/space_cleaner,
-		/datum/reagent/space_cleaner/ez_clean,
 		// fire
 		/datum/reagent/clf3,
 		/datum/reagent/phlogiston,
@@ -251,34 +248,23 @@
 		// cosmetic
 		/datum/reagent/hair_dye,
 		/datum/reagent/barbers_aid,
-		/datum/reagent/concentrated_barbers_aid,
 		/datum/reagent/baldium,
-		/datum/reagent/spraytan,
 		/datum/reagent/mulligan,
-		/datum/reagent/colorful_reagent,
 		/datum/reagent/growthserum,
-		/datum/reagent/copper,
 		// op shit
 		/datum/reagent/romerol,
 		/datum/reagent/gondola_mutation_toxin,
-		/datum/reagent/eldritch,
 		/datum/reagent/metalgen,
 		/datum/reagent/flightpotion,
 		/datum/reagent/eigenstate,
-		/datum/reagent/hellwater,
 		/datum/reagent/magillitis,
 		/datum/reagent/pax,
-		/datum/reagent/liquid_dark_matter,
-		/datum/reagent/gunpowder,
-		/datum/reagent/rdx,
-		/datum/reagent/tatp,
-		/datum/reagent/nitroglycerin,
-		/datum/reagent/teslium,
 		/datum/reagent/gluttonytoxin,
 		/datum/reagent/aslimetoxin,
 		// misc
 		/datum/reagent/blood,
 		/datum/reagent/hauntium,
+		/datum/reagent/copper,
 	)
 	GLOB.wizard_rain_reagents |= allowed_exotic_reagents
 
