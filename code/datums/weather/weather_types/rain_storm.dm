@@ -181,75 +181,59 @@
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_INDOORS | WEATHER_BAROMETER) // disable thunder and reagent notifications
 
 /datum/weather/rain_storm/wizard/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
+	if(length(GLOB.wizard_rain_reagents)) // the wizard event has already been run once and setup the whitelist
+		whitelist_weather_reagents = GLOB.wizard_rain_reagents
+		if(!custom_reagent)
+			custom_reagent = pick_n_take(whitelist_weather_reagents)
+		return
+
 	// most medicine do nothing when it comes into contact with turfs or mobs (via TOUCH) except for a few
 	var/list/allowed_medicine = list(
 		/datum/reagent/medicine/c2/synthflesh,
 		/datum/reagent/medicine/adminordrazine,
 		/datum/reagent/medicine/strange_reagent,
 		/datum/reagent/medicine/polypyr, // purple hair coloring is funny
-		// include a few random medicines
-		pick(subtypesof(/datum/reagent/medicine)),
-		pick(subtypesof(/datum/reagent/medicine)),
+		// include a random medicine
 		pick(subtypesof(/datum/reagent/medicine)),
 	)
-	whitelist_weather_reagents |= allowed_medicine
+	GLOB.wizard_rain_reagents |= allowed_medicine
 
 	// For these subtypes, one randomized subtype is allowed while the rest get blacklisted
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/glitter))
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/carpet))
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/mutationtoxin))
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/plantnutriment))
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/uranium))
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/luminescent_fluid))
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/impurity))
-	whitelist_weather_reagents |= pick(typesof(/datum/reagent/water))
-	whitelist_weather_reagents |= pick(typesof(/datum/reagent/fuel))
-
-	// few random drugs
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/drug))
-	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/drug))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/glitter))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/carpet))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/mutationtoxin))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/plantnutriment))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/uranium))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/luminescent_fluid))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/impurity))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/water))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/fuel))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/drug))
 
 	// lots of toxins do nothing so we need to be picky
 	var/list/allowed_toxins = list(
-		/datum/reagent/toxin/plasma, // cover mobs in flammable liquid
 		/datum/reagent/toxin/itching_powder,
 		/datum/reagent/toxin/polonium, // radiation
-		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/mutagen,
 		// all the acids
 		/datum/reagent/toxin/acid,
 		/datum/reagent/toxin/acid/fluacid,
 		/datum/reagent/toxin/acid/nitracid,
-		// include a few random toxins
-		pick(subtypesof(/datum/reagent/toxin)),
-		pick(subtypesof(/datum/reagent/toxin)),
+		// include a random toxin
 		pick(subtypesof(/datum/reagent/toxin)),
 	)
-	whitelist_weather_reagents |= allowed_toxins
+	GLOB.wizard_rain_reagents |= allowed_toxins
 
 	// too many food & drinks so blacklist most of them
 	var/list/allowed_food_drinks = list(
 		/datum/reagent/consumable/ethanol/wizz_fizz,
 		/datum/reagent/consumable/condensedcapsaicin,
-		/datum/reagent/consumable/frostoil,
-		/datum/reagent/consumable/salt,
-		// some potential foods or exotic drinks
+		// include a random food or drink
 		pick(subtypesof(/datum/reagent/consumable)),
-		pick(subtypesof(/datum/reagent/consumable)),
-		// regular drinks (vodka, wine, beer, etc.)
-		pick(/obj/machinery/chem_dispenser/drinks/beer::beer_dispensable_reagents),
+		// include a random regular drink (vodka, wine, beer, etc.)
 		pick(/obj/machinery/chem_dispenser/drinks/beer::beer_dispensable_reagents),
 	)
-	whitelist_weather_reagents |= allowed_food_drinks
-
-	// these create gas when rained on turfs
-	var/list/allowed_gas_reagents = list(
-		/datum/reagent/nitrous_oxide,
-		/datum/reagent/carbondioxide,
-		/datum/reagent/nitrogen,
-		/datum/reagent/oxygen,
-	)
-	whitelist_weather_reagents |= allowed_gas_reagents
+	GLOB.wizard_rain_reagents |= allowed_food_drinks
 
 	var/list/allowed_exotic_reagents = list(
 		// pain
@@ -277,7 +261,6 @@
 		// op shit
 		/datum/reagent/romerol,
 		/datum/reagent/gondola_mutation_toxin,
-		/datum/reagent/love,
 		/datum/reagent/eldritch,
 		/datum/reagent/metalgen,
 		/datum/reagent/flightpotion,
@@ -295,11 +278,16 @@
 		/datum/reagent/aslimetoxin,
 		// misc
 		/datum/reagent/blood,
-		/datum/reagent/yuck,
-		/datum/reagent/brimdust,
 		/datum/reagent/hauntium,
-		/datum/reagent/thermite,
 	)
-	whitelist_weather_reagents |= allowed_exotic_reagents
+	GLOB.wizard_rain_reagents |= allowed_exotic_reagents
 
+	// add a few randomized reagents not listed above so they at least have a chance
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
+
+	whitelist_weather_reagents = GLOB.wizard_rain_reagents
+	if(!custom_reagent)
+		custom_reagent = pick_n_take(whitelist_weather_reagents)
 	..()
