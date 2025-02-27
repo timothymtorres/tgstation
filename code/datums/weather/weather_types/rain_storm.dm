@@ -160,3 +160,146 @@
 		/datum/reagent/toxin/acid/fluacid = 1,
 	)
 
+/datum/weather/rain_storm/wizard
+	name = "magical rain"
+	desc = "A magical thunderstorm rains down below, drenching anyone caught in it with mysterious rain."
+
+	telegraph_message = span_reallybig(span_hypnophrase("A magical rain cloud appears above. You hear droplets falling down."))
+	protected_areas = list(/area/station/maintenance, /area/station/ai_monitored/turret_protected/ai_upload, /area/station/ai_monitored/turret_protected/ai_upload_foyer,
+							/area/station/ai_monitored/turret_protected/aisat/maint, /area/station/ai_monitored/command/storage/satellite,
+							/area/station/ai_monitored/turret_protected/ai, /area/station/commons/storage/emergency/starboard, /area/station/commons/storage/emergency/port,
+							/area/shuttle, /area/station/security/prison/safe, /area/station/security/prison/toilet, /area/mine/maintenance, /area/icemoon/underground, /area/ruin/comms_agent/maint)
+
+	// same time durations as floor_is_lava event
+	telegraph_duration = 15 SECONDS
+	weather_duration_lower = 30 SECONDS
+	weather_duration_upper = 1 MINUTES
+	end_duration = 0 SECONDS
+	target_trait = ZTRAIT_STATION
+
+	whitelist_weather_reagents = list()
+	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_INDOORS | WEATHER_BAROMETER) // disable thunder and reagent notifications
+
+/datum/weather/rain_storm/wizard/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
+	// most medicine do nothing when it comes into contact with turfs or mobs (via TOUCH) except for a few
+	var/list/allowed_medicine = list(
+		/datum/reagent/medicine/c2/synthflesh,
+		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/strange_reagent,
+		/datum/reagent/medicine/polypyr, // purple hair coloring is funny
+		// include a few random medicines
+		pick(subtypesof(/datum/reagent/medicine)),
+		pick(subtypesof(/datum/reagent/medicine)),
+		pick(subtypesof(/datum/reagent/medicine)),
+	)
+	whitelist_weather_reagents |= allowed_medicine
+
+	// For these subtypes, one randomized subtype is allowed while the rest get blacklisted
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/glitter))
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/carpet))
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/mutationtoxin))
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/plantnutriment))
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/uranium))
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/luminescent_fluid))
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/impurity))
+	whitelist_weather_reagents |= pick(typesof(/datum/reagent/water))
+	whitelist_weather_reagents |= pick(typesof(/datum/reagent/fuel))
+
+	// few random drugs
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/drug))
+	whitelist_weather_reagents |= pick(subtypesof(/datum/reagent/drug))
+
+	// lots of toxins do nothing so we need to be picky
+	var/list/allowed_toxins = list(
+		/datum/reagent/toxin/plasma, // cover mobs in flammable liquid
+		/datum/reagent/toxin/itching_powder,
+		/datum/reagent/toxin/polonium, // radiation
+		/datum/reagent/toxin/mindbreaker,
+		/datum/reagent/toxin/mutagen,
+		// all the acids
+		/datum/reagent/toxin/acid,
+		/datum/reagent/toxin/acid/fluacid,
+		/datum/reagent/toxin/acid/nitracid,
+		// include a few random toxins
+		pick(subtypesof(/datum/reagent/toxin)),
+		pick(subtypesof(/datum/reagent/toxin)),
+		pick(subtypesof(/datum/reagent/toxin)),
+	)
+	whitelist_weather_reagents |= allowed_toxins
+
+	// too many food & drinks so blacklist most of them
+	var/list/allowed_food_drinks = list(
+		/datum/reagent/consumable/ethanol/wizz_fizz,
+		/datum/reagent/consumable/condensedcapsaicin,
+		/datum/reagent/consumable/frostoil,
+		/datum/reagent/consumable/salt,
+		// some potential foods or exotic drinks
+		pick(subtypesof(/datum/reagent/consumable)),
+		pick(subtypesof(/datum/reagent/consumable)),
+		// regular drinks (vodka, wine, beer, etc.)
+		pick(/obj/machinery/chem_dispenser/drinks/beer::beer_dispensable_reagents),
+		pick(/obj/machinery/chem_dispenser/drinks/beer::beer_dispensable_reagents),
+	)
+	whitelist_weather_reagents |= allowed_food_drinks
+
+	// these create gas when rained on turfs
+	var/list/allowed_gas_reagents = list(
+		/datum/reagent/nitrous_oxide,
+		/datum/reagent/carbondioxide,
+		/datum/reagent/nitrogen,
+		/datum/reagent/oxygen,
+	)
+	whitelist_weather_reagents |= allowed_gas_reagents
+
+	var/list/allowed_exotic_reagents = list(
+		// pain
+		/datum/reagent/ants,
+		/datum/reagent/ants/fire,
+		/datum/reagent/lube,
+		/datum/reagent/lube/superlube,
+		// clean
+		/datum/reagent/space_cleaner,
+		/datum/reagent/space_cleaner/ez_clean,
+		// fire
+		/datum/reagent/clf3,
+		/datum/reagent/phlogiston,
+		/datum/reagent/napalm,
+		// cosmetic
+		/datum/reagent/hair_dye,
+		/datum/reagent/barbers_aid,
+		/datum/reagent/concentrated_barbers_aid,
+		/datum/reagent/baldium,
+		/datum/reagent/spraytan,
+		/datum/reagent/mulligan,
+		/datum/reagent/colorful_reagent,
+		/datum/reagent/growthserum,
+		/datum/reagent/copper,
+		// op shit
+		/datum/reagent/romerol,
+		/datum/reagent/gondola_mutation_toxin,
+		/datum/reagent/love,
+		/datum/reagent/eldritch,
+		/datum/reagent/metalgen,
+		/datum/reagent/flightpotion,
+		/datum/reagent/eigenstate,
+		/datum/reagent/hellwater,
+		/datum/reagent/magillitis,
+		/datum/reagent/pax,
+		/datum/reagent/liquid_dark_matter,
+		/datum/reagent/gunpowder,
+		/datum/reagent/rdx,
+		/datum/reagent/tatp,
+		/datum/reagent/nitroglycerin,
+		/datum/reagent/teslium,
+		/datum/reagent/gluttonytoxin,
+		/datum/reagent/aslimetoxin,
+		// misc
+		/datum/reagent/blood,
+		/datum/reagent/yuck,
+		/datum/reagent/brimdust,
+		/datum/reagent/hauntium,
+		/datum/reagent/thermite,
+	)
+	whitelist_weather_reagents |= allowed_exotic_reagents
+
+	..()
