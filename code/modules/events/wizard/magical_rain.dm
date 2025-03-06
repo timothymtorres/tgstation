@@ -17,7 +17,7 @@
 		// give it to all wizards even if there are multiple
 		if(IS_WIZARD(wizard) && !HAS_TRAIT_FROM(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT))
 			ADD_TRAIT(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT)
-			to_chat(wizard, span_reallybig(span_hypnophrase("You feel a magical force giving you resistance to rain effects!")))
+			to_chat(wizard, span_reallybig(span_hypnophrase("You feel a magical force giving you resistance to rain!")))
 
 	if(!started)
 		started = TRUE
