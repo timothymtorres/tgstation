@@ -115,6 +115,15 @@
 			if(!container.is_open_container() || container.reagents.holder_full())
 				continue
 
+if(istype(thing, /obj/machinery/hydroponics))
+	var/obj/machinery/hydroponics/plant_tray = thing
+	if(plant_tray.reagents.holder_full())
+		continue
+
+	var/amount_to_add = min(plant_tray.reagents.maximum_volume - plant_tray.reagents.total_volume, RAIN_REAGENT_VOLUME)
+	plant_tray.reagents.add_reagent(rain_reagent.type, amount_to_add)
+	continue
+
 			var/amount_to_add = min(container.volume - container.reagents.total_volume, RAIN_REAGENT_VOLUME)
 			container.reagents.add_reagent(rain_reagent.type, amount_to_add)
 

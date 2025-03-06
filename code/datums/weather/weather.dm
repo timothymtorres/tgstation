@@ -37,6 +37,8 @@
 	var/weather_overlay
 	/// Color to apply to the area while weather is occuring
 	var/weather_color = null
+	/// The a list of of looping sounds for the weather
+	var/looping_sounds
 
 	/// Displayed once the weather is over
 	var/end_message = span_danger("The wind relents its assault.")
@@ -148,6 +150,7 @@
 		return
 	stage = STARTUP_STAGE
 	setup_weather_areas(impacted_areas)
+	setup_weather_looping_sounds()
 
 	if(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER))
 		setup_weather_turfs()
@@ -160,6 +163,10 @@
 	if(telegraph_duration)
 		send_alert(telegraph_message, telegraph_sound, telegraph_sound_vol)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
+
+/datum/weather/proc/setup_weather_looping_sounds()
+	for(var/mob/listener in GLOB.player_list)
+		listener.AddElement(/datum/element/weather_listener, src)
 
 /datum/weather/proc/setup_weather_areas(list/selected_areas)
 	if(length(selected_areas))

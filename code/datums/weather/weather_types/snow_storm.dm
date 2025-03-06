@@ -32,6 +32,10 @@
 	///Highest we can cool someone randomly per weather act. Positive values only
 	var/cooling_upper = 15
 
+/datum/weather/snow_storm/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
+	looping_sounds = GLOB.snowstorm_sounds
+	..()
+
 /datum/weather/snow_storm/weather_act_mob(mob/living/living)
 	living.adjust_bodytemperature(-rand(cooling_lower, cooling_upper))
 

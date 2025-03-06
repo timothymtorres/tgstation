@@ -10,7 +10,6 @@
 	//The playlist of sounds to draw from. Pass by ref
 	var/list/playlist
 
-
 /datum/element/weather_listener/Attach(datum/target, w_type, trait, weather_playlist)
 	. = ..()
 	if(!weather_type)

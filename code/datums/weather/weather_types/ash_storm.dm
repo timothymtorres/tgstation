@@ -26,6 +26,10 @@
 	var/list/weak_sounds = list()
 	var/list/strong_sounds = list()
 
+/datum/weather/ash_storm/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
+	looping_sounds = GLOB.ash_storm_sounds
+	..()
+
 /datum/weather/ash_storm/telegraph()
 	var/list/eligible_areas = list()
 	for (var/z in impacted_z_levels)

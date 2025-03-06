@@ -24,6 +24,10 @@
 
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
 
+/datum/weather/sand_storm/New(z_levels, area_override, weather_flags_override, thunder_chance_override, datum/reagent/custom_reagent)
+	looping_sounds = GLOB.sand_storm_sounds
+	..()
+
 /datum/weather/sand_storm/telegraph()
 	GLOB.sand_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
