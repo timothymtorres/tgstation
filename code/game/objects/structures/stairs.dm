@@ -253,6 +253,19 @@
 		new_stairs.set_custom_materials(custom_materials)
 	qdel(src)
 
+/obj/structure/stairs/ridge
+	name = "ridge"
+	icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
+	icon_state = "smoothrocks"
+	base_icon_state = "smoothrocks"
+	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
+	canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	// This is static
+	// Done like this to avoid needing to make it dynamic and save cpu time
+	// 4 to the left, 4 down
+	transform = MAP_SWITCH(TRANSLATE_MATRIX(-4, -4), matrix())
+
 #undef STAIR_TERMINATOR_AUTOMATIC
 #undef STAIR_TERMINATOR_NO
 #undef STAIR_TERMINATOR_YES
