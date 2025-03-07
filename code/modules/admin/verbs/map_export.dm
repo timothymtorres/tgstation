@@ -351,6 +351,7 @@ GLOBAL_LIST_EMPTY(df_liquid_types)
 #define IS_PLANT(material, shape) \
 	(material == text2num(GLOB.df_keys_materials["PLANT"]))
 
+// if shape is RAMP_TOP it is considered air via IS_AIR() (we need the top part to be openspace)
 #define IS_RAMP(material, shape) \
 	(shape == text2num(GLOB.df_keys_shapes["RAMP"]))
 
@@ -363,6 +364,7 @@ GLOBAL_LIST_EMPTY(df_liquid_types)
 #define IS_AIR(material, shape) \
 	(material == text2num(GLOB.df_keys_tiletypes["AIR"]) \
 	|| shape == text2num(GLOB.df_keys_shapes["NONE"]) \
+	|| shape == text2num(GLOB.df_keys_shapes["RAMP_TOP"]) \
 	|| (LAZYACCESS(GLOB.df_plant_materials, material) && !(shape == text2num(GLOB.df_keys_shapes["FLOOR"]))))
 
 #define IS_MUSHROOM(material, shape) \
