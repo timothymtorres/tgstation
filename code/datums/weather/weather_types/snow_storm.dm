@@ -25,10 +25,22 @@
 
 	immunity_type = TRAIT_SNOWSTORM_IMMUNE
 
+<<<<<<< HEAD
+	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER)
+
+	///Lowest we can cool someone randomly per weather act. Positive values only
+	var/cooling_lower = 5
+	///Highest we can cool someone randomly per weather act. Positive values only
+	var/cooling_upper = 15
+
+/datum/weather/snow_storm/weather_act_mob(mob/living/living)
+	living.adjust_bodytemperature(-rand(cooling_lower, cooling_upper))
+=======
 	// snowstorms should be colder than default icebox atmos
 	weather_temperature = ICEBOX_MIN_TEMPERATURE - 40
 	// snowstorms temperature ignores any clothing insulation
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_TEMPERATURE_BYPASS_CLOTHING)
+>>>>>>> master
 
 /datum/weather/snow_storm/start()
 	GLOB.snowstorm_sounds.Cut() // it's passed by ref

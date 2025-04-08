@@ -1,6 +1,12 @@
+<<<<<<< HEAD
+ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather on the z-level you choose.", ADMIN_CATEGORY_WEATHER)
+
+	var/static/list/weather_choices = list()
+=======
 ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather on the z-level you choose.", ADMIN_CATEGORY_EVENTS)
 
 	var/list/weather_choices = list()
+>>>>>>> master
 	if(!length(weather_choices))
 		for(var/datum/weather/weather_type as anything in subtypesof(/datum/weather))
 			weather_choices[initial(weather_type.type)] = weather_type
@@ -20,6 +26,14 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 	switch(custom_choice)
 		if("Default")
 			SSweather.run_weather(weather_choice, z_level) // default settings
+<<<<<<< HEAD
+			return
+		if("Cancel")
+			return
+		//if("Custom") venture on lil fella
+
+	var/static/list/area_choices = list()
+=======
 			message_admins("[key_name_admin(user)] started weather of type [weather_choice] on the z-level [z_level].")
 			log_admin("[key_name(user)] started weather of type [weather_choice] on the z-level [z_level].")
 			BLACKBOX_LOG_ADMIN_VERB("Run Weather")
@@ -28,6 +42,7 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 			return
 
 	var/list/area_choices = list()
+>>>>>>> master
 	if(!length(area_choices))
 		for(var/area/area_type as anything in typesof(/area))
 			area_choices[initial(area_type.type)] = area_type
@@ -45,6 +60,18 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 	)
 
 	var/datum/reagent/reagent_choice
+<<<<<<< HEAD
+	if(ispath(weather_choice, /datum/weather/rain_storm) && (weather_bitflags & (WEATHER_TURFS|WEATHER_MOBS)))
+		var/static/list/reagent_choices = list()
+		if(!length(reagent_choices))
+			for(var/datum/reagent/reagent_type as anything in subtypesof(/datum/reagent))
+				reagent_choices[initial(reagent_type.type)] = reagent_type
+
+		reagent_choice = tgui_input_list(user, "Select a reagent for the rain", "Rain Reagent", reagent_choices)
+		if(!reagent_choice)
+			return
+		reagent_choice = reagent_choices[reagent_choice]
+=======
 	if((weather_bitflags & (WEATHER_TURFS|WEATHER_MOBS)))
 		var/static/list/reagent_options = list("Yes", "No", "Cancel")
 		var/reagent_option = tgui_alert(user, "Would you like to make the weather use a custom reagent?", "Weather Reagent", reagent_options)
@@ -61,6 +88,7 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 				if(!reagent_choice)
 					return
 				reagent_choice = reagent_choices[reagent_choice]
+>>>>>>> master
 
 	var/thunder_value
 	if(weather_bitflags & (WEATHER_THUNDER))
@@ -71,6 +99,9 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 			return
 		thunder_value = GLOB.thunder_chance_options[thunder_choice]
 
+<<<<<<< HEAD
+	SSweather.run_weather(weather_choice, z_level, area_choice, weather_bitflags, thunder_value, reagent_choice)
+=======
 	var/list/weather_data = list(
 		area = area_choice,
 		weather_flags = weather_bitflags,
@@ -79,12 +110,17 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 	)
 
 	SSweather.run_weather(weather_choice, z_level, weather_data)
+>>>>>>> master
 
 	message_admins("[key_name_admin(user)] started weather of type [weather_choice] on the z-level [z_level].")
 	log_admin("[key_name(user)] started weather of type [weather_choice] on the z-level [z_level].")
 	BLACKBOX_LOG_ADMIN_VERB("Run Weather")
 
+<<<<<<< HEAD
+ADMIN_VERB(stop_weather, R_ADMIN|R_DEBUG, "Stop All Active Weather", "Stop all currently active weather.", ADMIN_CATEGORY_WEATHER)
+=======
 ADMIN_VERB(stop_weather, R_ADMIN|R_DEBUG, "Stop All Active Weather", "Stop all currently active weather.", ADMIN_CATEGORY_EVENTS)
+>>>>>>> master
 	log_admin("[key_name(user)] stopped all currently active weather.")
 	message_admins("[key_name_admin(user)] stopped all currently active weather.")
 	for(var/datum/weather/current_weather as anything in SSweather.processing)

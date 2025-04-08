@@ -7,6 +7,9 @@ GLOBAL_LIST_EMPTY(snowstorm_sounds)
 /// The wizard rain event can run multiple times so we use a global reagent whitelist to reuse the same list to boost performance
 GLOBAL_LIST_EMPTY(wizard_rain_reagents)
 
+// The wizard rain event can run multiple times so we use a global reagent whitelist to reuse the same list to boost performance
+GLOBAL_LIST_EMPTY(wizard_rain_reagents)
+
 #define STARTUP_STAGE 1
 #define MAIN_STAGE 2
 #define WIND_DOWN_STAGE 3

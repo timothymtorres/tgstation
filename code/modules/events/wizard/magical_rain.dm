@@ -1,6 +1,6 @@
 /datum/round_event_control/wizard/magical_rain
 	name = "Magical Rain"
-	weight = 99 //3
+	weight = 3
 	typepath = /datum/round_event/wizard/magical_rain
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
