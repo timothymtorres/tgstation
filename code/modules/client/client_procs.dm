@@ -398,6 +398,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	)
 	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
 
+	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
+
 	// Initialize tgui panel
 	tgui_panel.initialize()
 
@@ -441,7 +443,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			msg += "Your version: [byond_version].[byond_build]<br>"
 			msg += "Required version to remove this message: [warn_version].[warn_build] or later<br>"
 			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
-			src << browse(msg, "window=warning_popup")
+			src << browse(HTML_SKELETON(msg), "window=warning_popup")
 		else
 			to_chat(src, span_danger("<b>Your version of byond may be getting out of date:</b>"))
 			to_chat(src, CONFIG_GET(string/client_warn_message))
@@ -527,7 +529,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
 		else
-			winset(src, "infowindow.changelog", "font-style=bold")
+			winset(src, "infobuttons.changelog", "font-style=bold")
 
 	if(ckey in GLOB.clientmessages)
 		for(var/message in GLOB.clientmessages[ckey])
@@ -1246,6 +1248,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	message_to_send += "(No admins online)"
 
 	send2adminchat("Server", jointext(message_to_send, " "))
+
+/// This grabs the DPI of the user per their skin
+/client/proc/acquire_dpi()
+	window_scaling = text2num(winget(src, null, "dpi"))
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE

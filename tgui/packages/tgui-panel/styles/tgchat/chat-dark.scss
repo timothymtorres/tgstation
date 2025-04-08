@@ -22,6 +22,7 @@ img {
 img.icon {
   height: 1em;
   min-height: 16px;
+  min-width: 16px;
   width: auto;
   vertical-align: bottom;
 }
@@ -583,6 +584,11 @@ em {
 .boldnicegreen {
   color: hsl(132.8, 93.4%, 29.6%);
   font-weight: bold;
+}
+
+.tinynicegreen {
+  color: hsl(132.8, 93.4%, 29.6%);
+  font-size: 85%;
 }
 
 .blob {

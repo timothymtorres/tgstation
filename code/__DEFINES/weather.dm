@@ -14,7 +14,9 @@ GLOBAL_LIST_EMPTY(wizard_rain_reagents)
 #define END_STAGE 4
 
 /// The amount of reagent units that is applied when an object comes into contact with rain
-#define RAIN_REAGENT_VOLUME 5
+#define WEATHER_REAGENT_VOLUME 5
+/// Weather reagent volume applied to randomly selected turfs/objects is scaled by this multiplier to compensate for reduced processing frequency
+#define TURF_REAGENT_VOLUME_MULTIPLIER 3
 
 /// 1 / 400 chance for a turf to get a thunder strike per tick (death and destruction to mobs/equipment in area)
 #define THUNDER_CHANCE_INSANE 0.0025
@@ -37,9 +39,6 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 	"None - Admin Safe Space (Thunder Disabled)" = NONE,
 ))
 
-/// Does weather have any type of processing related to mobs, turfs, or thunder?
-#define IS_WEATHER_AESTHETIC(flags) (!(flags & (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)))
-
 //WEATHER FLAGS
 /// If weather will affect turfs
 #define WEATHER_TURFS (1<<0)
@@ -53,5 +52,8 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 #define WEATHER_ENDLESS (1<<4)
 /// If weather will be detected by a barometer
 #define WEATHER_BAROMETER (1<<5)
-/// If weather provides a notification message to mobs
-#define WEATHER_NOTIFICATION (1<<6)
+/// If weather temperature ignores clothing insulation when adjusting bodytemperature
+#define WEATHER_TEMPERATURE_BYPASS_CLOTHING (1<<6)
+
+/// Does weather have any type of processing related to mobs, turfs, or thunder?
+#define FUNCTIONAL_WEATHER (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)

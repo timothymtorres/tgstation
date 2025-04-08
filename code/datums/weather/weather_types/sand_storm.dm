@@ -20,36 +20,55 @@
 	area_type = /area
 	target_trait = ZTRAIT_SANDSTORM
 	immunity_type = TRAIT_SANDSTORM_IMMUNE
+<<<<<<< HEAD
 	probability = 0
 
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
+=======
+	probability = 90
+
+	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER)
+>>>>>>> master
 
 /datum/weather/sand_storm/telegraph()
 	GLOB.sand_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.sand_storm_sounds[impacted_area] = /datum/looping_sound/weak_outside_ashstorm
+<<<<<<< HEAD
 		CHECK_TICK
 
+=======
+>>>>>>> master
 	return ..()
 
 /datum/weather/sand_storm/start()
 	GLOB.sand_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.sand_storm_sounds[impacted_area] = /datum/looping_sound/active_outside_ashstorm
+<<<<<<< HEAD
 		CHECK_TICK
+=======
+>>>>>>> master
 	return ..()
 
 /datum/weather/sand_storm/wind_down()
 	GLOB.sand_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.sand_storm_sounds[impacted_area] = /datum/looping_sound/weak_outside_ashstorm
+<<<<<<< HEAD
 		CHECK_TICK
+=======
+>>>>>>> master
 	return ..()
 
 /datum/weather/sand_storm/weather_act_mob(mob/living/victim)
 	victim.adjustBruteLoss(5, required_bodytype = BODYTYPE_ORGANIC)
+<<<<<<< HEAD
 	if((weather_flags & WEATHER_NOTIFICATION) && prob(5))
 		to_chat(victim, span_danger("You are battered by the coarse sand!"))
+=======
+	return ..()
+>>>>>>> master
 
 /datum/weather/sand_storm/harmless
 	name = "sandfall"
@@ -65,4 +84,8 @@
 	end_message = span_notice("The sandfall slows, stops. Another layer of sand on the mesa beneath your feet.")
 	end_overlay = "dust_low"
 
+<<<<<<< HEAD
+=======
+	probability = 10
+>>>>>>> master
 	weather_flags = parent_type::weather_flags & ~WEATHER_MOBS

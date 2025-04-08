@@ -22,6 +22,7 @@
 	area_type = /area
 	target_trait = ZTRAIT_RAINSTORM
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
+<<<<<<< HEAD
 	probability = 0
 	turf_weather_chance = 0.01
 	turf_thunder_chance = THUNDER_CHANCE_AVERAGE
@@ -65,26 +66,44 @@
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/start
 		CHECK_TICK
+=======
+	probability = 90
+
+	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER)
+	whitelist_weather_reagents = list(/datum/reagent/water)
+
+/datum/weather/rain_storm/telegraph()
+	GLOB.rain_storm_sounds.Cut()
+	for(var/area/impacted_area as anything in impacted_areas)
+		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/start
+>>>>>>> master
 	return ..()
 
 /datum/weather/rain_storm/start()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/middle
+<<<<<<< HEAD
 		CHECK_TICK
+=======
+>>>>>>> master
 	return ..()
 
 /datum/weather/rain_storm/wind_down()
 	GLOB.rain_storm_sounds.Cut()
 	for(var/area/impacted_area as anything in impacted_areas)
 		GLOB.rain_storm_sounds[impacted_area] = /datum/looping_sound/rain/end
+<<<<<<< HEAD
 		CHECK_TICK
+=======
+>>>>>>> master
 	return ..()
 
 /datum/weather/rain_storm/end()
 	GLOB.rain_storm_sounds.Cut()
 	return ..()
 
+<<<<<<< HEAD
 /datum/weather/rain_storm/weather_act_mob(mob/living/living)
 	if(istype(rain_reagent, /datum/reagent/water))
 		living.wash()
@@ -140,6 +159,25 @@
 
 /datum/weather/rain_storm/acid
 	name = "acid rain"
+=======
+/datum/weather/rain_storm/blood
+	whitelist_weather_reagents = list(/datum/reagent/blood)
+	probability = 0 // admeme event
+
+// Fun fact - if you increase the weather_temperature higher than LIQUID_PLASMA_BP
+// the plasma rain will vaporize into a gas on whichever turf it lands on
+/datum/weather/rain_storm/plasma
+	whitelist_weather_reagents = list(/datum/reagent/toxin/plasma)
+	probability = 0 // maybe for icebox maps one day?
+
+/datum/weather/rain_storm/deep_fried
+	weather_temperature = 455 // just hot enough to apply the fried effect
+	whitelist_weather_reagents = list(/datum/reagent/consumable/nutriment/fat/oil)
+	weather_flags = (WEATHER_TURFS | WEATHER_INDOORS)
+	probability = 0 // admeme event
+
+/datum/weather/rain_storm/acid
+>>>>>>> master
 	desc = "The planet's thunderstorms are by nature acidic, and will incinerate anyone standing beneath them without protection."
 
 	telegraph_duration = 40 SECONDS
@@ -159,6 +197,7 @@
 		/datum/reagent/toxin/acid = 2,
 		/datum/reagent/toxin/acid/fluacid = 1,
 	)
+<<<<<<< HEAD
 
 /datum/weather/rain_storm/wizard
 	name = "magical rain"
@@ -277,3 +316,8 @@
 	if(!custom_reagent)
 		custom_reagent = pick_n_take(whitelist_weather_reagents)
 	..()
+=======
+	probability = 0
+
+
+>>>>>>> master

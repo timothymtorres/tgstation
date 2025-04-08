@@ -2,6 +2,9 @@
 SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
+	dependencies = list(
+		/datum/controller/subsystem/mapping
+	)
 	wait = 10
 	runlevels = RUNLEVEL_GAME
 	var/list/processing = list()
@@ -10,8 +13,8 @@ SUBSYSTEM_DEF(weather)
 
 /datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
-	for(var/datum/weather/weather_event in processing)
-		if(IS_WEATHER_AESTHETIC(weather_event.weather_flags) || weather_event.stage != MAIN_STAGE)
+	for(var/datum/weather/weather_event as anything in processing)
+		if(!length(weather_event.subsystem_tasks) || weather_event.stage != MAIN_STAGE)
 			continue
 
 		if(weather_event.currentpart == SSWEATHER_MOBS)
@@ -28,37 +31,33 @@ SUBSYSTEM_DEF(weather)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.next_subsystem_task()
+			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
 
 		if(weather_event.currentpart == SSWEATHER_TURFS)
 			if(!resumed)
-				weather_event.turf_iteration = floor(weather_event.weather_turfs_per_tick)
-				var/fraction_chance = fract(weather_event.weather_turfs_per_tick) * 100
-				weather_event.turf_iteration += prob(fraction_chance) ? 1 : 0
-			var/list/weather_turfs = weather_event.weather_turfs // cache for performance
+				weather_event.turf_iteration = ROUND_PROB(weather_event.weather_turfs_per_tick)
 			while(weather_event.turf_iteration)
 				weather_event.turf_iteration--
-				var/turf/open/selected_turf = pick(weather_turfs)
-				weather_event.weather_act_turf(selected_turf)
+				var/turf/selected_turf = weather_event.pick_turf()
+				if(selected_turf && weather_event.can_weather_act_turf(selected_turf))
+					weather_event.weather_act_turf(selected_turf)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.next_subsystem_task()
+			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
 
 		if(weather_event.currentpart == SSWEATHER_THUNDER)
 			if(!resumed)
-				weather_event.thunder_iteration = floor(weather_event.thunder_turfs_per_tick)
-				var/fraction_chance = fract(weather_event.thunder_turfs_per_tick) * 100
-				weather_event.thunder_iteration += prob(fraction_chance) ? 1 : 0
-			var/list/weather_turfs = weather_event.weather_turfs // cache for performance
+				weather_event.thunder_iteration = ROUND_PROB(weather_event.thunder_turfs_per_tick)
 			while(weather_event.thunder_iteration)
 				weather_event.thunder_iteration--
-				var/turf/open/selected_turf = pick(weather_turfs)
-				weather_event.thunder_act_turf(selected_turf)
+				var/turf/selected_turf = weather_event.pick_turf()
+				if(selected_turf && weather_event.can_weather_act_turf(selected_turf))
+					weather_event.thunder_act_turf(selected_turf)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.next_subsystem_task()
+			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
@@ -66,8 +65,8 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/weather_event = pick_weight(possible_weather)
 		run_weather(weather_event, list(text2num(z)))
 		eligible_zlevels -= z
-		var/randTime = rand(3000, 6000)
-		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(weather_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE) //Around 5-10 minutes between weathers
+		var/randTime = rand(5 MINUTES, 10 MINUTES)
+		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(weather_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/controller/subsystem/weather/Initialize()
 	for(var/V in subtypesof(/datum/weather))
@@ -91,7 +90,7 @@ SUBSYSTEM_DEF(weather)
 			LAZYINITLIST(eligible_zlevels["[z]"])
 			eligible_zlevels["[z]"][weather] = probability
 
-/datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels, area_type, weather_bitflags, thunder_value, datum/reagent/reagent_type)
+/datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels, list/weather_data)
 	if (istext(weather_datum_type))
 		for (var/V in subtypesof(/datum/weather))
 			var/datum/weather/W = V
@@ -108,7 +107,8 @@ SUBSYSTEM_DEF(weather)
 	else if (!islist(z_levels))
 		CRASH("run_weather called with invalid z_levels: [z_levels || "null"]")
 
-	var/datum/weather/W = new weather_datum_type(z_levels, area_type, weather_bitflags, thunder_value, reagent_type)
+
+	var/datum/weather/W = new weather_datum_type(z_levels, weather_data)
 	W.telegraph()
 
 /datum/controller/subsystem/weather/proc/make_eligible(z, possible_weather)
