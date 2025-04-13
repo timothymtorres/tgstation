@@ -195,3 +195,36 @@
 
 /turf/open/water/hot_spring/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/water/deep
+	name = "deep water"
+	desc = "Deep water. May cause fatal drowning."
+	immerse_overlay_color = "#1a17bd"
+	fishing_datum = /datum/fish_source/ocean
+
+/turf/open/water/deep/Entered(atom/movable/arrived)
+	. = ..()
+
+	RegisterSignal(movable, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
+	if(isliving(movable)) //so far, exiting a hot spring only has effects on living mobs.
+		RegisterSignal(movable, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), PROC_REF(dip_out))
+
+	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
+		dip_in(movable)
+
+	if(burn_stuff(arrived))
+		START_PROCESSING(SSobj, src)
+
+/turf/open/water/deep/process(seconds_per_tick)
+	if(!burn_stuff(null, seconds_per_tick))
+		checked_atoms = null
+		return PROCESS_KILL
+
+/turf/open/water/deep/Exited(atom/movable/gone, atom/new_loc)
+	. = ..()
+	exit_hot_spring(gone)
+
+/turf/open/water/deep/Destroy()
+	for(var/mob/living/leaving_mob in contents)
+		Exited(leaving_mob)
+	return ..()
