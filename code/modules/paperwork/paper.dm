@@ -66,6 +66,18 @@
 	///If this paper can be selected as a candidate for a future message in a bottle when spawned outside of mapload. Doesn't affect manually doing that.
 	var/can_become_message_in_bottle = TRUE
 
+/obj/item/paper/get_save_vars()
+	. = ..()
+	//. += NAMEOF(src, default_raw_text)
+	. += NAMEOF(src, input_field_count)
+	. += NAMEOF(src, stamp_cache)
+	. += NAMEOF(src, raw_text_inputs)
+	. += NAMEOF(src, raw_stamp_data)
+	. += NAMEOF(src, raw_field_input_data)
+	. += NAMEOF(src, contact_poison)
+	. += NAMEOF(src, contact_poison_volume)
+	return .
+
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
