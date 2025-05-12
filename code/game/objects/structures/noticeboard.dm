@@ -19,14 +19,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 	if(!mapload)
 		return
 
-	for(var/obj/item/I in loc)
+	if(!id_tag)
+		id_tag = assign_random_name()
+
+	for(var/obj/item/paper/paper in loc)
 		if(notices >= MAX_NOTICES)
 			break
-		if(istype(I, /obj/item/paper))
-			I.forceMove(src)
-			notices++
+
+		if(paper.id_tag != id_tag)
+			continue
+
+		paper.forceMove(src)
+		notices++
 	update_appearance(UPDATE_ICON)
 	find_and_hang_on_wall()
+
+/obj/structure/noticeboard/on_object_saved()
+	var/data
+
+	for(var/obj/item/paper/paper in contents)
+		paper.id_tag = id_tag
+		var/metadata = generate_tgm_metadata(paper)
+		data += "[data ? ",\n" : ""][paper.type][metadata]"
+
+	return data
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, list/modifiers)

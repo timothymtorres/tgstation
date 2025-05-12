@@ -48,7 +48,15 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
  * For example, saving ore into a silo, and further spavn by coordinates of metal stacks objects
  */
 /obj/proc/on_object_saved()
-	return null
+	var/data
+
+	for(var/obj/thing in contents)
+		if(is_container() || is_storage())
+			data += thing.on_object_saved()
+		var/metadata = generate_tgm_metadata(thing)
+		data += "[data ? ",\n" : ""][thing.type][metadata]"
+
+	return data
 
 // Save resources in silo
 /obj/machinery/ore_silo/on_object_saved()
