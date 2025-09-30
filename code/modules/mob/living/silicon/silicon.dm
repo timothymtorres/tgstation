@@ -522,5 +522,26 @@
 /mob/living/silicon/get_access()
 	return REGION_ACCESS_ALL_STATION
 
+/*
 /mob/living/silicon/expose_reagents(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
-	return COMPONENT_NO_EXPOSE_REAGENTS
+	var/static/list/whitelisted_silicon_reagents = typecacheof(list(
+		/datum/reagent/colorful_reagent,
+	))
+
+	if(is_type_in_typecache(whitelisted_silicon_reagents, chem))
+		return COMPONENT_NO_EXPOSE_REAGENTS
+*/
+
+/mob/living/silicon/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+	. = ..()
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(show_message && (methods & (INGEST | INHALE)))
+		taste_list(reagents)
+
+	var/touch_protection = 0
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_mob(src, methods, reac_volume, show_message, touch_protection)
