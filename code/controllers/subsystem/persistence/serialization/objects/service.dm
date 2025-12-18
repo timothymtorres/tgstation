@@ -20,7 +20,6 @@ GLOBAL_LIST_INIT(saveable_paper_container_whitelist, typecacheof(list(
 	// this is a really dumbed down version of saving that strips out stamps, pen types, fields, etc.
 	// later a similar version of SSpersistence.save_message_bottle() that uses a json database would be ideal
 	.[NAMEOF(src, default_raw_text)] = get_raw_text()
-	return .
 
 // seeds are easily spammable
 /obj/item/seeds/get_save_vars(save_flags=ALL)

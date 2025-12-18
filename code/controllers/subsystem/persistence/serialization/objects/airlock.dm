@@ -2,7 +2,6 @@
 	. = ..()
 	. -= NAMEOF(src, density)
 	. -= NAMEOF(src, opacity)
-	return .
 
 /obj/machinery/door/airlock/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -14,7 +13,6 @@
 
 	. -= NAMEOF(src, density)
 	. -= NAMEOF(src, opacity)
-	return .
 
 /obj/machinery/door/airlock/on_object_saved(map_string, turf/current_loc)
 	if(abandoned)
@@ -47,4 +45,3 @@
 /obj/machinery/door/poddoor/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, id)
-	return .

@@ -39,19 +39,16 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 		. += NAMEOF(src, resistance_flags)
 
 	GLOB.map_export_save_vars_cache[type] = .
-	return .
 
 /atom/movable/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, anchored)
-	return .
 
 /obj/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, req_access)
 	. += NAMEOF(src, id_tag)
 	. += NAMEOF(src, obj_flags)
-	return .
 
 /**
  * Overrides the variables of an object with a custom value when it is serialized.
@@ -67,7 +64,6 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 	. = list()
 	if(uses_integrity && (atom_integrity != max_integrity))
 		.[NAMEOF(src, atom_integrity)] = atom_integrity
-	return .
 
 /**
  * A procedure for saving non-standard properties of an object.
@@ -126,7 +122,6 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 		.[NAMEOF(src, save_container_parent_id)] = GLOB.save_containers_parents[src]
 	if(GLOB.save_containers_children[src])
 		.[NAMEOF(src, save_container_child_id)] = GLOB.save_containers_children[src]
-	return .
 
 /obj/PersistentInitialize()
 /*

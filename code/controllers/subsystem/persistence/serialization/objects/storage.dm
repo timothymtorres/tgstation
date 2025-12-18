@@ -15,12 +15,10 @@
 /obj/item/storage/briefcase/secure/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, stored_lock_code)
-	return .
 
 /obj/item/wallframe/secure_safe/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, stored_lock_code)
-	return .
 
 /obj/structure/secure_safe/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	save_stored_contents(map_string, current_loc, obj_blacklist)
@@ -28,7 +26,6 @@
 /obj/structure/secure_safe/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, stored_lock_code)
-	return .
 
 /obj/structure/safe/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	save_stored_contents(map_string, current_loc, obj_blacklist)
@@ -39,13 +36,11 @@
 	. += NAMEOF(src, locked)
 	. += NAMEOF(src, tumblers)
 	. += NAMEOF(src, explosion_count)
-	return .
 
 /obj/structure/safe/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	// we don't need to set new tumblers otherwise the tumblers list grows out of control
 	.[NAMEOF(src, number_of_tumblers)] = 0
-	return .
 
 /obj/structure/safe/PersistentInitialize()
 	. = ..()

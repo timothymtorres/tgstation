@@ -8,7 +8,6 @@
 	. += NAMEOF(src, frequency)
 	. += NAMEOF(src, broadcasting)
 	. += NAMEOF(src, listening)
-	return .
 
 /obj/item/radio/get_custom_save_vars(save_flags=ALL)
 	. = ..()
@@ -16,7 +15,6 @@
 		.[NAMEOF(src, keyslot)] = keyslot
 	else if(istype(keyslot))
 		.[NAMEOF(src, keyslot)] = keyslot.type
-	return .
 
 /obj/item/radio/headset/get_custom_save_vars(save_flags=ALL)
 	. = ..()
@@ -24,7 +22,6 @@
 		.[NAMEOF(src, keyslot2)] = keyslot2
 	else if(istype(keyslot2))
 		.[NAMEOF(src, keyslot2)] = keyslot2.type
-	return .
 
 /obj/machinery/telecomms/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -33,7 +30,6 @@
 	. += NAMEOF(src, network)
 	. += NAMEOF(src, id)
 	. += NAMEOF(src, freq_listening)
-	return .
 
 /obj/machinery/telecomms/message_server/get_save_vars(save_flags=ALL)
 	. = ..()

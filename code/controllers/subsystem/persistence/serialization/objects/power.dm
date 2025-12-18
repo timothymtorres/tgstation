@@ -4,7 +4,6 @@
 	. += NAMEOF(src, cable_layer)
 
 	. -= NAMEOF(src, color)
-	return .
 
 /obj/item/stack/cable_coil/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -15,13 +14,11 @@
 	. -= NAMEOF(src, pixel_x)
 	. -= NAMEOF(src, pixel_y)
 	. -= NAMEOF(src, color)
-	return .
 
 /obj/item/rwd/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, current_amount)
 	. += NAMEOF(src, cable_layer)
-	return .
 
 /obj/item/rwd/PersistentInitialize()
 	. = ..()
@@ -31,13 +28,11 @@
 /obj/machinery/power/terminal/is_saveable(turf/current_loc, list/obj_blacklist)
 	if(locate(/obj/machinery/power/apc) in loc)
 		return FALSE
-
 	return ..()
 
 /obj/machinery/power/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, cable_layer)
-	return .
 
 /obj/machinery/power/apc/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -53,56 +48,47 @@
 
 	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
 	//. += NAMEOF(src, shorted)
-	return .
 
 /obj/machinery/power/apc/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	if(cell_type)
 		.[NAMEOF(src, start_charge)] = round((cell.charge / cell.maxcharge) * 100)
-	return .
 
 /obj/machinery/power/smes/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, input_level)
 	. += NAMEOF(src, output_level)
-	return .
 
 /obj/machinery/power/smes/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	.[NAMEOF(src, charge)] = total_charge()
-	return .
 
 /obj/item/stock_parts/power_store/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, charge)
 	. += NAMEOF(src, rigged)
-	return .
 
 /obj/machinery/power/port_gen/pacman/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, active)
 	. += NAMEOF(src, sheets)
 	. += NAMEOF(src, sheet_left)
-	return .
 
 /obj/machinery/power/port_gen/pacman/PersistentInitialize()
 	. = ..()
 	if(active)
 		active = FALSE // gets reset to TRUE after TogglePower()
 		TogglePower()
-	return .
 
 /obj/machinery/power/solar_control/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, track)
-	return .
 
 /obj/machinery/power/solar_control/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	if(track == SOLAR_TRACK_TIMED)
 		.[NAMEOF(src, azimuth_rate)] = azimuth_rate
 		.[NAMEOF(src, azimuth_target)] = azimuth_target
-	return .
 
 /obj/machinery/power/solar_control/PersistentInitialize()
 	. = ..()
@@ -125,11 +111,11 @@
 	. += NAMEOF(src, projectile_sound)
 	. += NAMEOF(src, fire_rate_mod)
 	. += NAMEOF(src, no_shot_counter)
-	return .
 
 /obj/machinery/power/emitter/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
-	if(diskie)
-		save_stored_contents(map_string, current_loc, obj_blacklist)
+	if(isnull(diskie))
+		return
+	save_stored_contents(map_string, current_loc, obj_blacklist)
 
 /obj/machinery/power/emitter/PersistentInitialize()
 	. = ..()
@@ -141,14 +127,12 @@
 	. += NAMEOF(src, rotation_angle)
 	. += NAMEOF(src, finished)
 	. += NAMEOF(src, can_rotate)
-	return .
 
 /obj/machinery/atmos_shield_gen/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, locked)
 	. += NAMEOF(src, on)
 	. += NAMEOF(src, max_range)
-	return .
 
 /obj/machinery/power/emitter/PersistentInitialize()
 	. = ..()

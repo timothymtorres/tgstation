@@ -1,7 +1,6 @@
 /obj/item/stack/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, amount)
-	return .
 
 /obj/machinery/ore_silo/on_object_saved(map_string, turf/current_loc)
 	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)

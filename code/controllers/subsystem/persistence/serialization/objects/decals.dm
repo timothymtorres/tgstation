@@ -11,7 +11,6 @@
 	. += NAMEOF(src, rotation)
 	. += NAMEOF(src, paint_colour)
 	. += NAMEOF(src, color_strength)
-	return .
 
 /obj/effect/decal/cleanable/blood/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -21,4 +20,3 @@
 
 	. += NAMEOF(src, bloodiness)
 	. += NAMEOF(src, dried)
-	return .

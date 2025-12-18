@@ -3,7 +3,6 @@
 /obj/machinery/meter/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, target_layer)
-	return .
 
 /obj/machinery/atmospherics/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -13,7 +12,6 @@
 	. += NAMEOF(src, vent_movement)
 
 	. -= NAMEOF(src, id_tag)
-	return .
 
 /obj/machinery/atmospherics/pipe/smart/substitute_with_typepath(map_string)
 	var/base_type = /obj/machinery/atmospherics/pipe/smart/manifold4w
@@ -81,7 +79,6 @@
 /obj/machinery/atmospherics/components/unary/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, welded)
-	return .
 
 /obj/machinery/atmospherics/components/unary/vent_pump/substitute_with_typepath(map_string)
 	var/base_type
@@ -130,7 +127,6 @@
 	. += NAMEOF(src, internal_pressure_bound)
 	. += NAMEOF(src, external_pressure_bound)
 	. += NAMEOF(src, fan_overclocked)
-	return .
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/substitute_with_typepath(map_string)
 	var/base_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
@@ -170,7 +166,6 @@
 	. += NAMEOF(src, scrubbing)
 	. += NAMEOF(src, filter_types)
 	. += NAMEOF(src, widenet)
-	return .
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/PersistentInitialize()
 	. = ..()
@@ -180,25 +175,21 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, target_temperature)
-	return .
 
 /obj/machinery/atmospherics/components/trinary/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, flipped)
-	return .
 
 /obj/machinery/atmospherics/components/trinary/filter/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, transfer_rate)
 	. += NAMEOF(src, filter_type)
-	return .
 
 /obj/machinery/atmospherics/components/trinary/mixer/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, target_pressure)
 	. += NAMEOF(src, node1_concentration)
 	. += NAMEOF(src, node2_concentration)
-	return .
 
 /obj/machinery/atmospherics/components/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -206,13 +197,11 @@
 
 	if(override_naming)
 		. += NAMEOF(src, name)
-	return .
 
 /obj/item/pipe/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, piping_layer)
 	. += NAMEOF(src, pipe_color)
-	return .
 
 /obj/machinery/portable_atmospherics/canister/get_save_vars(save_flags=ALL)
 	. = ..()
@@ -224,13 +213,10 @@
 	. += NAMEOF(src, base_icon_state)
 	. += NAMEOF(src, greyscale_colors)
 	. += NAMEOF(src, greyscale_config)
-	return .
 
 /obj/machinery/portable_atmospherics/get_custom_save_vars(save_flags=ALL)
 	. = ..()
-	var/datum/gas_mixture/gasmix = air_contents
-	.[NAMEOF(src, initial_gas_mix)] = gasmix.to_string()
-	return .
+	.[NAMEOF(src, initial_gas_mix)] = air_contents.to_string()
 
 /obj/machinery/portable_atmospherics/PersistentInitialize()
 	. = ..()

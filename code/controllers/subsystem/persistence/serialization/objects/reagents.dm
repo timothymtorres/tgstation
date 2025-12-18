@@ -1,7 +1,6 @@
 /obj/item/reagent_containers/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, amount_per_transfer_from_this)
-	return .
 
 /obj/item/reagent_containers/get_custom_save_vars(save_flags=ALL)
 	. = ..()
@@ -29,8 +28,6 @@
 	if(initial(initial_reagent_flags) != reagents.flags)
 		.[NAMEOF(src, initial_reagent_flags)] = reagents.flags
 
-	return .
-
 /obj/item/reagent_containers/PersistentInitialize()
 	. = ..()
 	update_appearance()
@@ -44,12 +41,10 @@
 	. += NAMEOF(src, duct_color)
 
 	. -= NAMEOF(src, color)
-	return .
 
 /obj/item/lazarus_injector/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, loaded)
-	return .
 
 /obj/item/lazarus_injector/PersistentInitialize()
 	. = ..()
@@ -58,4 +53,3 @@
 /obj/item/reagent_containers/hypospray/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, used_up)
-	return .

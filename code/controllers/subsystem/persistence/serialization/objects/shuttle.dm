@@ -5,12 +5,10 @@
 	. += NAMEOF(src, height)
 	. += NAMEOF(src, shuttle_id)
 	. += NAMEOF(src, width)
-	return .
 
 /obj/docking_port/stationary/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, roundstart_template)
-	return .
 
 // The tram is a little tricky to save because all the [/obj/structure/transport/linear] get deleted except for the one at the bottom left of the tram. These all get used during Init to determine the size and shape of the tram.
 // Next problem is the landmark [/obj/effect/landmark/transport/transport_id] gets attatched to the /datum/transport_controller/ and then deleted.
@@ -61,10 +59,8 @@
 	. = ..()
 	. += NAMEOF(src, linked_elevator_id)
 	. += NAMEOF(src, preset_destination_names)
-	return .
 
 /obj/machinery/lift_indicator/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, linked_elevator_id)
 	. += NAMEOF(src, current_lift_floor)
-	return .

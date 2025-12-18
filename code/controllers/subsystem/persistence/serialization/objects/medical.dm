@@ -1,7 +1,6 @@
 /obj/machinery/defibrillator_mount/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, clamps_locked)
-	return .
 
 /obj/machinery/defibrillator_mount/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	var/list/defib_mount_contents = list()
