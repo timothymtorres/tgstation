@@ -53,3 +53,14 @@
 /obj/item/reagent_containers/hypospray/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, used_up)
+
+/obj/machinery/shower/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, intended_on)
+	. += NAMEOF(src, actually_on)
+	. += NAMEOF(src, has_water_reclaimer)
+	. += NAMEOF(src, mode)
+
+/obj/machinery/shower/PersistentInitialize()
+	. = ..()
+	update_actually_on(intended_on)
