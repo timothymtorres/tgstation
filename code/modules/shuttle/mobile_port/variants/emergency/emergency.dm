@@ -210,6 +210,10 @@
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
 				for(var/A in SSshuttle.mobile_docking_ports)
 					var/obj/docking_port/mobile/M = A
+
+					if(istype(M, /obj/docking_port/mobile/custom))
+						continue // skip launching custom shuttles at round end
+
 					M.on_emergency_launch()
 
 				//now move the actual emergency shuttle to its transit dock
