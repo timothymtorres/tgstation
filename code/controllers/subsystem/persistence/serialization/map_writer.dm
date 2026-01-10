@@ -44,13 +44,13 @@
 
 	for(var/z in 0 to depth)
 		for(var/x in 0 to width)
-			SSpersistence.current_save_x = x
+			SSworld_save.current_save_x = x
 			contents += "\n([x + 1],1,[z + 1]) = {\"\n"
 
 			for(var/y in height to 0 step -1)
 				CHECK_TICK
 
-				SSpersistence.current_save_y = y
+				SSworld_save.current_save_y = y
 				// Reset the per turf obj/mob limits
 				GLOB.TGM_objs = 0
 				GLOB.TGM_mobs = 0
@@ -139,8 +139,8 @@
 					INCREMENT_TURF_COUNT
 
 				// Count unique areas
-				if(saved_area.type != /area/template_noop && !(SSpersistence.counted_areas[saved_area.type]))
-					SSpersistence.counted_areas[saved_area.type] = TRUE
+				if(saved_area.type != /area/template_noop && !(SSworld_save.counted_areas[saved_area.type]))
+					SSworld_save.counted_areas[saved_area.type] = TRUE
 					INCREMENT_AREA_COUNT
 
 				for(var/atom/movable/target_atom as anything in pull_from)

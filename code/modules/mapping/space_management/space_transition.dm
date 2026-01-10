@@ -1,4 +1,4 @@
-#define IS_PERSISTENT_MAP_GRID_STATIC(persistent_save_z_levels) (CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && SSpersistence.map_configs_cache && persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && persistent_save_z_levels[ZTRAIT_ICE_RUINS])
+#define IS_PERSISTENT_MAP_GRID_STATIC(persistent_save_z_levels) (CONFIG_GET(flag/persistent_save_enabled) && CONFIG_GET(flag/persistent_use_static_map_grid) && SSworld_save.map_configs_cache && persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && persistent_save_z_levels[ZTRAIT_ICE_RUINS])
 
 /datum/space_level/proc/set_linkage(new_linkage)
 	linkage = new_linkage

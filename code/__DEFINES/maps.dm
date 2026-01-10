@@ -264,4 +264,4 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PERSISTENT_LOADED_Z_LEVELS "persistent_loaded_z_levels"
 /// Checks if a persistent map is already loaded
 /// We use this to avoid loading maps that have multiple traits enabled (ie. IceBox is considered ZTRAIT_STATION and ZTRAIT_MINING)
-#define IS_PERSISTENT_MAP_LOADED(map_file) SSpersistence.map_configs_cache?[PERSISTENT_LOADED_Z_LEVELS][map_file]
+#define IS_PERSISTENT_MAP_LOADED(map_file) SSworld_save.map_configs_cache?[PERSISTENT_LOADED_Z_LEVELS][map_file]

@@ -31,7 +31,7 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 	data["z_levels"] = get_z_level_data()
 	data["save_flags"] = get_save_flags_data()
 	data["save_enabled"] = CONFIG_GET(flag/persistent_save_enabled)
-	data["is_saving"] = SSpersistence.save_in_progress
+	data["is_saving"] = SSworld_save.save_in_progress
 	data["total_save_time"] = get_total_save_time()
 	return data
 
@@ -43,7 +43,7 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 
 	switch(action)
 		if("start_save")
-			if(!SSpersistence.save_in_progress && CONFIG_GET(flag/persistent_save_enabled))
+			if(!SSworld_save.save_in_progress && CONFIG_GET(flag/persistent_save_enabled))
 				message_admins("[key_name_admin(usr)] started a map serialization save operation.")
 				log_admin("[key_name(usr)] started a map serialization save operation.")
 
@@ -53,13 +53,13 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 
 				refresh_timer = addtimer(CALLBACK(src, PROC_REF(auto_refresh)), 1 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_LOOP)
 				// Start the save operation asynchronously
-				INVOKE_ASYNC(SSpersistence, TYPE_PROC_REF(/datum/controller/subsystem/persistence, save_world), z_levels_to_save, silent=TRUE)
+				INVOKE_ASYNC(SSworld_save, TYPE_PROC_REF(/datum/controller/subsystem/persistence, save_world), z_levels_to_save, silent=TRUE)
 
 		if("stop_save")
-			if(SSpersistence.save_in_progress)
+			if(SSworld_save.save_in_progress)
 				message_admins("[key_name_admin(usr)] stopped the map serialization save operation.")
 				log_admin("[key_name(usr)] stopped the map serialization save operation.")
-				SSpersistence.save_in_progress = FALSE
+				SSworld_save.save_in_progress = FALSE
 
 				if(refresh_timer)
 					deltimer(refresh_timer)
@@ -77,7 +77,7 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 
 /// Auto-refresh the UI during saves and stop when complete
 /datum/map_serialization_ui/proc/auto_refresh()
-	if(!SSpersistence.save_in_progress)
+	if(!SSworld_save.save_in_progress)
 		if(refresh_timer)
 			deltimer(refresh_timer)
 			refresh_timer = null
@@ -124,11 +124,11 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 				disabled = TRUE // due to the way the map save works, we cannot split z-levels so the bottom z-level determines if all the multi-z's get saved
 
 		// Check if this z-level is currently being processed
-		var/in_progress = (SSpersistence.save_in_progress && SSpersistence.current_save_z_level == z)
+		var/in_progress = (SSworld_save.save_in_progress && SSworld_save.current_save_z_level == z)
 		var/progress_percent = 0
 
 		if(in_progress)
-			progress_percent = SSpersistence.get_current_progress_percent()
+			progress_percent = SSworld_save.get_current_progress_percent()
 
 		// Get metrics from the last save if available
 		var/save_time = 0
@@ -137,8 +137,8 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 		var/turfs_saved = 0
 		var/areas_saved = 0
 
-		if(islist(SSpersistence.current_save_metrics))
-			for(var/list/metric in SSpersistence.current_save_metrics)
+		if(islist(SSworld_save.current_save_metrics))
+			for(var/list/metric in SSworld_save.current_save_metrics)
 				if(metric["z-level"] == z)
 					save_time = metric["save_time_seconds"] || 0
 					mobs_saved = metric["mobs_saved"] || 0
@@ -166,7 +166,7 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 
 /// Returns the save flags data for the UI
 /datum/map_serialization_ui/proc/get_save_flags_data()
-	var/save_flags = SSpersistence.get_save_flags()
+	var/save_flags = SSworld_save.get_save_flags()
 	var/list/flags_data = list()
 
 	flags_data["objects"] = !!(save_flags & SAVE_OBJECTS)
@@ -187,11 +187,11 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 
 /// Gets total save time from all completed z-levels
 /datum/map_serialization_ui/proc/get_total_save_time()
-	if(!islist(SSpersistence.current_save_metrics))
+	if(!islist(SSworld_save.current_save_metrics))
 		return 0
 
 	var/total_time = 0
-	for(var/list/metric in SSpersistence.current_save_metrics)
+	for(var/list/metric in SSworld_save.current_save_metrics)
 		total_time += metric["save_time_seconds"] || 0
 
 	return total_time

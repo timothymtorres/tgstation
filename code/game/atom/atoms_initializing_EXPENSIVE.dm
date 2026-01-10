@@ -43,7 +43,7 @@
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	else
 		if(arguments[1]) // mapload
-			persistent_loaders += A
+			world_save_loaders += A
 
 		SEND_SIGNAL(A, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ATOM_AFTER_POST_INIT, A)
