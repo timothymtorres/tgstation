@@ -38,9 +38,7 @@
 /obj/machinery/duct/get_save_vars(save_flags=ALL)
 	. = ..()
 	// idk shit about plumbing but i think these are correct?
-	. += NAMEOF(src, lock_layers)
 	. += NAMEOF(src, duct_layer)
-	. += NAMEOF(src, ignore_colors)
 	. += NAMEOF(src, duct_color)
 
 	. -= NAMEOF(src, color)
