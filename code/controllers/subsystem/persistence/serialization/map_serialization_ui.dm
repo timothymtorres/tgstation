@@ -53,7 +53,7 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serializati
 
 				refresh_timer = addtimer(CALLBACK(src, PROC_REF(auto_refresh)), 1 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_LOOP)
 				// Start the save operation asynchronously
-				INVOKE_ASYNC(SSworld_save, TYPE_PROC_REF(/datum/controller/subsystem/persistence, save_world), z_levels_to_save, silent=TRUE)
+				INVOKE_ASYNC(SSworld_save, TYPE_PROC_REF(/datum/controller/subsystem/world_save, save_world), z_levels_to_save, silent=TRUE)
 
 		if("stop_save")
 			if(SSworld_save.save_in_progress)
