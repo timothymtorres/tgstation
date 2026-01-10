@@ -4,7 +4,7 @@
 	return .
 
 /obj/machinery/ore_silo/on_object_saved(map_string, turf/current_loc)
-	var/datum/component/material_container/material_holder  = materials
+	var/datum/material_container/material_holder = materials
 	for(var/each in material_holder.materials)
 		var/amount_in_stack = material_holder.materials[each] / SHEET_MATERIAL_AMOUNT
 		if(amount_in_stack <= 0)
@@ -18,7 +18,7 @@
 
 /obj/machinery/ore_silo/PersistentInitialize()
 	. = ..()
-	var/datum/component/material_container/silo_container = materials
+	var/datum/material_container/silo_container = materials
 
 	// transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 	top_level:
