@@ -151,28 +151,23 @@
 	if(istext(source))
 		return source
 
-	// Mind → job title
 	if(istype(source, /datum/mind))
 		var/datum/mind/mind_source = source
 		if(mind_source.assigned_role && !is_unassigned_job(mind_source.assigned_role))
 			return "the [LOWER_TEXT(mind_source.assigned_role.title)]"
-		return "the unfamiliar person"
+		return "someone"
 
-	// Living mob → check for job, otherwise use name
 	if(isliving(source))
 		var/mob/living/living_source = source
 		if(living_source.mind?.assigned_role && !is_unassigned_job(living_source.mind.assigned_role))
 			return "the [LOWER_TEXT(living_source.mind.assigned_role.title)]"
 		if(ishuman(source))
-			return "the unfamiliar person"
-		return "the [living_source.name]"
+			return "someone"
+		return "\the [living_source]"
 
-	// Turfs
 	if(isturf(source))
-		var/turf/turf_source = source
-		return "the [turf_source.name]"
+		return "\the [source]"
 
-	// Objects and everything else
 	if(isatom(source))
 		return "\a [source]"
 

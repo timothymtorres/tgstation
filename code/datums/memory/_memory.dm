@@ -173,37 +173,16 @@
  * * story_flags - Additional flags (STORY_FLAG_DATED, etc.)
  */
 /datum/memory/proc/generate_story(story_type, story_flags)
-	// Pick a random creature/item for the "something" flavor text
-	var/atom/something = pick(GLOB.story_something_pool)
-
-	// Get a random crewmember for flavor text
-	var/crewmember_name = "an unknown crewmember"
-	var/datum/antagonist/obsessed/creeper = memorizer_mind?.has_antag_datum(/datum/antagonist/obsessed)
-	if(creeper?.trauma?.obsession)
-		crewmember_name = build_character_name(creeper.trauma.obsession)
-	else
-		var/list/crew_members = list()
-		for(var/mob/living/carbon/human/potential as anything in GLOB.human_list)
-			if(potential.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER)
-				crew_members += potential
-		if(length(crew_members))
-			crewmember_name = build_character_name(pick(crew_members))
-
-	// Build the story context for resolving "somethings"
-	var/list/story_context = list(
-		"SOMETHING" = initial(something.name),
-		"CREWMEMBER" = crewmember_name,
-		"STORY_TYPE" = story_type,
-	)
-
 	// Grab the data pools for this story type
 	var/list/forewords = GLOB.story_forewords[story_type]
-	var/list/somethings = GLOB.story_somethings[story_type]
 	var/list/styles
 	if(!(story_flags & STORY_FLAG_NO_STYLE))
 		styles = GLOB.story_styles["generic"]?.Copy()
 		if(GLOB.story_styles[story_type])
 			LAZYADD(styles, GLOB.story_styles[story_type])
+
+	// Context for style resolution
+	var/list/story_context = list("STORY_TYPE" = story_type)
 
 	// Build the story pieces
 	var/list/story_pieces = list()
@@ -214,19 +193,15 @@
 
 	// 2. Story start from templates
 	if(length(start_templates))
-		story_pieces += resolve_template(pick(start_templates), story_context)
+		story_pieces += resolve_template(pick(start_templates))
 
 	// 3. Location
 	if(!(memory_flags & MEMORY_FLAG_NOLOCATION) && length(location_templates))
-		story_pieces += resolve_template(pick(location_templates), story_context)
+		story_pieces += resolve_template(pick(location_templates))
 
-	// 4. Random "something" flavor (75% chance)
-	if(length(somethings) && prob(75))
-		story_pieces += resolve_template(pick(somethings), story_context)
-
-	// 5. Style (75% chance)
+	// 4. Style (75% chance)
 	if(length(styles) && prob(75))
-		story_pieces += pick(styles)
+		story_pieces += resolve_template(pick(styles), story_context)
 
 	// Assemble the parsed story
 	var/parsed_story = ""
