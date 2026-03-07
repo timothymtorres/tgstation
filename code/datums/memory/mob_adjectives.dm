@@ -1,0 +1,100 @@
+/**
+ * Maps mob traits to lists of possible adjectives for memory descriptions.
+ * When a memory is created, the character builder picks one adjective per matched trait.
+ */
+GLOBAL_LIST_INIT(memory_trait_adjectives, list(
+	// Physical state
+	TRAIT_DEAD = list("dead", "deceased", "lifeless"),
+	TRAIT_KNOCKEDOUT = list("unconscious", "passed out"),
+	TRAIT_CRITICAL_CONDITION = list("dying", "fading"),
+	TRAIT_FLOORED = list("fallen", "prone"),
+	TRAIT_PERMANENTLY_ONFIRE = list("melting"),
+	TRAIT_HEADLESS = list("headless", "decapitated"),
+	// Appearance
+	TRAIT_DWARF = list("diminutive", "small"),
+	TRAIT_GIANT = list("towering", "imposing"),
+	TRAIT_FAT = list("rotund", "heavyset"),
+	TRAIT_BALD = list("bald"),
+	TRAIT_DISFIGURED = list("disfigured", "scarred"),
+	TRAIT_HUSKED = list("husked", "withered"),
+	TRAIT_NAKED = list("naked", "unclothed"),
+	TRAIT_SCARRED = list("scarred", "grotesque"),
+	// Supernatural
+	TRAIT_HOLY = list("divine", "sanctified", "blessed"),
+	TRAIT_CULT_HALO = list("sinister", "corrupted", "profane"),
+	TRAIT_NO_SOUL = list("soulless", "hollow", "forsaken"),
+	TRAIT_IRRADIATED = list("glowing", "luminescent"),
+	// Senses
+	TRAIT_BLIND = list("blind", "sightless"),
+	TRAIT_DEAF = list("deaf"),
+	TRAIT_MUTE = list("silent", "mute"),
+	TRAIT_NEARSIGHT = list("squinting"),
+	// Physical
+	TRAIT_HULK = list("hulking", "muscular"),
+	TRAIT_CLUMSY = list("clumsy", "bumbling"),
+	TRAIT_FREERUNNING = list("nimble", "athletic"),
+	TRAIT_SILENT_FOOTSTEPS = list("stealthy"),
+	TRAIT_GRABWEAKNESS = list("feeble", "frail"),
+	TRAIT_EASILY_WOUNDED = list("fragile"),
+	TRAIT_HARDLY_WOUNDED = list("tough", "hardy"),
+	TRAIT_PARAPLEGIC = list("crippled"),
+	TRAIT_BAD_BACK = list("hunched"),
+	// Movement
+	TRAIT_MOVE_FLYING = list("soaring", "airborne"),
+	TRAIT_MOVE_FLOATING = list("hovering", "drifting"),
+	// Behavioral
+	TRAIT_PACIFISM = list("gentle", "peaceful"),
+	TRAIT_DEPRESSION = list("melancholic", "downcast"),
+	TRAIT_JOLLY = list("cheerful", "beaming"),
+	TRAIT_SKITTISH = list("skittish", "jumpy"),
+	TRAIT_FEARLESS = list("fearless", "bold"),
+	TRAIT_VORACIOUS = list("ravenous"),
+	TRAIT_SPIRITUAL = list("pious", "devout"),
+	TRAIT_NAIVE = list("naive", "innocent"),
+	TRAIT_FRIENDLY = list("friendly", "warm"),
+	TRAIT_SNOB = list("pretentious", "haughty"),
+	TRAIT_EXTROVERT = list("outgoing"),
+	TRAIT_INTROVERT = list("reserved", "withdrawn"),
+	TRAIT_ANXIOUS = list("anxious", "nervous"),
+	TRAIT_APATHETIC = list("apathetic", "emotionless"),
+	TRAIT_INSANITY = list("deranged", "unhinged"),
+	TRAIT_UNSTABLE = list("unstable", "erratic"),
+	TRAIT_GAMER = list("nerdy"),
+	// Status
+	TRAIT_SMOKING = list("smoking"),
+	TRAIT_TATTOOED = list("tattooed"),
+	TRAIT_BLUSHING = list("blushing"),
+))
+
+/**
+ * Maps status effect types to lists of possible adjectives for memory descriptions.
+ */
+GLOBAL_LIST_INIT(memory_status_adjectives, list(
+	/datum/status_effect/incapacitating/stun = list("stunned", "reeling"),
+	/datum/status_effect/incapacitating/unconscious = list("unconscious"),
+	/datum/status_effect/incapacitating/sleeping = list("sleeping"),
+	/datum/status_effect/stagger = list("staggering", "unsteady"),
+	/datum/status_effect/confusion = list("confused", "dazed"),
+	/datum/status_effect/jitter = list("jittery", "twitchy"),
+	/datum/status_effect/dizziness = list("dizzy"),
+	/datum/status_effect/drugginess = list("stoned"),
+	/datum/status_effect/inebriated/tipsy = list("tipsy"),
+	/datum/status_effect/inebriated/drunk = list("drunk", "hammered"),
+	/datum/status_effect/amok = list("berserk", "frenzied"),
+	/datum/status_effect/blooddrunk = list("bloodthirsty", "savage"),
+	/datum/status_effect/in_love = list("lovestruck", "infatuated"),
+	/datum/status_effect/trance = list("entranced", "mesmerized"),
+	/datum/status_effect/convulsing = list("convulsing"),
+	/datum/status_effect/spasms = list("spasming"),
+	/datum/status_effect/necropolis_curse = list("cursed"),
+	/datum/status_effect/good_music = list("soothed"),
+	/datum/status_effect/exercised = list("robust", "vigorous"),
+	/datum/status_effect/ghoul = list("ghoulish", "fiendish"),
+	/datum/status_effect/eldritch = list("marked", "eldritch"),
+	/datum/status_effect/limp = list("limping"),
+	/datum/status_effect/speech/stutter = list("stuttering"),
+	/datum/status_effect/speech/slurring = list("slurring"),
+	/datum/status_effect/grouped/heldup = list("captive", "coerced"),
+	/datum/status_effect/grouped/surrender = list("surrendering"),
+	/datum/status_effect/determined = list("determined"),
+))

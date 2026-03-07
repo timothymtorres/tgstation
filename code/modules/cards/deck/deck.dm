@@ -129,18 +129,25 @@
 		if(held_card_item)
 			card_players[person] = held_card_item
 
-	if(length(card_players) >= 2) // need at least 2 people to play a cardgame, duh!
+	if(length(card_players) >= 2)
 		for(var/mob/living/carbon/player in card_players)
-			var/other_players = card_players - player
 			var/obj/item/toy/held_card_item = card_players[player]
 
+			// Build a formatted players list (anonymized)
+			var/list/other_player_names = list()
+			for(var/mob/living/other_player in card_players - player)
+				other_player_names += build_character_name(other_player)
+			var/formatted_players = english_list(other_player_names, nothing_text = "no-one")
+
+			// Mood added separately — has custom add_effects logic
 			player.add_mood_event("playing_cards", /datum/mood_event/playing_cards)
+
 			player.add_mob_memory( \
 				/datum/memory/playing_cards, \
-				deuteragonist = dealer, \
+				target = dealer, \
 				game = cardgame_desc, \
-				protagonist_held_card = held_card_item, \
-				other_players = other_players, \
+				held_card_name = held_card_item.name, \
+				players_list = formatted_players, \
 			)
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
@@ -204,17 +211,17 @@
 /// This is how we play 52 card pickup
 /obj/item/toy/cards/deck/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(. || !istype(target)) // was it caught or is the target not a living mob
+	if(. || !istype(target))
 		return .
 
 	var/mob/living/thrower = throwingdatum?.get_thrower()
-	if(!istype(thrower)) // if a mob didn't throw it (need two people to play 52 pickup)
+	if(!istype(thrower))
 		return
 
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
 	target.add_mood_event("lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
 	thrower.add_mood_event("won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
-	add_memory_in_range(target, 7, /datum/memory/playing_card_pickup, protagonist = thrower, deuteragonist = target, antagonist = src)
+	add_memory_in_range(target, 7, /datum/memory/playing_card_pickup, subject = thrower, target = target, object = src)
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
