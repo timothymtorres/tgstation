@@ -146,7 +146,7 @@
 
 	// Extra data tokens (keys uppercased for template matching)
 	for(var/key in extra_data)
-		result = replacetext(result, "{[UPPER_TEXT(key)]}", "[extra_data[key]]")
+		result = replacetext(result, "{[uppertext(key)]}", "[extra_data[key]]")
 
 	// Story generation context (SOMETHING, CREWMEMBER, etc.)
 	for(var/key in extra_context)

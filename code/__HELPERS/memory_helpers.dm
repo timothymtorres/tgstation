@@ -180,7 +180,7 @@
 	var/list/adjectives = list()
 
 	// Trait-based adjectives
-	for(var/trait in target.status_traits)
+	for(var/trait in target._status_traits)
 		var/list/adj_pool = GLOB.memory_trait_adjectives[trait]
 		if(length(adj_pool))
 			adjectives += pick(adj_pool)
@@ -242,8 +242,19 @@
  */
 /proc/collect_turf_adjectives(turf/target)
 	var/list/adjectives = list()
-	if(HAS_TRAIT(target, TRAIT_TURF_WET))
-		adjectives += pick("wet", "slippery", "lubed")
+	var/datum/component/wet_floor/wet_floor = target?.GetComponent(/datum/component/wet_floor)
+	if(wet_floor)
+		switch(wet_floor.highest_strength)
+			if(TURF_WET_WATER)
+				adjectives += pick("wet")
+			if(TURF_WET_PERMAFROST to TURF_WET_ICE)
+				adjectives += pick("icy", "frozen", "frosted")
+			if(TURF_WET_LUBE to TURF_WET_SUPERLUBE)
+				adjectives += pick("lubed")
+
+		if(wet_floor.highest_strength != TURF_DRY)
+			adjectives += pick("slippery")
+
 	return adjectives
 
 /**
