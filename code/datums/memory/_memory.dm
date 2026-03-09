@@ -61,7 +61,13 @@
 	/// Anonymized name of the memorizer.
 	var/memorizer_name
 
-/datum/memory/New(datum/mind/memorizer_mind, atom/subject, atom/target, atom/object_atom, list/extra_data)
+/datum/memory/New(
+	datum/mind/memorizer_mind,
+	atom/subject,
+	atom/target,
+	atom/object_atom,
+	list/extra_data
+)
 	src.memorizer_mind = memorizer_mind
 	src.extra_data = extra_data
 
@@ -218,7 +224,8 @@
 		if(capitalize_next_line)
 			line = capitalize(line)
 			capitalize_next_line = FALSE
-		if(length(line) && line[length(line)] == ".")//End of sentence, next sentence needs to start with a capital.'
+
+		if(line[length(line)] == ".")//End of sentence, next sentence needs to start with a capital.'
 			capitalize_next_line = TRUE
 		if(line != story_pieces[story_pieces.len]) //not the last line
 			parsed_story += "[line] "
