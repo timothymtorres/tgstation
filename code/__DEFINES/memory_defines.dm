@@ -13,7 +13,7 @@
 
 ///Factor of how beauty is divided to make the engraving art value
 #define ENGRAVING_BEAUTY_TO_ART_FACTOR 10
-///Factor on how much beauty is removed from before adding the element on old engravings
+//Factor on how much beauty is removed from before adding the element on old engravings
 #define ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR 5
 
 // How cool a story is!
@@ -32,10 +32,10 @@
 /// This memory is insanely good, and can't get obtained just normally. Platinum star.
 #define STORY_VALUE_LEGENDARY 5
 
-// Flags for memories
-/// This memory doesn't have a location, omit that
+//Flags for memories
+///this memory doesn't have a location, omit that
 #define MEMORY_FLAG_NOLOCATION (1<<0)
-/// This memory shouldn't include the station name (example: revolution memory)
+///this memory shouldn't include the station name (example: revolution memory)
 #define MEMORY_FLAG_NOSTATIONNAME (1<<1)
 /// Really shouldn't be saved in persistence, or engraved. Use for stuff like quirk memories.
 #define MEMORY_FLAG_NOPERSISTENCE (1<<2)
@@ -50,16 +50,16 @@
 /// This memory can't be selected for tattoo-ing or engraving at all.
 #define MEMORY_NO_STORY (1<<7)
 
-// Story type defines - what the story is for
-/// Wall engraving stories
+//These defines are for what the story is for, they should be defined as what part of the json file they interact with
+///wall engraving stories
 #define STORY_ENGRAVING "engraving"
-/// Changeling memory reading
+///changeling memory reading
 #define STORY_CHANGELING_ABSORB "changeling_absorb"
-/// Tattoos
+///tattoos
 #define STORY_TATTOO "tattoo"
 
-// Story flags for including special bits on the generated story
-/// Include a date this event happened
+//These defines are story flags for including special bits on the generated story.
+///include a date this event happened
 #define STORY_FLAG_DATED (1<<0)
 /// Don't style this story
 #define STORY_FLAG_NO_STYLE (1<<1)

@@ -4,9 +4,9 @@
  * The third argument should be a typepath of a /datum/memory.
  *
  * Beyond that, can be supplied with named arguments:
- * * subject: The main character / doer of the action
- * * target: The secondary character / receiver of the action
- * * object: The tertiary element / thing involved
+ * * subject: The main subject / doer of the action
+ * * target: The secondary subject / receiver of the action
+ * * object: The thing involved
  * * skip_mood: If TRUE, don't fire the associated mood event
  *
  * Any other named arguments are stored in extra_data and available as {UPPERCASE_KEY} in templates.
@@ -16,25 +16,44 @@
 /// Unless you need to use this for an explicit reason, use the add_memory_in_range macro wrapper.
 /proc/_add_memory_in_range(atom/source, range = 7, list/memory_args)
 	for(var/mob/living/carbon/memorizer in hearers(range, source))
-		memorizer.mind?._add_memory(memory_args.Copy())
+		memorizer.mind?._add_memory(memory_args.Copy()) // One copy for each memory, since it mutates the list
 
 /**
  * Adds a memory to the target mob.
  *
  * The first argument should be a typepath of a /datum/memory.
+ *
+ * If the mob already has a memory of that type, it will be deleted.
+ *
+ * Beyond that, can be supplied with named arguments:
+ * * subject: The main subject / doer of the action
+ * * target: The secondary subject / receiver of the action
+ * * object: The thing involved
+ * * skip_mood: If TRUE, don't fire the associated mood event
+ *
  * Returns the datum memory created, or null otherwise.
  */
 #define add_mob_memory(arguments...) mind?._add_memory(list(##arguments))
 
+// Wrapper for _add_memory so we can used named arguments.
 /**
  * Adds a memory to the target mind.
  *
  * The first argument should be a typepath of a /datum/memory.
+ *
+ * If the mob already has a memory of that type, it will be deleted.
+ *
+ * Beyond that, can be supplied with named arguments:
+ * * subject: The main subject / doer of the action
+ * * target: The secondary subject / receiver of the action
+ * * object: The thing involved
+ * * skip_mood: If TRUE, don't fire the associated mood event
+ *
  * Returns the datum memory created, or null otherwise.
  */
 #define add_memory(arguments...) _add_memory(list(##arguments))
 
-/// Core proc for creating and registering a memory on a mind.
+/// Unless you need to use this for an explicit reason, use the add_memory, add_mob_memory, or add_memory_in_range macro wrappers.
 /datum/mind/proc/_add_memory(list/memory_args)
 	RETURN_TYPE(/datum/memory)
 
@@ -42,20 +61,18 @@
 	if(!ispath(memory_type))
 		CRASH("add_memory called with an invalid memory type. (Got: [memory_type || "null"])")
 
-	// Pre-creation checks based on the type's initial flags
 	if(current)
-		var/new_flags = initial(memory_type.memory_flags)
-		if(!(new_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
+		var/new_memory_flags = initial(memory_type.memory_flags)
+		if(!(new_memory_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
 			return
-		if((new_flags & MEMORY_CHECK_BLINDNESS) && current.is_blind())
+		if((new_memory_flags & MEMORY_CHECK_BLINDNESS) && current.is_blind())
 			return
-		if((new_flags & MEMORY_CHECK_DEAFNESS) && HAS_TRAIT(current, TRAIT_DEAF))
+		if((new_memory_flags & MEMORY_CHECK_DEAFNESS) && HAS_TRAIT(current, TRAIT_DEAF))
 			return
 
-	// Delete existing memory of same type
-	var/datum/memory/replaced = memories[memory_type]
-	if(replaced)
-		qdel(replaced)
+	var/datum/memory/replaced_memory = memories[memory_type]
+	if(replaced_memory)
+		qdel(replaced_memory)
 
 	// Extract standard arguments
 	var/atom/subject_atom = memory_args["subject"]
@@ -90,7 +107,12 @@
 
 /**
  * Simple / sane proc for giving a mob the option to select one of their memories
- * that do not have the flags MEMORY_FLAG_ALREADY_USED or MEMORY_NO_STORY.
+ * that do not have the flags [MEMORY_FLAG_ALREADY_USED] or [MEMORY_NO_STORY].
+ *
+ * Arguments
+ * * verbage: This is used in the tgui selection menu, explains what they're selecting a memory to do.
+ *
+ * Returns the memory selected, or null otherwise.
  */
 /datum/mind/proc/select_memory(verbage = "use")
 	RETURN_TYPE(/datum/memory)
@@ -98,17 +120,20 @@
 
 	for(var/key in memories)
 		var/datum/memory/memory_iter = memories[key]
-		if(memory_iter.memory_flags & (MEMORY_FLAG_ALREADY_USED|MEMORY_NO_STORY))
+		if(memory_iter.memory_flags & (MEMORY_FLAG_ALREADY_USED|MEMORY_NO_STORY)) //Can't use memories multiple times
 			continue
 		choice_list[memory_iter.name] = memory_iter
 
 	var/choice = tgui_input_list(usr, "Select a memory to [verbage]", "Memory Selection?", choice_list)
-	if(isnull(choice) || isnull(choice_list[choice]))
-		return null
+	if(isnull(choice))
+		return FALSE
+	if(isnull(choice_list[choice]))
+		return FALSE
+	var/datum/memory/memory_choice = choice_list[choice]
 
-	return choice_list[choice]
+	return memory_choice
 
-/// Wipes all memories from this mind.
+/// Small helper to clean out memories.
 /datum/mind/proc/wipe_memory()
 	QDEL_LIST_ASSOC_VAL(memories)
 
@@ -117,7 +142,9 @@
 	qdel(memories[memory_type])
 	memories -= memory_type
 
-/// Creates quick copies of all memories for another mind.
+/// Helper to create quick copies of all of our memories
+/// Quick copies aren't full copies - just basic copies containing necessities.
+/// They cannot be used in stories.
 /datum/mind/proc/quick_copy_all_memories(datum/mind/new_memorizer)
 	for(var/memory_path in memories)
 		var/datum/memory/prime_memory = memories[memory_path]
