@@ -56,7 +56,6 @@
 /// Unless you need to use this for an explicit reason, use the add_memory, add_mob_memory, or add_memory_in_range macro wrappers.
 /datum/mind/proc/_add_memory(list/memory_args)
 	RETURN_TYPE(/datum/memory)
-
 	var/datum/memory/memory_type = memory_args[1]
 	if(!ispath(memory_type))
 		CRASH("add_memory called with an invalid memory type. (Got: [memory_type || "null"])")
@@ -65,9 +64,9 @@
 		var/new_memory_flags = initial(memory_type.memory_flags)
 		if(!(new_memory_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
 			return
-		if((new_memory_flags & MEMORY_CHECK_BLINDNESS) && current.is_blind())
+		if(new_memory_flags & MEMORY_CHECK_BLINDNESS && current.is_blind())
 			return
-		if((new_memory_flags & MEMORY_CHECK_DEAFNESS) && HAS_TRAIT(current, TRAIT_DEAF))
+		if(new_memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF))
 			return
 
 	var/datum/memory/replaced_memory = memories[memory_type]

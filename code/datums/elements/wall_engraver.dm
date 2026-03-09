@@ -4,7 +4,7 @@
 /datum/element/wall_engraver/Attach(datum/target)
 	. = ..()
 
-	if(!isitem(target))
+	if (!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
