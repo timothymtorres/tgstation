@@ -52,10 +52,9 @@
 	/// Which extra_data keys to forward as args to the mood event's add_effects().
 	var/list/mood_arg_keys
 
-	// === METADATA ===
-	/// How valuable this memory is as a story. Affects art beauty and persistence.
+	/// Defines how beautiful art from it can be, and whether or not it stays in persistence.
 	var/story_value = STORY_VALUE_NONE
-	/// Bitflags for special memory behavior.
+	/// Flags of any special behavior for the memory
 	var/memory_flags = NONE
 	/// The mind that created this memory.
 	var/datum/mind/memorizer_mind
@@ -95,6 +94,19 @@
 	memorizer_mind = null
 	return ..()
 
+/datum/memory/serialize_list(list/options, list/semvers)
+	. = ..()
+	.["name"] = name
+	.["memorizer"] = memorizer_name
+	.["story_value"] = story_value
+	.["memory_flags"] = memory_flags
+	.["subject_name"] = subject_character?.name
+	.["target_name"] = target_character?.name
+	.["object_name"] = object_character?.name
+	.["where"] = area_name
+	SET_SERIALIZATION_SEMVER(semvers, "2.0.0")
+	return .
+
 /**
  * Hook for subtypes to run logic after all fields are populated.
  * Use this instead of overriding New() for things like modifying story_value based on extra_data.
@@ -103,14 +115,13 @@
 	return
 
 /**
- * Generates the display name from name_templates.
+ * Generates a name for the memory.
  */
 /datum/memory/proc/generate_memory_name()
 	if(!length(name_templates))
 		name = "Erroneous memory - This is a bug"
 		story_value = STORY_VALUE_SHIT
 		memory_flags |= (MEMORY_FLAG_NOPERSISTENCE|MEMORY_NO_STORY)
-		stack_trace("[type] has no name_templates defined!")
 		return
 
 	name = capitalize(resolve_template(pick(name_templates)))
@@ -187,42 +198,40 @@
 	// Build the story pieces
 	var/list/story_pieces = list()
 
-	// 1. Foreword
-	if(length(forewords))
-		story_pieces += pick(forewords)
+	// The forewords for this specific type of story (E.g. This engraving depicts)
+	story_pieces += pick(forewords)
 
-	// 2. Story start from templates
-	if(length(start_templates))
-		story_pieces += resolve_template(pick(start_templates))
+	// The story start for this specific action. (E.g. The Chef carving into The Clown)
+	story_pieces += resolve_template(pick(start_templates))
 
-	// 3. Location
+	// The location it happend, which isn't always included, but commonly is. (E.g. in Space, while in the Bar)
 	if(!(memory_flags & MEMORY_FLAG_NOLOCATION) && length(location_templates))
 		story_pieces += resolve_template(pick(location_templates))
 
-	// 4. Style (75% chance)
+	// Explains any unique styling the art has. e.g. (The engraving has a cubist style.)
 	if(length(styles) && prob(75))
 		story_pieces += resolve_template(pick(styles), story_context)
 
-	// Assemble the parsed story
 	var/parsed_story = ""
-	var/capitalize_next = FALSE
+	var/capitalize_next_line = FALSE
 	for(var/line in story_pieces)
-		if(capitalize_next)
+		if(capitalize_next_line)
 			line = capitalize(line)
-			capitalize_next = FALSE
-		if(length(line) && line[length(line)] == ".")
-			capitalize_next = TRUE
-		if(line != story_pieces[story_pieces.len])
+			capitalize_next_line = FALSE
+		if(length(line) && line[length(line)] == ".")//End of sentence, next sentence needs to start with a capital.'
+			capitalize_next_line = TRUE
+		if(line != story_pieces[story_pieces.len]) //not the last line
 			parsed_story += "[line] "
 
-	// Date suffix
+	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
 		if(memory_flags & MEMORY_FLAG_NOSTATIONNAME)
 			parsed_story += "This took place in [time2text(world.realtime, "Month", NO_TIMEZONE)] of [CURRENT_STATION_YEAR]."
 		else
 			parsed_story += "This took place in [time2text(world.realtime, "Month", NO_TIMEZONE)] of [CURRENT_STATION_YEAR] on [station_name()]."
 
-	return trim_right(parsed_story)
+	parsed_story = trim_right(parsed_story)
+	return parsed_story
 
 /datum/memory/serialize_list(list/options, list/semvers)
 	. = ..()
