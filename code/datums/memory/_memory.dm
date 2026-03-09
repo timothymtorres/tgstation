@@ -219,7 +219,9 @@
 		story_pieces += resolve_template(pick(styles), story_context)
 
 	var/parsed_story = ""
+
 	var/capitalize_next_line = FALSE
+
 	for(var/line in story_pieces)
 		if(capitalize_next_line)
 			line = capitalize(line)
@@ -227,6 +229,7 @@
 
 		if(line[length(line)] == ".")//End of sentence, next sentence needs to start with a capital.'
 			capitalize_next_line = TRUE
+
 		if(line != story_pieces[story_pieces.len]) //not the last line
 			parsed_story += "[line] "
 
@@ -238,18 +241,20 @@
 			parsed_story += "This took place in [time2text(world.realtime, "Month", NO_TIMEZONE)] of [CURRENT_STATION_YEAR] on [station_name()]."
 
 	parsed_story = trim_right(parsed_story)
+
 	return parsed_story
 
 /**
- * Creates a quick copy of this memory for another mind (e.g., changeling absorb).
- * Quick copies cannot be used for stories.
+ * Creates a "quick copy" of the memory for another mind,
+ * copying just basic memory information (name, major charactecrs) over.
+ *
+ * The copied memory cannot be used for stories or anything.
+ * They should generally only be used to give a new mind an idea of another mind's memories.
  */
 /datum/memory/proc/quick_copy_memory(datum/mind/new_memorizer)
 	return new /datum/memory/copy(new_memorizer, src)
 
-// === COPY SUBTYPE ===
-
-/// Shallow copy of a memory, used by changeling absorb and similar. Cannot generate stories.
+// To only be used by quick copies of memories
 /datum/memory/copy
 	memory_flags = MEMORY_NO_STORY
 
@@ -265,7 +270,8 @@
 	// Skip parent New() entirely — we're copying, not creating
 
 /datum/memory/copy/generate_memory_name()
-	return // We just copy the original memory's name anyways
+	// We just copy the original memory's name anyways
+	return
 
 /datum/memory/copy/post_init()
 	return
