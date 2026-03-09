@@ -1,4 +1,4 @@
-/// A doctor successfully completed a surgery on someone.
+/// A doctor successfuly completed a surgery on someone.
 /datum/memory/surgery
 	story_value = STORY_VALUE_OKAY
 	associated_mood_category = "surgery"
@@ -112,9 +112,10 @@
 		"{SUBJECT_ADJ}'s pockets not being able to contain their spaghetti",
 	)
 
-/// Got kissed!
+/// Got kissed! AHHHHH!
 /datum/memory/kissed
 	story_value = STORY_VALUE_MEH
+	// Sorry but blind people can't feel kisses...
 	memory_flags = MEMORY_CHECK_BLINDNESS
 	associated_mood_category = "kiss"
 	associated_mood_type = /datum/mood_event/kiss
