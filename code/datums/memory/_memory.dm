@@ -183,11 +183,11 @@
 	return "the [adj] [area_name]"
 
 /**
- * Generates a story based on this memory for engravings, tattoos, changeling absorb, etc.
+ * Generates a story based on this memory.
  *
- * Arguments:
- * * story_type - The type of story (STORY_ENGRAVING, STORY_TATTOO, etc.)
- * * story_flags - Additional flags (STORY_FLAG_DATED, etc.)
+ * Arguments
+ * * story_type - for used in grabbing phrases from memories.json involving specific types of stories.
+ * * story_flags - any additional flags involving the story
  */
 /datum/memory/proc/generate_story(story_type, story_flags)
 	// Grab the data pools for this story type
@@ -240,19 +240,6 @@
 	parsed_story = trim_right(parsed_story)
 	return parsed_story
 
-/datum/memory/serialize_list(list/options, list/semvers)
-	. = ..()
-	.["name"] = name
-	.["memorizer"] = memorizer_name
-	.["story_value"] = story_value
-	.["memory_flags"] = memory_flags
-	.["subject_name"] = subject_character?.name
-	.["target_name"] = target_character?.name
-	.["object_name"] = object_character?.name
-	.["where"] = area_name
-	SET_SERIALIZATION_SEMVER(semvers, "2.0.0")
-	return .
-
 /**
  * Creates a quick copy of this memory for another mind (e.g., changeling absorb).
  * Quick copies cannot be used for stories.
@@ -278,7 +265,7 @@
 	// Skip parent New() entirely — we're copying, not creating
 
 /datum/memory/copy/generate_memory_name()
-	return // Name copied from source
+	return // We just copy the original memory's name anyways
 
 /datum/memory/copy/post_init()
 	return
