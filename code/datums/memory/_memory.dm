@@ -39,6 +39,23 @@
 	/// Where this memory took place.
 	var/where
 
+/datum/memory
+    /// The root form of the action verb - ex. "slip" or "shoot"
+    var/verb_root
+    /// The gerund form of the action verb - ex. "slipping" or "shooting"
+    var/verb_ing
+    /// The formal name of the incident as a noun - ex. "prank" or "assassination"
+    var/event_name
+    /// The main character who initiated the memory
+    var/character
+    /// The recipient of the action. Can be a mob or object (optional)
+    var/target
+    /// The specific item utilized during the event - ex. a toolbox or a banana peel (optional)
+    var/item
+
+
+
+
 /datum/memory/New(
 	datum/mind/memorizer_mind,
 	atom/protagonist,
