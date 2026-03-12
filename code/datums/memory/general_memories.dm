@@ -1,3 +1,20 @@
+// UI Title: [Noun] [Connector] [Target]
+// Snapshot: {Subject} [Gerund] [Connector] {Target}
+// History: Relates to [Noun] [Connector] {Target}
+// Context: In {Loc} during {Time}
+// Dream: ???
+
+// [Hook] {Subject} [Gerund] {Connector} {Target}. {History_Statement}. {Context_Statement}.
+
+
+// UI Title: [Noun/Gerund] [Connector] [Target/Object]
+// Snapshot: {Subject} is [Gerund] [Connector] {Target} [using Object]
+// History:  Relates to the [Noun/Gerund] [Connector] {Target} by {Subj_Adj} {Subject}
+// Context:  In the [Loc_Adj] {Location} during {Time}
+// Dream:    ... you see ... a {Subj_Adj} {Subject} ... will [Root] [Connector] ... {Target_Adj} {Target} ... in a {Loc_Adj} place ...
+
+// [Hook] {Snapshot}. {History}. {Context}.
+
 /// A doctor successfuly completed a surgery on someone.
 /datum/memory/surgery
 	story_value = STORY_VALUE_OKAY
