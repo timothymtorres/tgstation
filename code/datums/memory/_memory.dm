@@ -38,21 +38,32 @@
 	var/where
 
 /datum/memory
-    /// The root form of the action verb - ex. "slip" or "shoot"
-    var/verb_root
-    /// The gerund form of the action verb - ex. "slipping" or "shooting"
-    var/verb_ing
-    /// The formal name of the incident as a noun - ex. "prank" or "assassination"
-    var/event_name
-    /// The main character who initiated the memory
-    var/character
-    /// The recipient of the action. Can be a mob or object (optional)
-    var/target
-    /// The specific item utilized during the event - ex. a toolbox or a banana peel (optional)
-    var/item
+	/// The root form of the action verb - ex. "slip" or "shoot"
+	var/verb_root
+	/// The gerund form of the action verb - ex. "slipping" or "shooting"
+	var/verb_ing
+	/// The formal name of the incident as a noun - ex. "prank" or "assassination"
+	var/event_name
+	/// The main character who initiated the memory
+	var/character
+	/// The recipient of the action. Can be a mob or object (optional)
+	var/target
+	/// The specific item utilized during the event - ex. a toolbox or a banana peel (optional)
+	var/item
+	/// The job title of the character (optional)
+	var/character_job_title
+	/// The job title of the target (optional)
+	var/target_job_title
 
-
-
+/*
+/datum/memory/New(
+	datum/mind/memorizer_mind,
+	atom/character,
+	atom/target,
+	atom/item,
+	...
+)
+*/
 
 /datum/memory/New(
 	datum/mind/memorizer_mind,
@@ -101,7 +112,7 @@
  * Generates a name for the memory.
  */
 /datum/memory/proc/generate_memory_name()
-	var/list/potential_names = get_names()
+	var/list/potential_names //= get_names()
 	if(!length(potential_names))
 		// Someone forgot to implement get_names - it will stack trace, so we just need to return
 		name = "Erroneous memory - This is a bug"
@@ -110,34 +121,6 @@
 		return
 
 	name = capitalize(pick(potential_names))
-
-/**
- * Returns a list of names to select from.
- *
- * This is necessary to implement. Names should be at-a-glance summaries of what the memory entails.
- *
- * For example: "The time the Clown did a sweet flip.".
- * You can use any information tidbits in your names to fill them out.
- * Your names should be puncuated.
- */
-/datum/memory/proc/get_names()
-	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("[type] didn't have any names setup, these are necessary for all memories!")
-	return list()
-
-/**
- * Returns a list of story starts for the memory.
- *
- * Starts are necessary if [MEMORY_FLAG_NOSTORY] is not set. They are used in generating stories out of memories.
- *
- * For example: "The Clown cracks his hands and honks his horn as he prepares to do a backflip".
- * You can use any information tidbits in your names to fill them out.
- * They should also be in the present tense.
- */
-/datum/memory/proc/get_starts()
-	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("[type] didn't have any starts setup, these are necessary if the MEMORY_FLAG_NOSTORY is not set!")
-	return list()
 
 /**
  * Returns a list of locations for use in stories which do not have [MEMORY_FLAG_NOLOCATION] set.
@@ -210,7 +193,6 @@
 
 	// These are picked from the datum
 	var/list/wheres = (memory_flags & MEMORY_FLAG_NOLOCATION) ? null : get_locations()
-	var/list/story_starts = get_starts()
 	var/mob/living/crew_member
 	var/atom/something = pick(something_pool) //Pick a something for the potential something line
 
@@ -233,8 +215,6 @@
 
 	//The forewords for this specific type of story (E.g. This engraving depicts)
 	story_pieces += pick(forewords)
-	//The story start for this specific action. (E.g. The Chef carving into The Clown)
-	story_pieces += pick(story_starts)
 	//The location it happend, which isn't always included, but commonly is. (E.g. in Space, while in the Bar)
 	if(length(wheres))
 		story_pieces += pick(wheres)
