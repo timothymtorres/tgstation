@@ -22,8 +22,6 @@
 	var/story_value = STORY_VALUE_NONE
 	/// Flags of any special behavior for the memory
 	var/memory_flags = NONE
-	/// If this memory changes based on mood, this is the verb it uses.
-	var/mood_verb
 
 	// Below are common infobits passed to memories, placed into strings.
 	// You can add your own to subtypes of memories to add more infobits.
@@ -77,14 +75,6 @@
 	if(!src.where && isatom(protagonist) && !(memory_flags & MEMORY_FLAG_NOLOCATION))
 		src.where = get_area_name(protagonist)
 
-	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
-		var/story_mood = MOODLESS_MEMORY
-		if(isliving(protagonist))
-			var/mob/living/the_main_character = protagonist
-			story_mood = the_main_character.mob_mood?.mood_level || MOODLESS_MEMORY
-
-		select_mood_verb(story_mood)
-
 	// This happens after everything's all set, remember this for New overrides
 	generate_memory_name()
 
@@ -99,7 +89,6 @@
 	.["memorizer"] = memorizer
 	.["story_value"] = story_value
 	.["memory_flags"] = memory_flags
-	.["mood_verb"] = mood_verb
 	.["protagonist_name"] = protagonist_name
 	.["deuteragonist_name"] = deuteragonist_name
 	.["antagonist_name"] = antagonist_name
@@ -123,35 +112,7 @@
 	name = capitalize(pick(potential_names))
 
 /**
- * Selects a mood related verb for the memory.
- *
- * Arguments
- * * story_mood - What mood level should we use to select a verb from?
- */
-/datum/memory/proc/select_mood_verb(story_mood)
-	if(story_mood == MOODLESS_MEMORY)
-		// The protagonist didn't end up having a mood, so just continue on
-		memory_flags |= MEMORY_FLAG_NOMOOD
-		return
-
-	var/list/possible_verbs
-	switch(story_mood)
-		if(MOOD_SAD4 to MOOD_SAD2)
-			possible_verbs = get_sad_moods()
-
-		if(MOOD_SAD2 to MOOD_HAPPY2)
-			possible_verbs = get_neutral_moods()
-
-		if(MOOD_HAPPY2 to MOOD_HAPPY4)
-			possible_verbs = get_happy_moods()
-
-	if(!length(possible_verbs))
-		return
-
-	mood_verb = pick(possible_verbs)
-
-/**
- * Returns a list of names for [proc/select_mood_verb] to select from.
+ * Returns a list of names to select from.
  *
  * This is necessary to implement. Names should be at-a-glance summaries of what the memory entails.
  *
@@ -171,74 +132,12 @@
  *
  * For example: "The Clown cracks his hands and honks his horn as he prepares to do a backflip".
  * You can use any information tidbits in your names to fill them out.
- * If the memory is not [MEMORY_FLAG_NOMOOD], your starts should NOT be puncuated, as a mood phrase will follow.
  * They should also be in the present tense.
  */
 /datum/memory/proc/get_starts()
 	SHOULD_CALL_PARENT(FALSE)
 	stack_trace("[type] didn't have any starts setup, these are necessary if the MEMORY_FLAG_NOSTORY is not set!")
 	return list()
-
-/**
- * Returns a list of mood phrases for the memory.
- *
- * Mood phrases are necessary if [MEMORY_FLAG_NOMOOD] is not set. They are used in making stories out of memories.
- * These are phrases that change in their verbage depending on the mood of the PROTAGONIST at the time of the memory.
- *
- * For example: "The clown grins (this is the mood verb) at the audience.".
- * You can use any information tidbits in your names to fill them out.
- * Mood phrases should be punctated, as they are their own independent clause.
- * Mood phrases should always include the [mood_verb] var, as well.
- */
-/datum/memory/proc/get_moods()
-	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("[type] didn't have any mood phrases, these are necessary if the MEMORY_FLAG_NOMOOD is not set!")
-	return list()
-
-/**
- * Used to select a mood verb if the protagonist is happy for memories that do not have [MEMORY_FLAG_NOMOOD] set.
- */
-/datum/memory/proc/get_happy_moods()
-	return list(
-		"chuckles",
-		"has a huge grin",
-		"has a twisted grin like a maniac",
-		"is silently working away like a pro",
-		"looks determined",
-		"seems cheerful about it all",
-		"seems confident",
-		"whistles to themselves",
-	)
-
-/**
- * Used to select a mood verb if the protagonist is neither happy or sad for memories that do not have [MEMORY_FLAG_NOMOOD] set.
- */
-/datum/memory/proc/get_neutral_moods()
-	return list(
-		"appears clueless",
-		"is darting their eyes around",
-		"is impatient",
-		"is uninterested",
-		"looks around cautiously",
-		"seems a bit sleepy",
-		"seems okay",
-		"works diligently",
-	)
-
-
-/**
- * Used to select a mood verb if the protagonist is sad for memories that do not have [MEMORY_FLAG_NOMOOD] set.
- */
-/datum/memory/proc/get_sad_moods()
-	return list(
-		"appears crushed",
-		"has dried tears on their face",
-		"is complaining loudly",
-		"is having a temper tantrum",
-		"is whiney about it all",
-		"looks angry",
-		"seems sad",
-	)
 
 /**
  * Returns a list of locations for use in stories which do not have [MEMORY_FLAG_NOLOCATION] set.
@@ -312,7 +211,6 @@
 	// These are picked from the datum
 	var/list/wheres = (memory_flags & MEMORY_FLAG_NOLOCATION) ? null : get_locations()
 	var/list/story_starts = get_starts()
-	var/list/story_mood_sentences = (memory_flags & MEMORY_FLAG_NOMOOD) ? null : get_moods()
 	var/mob/living/crew_member
 	var/atom/something = pick(something_pool) //Pick a something for the potential something line
 
@@ -340,9 +238,6 @@
 	//The location it happend, which isn't always included, but commonly is. (E.g. in Space, while in the Bar)
 	if(length(wheres))
 		story_pieces += pick(wheres)
-	//Shows how the protagonist felt about it all (E.g. The Chef is looking sad as they tear into The Clown.)
-	if(length(story_mood_sentences))
-		story_pieces += pick(story_mood_sentences)
 	//A nonsensical addition, using the memorizer, protagonist or even random crew / things (E.g. in the meantime, the Clown is being arrested, clutching a skub.")
 	if(prob(75))
 		var/chosen_addition = pick(somethings)

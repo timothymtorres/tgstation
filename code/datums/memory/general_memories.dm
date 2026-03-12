@@ -26,15 +26,6 @@
 		"[deuteragonist_name] being operated on by [protagonist_name]",
 	)
 
-/datum/memory/surgery/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] after finishing [surgery_type].",
-		"[protagonist_name] [mood_verb] as a blood splatter lands on [protagonist_name]'s face.",
-		"[protagonist_name] [mood_verb] as the [surgery_type] continues.",
-		"[protagonist_name] [mood_verb] as they pick apart [deuteragonist_name].",
-		"[protagonist_name] [mood_verb] as they tear into [deuteragonist_name].",
-	)
-
 /// Planted a bomb.
 /datum/memory/bomb_planted
 	story_value = STORY_VALUE_MEH
@@ -50,17 +41,6 @@
 		"[protagonist_name] slapping down [antagonist_name]",
 		"[antagonist_name] being armed by [protagonist_name]",
 	)
-
-/datum/memory/bomb_planted/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] and begins to walk away from it.",
-		"[protagonist_name] [mood_verb] as it begins to tick.",
-		"[protagonist_name] [mood_verb] with it winding down.",
-		"beep... beep... [protagonist_name] [mood_verb]."
-	)
-
-/datum/memory/bomb_planted/get_happy_moods()
-	return list("feels too cool to look at [antagonist_name]")
 
 /// Planted a SYNDICATE bomb.
 /datum/memory/bomb_planted/syndicate
@@ -100,18 +80,10 @@
 		"[protagonist_name] and [deuteragonist_name] giving each other a [high_five_type]",
 	)
 
-/datum/memory/high_five/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as the [high_five_type] connects.",
-		"[protagonist_name] [mood_verb] at all the compatriotism going on.",
-		"What a [high_five_type]! [protagonist_name] [mood_verb].",
-		"Wow! [protagonist_name] [mood_verb]!",
-	)
-
 /// Was cyborgized.
 /datum/memory/was_cyborged
 	story_value = STORY_VALUE_OKAY
-	memory_flags = MEMORY_FLAG_NOMOOD|MEMORY_SKIP_UNCONSCIOUS
+	memory_flags = MEMORY_SKIP_UNCONSCIOUS
 	// Protagonist - The mind of who was just cyborgized
 
 /datum/memory/was_cyborged/get_names()
@@ -126,7 +98,7 @@
 /// Witnessed someone die nearby.
 /datum/memory/witnessed_death
 	story_value = STORY_VALUE_MEH // this is pretty common on this hellhole
-	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS|MEMORY_FLAG_NOMOOD
+	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
 	// Protagonist - Who died
 
 /datum/memory/witnessed_death/get_names()
@@ -155,13 +127,6 @@
 		"[protagonist_name] getting cream-pied",
 	)
 
-/datum/memory/witnessed_creampie/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as the cream drips off their face",
-		"[protagonist_name] [mood_verb] because of their now expanded laundry task.",
-		"[protagonist_name] [mood_verb] as they lick off some of the pie",
-	)
-
 /// Witnessed someone get splashed with squid ink.
 /datum/memory/witnessed_inking
 	story_value = STORY_VALUE_OKAY
@@ -175,13 +140,6 @@
 	return list(
 		"[protagonist_name]'s face being covered in squid ink",
 		"[protagonist_name] getting squid-inked",
-	)
-
-/datum/memory/witnessed_inking/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as ink drips off their face",
-		"[protagonist_name] [mood_verb] because of their now expanded laundry task.",
-		"[protagonist_name] [mood_verb] as they wipe the ink off their face.",
 	)
 
 /// Got slipped by something.
@@ -199,15 +157,6 @@
 		"[protagonist_name] tumbling right over [antagonist_name]",
 		"[antagonist_name] which took [protagonist_name] down a notch",
 	)
-
-/datum/memory/was_slipped/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as they crawl up from the ground.",
-		"[protagonist_name] [mood_verb] while on the ground.",
-	)
-
-/datum/memory/was_slipped/get_sad_moods()
-	return list("doesn't even want to get up and looks depressed")
 
 /datum/memory/was_slipped/build_story_character(character)
 	// We can slip on turfs, so we should account for it
@@ -232,12 +181,6 @@
 		"[protagonist_name]'s pockets not being able to contain their spaghetti",
 	)
 
-/datum/memory/lost_spaghetti/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as the spaghetti poured out.",
-		"[protagonist_name] [mood_verb] as they try to pick up the scraps.",
-	)
-
 /// Got kissed! AHHHHH!
 /datum/memory/kissed
 	story_value = STORY_VALUE_MEH
@@ -253,12 +196,6 @@
 	return list(
 		"[protagonist_name]'s receiving a blown kiss from [deuteragonist_name]",
 		"[deuteragonist_name] blowing a kiss to [protagonist_name]",
-	)
-
-/datum/memory/kissed/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as the kiss lands on their cheek.",
-		"[protagonist_name] [mood_verb] as it happen.",
 	)
 
 /// Had some good food.
@@ -290,9 +227,6 @@
 		"[protagonist_name] producing a slice of life anime reaction to eating [food]",
 	)
 
-/datum/memory/good_food/get_moods()
-	return list("[protagonist_name] [mood_verb] as they take another bite.")
-
 /// Had a good drink.
 /datum/memory/good_drink
 	story_value = STORY_VALUE_MEH
@@ -321,9 +255,6 @@
 		"[protagonist_name] slurping some tasty [drink]",
 	)
 
-/datum/memory/good_drink/get_moods()
-	return list("[protagonist_name] [mood_verb] as they take another sip.")
-
 /// Was set on fire and started to burn.
 /datum/memory/was_burning
 	story_value = STORY_VALUE_MEH
@@ -338,9 +269,6 @@
 		"[protagonist_name] turning into a human torch",
 		"the fire that engulfed [protagonist_name]",
 	)
-
-/datum/memory/was_burning/get_moods()
-	return list("[protagonist_name] [mood_verb] as their skin melts.")
 
 /// Got a limb removed by force.
 /datum/memory/was_dismembered
@@ -369,12 +297,6 @@
 		"[protagonist_name]'s [lost_limb] flinging away",
 	)
 
-/datum/memory/was_dismembered/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] after losing [lost_limb].",
-		"Without [lost_limb], [protagonist_name] [mood_verb].",
-	)
-
 /// Our pet died...
 /datum/memory/pet_died
 	story_value = STORY_VALUE_AMAZING
@@ -390,12 +312,6 @@
 		"honoring [deuteragonist_name], the station's pet",
 		"[deuteragonist_name]'s funeral, which is attended by a group of crew members",
 		"a shallow hole, with [deuteragonist_name] inside",
-	)
-
-/datum/memory/pet_died/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] without [deuteragonist_name].",
-		"Without [deuteragonist_name], [protagonist_name] [mood_verb].",
 	)
 
 /// The revolution was triumphant!
@@ -416,12 +332,6 @@
 		"a statue of the former captain toppled over, with [protagonist_name] next to it",
 	)
 
-/datum/memory/revolution_rev_victory/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] at the fall of [station_name()].",
-		"[protagonist_name] [mood_verb] at the idea of the new era.",
-	)
-
 /// Given to heads of staff if they lose a revolution and are alive still.
 /datum/memory/revolution_heads_defeated
 	story_value = STORY_VALUE_NONE
@@ -436,12 +346,6 @@
 		"[protagonist_name] fleeing [station_name()] in shame due to the success of the revolution",
 		"[protagonist_name] looking at a camera feed of rampaging revolutionaries",
 		"a poster with [protagonist_name]'s face stratched out",
-	)
-
-/datum/memory/revolution_heads_defeated/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] at the fall of [station_name()].",
-		"[protagonist_name] [mood_verb] at their defeat.",
 	)
 
 /// Given to head revs for failing the revolution!
@@ -459,9 +363,6 @@
 /datum/memory/revolution_rev_defeat/get_starts()
 	return list("[protagonist_name] fleeing [station_name()] in shame due to the failure of their revolution")
 
-/datum/memory/revolution_rev_defeat/get_moods()
-	return list("[protagonist_name] [mood_verb] at their defeat.")
-
 /// Given to heads of staff, and those around them, upon defeating the revolutionaries.
 /datum/memory/revolution_heads_victory
 	story_value = STORY_VALUE_AMAZING // Not as cool as a rev victory. Everyone loves underdog stories
@@ -476,9 +377,6 @@
 		"[protagonist_name] dusting off their hands in victory over the revoution",
 		"the banner of Nanotrasen flying on the bridge of [station_name()] with [protagonist_name] proudly beside it",
 	)
-
-/datum/memory/revolution_rev_defeat/get_moods()
-	return list("[protagonist_name] [mood_verb] over the defeat of the revolution by the hands of Nanotrasen.")
 
 /// Watched someone receive a commendation medal
 /datum/memory/received_medal
@@ -513,12 +411,6 @@
 		"a [medal_type] with the inscription \"[medal_text]\" being awarded to [protagonist_name] by [deuteragonist_name]",
 	)
 
-/datum/memory/received_medal/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as they receive their medal.",
-		"[protagonist_name] [mood_verb] with their newly received award.",
-	)
-
 /// Killed a Megafauna
 /datum/memory/megafauna_slayer
 	story_value = STORY_VALUE_LEGENDARY
@@ -533,12 +425,6 @@
 		"[protagonist_name] performing the final strike on [antagonist_name], taking it down",
 		"[protagonist_name] standing with the head of [antagonist_name] in their hand",
 		"the killing of [antagonist_name], the dangerous megafauna, by [protagonist_name]",
-	)
-
-/datum/memory/megafauna_slayer/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as the blood lust fades from their eyes.",
-		"[protagonist_name] [mood_verb] as they search the corpse for valuables.",
 	)
 
 /// Got held at gunpoint by someone!
@@ -558,16 +444,10 @@
 		"[deuteragonist_name] whipping out [antagonist_name] and pointing it at [protagonist_name]",
 	)
 
-/datum/memory/held_at_gunpoint/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as they are faced with the situation.",
-		"[protagonist_name] [mood_verb] as they stare down [antagonist_name]'s barrel.",
-	)
-
 /// Saw someone get gibbed.
 /datum/memory/witness_gib
 	story_value = STORY_VALUE_OKAY
-	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_FLAG_NOMOOD
+	memory_flags = MEMORY_CHECK_BLINDNESS
 	// Protagonist - Who got gibbed
 
 /datum/memory/witness_gib/get_names()
@@ -596,12 +476,6 @@
 		"the fall of [antagonist_name] onto [protagonist_name]",
 	)
 
-/datum/memory/witness_vendor_crush/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as they lie under the machine.",
-		"[protagonist_name] [mood_verb] as a goodie falls out of the [antagonist_name]."
-	)
-
 /// Saw someone get dusted by the supermatter.
 /datum/memory/witness_supermatter_dusting
 	story_value = STORY_VALUE_AMAZING
@@ -617,12 +491,6 @@
 		"[protagonist_name] turning into a pile of bones after touching the [antagonist_name]",
 		"The [antagonist_name] turning [protagonist_name] into ash",
 		"The dusting of [protagonist_name] after they got too close to the [antagonist_name]",
-	)
-
-/datum/memory/witness_supermatter_dusting/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as they faded way.",
-		"[protagonist_name] [mood_verb] as they are reduced to atoms.",
 	)
 
 /// Played cards with another person.
@@ -670,13 +538,6 @@
 		"[deuteragonist_name] starts shuffling the deck for the [game]",
 	)
 
-/datum/memory/playing_cards/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as they hold the [protagonist_held_card] for the [game].",
-		"[protagonist_name] [mood_verb] as they pickup the [protagonist_held_card].",
-		"[protagonist_name] [mood_verb] as they put down the [protagonist_held_card].",
-	)
-
 /// Played 52 card pickup with another person.
 /datum/memory/playing_card_pickup
 	story_value = STORY_VALUE_OKAY
@@ -692,12 +553,6 @@
 	return list(
 		"[protagonist_name] tossing the [antagonist_name] at [deuteragonist_name] spilling cards all over the floor",
 		"A [antagonist_name] thrown by [protagonist_name] splatters across [deuteragonist_name] face",
-	)
-
-/datum/memory/playing_card_pickup/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as they taunt [deuteragonist_name].",
-		"[deuteragonist_name] [mood_verb] as they shamefully pickup the cards.",
 	)
 
 /// Saw someone play Russian Roulette.
@@ -743,9 +598,6 @@
 		"[protagonist_name] is gambling their life as they spin the revolver.",
 	)
 
-/datum/memory/witnessed_russian_roulette/get_moods()
-	return list("[protagonist_name] [mood_verb] as they [result] the deadly game of roulette.")
-
 /// When a heretic finishes their ritual of knowledge
 /datum/memory/heretic_knowledge_ritual
 	story_value = STORY_VALUE_AMAZING
@@ -764,18 +616,6 @@
 		"a wide, strange looking circle, with [protagonist_name] sketching it"
 	)
 
-/datum/memory/heretic_knowledge_ritual/get_moods()
-	return list("[protagonist_name] [mood_verb] as their hand glows with power.")
-
-/datum/memory/heretic_knowledge_ritual/get_happy_moods()
-	return list("cackling madly")
-
-/datum/memory/heretic_knowledge_ritual/get_neutral_moods()
-	return list("staring blankly with a wide grin")
-
-/datum/memory/heretic_knowledge_ritual/get_sad_moods()
-	return list("cackling insanely")
-
 /// Failed to defuse a bomb, by triggering it early.
 /datum/memory/bomb_defuse_failure
 	story_value = STORY_VALUE_NONE // Anyone who gets this is probably dead
@@ -792,9 +632,6 @@
 		"[protagonist_name] sweating nervously and shielding their face as [antagonist_name] makes a loud noise",
 		"The clock on [antagonist_name] suddenly jumping to 0 seconds"
 	)
-
-/datum/memory/bomb_defuse_failure/get_moods()
-	return list("[protagonist_name] [mood_verb] as they snip a wire on [antagonist_name].")
 
 /// Succeeded in defusing a bomb!
 /datum/memory/bomb_defuse_success
@@ -824,10 +661,6 @@
 		"[protagonist_name] sweating nervously and shielding their face as [antagonist_name] makes a shrill beep",
 		"The clock on [antagonist_name] stopping at [bomb_time_left]"
 	)
-
-/datum/memory/bomb_defuse_success/get_moods()
-	return list("[protagonist_name] [mood_verb] as they snip a wire on [antagonist_name].")
-
 
 /datum/memory/helped_up
 	story_value = STORY_VALUE_OKAY
@@ -860,16 +693,6 @@
 		"a whole lot of fishing going on",
 	)
 
-/datum/memory/caught_fish/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as a [deuteragonist_name] flies out of the water!",
-		"[protagonist_name] [mood_verb] as they catch a [deuteragonist_name]!",
-		"[protagonist_name] [mood_verb] as they pose holding a [deuteragonist_name]!",
-	)
-
-/datum/memory/caught_fish/get_sad_moods()
-	return list("partakes in therapy fishing")
-
 /// Becoming a mutant via infusion
 /datum/memory/dna_infusion
 	story_value = STORY_VALUE_MEH
@@ -899,31 +722,6 @@
 		"the DNA infuser closes with [protagonist_name] inside",
 		"a [deuteragonist_name] is in the infusion slot"
 	)
-
-/datum/memory/dna_infusion/get_moods()
-	return list(
-		"[protagonist_name] [mood_verb] as they infuse with a [deuteragonist_name]!",
-		"[protagonist_name] [mood_verb] as they become one the [deuteragonist_name].",
-		"[protagonist_name] [mood_verb] as their DNA has [deuteragonist_name] folded into it.",
-		"[protagonist_name] becomes more [mutantlike] as they infuse with a [deuteragonist_name]!",
-		"[protagonist_name] becomes more [mutantlike] as they become one the [deuteragonist_name].",
-		"[protagonist_name] becomes more [mutantlike] as their DNA has [deuteragonist_name] folded into it.",
-	)
-
-/datum/memory/dna_infusion/get_happy_moods()
-	return list(
-		"endures the pain for science",
-		"confidently winces through the pain"
-	)
-
-/datum/memory/dna_infusion/get_neutral_moods()
-	return list(
-		"screams with pain",
-		"begins to have second thoughts"
-	)
-
-/datum/memory/dna_infusion/get_sad_moods()
-	return list("bitterly rejects their humanity")
 
 /// Who rev'd me, so if a mindreader reads a rev, they have a clue on who to hunt down
 /datum/memory/recruited_by_headrev
@@ -969,28 +767,4 @@
 		"[protagonist_name] burns [deuteragonist_name], and [antagonist_name] turns [protagonist_name] into a fine red mist.",
 		"[antagonist_name] explodes [protagonist_name] into a million pieces for defiling [deuteragonist_name].",
 		"[protagonist_name] angers [antagonist_name] by defiling [deuteragonist_name], and gets obliterated.",
-	)
-
-/datum/memory/witnessed_gods_wrath/get_moods()
-	return list("[protagonist_name] [mood_verb] as they get annihilated by [antagonist_name].")
-
-/datum/memory/witnessed_gods_wrath/get_happy_moods()
-	return list(
-		"cackles hysterically",
-		"laughs maniacally",
-		"grins widely",
-	)
-
-/datum/memory/witnessed_gods_wrath/get_neutral_moods()
-	return list(
-		"appears concerned",
-		"reconsiders their life decisions",
-		"has a blank expression",
-	)
-
-/datum/memory/witnessed_gods_wrath/get_sad_moods()
-	return list(
-		"appears dejected",
-		"is filled with regret",
-		"winces in despair"
 	)

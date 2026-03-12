@@ -6,7 +6,7 @@
  */
 /datum/memory/key
 	story_value = STORY_VALUE_KEY
-	memory_flags = MEMORY_FLAG_NOMOOD|MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS
+	memory_flags = MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS
 
 /// Your bank account ID, can't get into it without it
 /datum/memory/key/account
@@ -80,7 +80,7 @@
 
 /// Tracks what medicines someone with the "allergies" quirk is allergic to
 /datum/memory/key/quirk_allergy
-	memory_flags = MEMORY_FLAG_NOMOOD|MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS|MEMORY_NO_STORY // No story for this
+	memory_flags = MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS|MEMORY_NO_STORY // No story for this
 	var/allergy_string
 
 /datum/memory/key/quirk_allergy/New(
@@ -148,9 +148,6 @@
 		"[protagonist_name] fiending for some [preferred_brand] ciggies.",
 	)
 
-/datum/memory/key/quirk_smoker/get_moods()
-	return list("[memorizer] [mood_verb] as they light another up.")
-
 /// Tracks what beverage an alcoholic quirk user likes
 /datum/memory/key/quirk_alcoholic
 	memory_flags = MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS // Does not have nomood
@@ -175,9 +172,6 @@
 		"[protagonist_name] buying a box of [preferred_brandy] bottles.",
 		"[protagonist_name] fiending for some [preferred_brandy].",
 	)
-
-/datum/memory/key/quirk_alcoholic/get_moods()
-	return list("[memorizer] [mood_verb] as they drink some [preferred_brandy].")
 
 /// Where our traitor uplink is, and what is its code
 /datum/memory/key/traitor_uplink
