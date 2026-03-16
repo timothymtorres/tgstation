@@ -38,12 +38,14 @@
 	var/where
 
 /datum/memory
+	/// The formal name of the incident as a noun - ex. "prank" or "assassination"
+	var/event_name
 	/// The root form of the action verb - ex. "slip" or "shoot"
 	var/verb_root
 	/// The gerund form of the action verb - ex. "slipping" or "shooting"
 	var/verb_ing
-	/// The formal name of the incident as a noun - ex. "prank" or "assassination"
-	var/event_name
+	/// The preposition linking the verb to the target or item (e.g., "on", "with", "using").
+	var/verb_preposition
 	/// The main character who initiated the memory
 	var/character
 	/// The recipient of the action. Can be a mob or object (optional)
