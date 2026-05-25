@@ -1,6 +1,6 @@
 /obj/item/organ/alien
 	icon_state = "acid"
-	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/acid = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/acid = 10)
 
 /obj/item/organ/alien/plasmavessel
 	name = "plasma vessel"
@@ -337,7 +337,7 @@
 		var/datum/reagents/acid_reagents = new /datum/reagents(5)
 		acid.reagents = acid_reagents
 		acid_reagents.my_atom = acid
-		acid_reagents.add_reagent(/datum/reagent/toxin/acid, 30)
+		acid_reagents.add_reagent(/datum/reagent/acid, 30)
 		acid.move_at(my_target, particle_delay, spit_range)
 
 	return ejected

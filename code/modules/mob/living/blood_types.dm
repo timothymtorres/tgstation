@@ -303,7 +303,7 @@
 	desc = "An incredibly potent mineral acid, somehow capable of carrying oxygen."
 	dna_string = "Alien DNA"
 	color = BLOOD_COLOR_XENO
-	reagent_type = /datum/reagent/toxin/acid
+	reagent_type = /datum/reagent/acid
 	// Viruses cannot survive in acid
 	blood_flags = BLOOD_ADD_DNA | BLOOD_COVER_ALL
 

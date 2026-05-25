@@ -8,7 +8,7 @@
 	dna_cost = 2
 	req_human = TRUE
 	disabled_by_fire = FALSE
-	var/static/bio_acid_path = /datum/reagent/toxin/acid/bio_acid
+	var/static/bio_acid_path = /datum/reagent/acid/bio_acid
 	var/static/bio_acid_amount_per_spray = 6
 	var/static/bio_acid_color = "#9455ff"
 

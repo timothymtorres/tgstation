@@ -35,7 +35,7 @@
 		/datum/reagent/stable_plasma,
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/sulfur,
-		/datum/reagent/toxin/acid,
+		/datum/reagent/acid,
 		/datum/reagent/water,
 		/datum/reagent/fuel,
 	)
@@ -195,15 +195,15 @@
 	desc = "Can generate all the tasty plumbing chems that make mining more profitable or destructive."
 
 	var/static/list/mining_chems = list(
-		/datum/reagent/toxin/acid,
-		/datum/reagent/toxin/acid/fluacid,
-		/datum/reagent/toxin/acid/nitracid,
+		/datum/reagent/acid,
+		/datum/reagent/acid/fluacid,
+		/datum/reagent/acid/nitracid,
 		/datum/reagent/teslium,
 		/datum/reagent/fuel,
 		/datum/reagent/thermite,
 		/datum/reagent/gunpowder,
 		/datum/reagent/liquid_dark_matter,
-		/datum/reagent/toxin/acid/industrial_waste,
+		/datum/reagent/acid/industrial_waste,
 	)
 
 /obj/machinery/plumbing/synthesizer/mining/Initialize(mapload, layer)

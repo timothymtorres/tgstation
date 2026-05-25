@@ -14,7 +14,7 @@
 	/// Reagents that can be selected
 	var/list/reagents = list(
 		/datum/reagent/water,
-		/datum/reagent/toxin/acid,
+		/datum/reagent/acid,
 		/datum/reagent/consumable/salt,
 		/datum/reagent/uranium/radium,
 	)

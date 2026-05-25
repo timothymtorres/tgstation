@@ -46,7 +46,7 @@
 	connector_type = "leadacid"
 
 /obj/item/stock_parts/power_store/cell/lead/grind_results()
-	return list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)
+	return list(/datum/reagent/lead = 15, /datum/reagent/acid = 15, /datum/reagent/water = 20)
 
 //starts partially discharged
 /obj/item/stock_parts/power_store/cell/lead/Initialize(mapload)

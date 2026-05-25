@@ -11,7 +11,7 @@
 	circuit = /obj/item/circuitboard/machine/refinery
 	usage_sound = 'sound/machines/mining/refinery.ogg'
 	action = "crushing"
-	waste_chemical = /datum/reagent/toxin/acid/industrial_waste
+	waste_chemical = /datum/reagent/acid/industrial_waste
 	pixel_y = 1
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
@@ -33,9 +33,9 @@
 	var/static/list/booster_reagents
 	if(!length(booster_reagents))
 		booster_reagents = list(
-			/datum/reagent/toxin/acid = 1,
-			/datum/reagent/toxin/acid/fluacid = 2,
-			/datum/reagent/toxin/acid/nitracid = 3,
+			/datum/reagent/acid = 1,
+			/datum/reagent/acid/fluacid = 2,
+			/datum/reagent/acid/nitracid = 3,
 			/datum/reagent/teslium = 5,
 		)
 	return booster_reagents

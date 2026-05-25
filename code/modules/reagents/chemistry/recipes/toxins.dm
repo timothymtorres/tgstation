@@ -80,8 +80,8 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/facid
-	results = list(/datum/reagent/toxin/acid/fluacid = 4)
-	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/fluorine = 1, /datum/reagent/hydrogen = 1, /datum/reagent/potassium = 1)
+	results = list(/datum/reagent/acid/fluacid = 4)
+	required_reagents = list(/datum/reagent/acid = 1, /datum/reagent/fluorine = 1, /datum/reagent/hydrogen = 1, /datum/reagent/potassium = 1)
 	mix_message = "The mixture bubbles fiercly."
 	is_cold_recipe = FALSE
 	required_temp = 380
@@ -100,8 +100,8 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_PLANT | REACTION_TAG_BURN | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/nitracid
-	results = list(/datum/reagent/toxin/acid/nitracid = 2)
-	required_reagents = list(/datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/nitrogen = 1,  /datum/reagent/hydrogen_peroxide = 1)
+	results = list(/datum/reagent/acid/nitracid = 2)
+	required_reagents = list(/datum/reagent/acid/fluacid = 1, /datum/reagent/nitrogen = 1,  /datum/reagent/hydrogen_peroxide = 1)
 	mix_message = "The mixture bubbles fiercly and gives off a pungent smell."
 	is_cold_recipe = FALSE
 	required_temp = 480

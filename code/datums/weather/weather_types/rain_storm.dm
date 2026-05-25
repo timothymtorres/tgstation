@@ -91,9 +91,9 @@
 
 	// these are weighted by acidpwr which causes more damage the higher it is
 	whitelist_weather_reagents = list(
-		/datum/reagent/toxin/acid/nitracid = 3,
-		/datum/reagent/toxin/acid = 2,
-		/datum/reagent/toxin/acid/fluacid = 1,
+		/datum/reagent/acid/nitracid = 3,
+		/datum/reagent/acid = 2,
+		/datum/reagent/acid/fluacid = 1,
 	)
 	probability = 0
 
@@ -153,9 +153,9 @@
 		/datum/reagent/toxin/polonium, // radiation
 		/datum/reagent/toxin/mutagen,
 		// all the acids
-		/datum/reagent/toxin/acid,
-		/datum/reagent/toxin/acid/fluacid,
-		/datum/reagent/toxin/acid/nitracid,
+		/datum/reagent/acid,
+		/datum/reagent/acid/fluacid,
+		/datum/reagent/acid/nitracid,
 		// include a random toxin
 		pick(subtypesof(/datum/reagent/toxin)),
 	)

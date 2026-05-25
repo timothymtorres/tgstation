@@ -124,7 +124,7 @@
 	web_speed = 0.25
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	poison_per_bite = 2
-	poison_type = /datum/reagent/toxin/acid
+	poison_type = /datum/reagent/acid
 
 /mob/living/basic/spider/growing/young/tangle/Initialize(mapload)
 	. = ..()

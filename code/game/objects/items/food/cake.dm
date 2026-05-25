@@ -507,7 +507,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
-		/datum/reagent/toxin/acid = 15,
+		/datum/reagent/acid = 15,
 		/datum/reagent/fuel/oil = 15,
 	)
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
@@ -523,7 +523,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
-		/datum/reagent/toxin/acid = 3,
+		/datum/reagent/acid = 3,
 		/datum/reagent/fuel/oil = 3,
 	)
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)

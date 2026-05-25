@@ -153,7 +153,7 @@
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/circuitboard = 2,
-		/datum/reagent/toxin/acid = 5
+		/datum/reagent/acid = 5
 	)
 	result = /obj/item/food/cake/hardware_cake
 	added_foodtypes = GROSS

@@ -96,7 +96,7 @@
 	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
 
 /obj/item/soap/syndie/grind_results()
-	return list(/datum/reagent/toxin/acid = 10, /datum/reagent/lye = 10)
+	return list(/datum/reagent/acid = 10, /datum/reagent/lye = 10)
 
 /obj/item/soap/drone
 	name = "\improper integrated soap module"
@@ -124,7 +124,7 @@
 		/datum/reagent/consumable/ethanol/lizardwine = 9,
 		/datum/reagent/monkey_powder = 9,
 		/datum/reagent/drug/krokodil = 9,
-		/datum/reagent/toxin/acid/nitracid = 9,
+		/datum/reagent/acid/nitracid = 9,
 		/datum/reagent/baldium = 9,
 		/datum/reagent/consumable/ethanol/hooch = 9,
 		/datum/reagent/bluespace = 9,

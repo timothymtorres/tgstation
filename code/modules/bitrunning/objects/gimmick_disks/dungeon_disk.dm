@@ -55,7 +55,7 @@
 		/datum/reagent/stable_plasma,
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/sulfur,
-		/datum/reagent/toxin/acid,
+		/datum/reagent/acid,
 		/datum/reagent/water,
 		/datum/reagent/fuel,
 		/datum/reagent/toxin/leadacetate, // Funny chems

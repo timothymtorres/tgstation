@@ -144,7 +144,7 @@
 
 /datum/chemical_reaction/medicine/sal_acid
 	results = list(/datum/reagent/medicine/sal_acid = 5)
-	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/acid = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/medicine/oxandrolone
@@ -167,7 +167,7 @@
 
 /datum/chemical_reaction/medicine/salbutamol_to_albuterol
 	results = list(/datum/reagent/medicine/albuterol = 4, /datum/reagent/medicine/sal_acid = 0.5, /datum/reagent/ammonia = 0.5)
-	required_catalysts = list(/datum/reagent/toxin/acid = 1)
+	required_catalysts = list(/datum/reagent/acid = 1)
 	required_reagents = list(/datum/reagent/medicine/salbutamol = 5, /datum/reagent/medicine/c2/convermol = 1)
 	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
 	required_temp = 500
@@ -179,7 +179,7 @@
 
 /datum/chemical_reaction/medicine/albuterol_to_salbutamol
 	results = list(/datum/reagent/medicine/salbutamol = 2, /datum/reagent/ammonia = 1)
-	required_catalysts = list(/datum/reagent/toxin/acid = 1)
+	required_catalysts = list(/datum/reagent/acid = 1)
 	required_reagents = list(/datum/reagent/medicine/albuterol = 3, /datum/reagent/oxygen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
 	required_temp = 300
@@ -189,7 +189,7 @@
 
 /datum/chemical_reaction/medicine/albuterol_to_convermol
 	results = list(/datum/reagent/medicine/c2/convermol = 1, /datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3)
-	required_catalysts = list(/datum/reagent/toxin/acid/fluacid = 1)
+	required_catalysts = list(/datum/reagent/acid/fluacid = 1)
 	required_reagents = list(/datum/reagent/medicine/albuterol = 5)
 	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
 	required_temp = 900
@@ -235,7 +235,7 @@
 
 /datum/chemical_reaction/medicine/atropine
 	results = list(/datum/reagent/medicine/atropine = 5)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/acetone = 1, /datum/reagent/diethylamine = 1, /datum/reagent/phenol = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/acetone = 1, /datum/reagent/diethylamine = 1, /datum/reagent/phenol = 1, /datum/reagent/acid = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE |REACTION_TAG_BURN | REACTION_TAG_TOXIN | REACTION_TAG_OXY
 
 /datum/chemical_reaction/medicine/epinephrine
@@ -381,7 +381,7 @@
 
 /datum/chemical_reaction/medicine/modafinil
 	results = list(/datum/reagent/medicine/modafinil = 5)
-	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/ammonia = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/ammonia = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone = 1, /datum/reagent/acid = 1)
 	required_catalysts = list(/datum/reagent/bromine = 1) // as close to the real world synthesis as possible
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
@@ -392,7 +392,7 @@
 
 /datum/chemical_reaction/medicine/granibitaluri
 	results = list(/datum/reagent/medicine/granibitaluri = 3)
-	required_reagents = list(/datum/reagent/consumable/salt = 1, /datum/reagent/carbon = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/consumable/salt = 1, /datum/reagent/carbon = 1, /datum/reagent/acid = 1)
 	required_catalysts = list(/datum/reagent/iron = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_BURN
 

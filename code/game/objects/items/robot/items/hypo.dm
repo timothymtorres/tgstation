@@ -21,7 +21,7 @@
 	)
 #define HACKED_MEDICAL_REAGENTS list(\
 		/datum/reagent/toxin/cyanide,\
-		/datum/reagent/toxin/acid/fluacid,\
+		/datum/reagent/acid/fluacid,\
 		/datum/reagent/toxin/heparin,\
 		/datum/reagent/toxin/lexorin,\
 		/datum/reagent/toxin/mutetoxin,\

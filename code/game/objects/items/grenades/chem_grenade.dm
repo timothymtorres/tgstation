@@ -431,7 +431,7 @@
 
 	beaker_one.reagents.add_reagent(/datum/reagent/aluminium, 30)
 	beaker_two.reagents.add_reagent(/datum/reagent/foaming_agent, 10)
-	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
+	beaker_two.reagents.add_reagent(/datum/reagent/acid/fluacid, 10)
 
 	beakers += beaker_one
 	beakers += beaker_two
@@ -449,7 +449,7 @@
 
 	beaker_one.reagents.add_reagent(/datum/reagent/aluminium, 75)
 	beaker_two.reagents.add_reagent(/datum/reagent/smart_foaming_agent, 25)
-	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/acid/fluacid, 25)
 
 	beakers += beaker_one
 	beakers += beaker_two
@@ -467,7 +467,7 @@
 
 	beaker_one.reagents.add_reagent(/datum/reagent/phosphorus, 25)
 	beaker_two.reagents.add_reagent(/datum/reagent/stable_plasma, 25)
-	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/acid, 25)
 
 	beakers += beaker_one
 	beakers += beaker_two
@@ -562,11 +562,11 @@
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_two = new(src)
 
-	beaker_one.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 290)
+	beaker_one.reagents.add_reagent(/datum/reagent/acid/fluacid, 290)
 	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 10)
 	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 10)
 	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 10)
-	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 280)
+	beaker_two.reagents.add_reagent(/datum/reagent/acid/fluacid, 280)
 
 	beakers += beaker_one
 	beakers += beaker_two

@@ -7,7 +7,7 @@
 	light_power = 1
 	beauty = -300
 	clean_type = CLEAN_TYPE_ACID
-	decal_reagent = /datum/reagent/toxin/acid/industrial_waste
+	decal_reagent = /datum/reagent/acid/industrial_waste
 	reagent_amount = 5
 	alpha = 0
 	color = "#bebebe8e"

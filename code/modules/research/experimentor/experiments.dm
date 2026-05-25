@@ -158,7 +158,7 @@
 		chosenchem = pick(
 			/datum/reagent/mutationtoxin/classic,
 			/datum/reagent/cyborg_mutation_nanomachines,
-			/datum/reagent/toxin/acid,
+			/datum/reagent/acid,
 		)
 		do_chem_smoke(0, machine, machine.loc, chosenchem, 50)
 		playsound(machine, 'sound/effects/smoke.ogg', 50, TRUE, -3)
