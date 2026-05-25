@@ -1,5 +1,8 @@
 //////////////////////////Acids///////////////////////
 
+/// Trait source for the temporary ageusia (loss of taste) inflicted by drinking acid.
+#define ACID_TONGUE_AGEUSIA_TRAIT "acid_tongue_melt"
+
 /datum/reagent/acid
 	name = "Sulfuric Acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
@@ -51,7 +54,8 @@
  * Only ever called on the initial ingestion (see expose_mob), never while the acid sits in the
  * stomach, so spiking someone's drink at the bar can leave an assassination target unable to
  * speak or scream once enough acid has passed their lips. Stronger acids and larger mouthfuls
- * melt the tongue faster; once it's fully eaten through it dissolves entirely.
+ * slur speech, kill the sense of taste for longer, and melt the tongue faster - once it's fully
+ * eaten through it dissolves entirely, leaving the victim mute.
  *
  * Arguments:
  * * victim - the carbon mob who just swallowed some of us
@@ -61,29 +65,34 @@
 	if(acid_damage <= 0)
 		return // harmless acids (e.g. neutralised bio-acid) don't melt anything
 
-	// no tongue means there's nothing to melt
 	var/obj/item/organ/tongue/melting_tongue = victim.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(isnull(melting_tongue))
+		return // no tongue, nothing to melt
+
+	// only flesh-and-blood tongues melt. robotic voiceboxes and mineral golem "tongues" shrug
+	// the acid off entirely, which is what lets rock golems and IPCs drink acid safely.
+	if(!IS_ORGANIC_ORGAN(melting_tongue))
 		return
 
-	// robotic/augmented tongues are made of sterner stuff than flesh
-	if(!(melting_tongue.organ_flags & ORGAN_ORGANIC))
-		return
+	// stronger acids and bigger mouthfuls chew through the tongue (and the senses it provides) faster
+	var/melt_power = acid_damage * reac_volume
+	var/effect_duration = melt_power SECONDS
 
-	// the head has to be made of something acid actually eats through. this is what lets rock
-	// golems (and any other inorganic bodytype) shrug it off, mirroring our burn damage check.
-	var/obj/item/bodypart/head/head = victim.get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(head) || !(head.bodytype & affected_bodytype))
-		return
+	// a scorched tongue makes for slurred speech...
+	victim.adjust_slurring(effect_duration)
+	// ...and a deadened sense of taste for a while, scaling with how badly it got burned
+	ADD_TRAIT(victim, TRAIT_AGEUSIA, ACID_TONGUE_AGEUSIA_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(victim, TRAIT_AGEUSIA, ACID_TONGUE_AGEUSIA_TRAIT), effect_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	// stronger acids and bigger mouthfuls chew through the tongue faster
-	var/melt_power = acid_damage * reac_volume * ACID_TONGUE_MELT_MULTIPLIER
 	melting_tongue.apply_organ_damage(melt_power)
+
+	// drinking acid HURTS - scream regardless of whether the tongue survives this particular gulp
+	victim.emote("scream")
+	playsound(victim, SFX_SEAR, 50, TRUE)
 
 	// not fully melted yet - just a horrible burn and a warning
 	if(melting_tongue.damage < melting_tongue.maxHealth)
 		to_chat(victim, span_userdanger("Your [melting_tongue.name] burns horribly as you swallow [name]!"))
-		playsound(victim, SFX_SEAR, 50, TRUE)
 		return
 
 	// fully melted - dissolve the tongue entirely, leaving the victim mute
@@ -91,7 +100,6 @@
 		span_warning("[victim]'s [melting_tongue.name] sizzles and dissolves into a puff of acrid smoke!"),
 		span_userdanger("Your [melting_tongue.name] dissolves into nothing as [name] sears straight through it!"),
 	)
-	playsound(victim, SFX_SEAR, 80, TRUE)
 	melting_tongue.Remove(victim)
 	qdel(melting_tongue)
 
@@ -249,3 +257,4 @@
 	volume = round(volume/2, 0.01)
 
 #undef CRITICAL_CAPACITY
+#undef ACID_TONGUE_AGEUSIA_TRAIT
