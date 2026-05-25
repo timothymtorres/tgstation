@@ -35,6 +35,8 @@
 	if(liver && HAS_TRAIT(liver, TRAIT_HUMAN_AI_METABOLISM))
 		return
 	reac_volume = round(reac_volume,0.1)
+	if(methods & INGEST)
+		try_melt_tongue(exposed_carbon, reac_volume)
 	if(methods & (INGEST|INHALE))
 		exposed_carbon.adjust_fire_loss(min(6*acid_damage, reac_volume * acid_damage), required_bodytype = affected_bodytype)
 		return
@@ -42,6 +44,56 @@
 		exposed_carbon.adjust_fire_loss(1.5 * min(6*acid_damage, reac_volume * acid_damage), required_bodytype = affected_bodytype)
 		return
 	exposed_carbon.acid_act(acidpwr, reac_volume)
+
+/**
+ * Tries to melt the tongue off a mob that just drank or ate this acid.
+ *
+ * Only ever called on the initial ingestion (see expose_mob), never while the acid sits in the
+ * stomach, so spiking someone's drink at the bar can leave an assassination target unable to
+ * speak or scream once enough acid has passed their lips. Stronger acids and larger mouthfuls
+ * melt the tongue faster; once it's fully eaten through it dissolves entirely.
+ *
+ * Arguments:
+ * * victim - the carbon mob who just swallowed some of us
+ * * reac_volume - how much of us was swallowed this gulp
+ */
+/datum/reagent/acid/proc/try_melt_tongue(mob/living/carbon/victim, reac_volume)
+	if(acid_damage <= 0)
+		return // harmless acids (e.g. neutralised bio-acid) don't melt anything
+
+	// no tongue means there's nothing to melt
+	var/obj/item/organ/tongue/melting_tongue = victim.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(isnull(melting_tongue))
+		return
+
+	// robotic/augmented tongues are made of sterner stuff than flesh
+	if(!(melting_tongue.organ_flags & ORGAN_ORGANIC))
+		return
+
+	// the head has to be made of something acid actually eats through. this is what lets rock
+	// golems (and any other inorganic bodytype) shrug it off, mirroring our burn damage check.
+	var/obj/item/bodypart/head/head = victim.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head) || !(head.bodytype & affected_bodytype))
+		return
+
+	// stronger acids and bigger mouthfuls chew through the tongue faster
+	var/melt_power = acid_damage * reac_volume * ACID_TONGUE_MELT_MULTIPLIER
+	melting_tongue.apply_organ_damage(melt_power)
+
+	// not fully melted yet - just a horrible burn and a warning
+	if(melting_tongue.damage < melting_tongue.maxHealth)
+		to_chat(victim, span_userdanger("Your [melting_tongue.name] burns horribly as you swallow [name]!"))
+		playsound(victim, SFX_SEAR, 50, TRUE)
+		return
+
+	// fully melted - dissolve the tongue entirely, leaving the victim mute
+	victim.visible_message(
+		span_warning("[victim]'s [melting_tongue.name] sizzles and dissolves into a puff of acrid smoke!"),
+		span_userdanger("Your [melting_tongue.name] dissolves into nothing as [name] sears straight through it!"),
+	)
+	playsound(victim, SFX_SEAR, 80, TRUE)
+	melting_tongue.Remove(victim)
+	qdel(melting_tongue)
 
 /datum/reagent/acid/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
