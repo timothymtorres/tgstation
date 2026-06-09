@@ -209,7 +209,6 @@
 /obj/structure/closet/crate/engineering/electrical{
 	name = "solar panel crate - #30";
 	obj_flags = 8421402;
-	name = "solar panel crate - #30";
 	icon_state = "engi_e_crateopen";
 	opened = 1
 	},
@@ -1177,7 +1176,6 @@
 	name = "solar panel crate - #31";
 	dir = 8;
 	obj_flags = 8421402;
-	name = "solar panel crate - #31";
 	icon_state = "engi_e_crateopen";
 	opened = 1
 	},
@@ -1381,7 +1379,6 @@
 	req_access = list();
 	valve_open = 1;
 	release_pressure = 2533;
-	name = "Air canister";
 	desc = "Pre-mixed air.";
 	icon_state = "/obj/machinery/portable_atmospherics/canister/air";
 	base_icon_state = "/obj/machinery/portable_atmospherics/canister/air";
@@ -1886,8 +1883,7 @@
 /obj/item/clothing/neck/petcollar,
 /obj/structure/closet/crate/critter{
 	name = "exotic corgi crate";
-	obj_flags = 10;
-	name = "exotic corgi crate"
+	obj_flags = 10
 	},
 /turf/open/space/basic,
 /area/station/solars/port/aft)
@@ -2558,7 +2554,6 @@
 	name = "religious supplies crate";
 	dir = 4;
 	obj_flags = 8388638;
-	name = "religious supplies crate";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -2838,8 +2833,7 @@
 "aeO" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/carpet/purple{
 	initial_gas_mix = "o2=1421.3;n2=415.8;TEMP=34.3"
@@ -2848,8 +2842,7 @@
 "aeP" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/carpet/purple{
 	initial_gas_mix = "n2=407.6;o2=1385.8;TEMP=34.3"
@@ -2881,10 +2874,6 @@
 /area/station/service/chapel)
 "aeT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_nDfAPvBzCSrk"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4{
 	persistence_pipe_id = "persistencegas_nDfAPvBzCSrk"
 	},
@@ -3356,8 +3345,7 @@
 	},
 /obj/machinery/door/airlock/hatch{
 	name = "Airlock";
-	req_access = list("library");
-	name = "Airlock"
+	req_access = list("library")
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -4121,8 +4109,7 @@
 "ahl" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
@@ -4497,8 +4484,7 @@
 "ahX" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -4510,8 +4496,7 @@
 "ahY" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/wood,
 /area/station/hallway/primary/starboard)
@@ -4724,8 +4709,7 @@
 "aiv" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/carpet/lone{
 	initial_gas_mix = "o2=31.8;n2=80.7;TEMP=254.3"
@@ -4800,8 +4784,7 @@
 "aiD" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "dark connector port";
-	pipe_color = "#454545";
-	name = "dark connector port"
+	pipe_color = "#454545"
 	},
 /obj/machinery/portable_atmospherics/canister/bz{
 	initial_gas_mix = "TEMP=0";
@@ -4814,8 +4797,7 @@
 "aiE" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "dark gas pump";
-	pipe_color = "#454545";
-	name = "dark gas pump"
+	pipe_color = "#454545"
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -4823,10 +4805,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/plasma/fulltile{
 	dir = 10
-	},
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "o2=0.6;n2=2.3;TEMP=293.2";
-	id_filter = "persistencegas_KD7206LFt4xd"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible{
 	persistence_pipe_id = "persistencegas_KD7206LFt4xd"
@@ -4837,8 +4815,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "dark passive vent";
 	dir = 1;
-	pipe_color = "#454545";
-	name = "dark passive vent"
+	pipe_color = "#454545"
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -4889,8 +4866,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/wood{
 	initial_gas_mix = "o2=13.5;n2=50.4;TEMP=168.8"
@@ -4909,8 +4885,7 @@
 /obj/effect/mapping_helpers/airlock/welded,
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=197.1"
@@ -5005,8 +4980,7 @@
 "aiY" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -5034,8 +5008,7 @@
 "ajb" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -5047,8 +5020,7 @@
 "ajc" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/wood{
 	initial_gas_mix = "o2=17.7;n2=65.9;TEMP=262.9"
@@ -5163,8 +5135,7 @@
 	name = "pink passive vent";
 	dir = 4;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
@@ -5245,8 +5216,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/carpet/blue,
 /area/station/commons/locker)
@@ -5267,10 +5237,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "o2=32.4;n2=120.5;co2=0.1;TEMP=293.1";
-	id_filter = "persistencegas_fIqDer8AYOms"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden/layer5{
 	persistence_pipe_id = "persistencegas_fIqDer8AYOms"
 	},
@@ -5280,7 +5246,6 @@
 /obj/structure/plaque{
 	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������Owned By";
 	pixel_y = -32;
-	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������Owned By";
 	desc = "The plaque reads: 'Quiet'";
 	engraved = 1
 	},
@@ -5444,7 +5409,6 @@
 	name = "���������������������������������������������������������������������������������TGP Test 2";
 	dir = 1;
 	pixel_y = 32;
-	name = "���������������������������������������������������������������������������������TGP Test 2";
 	desc = "The plaque reads: 'Just another check to see if it works'";
 	engraved = 1
 	},
@@ -5462,8 +5426,7 @@
 	name = "pink passive vent";
 	dir = 1;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/carpet/blue,
 /area/station/commons/locker)
@@ -6003,8 +5966,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/carpet/cyan,
 /area/station/commons/locker)
@@ -6035,7 +5997,6 @@
 /obj/structure/plaque{
 	name = "���������������������������Quiet Test 3";
 	pixel_y = -32;
-	name = "���������������������������Quiet Test 3";
 	desc = "The plaque reads: 'testing TGP saving'";
 	engraved = 1
 	},
@@ -6248,8 +6209,7 @@
 	name = "pink passive vent";
 	dir = 1;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/carpet/cyan,
 /area/station/commons/locker)
@@ -6624,8 +6584,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/carpet/green,
 /area/station/commons/locker)
@@ -6669,7 +6628,6 @@
 	pixel_y = 5
 	},
 /obj/item/borg/upgrade/modkit/chassis_mod/orange,
-/obj/item/borg/upgrade/modkit/aoe/turfs,
 /obj/item/borg/upgrade/modkit/cooldown,
 /obj/item/borg/upgrade/modkit/cooldown,
 /obj/item/borg/upgrade/modkit/cooldown,
@@ -7107,7 +7065,6 @@
 	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������TGP Test";
 	dir = 1;
 	pixel_y = 32;
-	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������TGP Test";
 	desc = "The plaque reads: 'Is this working? I hope so'";
 	engraved = 1
 	},
@@ -7126,8 +7083,7 @@
 	dir = 1;
 	pixel_x = 10;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/plating,
 /area/station/commons/locker)
@@ -7835,10 +7791,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_YzqzGKs9ZMwg"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2{
 	persistence_pipe_id = "persistencegas_YzqzGKs9ZMwg"
 	},
@@ -7879,8 +7831,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/carpet/orange,
 /area/station/commons/locker)
@@ -7909,7 +7860,6 @@
 /obj/structure/plaque{
 	name = "���������TGP test num 5 or 4 idk";
 	pixel_y = -32;
-	name = "���������TGP test num 5 or 4 idk";
 	desc = "The plaque reads: 'meowth'";
 	engraved = 1
 	},
@@ -8226,8 +8176,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood{
 	name = "dried pool of blood";
@@ -8287,7 +8236,6 @@
 	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������not a meow mix copycat";
 	dir = 1;
 	pixel_y = 32;
-	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������not a meow mix copycat";
 	desc = "The plaque reads: 'but really thou'";
 	engraved = 1
 	},
@@ -8298,8 +8246,7 @@
 	name = "pink passive vent";
 	dir = 1;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/carpet/orange,
 /area/station/commons/locker)
@@ -8370,8 +8317,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -8413,7 +8359,6 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	name = "omni Temperature control unit";
 	dir = 4;
-	name = "omni Temperature control unit";
 	target_temperature = 73.15
 	},
 /turf/open/floor/iron,
@@ -8851,10 +8796,6 @@
 	},
 /area/station/maintenance/department/science/xenobiology)
 "aoC" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "o2=0.1;n2=0.2;TEMP=77.5";
-	id_filter = "persistencegas_VrIHrVrDxDAQ"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	persistence_pipe_id = "persistencegas_VrIHrVrDxDAQ"
 	},
@@ -8977,8 +8918,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /obj/item/clothing/glasses/meson{
 	pixel_x = -2;
@@ -9715,7 +9655,6 @@
 /obj/structure/plaque{
 	name = "�another TGP test x2";
 	pixel_y = -32;
-	name = "�another TGP test x2";
 	desc = "The plaque reads: 'welll well well if it isn&#39;t my old friend wifebus'";
 	engraved = 1
 	},
@@ -9795,8 +9734,7 @@
 "apa" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "omni passive vent";
-	dir = 8;
-	name = "omni passive vent"
+	dir = 8
 	},
 /turf/open/floor/iron{
 	initial_gas_mix = "o2=2.6;n2=8.5;TEMP=77.5"
@@ -9943,7 +9881,6 @@
 	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������meow mix";
 	dir = 1;
 	pixel_y = 32;
-	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������meow mix";
 	desc = "The plaque reads: 'test for the test'";
 	engraved = 1
 	},
@@ -9954,8 +9891,7 @@
 	name = "pink passive vent";
 	dir = 1;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/carpet/purple,
 /area/station/commons/locker)
@@ -10197,8 +10133,7 @@
 "apB" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -10439,8 +10374,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /obj/item/swapper{
 	dir = 1;
@@ -10686,7 +10620,6 @@
 /obj/structure/plaque{
 	name = "���TGP test ultimate";
 	pixel_y = -32;
-	name = "���TGP test ultimate";
 	desc = "The plaque reads: 'The ULTIMATE test live or die'";
 	engraved = 1
 	},
@@ -12452,7 +12385,6 @@
 	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������Thaeli";
 	dir = 1;
 	pixel_y = 32;
-	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������Thaeli";
 	desc = "The plaque reads: '((CKEY Perel))'";
 	engraved = 1
 	},
@@ -12476,8 +12408,7 @@
 	name = "pink passive vent";
 	dir = 1;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /obj/item/stock_parts/power_store/cell/bluespace/empty{
 	pixel_x = 5;
@@ -12709,8 +12640,7 @@
 	name = "pink passive vent";
 	dir = 8;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
@@ -12963,8 +12893,7 @@
 "arq" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -12974,8 +12903,7 @@
 "arr" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/wood,
 /area/station/commons/locker)
@@ -13154,8 +13082,7 @@
 "arE" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "high security airlock";
-	req_access = list();
-	name = "high security airlock"
+	req_access = list()
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -13454,8 +13381,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "high security airlock";
 	dir = 1;
-	req_access = list();
-	name = "high security airlock"
+	req_access = list()
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/starboard)
@@ -13543,8 +13469,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -13940,7 +13865,6 @@
 	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������Ready-Donk crate - #605";
 	dir = 4;
 	obj_flags = 8388638;
-	name = "���������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������Ready-Donk crate - #605";
 	icon_state = "donkcocrateopen";
 	opened = 1
 	},
@@ -14510,8 +14434,7 @@
 "atn" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -14761,8 +14684,7 @@
 "atK" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -15073,8 +14995,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/noslip,
@@ -15212,7 +15133,6 @@
 	name = "goody crate - purchased by Davion Welty";
 	dir = 8;
 	obj_flags = 8388618;
-	name = "goody crate - purchased by Davion Welty";
 	icon_state = "privatecrateopen";
 	opened = 1;
 	locked = 0
@@ -15634,10 +15554,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "o2=17.1;n2=63.8;co2=0.1;TEMP=293.2";
-	id_filter = "persistencegas_IzURwHPS01IQ"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden/layer5{
 	persistence_pipe_id = "persistencegas_IzURwHPS01IQ"
 	},
@@ -15653,8 +15569,7 @@
 	name = "pink passive vent";
 	dir = 1;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -15704,8 +15619,7 @@
 "avc" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "red connector port";
-	pipe_color = "#FF0000";
-	name = "red connector port"
+	pipe_color = "#FF0000"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -15718,14 +15632,12 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "red gas pump";
 	dir = 1;
-	pipe_color = "#FF0000";
-	name = "red gas pump"
+	pipe_color = "#FF0000"
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "ave" = (
 /obj/machinery/atmospherics/components/binary/tank_compressor{
-	name = "omni Tank Compressor";
 	name = "omni Tank Compressor"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -15737,7 +15649,6 @@
 	dir = 1;
 	pipe_color = "#00FF00";
 	on = 1;
-	name = "green gas pump";
 	target_pressure = 4500
 	},
 /obj/machinery/camera/autoname/directional/west{
@@ -15762,7 +15673,6 @@
 	dir = 1;
 	pipe_color = "#00FF00";
 	on = 1;
-	name = "green gas mixer";
 	target_pressure = 4500;
 	node1_concentration = 1;
 	node2_concentration = 0
@@ -15773,8 +15683,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "green connector port";
 	dir = 1;
-	pipe_color = "#00FF00";
-	name = "green connector port"
+	pipe_color = "#00FF00"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen{
 	initial_gas_mix = "TEMP=0";
@@ -15970,8 +15879,7 @@
 "avm" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -15981,8 +15889,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -16152,8 +16059,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -16225,8 +16131,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "green connector port";
 	dir = 8;
-	pipe_color = "#00FF00";
-	name = "green connector port"
+	pipe_color = "#00FF00"
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
@@ -16375,7 +16280,6 @@
 /obj/structure/closet/crate{
 	name = "janitorial supplies crate";
 	obj_flags = 8388638;
-	name = "janitorial supplies crate";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -16583,8 +16487,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden/layer5,
@@ -16593,8 +16496,7 @@
 "avX" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/noslip,
 /area/station/commons/dorms)
@@ -16638,8 +16540,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "yellow connector port";
 	dir = 4;
-	pipe_color = "#FFFF00";
-	name = "yellow connector port"
+	pipe_color = "#FFFF00"
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
@@ -16655,8 +16556,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "yellow connector port";
 	dir = 4;
-	pipe_color = "#FFFF00";
-	name = "yellow connector port"
+	pipe_color = "#FFFF00"
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
@@ -17554,8 +17454,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "yellow gas pump";
 	dir = 4;
-	pipe_color = "#FFFF00";
-	name = "yellow gas pump"
+	pipe_color = "#FFFF00"
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
@@ -17993,8 +17892,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/noslip,
 /area/station/commons/dorms)
@@ -18048,8 +17946,7 @@
 "awW" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -18110,8 +18007,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "yellow connector port";
 	dir = 8;
-	pipe_color = "#FFFF00";
-	name = "yellow connector port"
+	pipe_color = "#FFFF00"
 	},
 /obj/machinery/portable_atmospherics/canister{
 	initial_gas_mix = "TEMP=0";
@@ -18125,8 +18021,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "yellow connector port";
 	dir = 8;
-	pipe_color = "#FFFF00";
-	name = "yellow connector port"
+	pipe_color = "#FFFF00"
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
@@ -18421,8 +18316,7 @@
 /obj/structure/closet/crate/wooden{
 	name = "art supply crate - #6041";
 	dir = 4;
-	obj_flags = 8388638;
-	name = "art supply crate - #6041"
+	obj_flags = 8388638
 	},
 /turf/open/floor/iron/terracotta/small,
 /area/station/commons/dorms)
@@ -18629,7 +18523,6 @@
 	name = "food crate";
 	dir = 8;
 	obj_flags = 8388618;
-	name = "food crate";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -18821,8 +18714,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "pink passive vent";
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/mineral/silver,
 /area/station/commons/dorms)
@@ -18838,8 +18730,7 @@
 	name = "pink passive vent";
 	dir = 1;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/mineral/silver,
 /area/station/commons/dorms)
@@ -19067,7 +18958,6 @@
 	name = "plasma assembly crate";
 	req_access = list("ordnance");
 	obj_flags = 8388618;
-	name = "plasma assembly crate";
 	icon_state = "plasmacrateopen";
 	opened = 1;
 	locked = 0
@@ -19106,7 +18996,6 @@
 	persistent_components = list(/obj/item/stock_parts/matter_bin/bluespace, /obj/item/stock_parts/matter_bin/bluespace, /obj/item/stock_parts/micro_laser/quadultra, /obj/item/stock_parts/micro_laser/quadultra);
 	name = "omni Temperature control unit";
 	dir = 8;
-	name = "omni Temperature control unit";
 	target_temperature = 2.7
 	},
 /turf/open/floor/iron,
@@ -19114,8 +19003,7 @@
 "aye" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "green connector port";
-	pipe_color = "#00FF00";
-	name = "green connector port"
+	pipe_color = "#00FF00"
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
@@ -19124,7 +19012,6 @@
 	persistent_components = list(/obj/item/stock_parts/matter_bin/bluespace, /obj/item/stock_parts/matter_bin/bluespace, /obj/item/stock_parts/micro_laser/quadultra, /obj/item/stock_parts/micro_laser/quadultra);
 	name = "omni Temperature control unit";
 	dir = 1;
-	name = "omni Temperature control unit";
 	target_temperature = 1413.15
 	},
 /turf/open/floor/iron,
@@ -19227,7 +19114,6 @@
 	name = "food crate";
 	dir = 1;
 	obj_flags = 8388618;
-	name = "food crate";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -19499,7 +19385,6 @@
 	name = "food crate";
 	dir = 4;
 	obj_flags = 8388618;
-	name = "food crate";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -19738,7 +19623,6 @@
 	name = "food crate";
 	dir = 4;
 	obj_flags = 8388618;
-	name = "food crate";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -20077,8 +19961,7 @@
 "ayO" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -20310,17 +20193,9 @@
 /turf/open/floor/glass/reinforced/plasma,
 /area/station/engineering/hallway)
 "azg" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/glass/reinforced/plasma,
 /area/station/engineering/hallway)
 "azh" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
 	color = "#2c2c2c";
@@ -20332,8 +20207,7 @@
 "azi" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/reinforced,
@@ -20567,14 +20441,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"azB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/turf/open/floor/glass/reinforced/plasma,
-/area/station/engineering/hallway)
 "azC" = (
 /obj/item/assembly/control{
 	save_container_child_id = "4f8s0";
@@ -20589,10 +20455,6 @@
 	color = "#2c2c2c";
 	icon_state = "floor7";
 	base_icon_state = "floor7"
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/glass/reinforced/plasma,
 /area/station/engineering/hallway)
@@ -20858,8 +20720,7 @@
 "azW" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "AI Core";
-	req_access = list("ai_upload");
-	name = "AI Core"
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
@@ -20917,10 +20778,6 @@
 /obj/structure/sign/warning/test_chamber{
 	pixel_y = 32
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
 	icon_state = "stand_clear";
@@ -20939,10 +20796,6 @@
 	dir = 4;
 	panel_open = 1;
 	id = "7"
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -20976,10 +20829,6 @@
 	icon_state = "floor6";
 	base_icon_state = "floor6"
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
 	icon_state = "stand_clear";
@@ -21000,8 +20849,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/plating,
 /area/station/service/janitor)
@@ -21481,8 +21329,7 @@
 "aAy" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -21690,10 +21537,6 @@
 	dir = 1;
 	status = 2
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/corner,
 /area/station/engineering/hallway)
 "aAM" = (
@@ -21702,10 +21545,6 @@
 	color = "#2c2c2c";
 	icon_state = "floor4";
 	base_icon_state = "floor4"
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/edge,
 /area/station/engineering/hallway)
@@ -21720,10 +21559,6 @@
 /obj/machinery/button{
 	save_container_parent_id = "b6vgG";
 	pixel_y = -24
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/corner,
 /area/station/engineering/hallway)
@@ -21821,8 +21656,7 @@
 "aAY" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -21967,8 +21801,7 @@
 "aBh" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "AI Core";
-	req_access = list("ai_upload");
-	name = "AI Core"
+	req_access = list("ai_upload")
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/old{
@@ -22129,10 +21962,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/hallway)
 "aBx" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -22146,17 +21975,9 @@
 /area/station/engineering/hallway)
 "aBy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aBz" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/edge,
 /area/station/engineering/hallway)
 "aBA" = (
@@ -22647,8 +22468,7 @@
 "aCj" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering B";
-	req_access = list();
-	name = "Engineering B"
+	req_access = list()
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -22664,10 +22484,6 @@
 "aCk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /mob/living/basic/spider/giant{
 	name = "giant spider (528) (472) (246) (864) (868) (439) (330) (909) (115)";
@@ -22685,17 +22501,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aCm" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/edge,
 /area/station/engineering/hallway)
@@ -23056,8 +22864,7 @@
 "aCN" = (
 /obj/machinery/door/airlock/command{
 	name = "CE Office";
-	req_access = list("ce");
-	name = "CE Office"
+	req_access = list("ce")
 	},
 /obj/effect/decal/cleanable/ants,
 /obj/effect/decal/cleanable/dirt,
@@ -23086,8 +22893,7 @@
 	},
 /obj/machinery/door/airlock/command/glass{
 	name = "CE Office";
-	req_access = list("ce");
-	name = "CE Office"
+	req_access = list("ce")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil{
@@ -23152,10 +22958,6 @@
 /area/station/maintenance/department/engine)
 "aCX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
 	color = "#2c2c2c";
@@ -23176,10 +22978,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aCZ" = (
@@ -23192,10 +22990,6 @@
 	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -23587,10 +23381,6 @@
 	dir = 1;
 	status = 2
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
 	color = "#2c2c2c";
@@ -23617,10 +23407,6 @@
 	icon_state = "floor7";
 	base_icon_state = "floor7"
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aDA" = (
@@ -23629,10 +23415,6 @@
 	},
 /obj/structure/sign/departments/custodian_alt{
 	pixel_y = -32
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -23951,8 +23733,7 @@
 /obj/machinery/door/airlock/vault{
 	name = "AI Chamber";
 	dir = 8;
-	req_access = list("ai_upload");
-	name = "AI Chamber"
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=2.2;o2=108.5;TEMP=291.6"
@@ -23962,8 +23743,7 @@
 /obj/machinery/door/airlock/vault{
 	name = "AI Chamber";
 	dir = 8;
-	req_access = list("ai_upload");
-	name = "AI Chamber"
+	req_access = list("ai_upload")
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/old{
@@ -24074,8 +23854,7 @@
 "aEc" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
@@ -24163,8 +23942,7 @@
 "aEj" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -24192,10 +23970,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -24219,10 +23993,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/ants,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
@@ -24236,10 +24006,6 @@
 	base_icon_state = "floor6";
 	bloodiness = 0;
 	dried = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -24500,10 +24266,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_K5jQXOOfPpEh"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2{
 	persistence_pipe_id = "persistencegas_K5jQXOOfPpEh"
 	},
@@ -24553,8 +24315,7 @@
 	name = "pink passive vent";
 	dir = 8;
 	piping_layer = 5;
-	pipe_color = "#FF3CC8";
-	name = "pink passive vent"
+	pipe_color = "#FF3CC8"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -24738,7 +24499,6 @@
 	dir = 1;
 	req_access = list("ce");
 	obj_flags = 8388638;
-	name = "supermatter shard crate";
 	icon_state = "radiation_secureopen";
 	opened = 1;
 	locked = 0
@@ -24942,10 +24702,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -24975,10 +24731,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aFq" = (
@@ -24995,10 +24747,6 @@
 	base_icon_state = "floor4";
 	bloodiness = 0;
 	dried = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -25050,8 +24798,7 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/fore)
@@ -25156,8 +24903,7 @@
 "aFK" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Upload";
-	req_access = list("ai_upload");
-	name = "AI Upload"
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/plating,
 /area/station/ai/upload/chamber)
@@ -25170,8 +24916,7 @@
 "aFM" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "AI Upload Antechamber";
-	req_access = list("ai_upload");
-	name = "AI Upload Antechamber"
+	req_access = list("ai_upload")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -25190,7 +24935,6 @@
 /obj/structure/closet/crate/engineering{
 	name = "shield sat crate";
 	obj_flags = 8388638;
-	name = "shield sat crate";
 	icon_state = "engi_crateopen";
 	opened = 1
 	},
@@ -25222,10 +24966,6 @@
 	},
 /area/station/engineering/supermatter)
 "aFR" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "o2=163.3;plasma=9.5;co2=12.6;pluoxium=10.7;water_vapor=7.8;TEMP=7042.2";
-	id_filter = "persistencegas_ImwgaJMzxnXG"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible{
 	persistence_pipe_id = "persistencegas_ImwgaJMzxnXG"
 	},
@@ -25433,10 +25173,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aGg" = (
@@ -25450,10 +25186,6 @@
 	base_icon_state = "floor1";
 	bloodiness = 0;
 	dried = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
@@ -25474,10 +25206,6 @@
 	dir = 4;
 	icon_state = "gib6";
 	base_icon_state = "gib6"
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -25502,10 +25230,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -25524,10 +25248,6 @@
 	base_icon_state = "floor3";
 	bloodiness = 0;
 	dried = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -25557,10 +25277,6 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
 	color = "#2c2c2c";
@@ -25579,10 +25295,6 @@
 /obj/machinery/light/directional/west{
 	status = 2
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -25594,10 +25306,6 @@
 	},
 /area/station/engineering/hallway)
 "aGm" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -25616,10 +25324,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -25636,10 +25340,6 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -25654,10 +25354,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	filter_types = list(/datum/gas/carbon_dioxide)
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "trimline_warn_fill";
 	alpha = 110;
@@ -25670,10 +25366,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 50;
@@ -25685,10 +25377,6 @@
 	},
 /area/station/engineering/hallway)
 "aGr" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
 "aGs" = (
@@ -25696,19 +25384,11 @@
 	dir = 4;
 	external_pressure_bound = 303.975
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central/fore)
 "aGt" = (
 /obj/machinery/light/directional/west{
 	status = 2
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
@@ -25716,10 +25396,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4;
 	filter_types = list(/datum/gas/carbon_dioxide)
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central/fore)
@@ -25731,27 +25407,15 @@
 	locked = 0
 	},
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
 "aGw" = (
 /obj/machinery/door/airlock/public/glass,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood,
 /area/station/hallway/primary/central/fore)
 "aGx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
@@ -25769,10 +25433,6 @@
 	pixel_x = -32;
 	pixel_y = -7
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
 "aGz" = (
@@ -25782,10 +25442,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
 "aGA" = (
@@ -25916,8 +25572,7 @@
 "aGN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -25957,8 +25612,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Upload";
 	dir = 4;
-	req_access = list("ai_upload");
-	name = "AI Upload"
+	req_access = list("ai_upload")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -25987,16 +25641,8 @@
 /area/station/ai/satellite/interior)
 "aGV" = (
 /obj/structure/cable,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_ZQKtvHsxSRKQ"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2{
 	persistence_pipe_id = "persistencegas_ZQKtvHsxSRKQ"
-	},
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_l6OqTgvdbuSd"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4{
 	persistence_pipe_id = "persistencegas_l6OqTgvdbuSd"
@@ -26086,7 +25732,6 @@
 /area/station/ai/satellite/interior)
 "aHd" = (
 /obj/machinery/door/airlock/external{
-	name = "Airlock";
 	name = "Airlock"
 	},
 /turf/open/floor/plating{
@@ -26108,7 +25753,6 @@
 	color = "#da00ff";
 	pixel_x = -6;
 	pixel_y = 8;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -26117,7 +25761,6 @@
 	color = "#da00ff";
 	pixel_x = 10;
 	pixel_y = 7;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -26126,7 +25769,6 @@
 	color = "#da00ff";
 	pixel_x = -7;
 	pixel_y = -6;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -26135,7 +25777,6 @@
 	color = "#da00ff";
 	pixel_x = 8;
 	pixel_y = -5;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -26144,7 +25785,6 @@
 	color = "#da00ff";
 	pixel_x = 1;
 	pixel_y = 6;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -26174,7 +25814,6 @@
 	color = "#ff0000";
 	pixel_x = -8;
 	pixel_y = 8;
-	name = "letter";
 	icon_state = "u";
 	paint_colour = "#FF0000"
 	},
@@ -26183,7 +25822,6 @@
 	color = "#ff0000";
 	pixel_x = 4;
 	pixel_y = 9;
-	name = "letter";
 	icon_state = "n";
 	paint_colour = "#FF0000"
 	},
@@ -26203,7 +25841,6 @@
 	name = "omni Temperature control unit";
 	dir = 1;
 	on = 1;
-	name = "omni Temperature control unit";
 	target_temperature = 2.7
 	},
 /obj/effect/decal/cleanable/blood/oil{
@@ -26410,10 +26047,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aHt" = (
@@ -26426,10 +26059,6 @@
 	base_icon_state = "floor3";
 	bloodiness = 0;
 	dried = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -26447,10 +26076,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aHv" = (
@@ -26467,10 +26092,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aHw" = (
@@ -26486,10 +26107,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aHx" = (
@@ -26499,10 +26116,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
@@ -26512,10 +26125,6 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/junction/flip,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aHz" = (
@@ -26527,10 +26136,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil{
@@ -26547,10 +26152,6 @@
 /obj/machinery/navbeacon,
 /obj/structure/disposalpipe/junction,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aHB" = (
@@ -26561,10 +26162,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aHC" = (
@@ -26573,10 +26170,6 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
@@ -26587,10 +26180,6 @@
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/disposalpipe/segment{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -26607,10 +26196,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
 "aHF" = (
@@ -26622,10 +26207,6 @@
 	},
 /obj/machinery/holopad{
 	req_access = list("keycard_auth")
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
@@ -26650,10 +26231,6 @@
 	dir = 5
 	},
 /obj/structure/rack,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
 "aHI" = (
@@ -26671,10 +26248,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
@@ -26720,10 +26293,6 @@
 /obj/structure/cable,
 /obj/structure/railing{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
@@ -26949,7 +26518,6 @@
 	color = "#ff0000";
 	pixel_x = -12;
 	pixel_y = 9;
-	name = "letter";
 	icon_state = "r";
 	paint_colour = "#FF0000"
 	},
@@ -26958,7 +26526,6 @@
 	color = "#ff0000";
 	pixel_x = -2;
 	pixel_y = 8;
-	name = "letter";
 	icon_state = "e";
 	paint_colour = "#FF0000"
 	},
@@ -26967,7 +26534,6 @@
 	color = "#ff0000";
 	pixel_x = 8;
 	pixel_y = 9;
-	name = "letter";
 	icon_state = "l";
 	paint_colour = "#FF0000"
 	},
@@ -26976,7 +26542,6 @@
 	color = "#ff0000";
 	pixel_x = -14;
 	pixel_y = 6;
-	name = "letter";
 	icon_state = "i";
 	paint_colour = "#FF0000"
 	},
@@ -26995,7 +26560,6 @@
 	name = "omni Temperature control unit";
 	dir = 1;
 	on = 1;
-	name = "omni Temperature control unit";
 	target_temperature = 2.7
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -27026,7 +26590,6 @@
 	piping_layer = 1;
 	pipe_color = "#FFFF00";
 	on = 1;
-	name = "yellow gas filter";
 	filter_type = list(/datum/gas/nitrogen, /datum/gas/nitrous_oxide)
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
@@ -27197,10 +26760,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aIy" = (
@@ -27215,10 +26774,6 @@
 	base_icon_state = "floor5";
 	bloodiness = 0;
 	dried = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
@@ -27236,10 +26791,6 @@
 	base_icon_state = "floor2";
 	bloodiness = 0;
 	dried = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -27265,10 +26816,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
 	color = "#2c2c2c";
@@ -27293,10 +26840,6 @@
 	base_icon_state = "floor1";
 	bloodiness = 0;
 	dried = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -27324,10 +26867,6 @@
 	camera_enabled = 0
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "trimline_warn_fill";
 	alpha = 110;
@@ -27342,10 +26881,6 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
@@ -27376,10 +26911,6 @@
 /area/station/engineering/hallway)
 "aIF" = (
 /obj/machinery/piratepad/civilian,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -27399,10 +26930,6 @@
 	color = "#2c2c2c";
 	icon_state = "floor3";
 	base_icon_state = "floor3"
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -27430,10 +26957,6 @@
 /area/station/engineering/hallway)
 "aII" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
 	color = "#2c2c2c";
@@ -27467,20 +26990,12 @@
 /obj/machinery/light/directional/east{
 	status = 2
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
 "aIL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8;
 	filter_types = list(/datum/gas/carbon_dioxide)
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central/fore)
@@ -27489,10 +27004,6 @@
 	network = list("ss13");
 	camera_enabled = 0
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
 "aIN" = (
@@ -27500,20 +27011,12 @@
 	dir = 4;
 	pixel_x = 29
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
 "aIO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8;
 	external_pressure_bound = 303.975
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central/fore)
@@ -27527,10 +27030,6 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/wood/tile,
 /area/station/hallway/primary/central/fore)
 "aIQ" = (
@@ -27550,10 +27049,6 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
 "aIS" = (
@@ -27567,10 +27062,6 @@
 /obj/structure/sign/directions/medical/directional/east{
 	pixel_y = 7
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
 "aIT" = (
@@ -27578,19 +27069,11 @@
 	status = 2
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_CTrbihnBGi7W"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2{
 	persistence_pipe_id = "persistencegas_CTrbihnBGi7W"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/entry)
 "aIU" = (
@@ -27700,8 +27183,7 @@
 "aJh" = (
 /obj/machinery/door/airlock/hatch{
 	name = "AI Sat Inner";
-	req_access = list("minisat");
-	name = "AI Sat Inner"
+	req_access = list("minisat")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
@@ -27821,8 +27303,7 @@
 "aJu" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "yellow passive vent";
-	pipe_color = "#FFFF00";
-	name = "yellow passive vent"
+	pipe_color = "#FFFF00"
 	},
 /obj/machinery/power/supermatter_crystal/shard,
 /obj/effect/decal/cleanable/dirt,
@@ -27841,7 +27322,6 @@
 	color = "#ff0000";
 	pixel_x = -13;
 	pixel_y = 7;
-	name = "letter";
 	icon_state = "a";
 	paint_colour = "#FF0000"
 	},
@@ -27861,7 +27341,6 @@
 	name = "omni Temperature control unit";
 	dir = 1;
 	on = 1;
-	name = "omni Temperature control unit";
 	target_temperature = 2.7
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -27923,16 +27402,11 @@
 	piping_layer = 2;
 	pipe_color = "#FFFF00";
 	on = 1;
-	name = "yellow gas filter";
 	filter_type = list(/datum/gas/nitrogen, /datum/gas/nitrous_oxide)
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer5,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "o2=97.9;plasma=4.5;co2=8.5;pluoxium=6.5;water_vapor=5;TEMP=7956.4";
-	id_filter = "persistencegas_jAFXWC5npyud"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer1{
 	persistence_pipe_id = "persistencegas_jAFXWC5npyud"
 	},
@@ -28041,10 +27515,6 @@
 	},
 /area/station/engineering/hallway)
 "aJI" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "aJJ" = (
@@ -28053,10 +27523,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
@@ -28106,10 +27572,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/airlock/public/glass,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 50;
@@ -28613,7 +28075,6 @@
 /area/station/ai/satellite/interior)
 "aKk" = (
 /obj/machinery/door/airlock/external{
-	name = "Airlock";
 	name = "Airlock"
 	},
 /obj/effect/decal/cleanable/blood/oil/slippery{
@@ -28684,7 +28145,6 @@
 	name = "omni Temperature control unit";
 	dir = 1;
 	on = 1;
-	name = "omni Temperature control unit";
 	target_temperature = 73.15
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -28718,7 +28178,6 @@
 	dir = 4;
 	pipe_color = "#FFFF00";
 	on = 1;
-	name = "yellow gas filter";
 	filter_type = list(/datum/gas/nitrogen, /datum/gas/nitrous_oxide)
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer4,
@@ -28853,10 +28312,6 @@
 	dir = 4;
 	external_pressure_bound = 303.975
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/large,
 /area/station/engineering/hallway)
@@ -28871,10 +28326,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -29094,10 +28545,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 50;
@@ -29113,10 +28560,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -29129,10 +28572,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -29145,10 +28584,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -29158,10 +28593,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aKR" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -29171,10 +28602,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aKS" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -29187,26 +28614,6 @@
 /area/station/hallway/primary/central)
 "aKT" = (
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_corner";
-	alpha = 50;
-	dir = 8;
-	color = "#d4d4d4"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
-"aKU" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -29331,7 +28738,6 @@
 	name = "Big band musical instruments collection - #7128";
 	dir = 8;
 	obj_flags = 8388638;
-	name = "Big band musical instruments collection - #7128";
 	icon_state = "woodenopen";
 	opened = 1
 	},
@@ -29384,7 +28790,6 @@
 	name = "party equipment crate - #22";
 	dir = 8;
 	obj_flags = 8421402;
-	name = "party equipment crate - #22";
 	icon_state = "hydrocrateopen";
 	base_icon_state = "hydrocrate";
 	opened = 1
@@ -29621,7 +29026,6 @@
 	name = "omni Temperature control unit";
 	dir = 1;
 	on = 1;
-	name = "omni Temperature control unit";
 	target_temperature = 2.7
 	},
 /obj/effect/decal/cleanable/blood/oil{
@@ -29641,7 +29045,6 @@
 	piping_layer = 4;
 	pipe_color = "#FFFF00";
 	on = 1;
-	name = "yellow gas filter";
 	filter_type = list(/datum/gas/nitrogen, /datum/gas/nitrous_oxide)
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer5,
@@ -29838,10 +29241,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
 	color = "#2c2c2c";
@@ -29859,10 +29258,6 @@
 	},
 /obj/machinery/light{
 	status = 2
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -29991,19 +29386,6 @@
 /obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/iron/dark/small,
 /area/station/service/kitchen)
-"aMf" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_corner";
-	alpha = 50;
-	dir = 4;
-	color = "#d4d4d4"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "aMg" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -30011,26 +29393,14 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aMh" = (
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aMi" = (
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -30042,10 +29412,6 @@
 "aMj" = (
 /obj/machinery/light/directional/east,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -30060,10 +29426,6 @@
 	dir = 4;
 	pixel_x = 32
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -30076,10 +29438,6 @@
 /obj/machinery/light/directional/east{
 	status = 2
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -30091,10 +29449,6 @@
 "aMm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "box_white"
@@ -30275,8 +29629,7 @@
 	},
 /obj/machinery/door/airlock/hatch{
 	name = "AI Sat Utility";
-	req_access = list("minisat");
-	name = "AI Sat Utility"
+	req_access = list("minisat")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
@@ -30321,8 +29674,7 @@
 	},
 /obj/machinery/door/airlock/hatch{
 	name = "Telecommunications";
-	req_access = list("tcomms");
-	name = "Telecommunications"
+	req_access = list("tcomms")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
@@ -30342,8 +29694,7 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Telecommunications";
 	req_access = list("tcomms");
-	emergency = 1;
-	name = "Telecommunications"
+	emergency = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
@@ -30389,7 +29740,6 @@
 /area/station/ai/satellite/interior)
 "aMS" = (
 /obj/machinery/door/airlock/hatch{
-	name = "AI Sattelite Entrance";
 	name = "AI Sattelite Entrance"
 	},
 /obj/structure/cable,
@@ -30481,8 +29831,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "omni volumetric gas pump";
 	dir = 1;
-	on = 1;
-	name = "omni volumetric gas pump"
+	on = 1
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -30497,8 +29846,7 @@
 "aNc" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "omni connector port";
-	dir = 1;
-	name = "omni connector port"
+	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen{
 	initial_gas_mix = "TEMP=0";
@@ -30519,7 +29867,6 @@
 	piping_layer = 5;
 	pipe_color = "#FFFF00";
 	on = 1;
-	name = "yellow gas filter";
 	filter_type = list(/datum/gas/nitrogen, /datum/gas/nitrous_oxide)
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer4,
@@ -30791,20 +30138,12 @@
 	icon_state = "floor6";
 	base_icon_state = "floor6"
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/large,
 /area/station/engineering/hallway)
 "aNp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
@@ -30950,17 +30289,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/service/kitchen)
-"aNA" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "box_white"
-	},
-/turf/open/floor/iron/large,
-/area/station/hallway/primary/central)
 "aNB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30968,26 +30296,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
-/area/station/hallway/primary/central)
-"aNC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
-	dir = 1;
-	filter_types = list(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/water_vapor, /datum/gas/hypernoblium, /datum/gas/nitrous_oxide, /datum/gas/nitrium, /datum/gas/tritium, /datum/gas/bz, /datum/gas/miasma, /datum/gas/freon, /datum/gas/hydrogen, /datum/gas/healium, /datum/gas/proto_nitrate, /datum/gas/zauker, /datum/gas/halon, /datum/gas/helium, /datum/gas/antinoblium);
-	widenet = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "box_white"
-	},
-/turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "aND" = (
 /turf/closed/wall/r_wall,
@@ -30998,8 +30307,7 @@
 "aNF" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Gateway";
-	req_access = list();
-	name = "Gateway"
+	req_access = list()
 	},
 /turf/open/floor/iron,
 /area/station/command/gateway)
@@ -31011,8 +30319,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator";
 	req_access = list("engineering");
-	emergency = 1;
-	name = "Gravity Generator"
+	emergency = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -31137,8 +30444,7 @@
 "aNU" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron,
 /area/station/service/bar)
@@ -31339,8 +30645,7 @@
 	dir = 4;
 	pixel_y = -10;
 	piping_layer = 1;
-	pipe_color = "#FF0000";
-	name = "red passive vent"
+	pipe_color = "#FF0000"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=0.4;TEMP=2.7"
@@ -31351,8 +30656,7 @@
 	name = "red passive vent";
 	pixel_x = -10;
 	piping_layer = 1;
-	pipe_color = "#FF0000";
-	name = "red passive vent"
+	pipe_color = "#FF0000"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=0.4;TEMP=2.7"
@@ -31599,8 +30903,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -31742,10 +31045,6 @@
 /obj/machinery/camera/autoname/directional/north{
 	network = list()
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -31780,16 +31079,8 @@
 /area/station/engineering/gravity_generator)
 "aOU" = (
 /obj/structure/cable,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_lSWauKi3Hefu"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2{
 	persistence_pipe_id = "persistencegas_lSWauKi3Hefu"
-	},
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_ymjljvRA2XZQ"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	persistence_pipe_id = "persistencegas_ymjljvRA2XZQ"
@@ -32025,7 +31316,6 @@
 /area/station/ai/satellite/interior)
 "aPr" = (
 /obj/machinery/door/airlock/external{
-	name = "Airlock";
 	name = "Airlock"
 	},
 /obj/structure/cable,
@@ -32209,7 +31499,6 @@
 	pixel_x = -10;
 	piping_layer = 1;
 	on = 1;
-	name = "omni pressure valve";
 	target_pressure = 1000
 	},
 /obj/effect/decal/cleanable/ants,
@@ -32224,8 +31513,7 @@
 	dir = 1;
 	pixel_x = -5;
 	piping_layer = 2;
-	vent_movement = 4;
-	name = "omni manual valve"
+	vent_movement = 4
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -32325,8 +31613,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engine";
-	req_access = list();
-	name = "Engine"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -32382,8 +31669,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/old{
 	name = "dried pool of blood";
@@ -32808,10 +32094,6 @@
 /obj/structure/noticeboard{
 	dir = 1;
 	pixel_y = 32
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
@@ -33311,8 +32593,7 @@
 "aQw" = (
 /obj/machinery/door/airlock/hatch{
 	name = "AI Sat Inner";
-	req_access = list("minisat");
-	name = "AI Sat Inner"
+	req_access = list("minisat")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
@@ -33417,8 +32698,7 @@
 	dir = 8;
 	pixel_y = -10;
 	piping_layer = 1;
-	pipe_color = "#FF0000";
-	name = "red passive vent"
+	pipe_color = "#FF0000"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=0.4;TEMP=2.7"
@@ -33640,8 +32920,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -33810,10 +33089,6 @@
 /area/station/service/kitchen)
 "aRk" = (
 /obj/machinery/light/directional/south,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -34075,7 +33350,6 @@
 	dir = 4;
 	req_access = list("ordnance");
 	obj_flags = 8388618;
-	name = "raw ectoplasm anomaly";
 	icon_state = "scisecurecrateopen";
 	opened = 1;
 	locked = 0
@@ -34268,7 +33542,6 @@
 	color = "#da00ff";
 	pixel_x = -1;
 	pixel_y = 11;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -34277,7 +33550,6 @@
 	color = "#da00ff";
 	pixel_x = 6;
 	pixel_y = -3;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -34306,7 +33578,6 @@
 	color = "#da00ff";
 	pixel_x = 10;
 	pixel_y = 9;
-	name = "graffiti";
 	icon_state = "arrow";
 	rotation = 270;
 	paint_colour = "#DA00FF"
@@ -34316,7 +33587,6 @@
 	color = "#ff0000";
 	pixel_x = -4;
 	pixel_y = -8;
-	name = "letter";
 	icon_state = "s";
 	paint_colour = "#FF0000"
 	},
@@ -34325,7 +33595,6 @@
 	color = "#ff0000";
 	pixel_x = 7;
 	pixel_y = -7;
-	name = "letter";
 	icon_state = "m";
 	paint_colour = "#FF0000"
 	},
@@ -34357,7 +33626,6 @@
 	name = "letter";
 	color = "#ff0000";
 	pixel_x = -5;
-	name = "letter";
 	icon_state = "e";
 	paint_colour = "#FF0000"
 	},
@@ -34365,7 +33633,6 @@
 	name = "letter";
 	color = "#ff0000";
 	pixel_x = 4;
-	name = "letter";
 	icon_state = "m";
 	paint_colour = "#FF0000"
 	},
@@ -34374,7 +33641,6 @@
 	color = "#ff0000";
 	pixel_x = 14;
 	pixel_y = -1;
-	name = "letter";
 	icon_state = "i";
 	paint_colour = "#FF0000"
 	},
@@ -34476,7 +33742,6 @@
 	dir = 4;
 	req_access = list("ce");
 	obj_flags = 8388638;
-	name = "supermatter shard crate";
 	icon_state = "radiation_secureopen";
 	opened = 1;
 	locked = 0
@@ -34723,10 +33988,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -29
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -34831,7 +34092,6 @@
 	color = "#00ff00";
 	pixel_x = -9;
 	pixel_y = 6;
-	name = "letter";
 	icon_state = "e";
 	paint_colour = "#00FF00"
 	},
@@ -34840,7 +34100,6 @@
 	color = "#00ff00";
 	pixel_x = 4;
 	pixel_y = 7;
-	name = "letter";
 	icon_state = "v";
 	paint_colour = "#00FF00"
 	},
@@ -34849,7 +34108,6 @@
 	color = "#00ff00";
 	pixel_x = -4;
 	pixel_y = -11;
-	name = "letter";
 	icon_state = "c";
 	paint_colour = "#00FF00"
 	},
@@ -34858,7 +34116,6 @@
 	color = "#00ff00";
 	pixel_x = 9;
 	pixel_y = -11;
-	name = "letter";
 	icon_state = "r";
 	paint_colour = "#00FF00"
 	},
@@ -34875,7 +34132,6 @@
 	name = "graffiti";
 	color = "#00ff00";
 	pixel_y = -6;
-	name = "graffiti";
 	icon_state = "arrow";
 	rotation = 180;
 	paint_colour = "#00FF00"
@@ -35036,8 +34292,7 @@
 	},
 /obj/machinery/door/airlock/hatch{
 	name = "Telecommuns Control";
-	req_access = list("tcomms");
-	name = "Telecommuns Control"
+	req_access = list("tcomms")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
@@ -35126,8 +34381,7 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Telecommuns Control";
 	req_access = list("tcomms");
-	emergency = 1;
-	name = "Telecommuns Control"
+	emergency = 1
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -35210,7 +34464,6 @@
 	name = "disabler crate - #7856";
 	req_access = list("security");
 	obj_flags = 8388618;
-	name = "disabler crate - #7856";
 	locked = 0
 	},
 /turf/open/floor/iron/dark/smooth_corner{
@@ -35220,7 +34473,6 @@
 /area/station/ai/satellite/interior)
 "aSY" = (
 /obj/machinery/door/airlock/external{
-	name = "Airlock";
 	name = "Airlock"
 	},
 /obj/structure/cable,
@@ -35337,7 +34589,6 @@
 	color = "#da00ff";
 	pixel_x = -7;
 	pixel_y = 8;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -35346,7 +34597,6 @@
 	color = "#da00ff";
 	pixel_x = 8;
 	pixel_y = 4;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -35355,7 +34605,6 @@
 	color = "#da00ff";
 	pixel_x = 9;
 	pixel_y = -11;
-	name = "graffiti";
 	icon_state = "arrow";
 	rotation = 270;
 	paint_colour = "#DA00FF"
@@ -35365,7 +34614,6 @@
 	color = "#da00ff";
 	pixel_x = -6;
 	pixel_y = -6;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -35392,7 +34640,6 @@
 	color = "#da00ff";
 	pixel_x = -9;
 	pixel_y = 9;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -35401,7 +34648,6 @@
 	color = "#da00ff";
 	pixel_x = 12;
 	pixel_y = 9;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -35410,7 +34656,6 @@
 	color = "#ff0000";
 	pixel_x = -5;
 	pixel_y = -6;
-	name = "letter";
 	icon_state = "h";
 	paint_colour = "#FF0000"
 	},
@@ -35419,7 +34664,6 @@
 	color = "#ff0000";
 	pixel_x = 3;
 	pixel_y = -8;
-	name = "letter";
 	icon_state = "e";
 	paint_colour = "#FF0000"
 	},
@@ -35428,7 +34672,6 @@
 	color = "#ff0000";
 	pixel_x = 13;
 	pixel_y = -8;
-	name = "letter";
 	icon_state = "a";
 	paint_colour = "#FF0000"
 	},
@@ -35464,7 +34707,6 @@
 	color = "#ff0000";
 	pixel_x = -11;
 	pixel_y = -3;
-	name = "letter";
 	icon_state = "t";
 	paint_colour = "#FF0000"
 	},
@@ -35473,7 +34715,6 @@
 	color = "#ff0000";
 	pixel_x = -5;
 	pixel_y = -4;
-	name = "letter";
 	icon_state = "t";
 	paint_colour = "#FF0000"
 	},
@@ -35482,7 +34723,6 @@
 	color = "#ff0000";
 	pixel_x = 7;
 	pixel_y = -4;
-	name = "letter";
 	icon_state = "e";
 	paint_colour = "#FF0000"
 	},
@@ -35491,7 +34731,6 @@
 	color = "#ff0000";
 	pixel_x = 15;
 	pixel_y = -6;
-	name = "letter";
 	icon_state = "r";
 	paint_colour = "#FF0000"
 	},
@@ -35508,7 +34747,6 @@
 	color = "#ff0000";
 	pixel_x = -14;
 	pixel_y = -1;
-	name = "letter";
 	icon_state = "e";
 	paint_colour = "#FF0000"
 	},
@@ -35517,7 +34755,6 @@
 	color = "#ff0000";
 	pixel_x = -7;
 	pixel_y = -1;
-	name = "letter";
 	icon_state = "p";
 	paint_colour = "#FF0000"
 	},
@@ -35526,7 +34763,6 @@
 	color = "#ff0000";
 	pixel_x = 9;
 	pixel_y = -1;
-	name = "letter";
 	icon_state = "o";
 	paint_colour = "#FF0000"
 	},
@@ -36054,27 +35290,9 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/service/kitchen)
-"aTE" = (
-/obj/machinery/light/directional/north,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_corner";
-	alpha = 50;
-	dir = 4;
-	color = "#d4d4d4"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "aTF" = (
 /obj/structure/sign/poster/official/bless_this_spess/directional/south{
 	name = "poster - poster - poster - poster - poster - poster - poster - poster - poster - Bless This Spess"
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
@@ -36356,7 +35574,6 @@
 	color = "#00ff00";
 	pixel_x = -14;
 	pixel_y = 5;
-	name = "letter";
 	icon_state = "a";
 	paint_colour = "#00FF00"
 	},
@@ -36365,7 +35582,6 @@
 	color = "#00ff00";
 	pixel_x = -1;
 	pixel_y = 5;
-	name = "letter";
 	icon_state = "n";
 	paint_colour = "#00FF00"
 	},
@@ -36374,7 +35590,6 @@
 	color = "#00ff00";
 	pixel_x = 12;
 	pixel_y = 5;
-	name = "letter";
 	icon_state = "s";
 	paint_colour = "#00FF00"
 	},
@@ -36383,7 +35598,6 @@
 	color = "#00ff00";
 	pixel_x = -10;
 	pixel_y = -8;
-	name = "letter";
 	icon_state = "a";
 	paint_colour = "#00FF00"
 	},
@@ -36392,7 +35606,6 @@
 	color = "#00ff00";
 	pixel_x = 2;
 	pixel_y = -8;
-	name = "letter";
 	icon_state = "c";
 	paint_colour = "#00FF00"
 	},
@@ -36401,7 +35614,6 @@
 	color = "#00ff00";
 	pixel_x = 16;
 	pixel_y = -9;
-	name = "letter";
 	icon_state = "k";
 	paint_colour = "#00FF00"
 	},
@@ -36461,8 +35673,7 @@
 "aTV" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
@@ -36789,7 +36000,6 @@
 	name = "graffiti";
 	color = "#da00ff";
 	pixel_y = 5;
-	name = "graffiti";
 	icon_state = "arrow";
 	rotation = 90;
 	paint_colour = "#DA00FF"
@@ -36799,7 +36009,6 @@
 	color = "#da00ff";
 	pixel_x = -6;
 	pixel_y = -12;
-	name = "graffiti";
 	icon_state = "arrow";
 	rotation = 90;
 	paint_colour = "#DA00FF"
@@ -36809,7 +36018,6 @@
 	color = "#da00ff";
 	pixel_x = -9;
 	pixel_y = 7;
-	name = "graffiti";
 	icon_state = "arrow";
 	paint_colour = "#DA00FF"
 	},
@@ -36846,7 +36054,6 @@
 	color = "#da00ff";
 	pixel_x = -9;
 	pixel_y = 10;
-	name = "graffiti";
 	icon_state = "arrow";
 	rotation = 90;
 	paint_colour = "#DA00FF"
@@ -36856,7 +36063,6 @@
 	color = "#ff0000";
 	pixel_x = -10;
 	pixel_y = -7;
-	name = "letter";
 	icon_state = "l";
 	paint_colour = "#FF0000"
 	},
@@ -36865,7 +36071,6 @@
 	color = "#ff0000";
 	pixel_x = -3;
 	pixel_y = -6;
-	name = "letter";
 	icon_state = "i";
 	paint_colour = "#FF0000"
 	},
@@ -36874,7 +36079,6 @@
 	color = "#ff0000";
 	pixel_x = 6;
 	pixel_y = -6;
-	name = "letter";
 	icon_state = "n";
 	paint_colour = "#FF0000"
 	},
@@ -36883,7 +36087,6 @@
 	color = "#ff0000";
 	pixel_x = 15;
 	pixel_y = -7;
-	name = "letter";
 	icon_state = "g";
 	paint_colour = "#FF0000"
 	},
@@ -36912,7 +36115,6 @@
 	color = "#ff0000";
 	pixel_x = -11;
 	pixel_y = -7;
-	name = "letter";
 	icon_state = "s";
 	paint_colour = "#FF0000"
 	},
@@ -36933,7 +36135,6 @@
 	color = "#ff0000";
 	pixel_x = -11;
 	pixel_y = -1;
-	name = "letter";
 	icon_state = "n";
 	paint_colour = "#FF0000"
 	},
@@ -36942,7 +36143,6 @@
 	color = "#ff0000";
 	pixel_x = 5;
 	pixel_y = -2;
-	name = "letter";
 	icon_state = "!";
 	paint_colour = "#FF0000"
 	},
@@ -36951,7 +36151,6 @@
 	color = "#ff0000";
 	pixel_x = 14;
 	pixel_y = -2;
-	name = "letter";
 	icon_state = "!";
 	paint_colour = "#FF0000"
 	},
@@ -37071,7 +36270,6 @@
 /obj/machinery/suit_storage_unit{
 	density = 0;
 	req_access = list();
-	density = 0;
 	state_open = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -37080,7 +36278,6 @@
 	dir = 1;
 	req_access = list("eva");
 	obj_flags = 8388638;
-	name = "space suit crate - #6178";
 	icon_state = "securecrateopen";
 	opened = 1;
 	locked = 0
@@ -37089,7 +36286,6 @@
 	name = "solar panel crate - #33";
 	dir = 1;
 	obj_flags = 8421402;
-	name = "solar panel crate - #33";
 	icon_state = "engi_e_crateopen";
 	opened = 1
 	},
@@ -37106,7 +36302,6 @@
 	storage_type = /obj/item/clothing/gloves/color/yellow;
 	density = 0;
 	req_access = list();
-	density = 0;
 	state_open = 1;
 	safeties = 0
 	},
@@ -37215,7 +36410,6 @@
 /obj/machinery/suit_storage_unit{
 	density = 0;
 	req_access = list();
-	density = 0;
 	state_open = 1;
 	safeties = 0
 	},
@@ -37307,10 +36501,6 @@
 /obj/item/reagent_containers/condiment/pack/astrotame{
 	pixel_x = -8;
 	pixel_y = 11
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
@@ -37461,10 +36651,6 @@
 /obj/machinery/light/directional/west{
 	status = 2
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aUM" = (
@@ -37488,10 +36674,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aUP" = (
@@ -37499,17 +36681,12 @@
 /obj/structure/disposalpipe/junction/yjunction,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aUQ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Kitchen";
-	req_access = list();
-	name = "Kitchen"
+	req_access = list()
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -37533,19 +36710,11 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/small,
 /area/station/service/kitchen)
 "aUS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -37559,10 +36728,6 @@
 	name = "�Central Primary Hallway Air Alarm";
 	pixel_y = -27;
 	req_access = list("engineering")
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
@@ -37716,7 +36881,6 @@
 	color = "#00ff00";
 	pixel_x = 3;
 	pixel_y = -8;
-	name = "letter";
 	icon_state = "s";
 	paint_colour = "#00FF00"
 	},
@@ -37849,7 +37013,6 @@
 	color = "#00ff00";
 	pixel_x = -10;
 	pixel_y = -3;
-	name = "graffiti";
 	icon_state = "arrow";
 	rotation = 90;
 	paint_colour = "#00FF00"
@@ -37861,7 +37024,6 @@
 	name = "symbol";
 	color = "#00ff00";
 	pixel_x = 4;
-	name = "symbol";
 	icon_state = "biohazard";
 	paint_colour = "#00FF00"
 	},
@@ -37986,10 +37148,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "aVz" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_UkLgOZGocBfM"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer5{
 	persistence_pipe_id = "persistencegas_UkLgOZGocBfM"
 	},
@@ -38076,7 +37234,6 @@
 	color = "#ff0000";
 	pixel_x = -11;
 	pixel_y = -2;
-	name = "letter";
 	icon_state = "!";
 	paint_colour = "#FF0000"
 	},
@@ -38216,8 +37373,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list("external airlocks");
-	name = "Airlock"
+	req_access = list("external airlocks")
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -38401,20 +37557,12 @@
 "aVT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aVU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/effect/decal/cleanable/food/egg_smudge,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aVV" = (
@@ -38425,10 +37573,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aVW" = (
@@ -38456,38 +37600,17 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/ants,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/small,
 /area/station/service/kitchen)
 "aVY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
 	dir = 4;
 	color = "#d4d4d4"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
-"aVZ" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -38527,10 +37650,6 @@
 	},
 /obj/item/clothing/suit/space{
 	pixel_x = -11
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "siding_plain";
@@ -38575,10 +37694,6 @@
 	pixel_y = 15;
 	obj_flags = 8429570
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aWc" = (
@@ -38592,10 +37707,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aWe" = (
@@ -38607,8 +37718,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -38772,7 +37882,6 @@
 	color = "#00ff00";
 	pixel_x = -12;
 	pixel_y = -8;
-	name = "letter";
 	icon_state = "h";
 	paint_colour = "#00FF00"
 	},
@@ -38781,7 +37890,6 @@
 	color = "#00ff00";
 	pixel_x = -3;
 	pixel_y = -9;
-	name = "letter";
 	icon_state = "a";
 	paint_colour = "#00FF00"
 	},
@@ -38790,7 +37898,6 @@
 	color = "#00ff00";
 	pixel_x = 4;
 	pixel_y = -9;
-	name = "letter";
 	icon_state = "k";
 	paint_colour = "#00FF00"
 	},
@@ -38815,7 +37922,6 @@
 	color = "#00ff00";
 	pixel_x = -11;
 	pixel_y = 2;
-	name = "graffiti";
 	icon_state = "arrow";
 	rotation = 90;
 	paint_colour = "#00FF00"
@@ -39240,10 +38346,6 @@
 	},
 /area/station/engineering/supermatter)
 "aWP" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_6YHSVbqGPlz8"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	persistence_pipe_id = "persistencegas_6YHSVbqGPlz8"
 	},
@@ -39319,17 +38421,9 @@
 /obj/machinery/griddle{
 	persistent_components = list(/obj/item/stock_parts/micro_laser/quadultra)
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aWZ" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aXa" = (
@@ -39583,10 +38677,6 @@
 	pixel_y = 3;
 	obj_flags = 8388610
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aXb" = (
@@ -39660,28 +38750,16 @@
 	pixel_x = -7;
 	obj_flags = 8388610
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aXc" = (
 /obj/structure/table{
 	dir = 8
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aXd" = (
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aXe" = (
@@ -39702,10 +38780,6 @@
 	pixel_y = 12;
 	obj_flags = 8388608
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/kitchen)
 "aXf" = (
@@ -39713,29 +38787,14 @@
 /obj/structure/chair/stool/bar{
 	dir = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/iron/small,
 /area/station/service/kitchen)
 "aXg" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "siding_plain";
 	dir = 1;
 	color = "#bcbcbc"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
-"aXh" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -39748,10 +38807,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/sign/departments/maint{
 	pixel_y = -32
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -39870,8 +38925,7 @@
 "aXp" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/wood,
 /area/station/maintenance/department/crew_quarters/bar{
@@ -40460,8 +39514,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "omni passive vent";
-	dir = 8;
-	name = "omni passive vent"
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/space)
@@ -40552,7 +39605,6 @@
 	dir = 8;
 	anchored = 1;
 	obj_flags = 8388638;
-	name = "mail crate (Personal Kit)";
 	icon_state = "mailsealed"
 	},
 /obj/effect/decal/cleanable/food/flour,
@@ -40570,17 +39622,9 @@
 /obj/machinery/griddle{
 	dir = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aYk" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
@@ -40591,10 +39635,6 @@
 /obj/machinery/reagentgrinder{
 	persistent_components = list(/obj/item/stock_parts/matter_bin/bluespace);
 	dir = 8
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
@@ -40611,10 +39651,6 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aYn" = (
@@ -40624,10 +39660,6 @@
 /obj/item/reagent_containers/condiment/enzyme{
 	pixel_x = 5;
 	pixel_y = 6
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
@@ -40680,19 +39712,11 @@
 	pixel_y = 4;
 	obj_flags = 8388608
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/kitchen)
 "aYp" = (
 /obj/structure/chair/stool/bar{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/small,
 /area/station/service/kitchen)
@@ -40705,10 +39729,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/chair/sofa/bench/left{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "trimline_end";
@@ -40795,8 +39815,7 @@
 /obj/machinery/door/airlock/material/glass{
 	name = "iron Airlock";
 	dir = 4;
-	req_access = list();
-	name = "iron Airlock"
+	req_access = list()
 	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
@@ -41056,7 +40075,6 @@
 	name = "bamboo cuttings crate - #13 (Medical Supplies)";
 	dir = 4;
 	obj_flags = 8388638;
-	name = "bamboo cuttings crate - #13 (Medical Supplies)";
 	icon_state = "medicalcrateopen";
 	base_icon_state = "medicalcrate";
 	opened = 1
@@ -41077,47 +40095,21 @@
 /obj/machinery/oven/range{
 	dir = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aZb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	filter_types = list(/datum/gas/carbon_dioxide)
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aZc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aZd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/turf/open/floor/iron/kitchen,
-/area/station/service/kitchen)
-"aZe" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "aZf" = (
@@ -41136,10 +40128,6 @@
 /obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 9;
 	pixel_y = -2
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/kitchen)
@@ -41174,10 +40162,6 @@
 	icon_state = "";
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "trimline_fill";
 	alpha = 50;
@@ -41195,10 +40179,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/chair/sofa/bench{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "trimline";
@@ -41260,7 +40240,6 @@
 	dir = 8;
 	req_access = list("security");
 	obj_flags = 8388638;
-	name = "firing pins crate";
 	locked = 0
 	},
 /turf/open/floor/plating,
@@ -41400,8 +40379,7 @@
 	pixel_y = -5;
 	piping_layer = 2;
 	pipe_color = "#0000FF";
-	on = 1;
-	name = "blue manual valve"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/valve{
 	name = "red manual valve";
@@ -41409,8 +40387,7 @@
 	pixel_y = 5;
 	piping_layer = 4;
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red manual valve"
+	on = 1
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -41626,10 +40603,6 @@
 /obj/machinery/oven/range{
 	persistent_components = list(/obj/item/stock_parts/micro_laser/quadultra, /obj/item/stock_parts/micro_laser/quadultra)
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "aZP" = (
@@ -41638,10 +40611,6 @@
 	dir = 4;
 	pixel_x = 27;
 	req_access = list("engineering")
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
@@ -41775,10 +40744,6 @@
 	pixel_x = -10;
 	pixel_y = 10
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/kitchen)
 "aZW" = (
@@ -41786,10 +40751,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/ants,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/small,
 /area/station/service/kitchen)
 "aZX" = (
@@ -41894,10 +40855,6 @@
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "trimline_fill";
 	alpha = 50;
@@ -41912,10 +40869,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "baa" = (
@@ -41933,10 +40886,6 @@
 	pixel_x = 3;
 	pixel_y = 1;
 	used_up = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "trimline_end";
@@ -41965,7 +40914,6 @@
 	name = "janitor backpack crate";
 	req_access = list("janitor");
 	obj_flags = 8388618;
-	name = "janitor backpack crate";
 	icon_state = "securecrateopen";
 	opened = 1;
 	locked = 0
@@ -42210,8 +41158,7 @@
 "baq" = (
 /obj/machinery/door/airlock/external{
 	name = "Airlock";
-	req_access = list("atmospherics", "external airlocks");
-	name = "Airlock"
+	req_access = list("atmospherics", "external airlocks")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil{
@@ -42400,10 +41347,6 @@
 "baH" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/light/directional/north,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -42573,10 +41516,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "baL" = (
@@ -42596,8 +41535,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance";
-	req_access = list();
-	name = "Maintenance"
+	req_access = list()
 	},
 /turf/open/floor/plating,
 /area/station/service/theater)
@@ -42767,8 +41705,7 @@
 "bbc" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
@@ -44205,7 +43142,6 @@
 	name = "syndicate gear crate";
 	dir = 8;
 	obj_flags = 8388638;
-	name = "syndicate gear crate";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -44272,10 +43208,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bbx" = (
@@ -44285,10 +43217,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -44334,10 +43262,6 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bbA" = (
@@ -44346,10 +43270,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -45414,10 +44334,6 @@
 	dir = 1;
 	pixel_y = 29
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -45430,10 +44346,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bcq" = (
@@ -45641,10 +44553,6 @@
 /turf/open/space/basic,
 /area/station/engineering/atmos)
 "bcM" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_Moisiq3TB8pa"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer5{
 	persistence_pipe_id = "persistencegas_Moisiq3TB8pa"
 	},
@@ -45653,8 +44561,7 @@
 "bcN" = (
 /obj/machinery/door/airlock/external{
 	name = "Airlock";
-	req_access = list("atmospherics", "external airlocks");
-	name = "Airlock"
+	req_access = list("atmospherics", "external airlocks")
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -45673,10 +44580,6 @@
 	},
 /area/station/engineering/atmos)
 "bcO" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_k6S7JMVW6Fax"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer1{
 	persistence_pipe_id = "persistencegas_k6S7JMVW6Fax"
 	},
@@ -45701,7 +44604,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/atmos/glass{
-	name = "Atmospherics";
 	name = "Atmospherics"
 	},
 /obj/effect/decal/cleanable/ants,
@@ -46416,35 +45318,12 @@
 	pixel_x = 2;
 	pixel_y = 4
 	})
-"bdc" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_corner";
-	alpha = 50;
-	dir = 4;
-	color = "#d4d4d4"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "bdd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/disposalpipe/junction/flip{
 	dir = 4
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -46814,8 +45693,7 @@
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -46890,8 +45768,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	name = "blue air injector";
 	pipe_color = "#0000FF";
-	on = 1;
-	name = "blue air injector"
+	on = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil{
@@ -46905,10 +45782,6 @@
 	},
 /area/station/engineering/atmos)
 "bdy" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_uxM1U8kFC7My"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	persistence_pipe_id = "persistencegas_uxM1U8kFC7My"
 	},
@@ -46970,7 +45843,6 @@
 	dir = 1;
 	pipe_color = "#0000FF";
 	on = 1;
-	name = "blue gas pump";
 	target_pressure = 4500
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -46991,10 +45863,6 @@
 	},
 /area/station/engineering/atmos)
 "bdE" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_nAA2JNK0fW6n"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible{
 	persistence_pipe_id = "persistencegas_nAA2JNK0fW6n"
 	},
@@ -47286,10 +46154,6 @@
 	pixel_x = -5;
 	pixel_y = -5;
 	target_layer = 2
-	},
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_YZ3yk4Vz6F0o"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2{
 	persistence_pipe_id = "persistencegas_YZ3yk4Vz6F0o"
@@ -47987,37 +46851,6 @@
 	pixel_x = 2;
 	pixel_y = 4
 	})
-"beb" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
-"bec" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_corner";
-	alpha = 50;
-	dir = 8;
-	color = "#d4d4d4"
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_corner";
-	alpha = 110;
-	color = "#de3a3a"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "bed" = (
 /obj/structure/window/unanchored{
 	dir = 1;
@@ -48043,10 +46876,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bee" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "stand_clear";
 	dir = 8
@@ -48168,7 +46997,6 @@
 	name = "premium carpet crate - #4029";
 	dir = 1;
 	obj_flags = 8388618;
-	name = "premium carpet crate - #4029";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -48260,7 +47088,6 @@
 /obj/structure/closet/crate/critter{
 	name = "pig crate";
 	obj_flags = 8388638;
-	name = "pig crate";
 	opened = 1
 	},
 /turf/open/floor/iron/sepia,
@@ -49086,7 +47913,6 @@
 	density = 0;
 	req_access = list("syndicate");
 	obj_flags = 8388638;
-	name = "Closet";
 	opened = 1
 	},
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate{
@@ -49753,10 +48579,6 @@
 /obj/structure/sign/warning/yes_smoking/circle{
 	pixel_y = 32
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "box_white"
 	},
@@ -49771,10 +48593,6 @@
 	filter_types = list(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/water_vapor, /datum/gas/hypernoblium, /datum/gas/nitrous_oxide, /datum/gas/nitrium, /datum/gas/tritium, /datum/gas/bz, /datum/gas/miasma, /datum/gas/freon, /datum/gas/hydrogen, /datum/gas/healium, /datum/gas/proto_nitrate, /datum/gas/zauker, /datum/gas/halon, /datum/gas/helium, /datum/gas/antinoblium);
 	widenet = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "box_white"
 	},
@@ -49788,7 +48606,6 @@
 	cycle_id = "security-front-top"
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Airlock";
 	name = "Airlock"
 	},
 /obj/effect/decal/cleanable/blood/gibs/old{
@@ -49819,15 +48636,10 @@
 	cycle_id = "security-front-bottom"
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Airlock";
 	name = "Airlock"
 	},
 /obj/structure/sign/departments/security{
 	pixel_y = -32
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_fourcorners";
@@ -49870,8 +48682,7 @@
 "bfp" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -49900,8 +48711,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -50014,8 +48824,7 @@
 "bfA" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "cyan passive vent";
-	pipe_color = "#00FFFF";
-	name = "cyan passive vent"
+	pipe_color = "#00FFFF"
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -50051,38 +48860,33 @@
 	pixel_x = -10;
 	piping_layer = 1;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "cyan passive gate";
 	pixel_x = -5;
 	piping_layer = 2;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "cyan passive gate";
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "cyan passive gate";
 	pixel_x = 5;
 	piping_layer = 4;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "cyan passive gate";
 	pixel_x = 10;
 	piping_layer = 5;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan passive gate"
+	on = 1
 	},
 /obj/structure/grille{
 	dir = 1
@@ -50238,10 +49042,6 @@
 	},
 /area/station/engineering/atmos)
 "bfL" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_7S3rI7r7xtHL"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible{
 	persistence_pipe_id = "persistencegas_7S3rI7r7xtHL"
 	},
@@ -50414,7 +49214,6 @@
 	name = "cyan gas pump";
 	pipe_color = "#00FFFF";
 	on = 1;
-	name = "cyan gas pump";
 	target_pressure = 4500
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
@@ -50495,7 +49294,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
 /obj/machinery/atmospherics/components/binary/volume_pump{
-	name = "omni volumetric gas pump";
 	name = "omni volumetric gas pump"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -51041,10 +49839,6 @@
 	name = "poster - poster - poster - poster - poster - poster - poster - poster - poster - Seabiscuit";
 	pixel_y = -32
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 50;
@@ -51059,10 +49853,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bgh" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -51077,17 +49867,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
 "bgj" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -51182,8 +49964,7 @@
 /obj/structure/closet/crate/large{
 	name = "biker kit";
 	dir = 8;
-	obj_flags = 28;
-	name = "biker kit"
+	obj_flags = 28
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -51376,8 +50157,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -51400,8 +50180,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -51741,8 +50520,7 @@
 	name = "red volumetric gas pump";
 	dir = 1;
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "red volumetric gas pump";
@@ -51750,8 +50528,7 @@
 	pixel_x = -10;
 	piping_layer = 1;
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "red volumetric gas pump";
@@ -51759,8 +50536,7 @@
 	pixel_x = -5;
 	piping_layer = 2;
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "red volumetric gas pump";
@@ -51768,8 +50544,7 @@
 	pixel_x = 5;
 	piping_layer = 4;
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "red volumetric gas pump";
@@ -51777,8 +50552,7 @@
 	pixel_x = 10;
 	piping_layer = 5;
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red volumetric gas pump"
+	on = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -52189,8 +50963,7 @@
 /obj/structure/closet/crate/cardboard/mothic{
 	name = "surplus rations box";
 	dir = 4;
-	obj_flags = 8388638;
-	name = "surplus rations box"
+	obj_flags = 8388638
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage{
@@ -52542,8 +51315,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge";
-	req_access = list();
-	name = "Departures Lounge"
+	req_access = list()
 	},
 /obj/machinery/door/firedoor{
 	name = "�Departure Lounge firelock HGGG3"
@@ -52589,8 +51361,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge";
-	req_access = list();
-	name = "Departures Lounge"
+	req_access = list()
 	},
 /obj/machinery/door/firedoor{
 	name = "�Departure Lounge firelock TgviD"
@@ -52691,8 +51462,7 @@
 "bhF" = (
 /obj/machinery/door/airlock/external{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	name = "green layer adaptor";
@@ -52705,10 +51475,6 @@
 	},
 /area/shuttle/custom)
 "bhG" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_3oIrvk2eAuGA"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	persistence_pipe_id = "persistencegas_3oIrvk2eAuGA"
 	},
@@ -52731,8 +51497,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	name = "red air injector";
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red air injector"
+	on = 1
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -52746,10 +51511,6 @@
 	},
 /area/station/engineering/atmos)
 "bhJ" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "o2=9.6;TEMP=299.9";
-	id_filter = "persistencegas_3dV87tWZl9cp"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	persistence_pipe_id = "persistencegas_3dV87tWZl9cp"
 	},
@@ -52822,7 +51583,6 @@
 	name = "omni gas filter";
 	dir = 8;
 	on = 1;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list(/datum/gas/oxygen)
 	},
@@ -52932,8 +51692,7 @@
 	name = "red volumetric gas pump";
 	dir = 8;
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red volumetric gas pump"
+	on = 1
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -52968,8 +51727,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	name = "omni Temperature control unit";
 	dir = 1;
-	piping_layer = 2;
-	name = "omni Temperature control unit"
+	piping_layer = 2
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -53372,12 +52130,7 @@
 	cycle_id = "security-front-top"
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Airlock";
 	name = "Airlock"
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/security/holding_cell)
@@ -53396,7 +52149,6 @@
 	cycle_id = "security-front-bottom"
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Airlock";
 	name = "Airlock"
 	},
 /turf/open/floor/iron/textured_large,
@@ -53458,8 +52210,7 @@
 "bix" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge";
-	req_access = list();
-	name = "Departures Lounge"
+	req_access = list()
 	},
 /obj/machinery/door/firedoor{
 	name = "�Departure Lounge firelock Za9CB"
@@ -53491,8 +52242,7 @@
 "biz" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge";
-	req_access = list();
-	name = "Departures Lounge"
+	req_access = list()
 	},
 /obj/machinery/door/firedoor{
 	name = "�Departure Lounge firelock 1JwKe"
@@ -53614,8 +52364,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -53634,8 +52383,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -53665,8 +52413,7 @@
 	name = "green volumetric gas pump";
 	dir = 4;
 	pipe_color = "#00FF00";
-	on = 1;
-	name = "green volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "green volumetric gas pump";
@@ -53674,8 +52421,7 @@
 	pixel_y = -10;
 	piping_layer = 1;
 	pipe_color = "#00FF00";
-	on = 1;
-	name = "green volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "green volumetric gas pump";
@@ -53683,8 +52429,7 @@
 	pixel_y = -5;
 	piping_layer = 2;
 	pipe_color = "#00FF00";
-	on = 1;
-	name = "green volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "green volumetric gas pump";
@@ -53692,8 +52437,7 @@
 	pixel_y = 5;
 	piping_layer = 4;
 	pipe_color = "#00FF00";
-	on = 1;
-	name = "green volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "green volumetric gas pump";
@@ -53701,8 +52445,7 @@
 	pixel_y = 10;
 	piping_layer = 5;
 	pipe_color = "#00FF00";
-	on = 1;
-	name = "green volumetric gas pump"
+	on = 1
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -53766,10 +52509,6 @@
 	},
 /area/station/engineering/atmos)
 "biS" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_paG96r4owXKo"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_paG96r4owXKo"
 	},
@@ -53901,8 +52640,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "red connector port";
 	dir = 8;
-	pipe_color = "#FF0000";
-	name = "red connector port"
+	pipe_color = "#FF0000"
 	},
 /obj/machinery/portable_atmospherics/canister{
 	initial_gas_mix = "TEMP=0";
@@ -53943,8 +52681,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	name = "omni Temperature control unit";
 	dir = 1;
-	piping_layer = 2;
-	name = "omni Temperature control unit"
+	piping_layer = 2
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=0.1;TEMP=38"
@@ -54134,10 +52871,6 @@
 	dir = 1;
 	status = 2
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -54152,10 +52885,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
 "bjr" = (
@@ -54163,10 +52892,6 @@
 	name = "�Holding Cell fire alarm kMTSh";
 	pixel_y = -26;
 	panel_open = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -54189,8 +52914,7 @@
 "bjt" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -54317,8 +53041,7 @@
 "bjA" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old{
@@ -54371,8 +53094,7 @@
 "bjF" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge";
-	req_access = list();
-	name = "Departures Lounge"
+	req_access = list()
 	},
 /obj/machinery/door/firedoor{
 	name = "�Departure Lounge firelock SY7m7"
@@ -54416,8 +53138,7 @@
 "bjJ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge";
-	req_access = list();
-	name = "Departures Lounge"
+	req_access = list()
 	},
 /obj/machinery/door/firedoor{
 	name = "�Departure Lounge firelock OdQJn"
@@ -54519,8 +53240,7 @@
 	name = "cyan connector port";
 	dir = 4;
 	piping_layer = 2;
-	pipe_color = "#00FFFF";
-	name = "cyan connector port"
+	pipe_color = "#00FFFF"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/custom)
@@ -54529,8 +53249,7 @@
 	name = "cyan connector port";
 	dir = 4;
 	piping_layer = 2;
-	pipe_color = "#00FFFF";
-	name = "cyan connector port"
+	pipe_color = "#00FFFF"
 	},
 /obj/machinery/portable_atmospherics/canister{
 	initial_gas_mix = "TEMP=0";
@@ -54545,8 +53264,7 @@
 	name = "cyan connector port";
 	dir = 4;
 	piping_layer = 2;
-	pipe_color = "#00FFFF";
-	name = "cyan connector port"
+	pipe_color = "#00FFFF"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen{
 	initial_gas_mix = "TEMP=0";
@@ -54560,8 +53278,7 @@
 "bjT" = (
 /obj/machinery/door/airlock/external{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	name = "green layer adaptor";
@@ -54603,8 +53320,7 @@
 "bjW" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "yellow passive vent";
-	pipe_color = "#FFFF00";
-	name = "yellow passive vent"
+	pipe_color = "#FFFF00"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil{
@@ -54639,38 +53355,33 @@
 	pixel_x = -10;
 	piping_layer = 1;
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "yellow passive gate";
 	pixel_x = -5;
 	piping_layer = 2;
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "yellow passive gate";
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "yellow passive gate";
 	pixel_x = 5;
 	piping_layer = 4;
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "yellow passive gate";
 	pixel_x = 10;
 	piping_layer = 5;
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/structure/grille{
 	dir = 1
@@ -54731,7 +53442,6 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "omni gas pump";
 	on = 1;
-	name = "omni gas pump";
 	target_pressure = 4500
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -54755,7 +53465,6 @@
 	dir = 8;
 	pipe_color = "#0000FF";
 	on = 1;
-	name = "blue gas mixer";
 	target_pressure = 4500;
 	node1_concentration = 0.21;
 	node2_concentration = 0.79
@@ -55259,10 +53968,6 @@
 	network = list();
 	camera_enabled = 0
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -55277,10 +53982,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 110;
@@ -55292,10 +53993,6 @@
 "bkH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -55457,10 +54154,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "bkY" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_pui1uhn1L0Ve"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
 	persistence_pipe_id = "persistencegas_pui1uhn1L0Ve"
 	},
@@ -55491,8 +54184,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "green volumetric gas pump";
 	pipe_color = "#00FF00";
-	on = 1;
-	name = "green volumetric gas pump"
+	on = 1
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/custom)
@@ -55504,8 +54196,7 @@
 	pixel_y = -5;
 	piping_layer = 2;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/custom)
@@ -55591,10 +54282,6 @@
 	},
 /area/station/engineering/atmos)
 "blj" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_gl44TaQpvqDV"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible{
 	persistence_pipe_id = "persistencegas_gl44TaQpvqDV"
 	},
@@ -55651,8 +54338,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "blue volumetric gas pump";
-	pipe_color = "#0000FF";
-	name = "blue volumetric gas pump"
+	pipe_color = "#0000FF"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=0.1;TEMP=38"
@@ -55676,8 +54362,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "blue connector port";
 	dir = 1;
-	pipe_color = "#0000FF";
-	name = "blue connector port"
+	pipe_color = "#0000FF"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=0.1;TEMP=38"
@@ -55873,7 +54558,6 @@
 	name = "Nitrogen canister";
 	dir = 4;
 	req_access = list();
-	name = "Nitrogen canister";
 	icon_state = "/obj/machinery/portable_atmospherics/canister/nitrogen";
 	base_icon_state = "/obj/machinery/portable_atmospherics/canister/nitrogen";
 	greyscale_colors = "#e9ff5c#f4fce8";
@@ -55967,10 +54651,6 @@
 /area/space/nearstation)
 "blG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /mob/living/basic/spider/giant{
 	name = "giant spider (177) (868) (98) (175) (58) (548) (580) (279) (91)";
 	dir = 1
@@ -55990,10 +54670,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 110;
@@ -56004,10 +54680,6 @@
 /area/station/security/holding_cell)
 "blI" = (
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 110;
@@ -56048,10 +54720,6 @@
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -56063,16 +54731,8 @@
 	},
 /area/station/security/holding_cell)
 "blL" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_C0pNEj79z1Tk"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2{
 	persistence_pipe_id = "persistencegas_C0pNEj79z1Tk"
-	},
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_JgJloPvmii5z"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	persistence_pipe_id = "persistencegas_JgJloPvmii5z"
@@ -56103,10 +54763,6 @@
 	},
 /obj/item/pen/fourcolor{
 	pixel_y = 9
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/blood/old{
 	name = "dried pool of blood";
@@ -56156,10 +54812,6 @@
 	dir = 8;
 	pixel_x = -3;
 	pixel_y = 8
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_anticorner_contrasted";
@@ -56284,8 +54936,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Departures Checkpoint";
 	req_access = list("security");
-	emergency = 1;
-	name = "Departures Checkpoint"
+	emergency = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
@@ -56379,8 +55030,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "green passive vent";
 	dir = 8;
-	pipe_color = "#00FF00";
-	name = "green passive vent"
+	pipe_color = "#00FF00"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
@@ -56391,7 +55041,6 @@
 	name = "portable gravity unit crate - #6179";
 	dir = 1;
 	obj_flags = 8388638;
-	name = "portable gravity unit crate - #6179";
 	icon_state = "engi_crateopen";
 	opened = 1
 	},
@@ -56475,10 +55124,6 @@
 	pixel_x = -5;
 	obj_flags = 8396802
 	},
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_tXvIV1X9ZAfj"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer2{
 	persistence_pipe_id = "persistencegas_tXvIV1X9ZAfj"
 	},
@@ -56545,8 +55190,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	name = "red air injector";
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red air injector"
+	on = 1
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -56565,10 +55209,6 @@
 	},
 /area/station/engineering/atmos)
 "bmm" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_NbLNIPjTF6b4"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	persistence_pipe_id = "persistencegas_NbLNIPjTF6b4"
 	},
@@ -56633,7 +55273,6 @@
 	name = "omni gas filter";
 	dir = 8;
 	on = 1;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list(/datum/gas/nitrogen)
 	},
@@ -56808,7 +55447,6 @@
 	initial_gas_mix = "TEMP=293.2";
 	name = "Oxygen canister";
 	req_access = list();
-	name = "Oxygen canister";
 	icon_state = "/obj/machinery/portable_atmospherics/canister/oxygen";
 	base_icon_state = "/obj/machinery/portable_atmospherics/canister/oxygen";
 	greyscale_colors = "#2786e5#e8fefe";
@@ -56986,7 +55624,6 @@
 	initial_gas_mix = "TEMP=293.2";
 	name = "Air canister";
 	req_access = list();
-	name = "Air canister";
 	desc = "Pre-mixed air.";
 	icon_state = "/obj/machinery/portable_atmospherics/canister/air";
 	base_icon_state = "/obj/machinery/portable_atmospherics/canister/air";
@@ -57244,10 +55881,6 @@
 	pixel_y = -2;
 	obj_flags = 8388608
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -57265,10 +55898,6 @@
 	widenet = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/large,
 /area/station/security/holding_cell)
 "bmX" = (
@@ -57281,10 +55910,6 @@
 	bloodiness = 0;
 	dried = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 110;
@@ -57295,10 +55920,6 @@
 /area/station/security/holding_cell)
 "bmY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 110;
@@ -57590,10 +56211,6 @@
 	},
 /area/station/engineering/atmos)
 "bnA" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_uCWHbQoVrtRL"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_uCWHbQoVrtRL"
 	},
@@ -57673,10 +56290,6 @@
 	},
 /area/station/engineering/atmos)
 "bnE" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_RvpnIRp3A3f0"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer5{
 	persistence_pipe_id = "persistencegas_RvpnIRp3A3f0"
 	},
@@ -57802,10 +56415,6 @@
 	pixel_y = 3
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -57823,10 +56432,6 @@
 /obj/effect/decal/cleanable/insectguts{
 	color = "#96bb00"
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 110;
@@ -57840,18 +56445,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/large,
 /area/station/security/holding_cell)
 "bnS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/insectguts{
 	color = "#96bb00"
 	},
@@ -57864,10 +56461,6 @@
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
 "bnT" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 110;
@@ -57905,7 +56498,6 @@
 /area/station/security/holding_cell)
 "bnY" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Airlock";
 	name = "Airlock"
 	},
 /obj/structure/cable,
@@ -58924,8 +57516,7 @@
 "bop" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "yellow passive vent";
-	pipe_color = "#FFFF00";
-	name = "yellow passive vent"
+	pipe_color = "#FFFF00"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine{
@@ -58988,7 +57579,6 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "omni gas pump";
 	on = 1;
-	name = "omni gas pump";
 	target_pressure = 4500
 	},
 /obj/effect/decal/cleanable/ants,
@@ -59114,10 +57704,6 @@
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_anticorner_contrasted";
 	alpha = 110;
@@ -59197,10 +57783,6 @@
 	icon_state = "floor3";
 	base_icon_state = "floor3"
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -59213,10 +57795,6 @@
 /area/station/security/holding_cell)
 "boF" = (
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_corner";
 	alpha = 110;
@@ -59231,10 +57809,6 @@
 /obj/machinery/firealarm{
 	name = "�Holding Cell fire alarm FPLSl";
 	pixel_y = -26
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -59345,8 +57919,7 @@
 "boR" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Food Stand";
-	req_access = list();
-	name = "Food Stand"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -59454,8 +58027,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -59474,8 +58046,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -59505,8 +58076,7 @@
 "bpd" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron/terracotta/diagonal,
 /area/shuttle/custom)
@@ -59695,19 +58265,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"bpw" = (
-/obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/turf/open/floor/iron,
-/area/station/security/holding_cell)
 "bpx" = (
 /obj/machinery/door/airlock/security{
 	name = "Airlock";
-	req_access = list("security");
-	name = "Airlock"
+	req_access = list("security")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
@@ -59718,10 +58279,6 @@
 /area/station/security/holding_cell)
 "bpz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_eERZC6O84w1h"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	persistence_pipe_id = "persistencegas_eERZC6O84w1h"
 	},
@@ -59924,8 +58481,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	name = "red air injector";
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red air injector"
+	on = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine{
@@ -59933,10 +58489,6 @@
 	},
 /area/station/engineering/atmos)
 "bpT" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_k2PhcEjZ29DR"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	persistence_pipe_id = "persistencegas_k2PhcEjZ29DR"
 	},
@@ -59986,7 +58538,6 @@
 	name = "omni gas filter";
 	dir = 8;
 	on = 1;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list(/datum/gas/carbon_dioxide)
 	},
@@ -60330,8 +58881,7 @@
 /obj/structure/closet/crate{
 	name = "syndicate gear crate";
 	dir = 1;
-	obj_flags = 8388618;
-	name = "syndicate gear crate"
+	obj_flags = 8388618
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -60432,10 +58982,6 @@
 	filter_types = list(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/water_vapor, /datum/gas/hypernoblium, /datum/gas/nitrous_oxide, /datum/gas/nitrium, /datum/gas/tritium, /datum/gas/bz, /datum/gas/miasma, /datum/gas/freon, /datum/gas/hydrogen, /datum/gas/healium, /datum/gas/proto_nitrate, /datum/gas/zauker, /datum/gas/halon, /datum/gas/helium, /datum/gas/antinoblium);
 	widenet = 1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "trimline_warn_fill";
 	alpha = 110;
@@ -60447,10 +58993,6 @@
 "bqx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 1
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "trimline_warn_fill";
@@ -60523,8 +59065,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -60539,8 +59080,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -60580,16 +59120,11 @@
 	dir = 4;
 	pipe_color = "#00FF00";
 	on = 1;
-	name = "green gas filter";
 	filter_type = list(/datum/gas/nitrogen, /datum/gas/hypernoblium, /datum/gas/bz, /datum/gas/healium, /datum/gas/halon, /datum/gas/helium, /datum/gas/pluoxium, /datum/gas/proto_nitrate, /datum/gas/antinoblium, /datum/gas/zauker, /datum/gas/miasma, /datum/gas/freon, /datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/nitrium, /datum/gas/nitrous_oxide, /datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/water_vapor)
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/custom)
 "bqJ" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_6ADXFodf3XeC"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden{
 	persistence_pipe_id = "persistencegas_6ADXFodf3XeC"
 	},
@@ -60604,8 +59139,7 @@
 	pixel_y = -5;
 	piping_layer = 2;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "cyan volumetric gas pump";
@@ -60613,15 +59147,13 @@
 	pixel_y = -10;
 	piping_layer = 1;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "cyan volumetric gas pump";
 	dir = 8;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "cyan volumetric gas pump";
@@ -60629,8 +59161,7 @@
 	pixel_y = 5;
 	piping_layer = 4;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "cyan volumetric gas pump";
@@ -60638,8 +59169,7 @@
 	pixel_y = 10;
 	piping_layer = 5;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/custom)
@@ -60648,16 +59178,11 @@
 	name = "green gas filter";
 	pipe_color = "#00FF00";
 	on = 1;
-	name = "green gas filter";
 	filter_type = list(/datum/gas/oxygen, /datum/gas/hypernoblium, /datum/gas/nitrous_oxide, /datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/nitrium, /datum/gas/water_vapor, /datum/gas/tritium, /datum/gas/hydrogen, /datum/gas/freon, /datum/gas/zauker, /datum/gas/antinoblium, /datum/gas/helium, /datum/gas/proto_nitrate, /datum/gas/miasma, /datum/gas/pluoxium, /datum/gas/healium, /datum/gas/halon, /datum/gas/bz)
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/custom)
 "bqM" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_mntQWXQS9oLj"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden{
 	persistence_pipe_id = "persistencegas_mntQWXQS9oLj"
 	},
@@ -60671,8 +59196,7 @@
 	pixel_y = -5;
 	piping_layer = 2;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "cyan volumetric gas pump";
@@ -60680,15 +59204,13 @@
 	pixel_y = -10;
 	piping_layer = 1;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "cyan volumetric gas pump";
 	dir = 8;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "cyan volumetric gas pump";
@@ -60696,8 +59218,7 @@
 	pixel_y = 5;
 	piping_layer = 4;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "cyan volumetric gas pump";
@@ -60705,8 +59226,7 @@
 	pixel_y = 10;
 	piping_layer = 5;
 	pipe_color = "#00FFFF";
-	on = 1;
-	name = "cyan volumetric gas pump"
+	on = 1
 	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/custom)
@@ -60770,10 +59290,6 @@
 	},
 /area/station/engineering/atmos)
 "bqS" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_KCyMwzYmtCf5"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_KCyMwzYmtCf5"
 	},
@@ -60890,8 +59406,7 @@
 "bqZ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/plating,
 /area/station/medical/treatment_center)
@@ -60947,10 +59462,6 @@
 /area/station/security/holding_cell)
 "brg" = (
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /mob/living/basic/spider/giant{
 	name = "giant spider (355) (685) (90) (179) (484) (348) (218) (262) (240)";
 	dir = 4
@@ -60961,10 +59472,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 110;
@@ -60985,8 +59492,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list("security");
-	name = "Airlock"
+	req_access = list("security")
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/oil{
@@ -61041,8 +59547,7 @@
 /obj/structure/closet/crate{
 	name = "security department supply crate - #6869";
 	dir = 1;
-	obj_flags = 8388638;
-	name = "security department supply crate - #6869"
+	obj_flags = 8388638
 	},
 /turf/open/floor/iron{
 	initial_gas_mix = "o2=26;n2=59.2;TEMP=269.7"
@@ -61116,8 +59621,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -61155,8 +59659,7 @@
 /obj/structure/holosign/barrier/atmos,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/plating,
 /area/shuttle/custom)
@@ -61185,8 +59688,7 @@
 /obj/structure/holosign/barrier/atmos,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/plating{
@@ -61217,8 +59719,7 @@
 "brF" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "yellow passive vent";
-	pipe_color = "#FFFF00";
-	name = "yellow passive vent"
+	pipe_color = "#FFFF00"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil{
@@ -61595,8 +60096,7 @@
 /obj/structure/closet/crate/freezer{
 	name = "blood freezer";
 	anchored = 1;
-	obj_flags = 8388638;
-	name = "blood freezer"
+	obj_flags = 8388638
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/treatment_center)
@@ -61758,10 +60258,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/old{
 	name = "dried pool of blood";
 	color = "#2d0000";
@@ -61914,8 +60410,7 @@
 	name = ".38 magazine crate";
 	dir = 4;
 	req_access = list("armory");
-	obj_flags = 28;
-	name = ".38 magazine crate"
+	obj_flags = 28
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/security/holding_cell)
@@ -61943,8 +60438,7 @@
 "bsn" = (
 /obj/machinery/door/airlock/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
@@ -61982,8 +60476,7 @@
 "bsr" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
@@ -62103,7 +60596,6 @@
 	dir = 1;
 	pipe_color = "#00FF00";
 	on = 1;
-	name = "green air injector";
 	volume_rate = 200
 	},
 /turf/open/floor/engine{
@@ -62130,7 +60622,6 @@
 	name = "green air injector";
 	pipe_color = "#00FF00";
 	on = 1;
-	name = "green air injector";
 	volume_rate = 200
 	},
 /turf/open/floor/engine{
@@ -62388,8 +60879,7 @@
 /obj/structure/closet/crate/hydroponics{
 	name = "potting soil crate";
 	dir = 8;
-	obj_flags = 8388638;
-	name = "potting soil crate"
+	obj_flags = 8388638
 	},
 /turf/open/floor/carpet/donk,
 /area/station/cargo/bitrunning/den{
@@ -62484,10 +60974,6 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/old{
 	name = "dried pool of blood";
 	color = "#2d0000";
@@ -62509,10 +60995,6 @@
 	persistent_components = list(/obj/item/stock_parts/capacitor/adv);
 	anchored = 0;
 	req_access = list("keycard_auth")
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -62536,10 +61018,6 @@
 	dir = 8;
 	icon_state = "gib3";
 	base_icon_state = "gib3"
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -62673,8 +61151,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	name = "red air injector";
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red air injector"
+	on = 1
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -62695,10 +61172,6 @@
 	},
 /area/station/engineering/atmos)
 "btw" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_gdbVBxhsiJcy"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	persistence_pipe_id = "persistencegas_gdbVBxhsiJcy"
 	},
@@ -62744,7 +61217,6 @@
 	name = "omni gas filter";
 	dir = 8;
 	on = 1;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list(/datum/gas/plasma)
 	},
@@ -63477,8 +61949,7 @@
 	},
 /obj/machinery/door/airlock/mining{
 	name = "Bitrunner Den";
-	req_access = list();
-	name = "Bitrunner Den"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/iron,
@@ -63529,10 +62000,6 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/terracotta/diagonal,
 /area/station/security/interrogation)
 "bub" = (
@@ -63557,10 +62024,6 @@
 /area/station/security/interrogation)
 "bud" = (
 /obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
 	alpha = 110;
@@ -63578,10 +62041,6 @@
 	pixel_x = -1;
 	pixel_y = -1
 	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
 	alpha = 110;
@@ -63589,18 +62048,6 @@
 	color = "#de3a3a"
 	},
 /turf/open/floor/iron,
-/area/station/security/interrogation)
-"buf" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_half";
-	alpha = 110;
-	color = "#de3a3a"
-	},
-/turf/open/floor/iron/edge,
 /area/station/security/interrogation)
 "bug" = (
 /obj/effect/decal/cleanable/dirt,
@@ -63741,7 +62188,6 @@
 	dir = 1;
 	pipe_color = "#00FF00";
 	on = 1;
-	name = "green air injector";
 	volume_rate = 200
 	},
 /obj/structure/light_construct/small{
@@ -63840,10 +62286,6 @@
 	},
 /area/station/engineering/atmos)
 "buB" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_WlNuuiN9GVMp"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_WlNuuiN9GVMp"
 	},
@@ -64078,10 +62520,6 @@
 	},
 /area/station/security/interrogation)
 "buR" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /mob/living/basic/spider/giant{
 	name = "giant spider (316) (928) (114) (7) (405) (789) (10) (518) (352)";
 	dir = 4
@@ -64089,20 +62527,12 @@
 /turf/open/floor/iron/terracotta/diagonal,
 /area/station/security/interrogation)
 "buS" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /turf/open/floor/iron/terracotta/diagonal,
 /area/station/security/interrogation)
 "buT" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	req_access = list()
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -64118,29 +62548,11 @@
 /turf/open/floor/iron/half,
 /area/station/security/interrogation)
 "buU" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
 /obj/effect/decal/cleanable/blood/old{
 	name = "dried pool of blood";
 	color = "#2d0000";
 	icon_state = "floor6";
 	base_icon_state = "floor6"
-	},
-/turf/open/floor/iron,
-/area/station/security/interrogation)
-"buV" = (
-/obj/structure/cable,
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_opposing_corners";
-	alpha = 110;
-	dir = 8;
-	color = "#de3a3a"
 	},
 /turf/open/floor/iron,
 /area/station/security/interrogation)
@@ -64333,8 +62745,7 @@
 "bvm" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "yellow passive vent";
-	pipe_color = "#FFFF00";
-	name = "yellow passive vent"
+	pipe_color = "#FFFF00"
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -64364,38 +62775,33 @@
 	pixel_x = -10;
 	piping_layer = 1;
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "yellow passive gate";
 	pixel_x = -5;
 	piping_layer = 2;
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "yellow passive gate";
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "yellow passive gate";
 	pixel_x = 5;
 	piping_layer = 4;
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/machinery/atmospherics/components/binary/passive_gate{
 	name = "yellow passive gate";
 	pixel_x = 10;
 	piping_layer = 5;
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow passive gate"
+	on = 1
 	},
 /obj/structure/grille{
 	dir = 1
@@ -64442,8 +62848,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "yellow volumetric gas pump";
 	pipe_color = "#FFFF00";
-	on = 1;
-	name = "yellow volumetric gas pump"
+	on = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -64460,8 +62865,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "yellow connector port";
 	dir = 1;
-	pipe_color = "#FFFF00";
-	name = "yellow connector port"
+	pipe_color = "#FFFF00"
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -64474,7 +62878,6 @@
 	name = "Plasma canister";
 	anchored = 1;
 	req_access = list();
-	name = "Plasma canister";
 	icon_state = "/obj/machinery/portable_atmospherics/canister/plasma";
 	base_icon_state = "/obj/machinery/portable_atmospherics/canister/plasma";
 	greyscale_colors = "#f62800#000000";
@@ -64853,21 +63256,6 @@
 "bvT" = (
 /turf/closed/wall,
 /area/station/security/interrogation)
-"bvU" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/obj/effect/turf_decal{
-	icon_state = "tile_half";
-	alpha = 110;
-	dir = 1;
-	color = "#de3a3a"
-	},
-/turf/open/floor/iron/edge{
-	dir = 1
-	},
-/area/station/security/interrogation)
 "bvV" = (
 /obj/structure/cable,
 /obj/item/stack/sheet/glass{
@@ -64875,10 +63263,6 @@
 	pixel_x = 4;
 	pixel_y = -1;
 	amount = 41
-	},
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -64888,18 +63272,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/interrogation)
-"bvW" = (
-/obj/structure/spider/stickyweb{
-	pixel_x = -9;
-	pixel_y = -9
-	},
-/turf/open/floor/iron,
-/area/station/security/interrogation)
 "bvX" = (
 /obj/machinery/door/airlock/security{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ants,
@@ -64993,8 +63369,7 @@
 "bwc" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -65012,8 +63387,7 @@
 "bwd" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
@@ -65348,8 +63722,7 @@
 "bwy" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -65384,8 +63757,7 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal{
@@ -65693,7 +64065,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list(/datum/gas/water_vapor)
 	},
@@ -65756,8 +64127,7 @@
 "bxe" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -65976,8 +64346,7 @@
 "bxu" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/security/interrogation)
@@ -66171,10 +64540,6 @@
 	},
 /area/station/engineering/atmos)
 "bxO" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_Ef5lEdmUbptN"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_Ef5lEdmUbptN"
 	},
@@ -67069,8 +65434,7 @@
 "bzj" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
@@ -67635,7 +65999,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -67703,8 +66066,7 @@
 "bAp" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -67927,8 +66289,7 @@
 "bAJ" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/old{
@@ -67942,8 +66303,7 @@
 "bAK" = (
 /obj/machinery/door/airlock/security{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -67990,8 +66350,7 @@
 "bAQ" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
@@ -68042,10 +66401,6 @@
 	},
 /area/station/engineering/atmos)
 "bAU" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_4MMDBq1MBjeE"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_4MMDBq1MBjeE"
 	},
@@ -68720,8 +67075,7 @@
 "bBC" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer2,
@@ -68945,8 +67299,7 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/white,
@@ -68971,10 +67324,6 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/cryo)
 "bBX" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_leAbuL21bjMc"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden{
 	persistence_pipe_id = "persistencegas_leAbuL21bjMc"
 	},
@@ -69231,8 +67580,7 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -69494,8 +67842,7 @@
 "bCQ" = (
 /obj/machinery/door/airlock/security{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron/small,
 /area/station/security/prison)
@@ -69596,7 +67943,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -70745,7 +69091,6 @@
 	name = "medical supplies crate";
 	dir = 8;
 	obj_flags = 8388638;
-	name = "medical supplies crate";
 	icon_state = "medicalcrateopen";
 	opened = 1
 	},
@@ -70969,8 +69314,7 @@
 "bDs" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -71213,10 +69557,6 @@
 	},
 /area/station/engineering/atmos)
 "bDJ" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_CemPKUZmU8XW"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_CemPKUZmU8XW"
 	},
@@ -71410,7 +69750,6 @@
 /area/station/medical/cryo)
 "bDS" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	name = "omni Temperature control unit";
 	name = "omni Temperature control unit"
 	},
 /turf/open/floor/iron/white/smooth_large,
@@ -71433,8 +69772,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "green gas pump";
 	dir = 8;
-	pipe_color = "#00FF00";
-	name = "green gas pump"
+	pipe_color = "#00FF00"
 	},
 /turf/open/floor/iron/white/small,
 /area/station/medical/cryo)
@@ -71464,8 +69802,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Storage";
-	req_access = list();
-	name = "Medbay Storage"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/old{
 	name = "dried pool of blood";
@@ -71892,8 +70229,7 @@
 /obj/item/multitool/ai_detect,
 /obj/structure/closet/crate{
 	name = "syndicate gear crate";
-	obj_flags = 30;
-	name = "syndicate gear crate"
+	obj_flags = 30
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_half";
@@ -71909,8 +70245,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "green connector port";
 	dir = 8;
-	pipe_color = "#00FF00";
-	name = "green connector port"
+	pipe_color = "#00FF00"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen{
 	initial_gas_mix = "o2=177;TEMP=293.2";
@@ -71963,8 +70298,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/door/airlock/medical{
 	name = "Chemistry";
-	req_access = list();
-	name = "Chemistry"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/old{
 	name = "dried pool of blood";
@@ -72212,8 +70546,7 @@
 "bEV" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -72239,8 +70572,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "tile_opposing_corners";
@@ -72727,7 +71059,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -72832,7 +71163,6 @@
 	name = "virus crate";
 	req_access = list("cmo");
 	obj_flags = 8388638;
-	name = "virus crate";
 	icon_state = "plasmacrateopen";
 	opened = 1;
 	locked = 0
@@ -72958,8 +71288,7 @@
 "bFT" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry";
-	req_access = list();
-	name = "Chemistry"
+	req_access = list()
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/medical/chemistry{
@@ -73322,10 +71651,6 @@
 	},
 /area/station/engineering/atmos)
 "bGv" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_vhF3z3UYLeg5"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_vhF3z3UYLeg5"
 	},
@@ -73664,8 +71989,7 @@
 "bGR" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -74276,8 +72600,7 @@
 "bHB" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil{
@@ -75181,7 +73504,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -75560,8 +73882,7 @@
 "bIW" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/glass,
 /area/station/cargo/miningdock)
@@ -75827,10 +74148,6 @@
 	},
 /area/station/engineering/atmos)
 "bJn" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_xPUzkey7iBoq"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_xPUzkey7iBoq"
 	},
@@ -75865,8 +74182,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -75912,8 +74228,7 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -76260,8 +74575,7 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -76663,8 +74977,7 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -77261,8 +75574,7 @@
 "bLg" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -77281,8 +75593,7 @@
 "bLi" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/footprints{
@@ -77479,8 +75790,7 @@
 "bLu" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -77603,7 +75913,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -77698,8 +76007,7 @@
 "bLK" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -77934,10 +76242,6 @@
 	},
 /area/station/engineering/atmos)
 "bMe" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_WebWqgHE6ttG"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_WebWqgHE6ttG"
 	},
@@ -79051,8 +77355,7 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "siding_plain";
@@ -79388,8 +77691,7 @@
 	},
 /obj/machinery/door/airlock/hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/holosign/barrier/atmos,
 /obj/structure/cable,
@@ -79535,8 +77837,7 @@
 "bNK" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -79660,7 +77961,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -79888,8 +78188,7 @@
 "bOh" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -80008,8 +78307,7 @@
 "bOp" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/turf_decal{
 	icon_state = "siding_plain";
@@ -80149,8 +78447,7 @@
 /obj/item/seeds/random,
 /obj/structure/closet/crate/hydroponics{
 	name = "exotic seeds crate";
-	obj_flags = 10;
-	name = "exotic seeds crate"
+	obj_flags = 10
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
@@ -80207,10 +78504,6 @@
 	},
 /area/station/engineering/atmos)
 "bOB" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_arPH4rubCVQz"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_arPH4rubCVQz"
 	},
@@ -80544,8 +78837,7 @@
 "bPa" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/oil{
@@ -83555,8 +81847,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/door/airlock/mining{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/cargo/drone_bay)
@@ -83593,7 +81884,6 @@
 /obj/structure/closet/crate{
 	name = "medical vending crate";
 	obj_flags = 8388618;
-	name = "medical vending crate";
 	icon_state = "crateopen";
 	opened = 1
 	},
@@ -83625,7 +81915,6 @@
 	name = "toolbox crate - #3815";
 	dir = 8;
 	obj_flags = 8388618;
-	name = "toolbox crate - #3815";
 	icon_state = "engi_crateopen";
 	opened = 1
 	},
@@ -83892,8 +82181,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "blue connector port";
 	dir = 4;
-	pipe_color = "#0000FF";
-	name = "blue connector port"
+	pipe_color = "#0000FF"
 	},
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = -2;
@@ -84008,8 +82296,7 @@
 "bQP" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	name = "dried footprints";
@@ -84124,10 +82411,6 @@
 	},
 /area/station/engineering/atmos)
 "bQX" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_OXMODLhEgZiz"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_OXMODLhEgZiz"
 	},
@@ -84296,8 +82579,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "blue volumetric gas pump";
 	dir = 4;
-	pipe_color = "#0000FF";
-	name = "blue volumetric gas pump"
+	pipe_color = "#0000FF"
 	},
 /turf/open/floor/iron/textured{
 	broken = 1
@@ -84524,8 +82806,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "blue connector port";
 	dir = 8;
-	pipe_color = "#0000FF";
-	name = "blue connector port"
+	pipe_color = "#0000FF"
 	},
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
@@ -84825,7 +83106,6 @@
 	dir = 1;
 	req_access = list("eva");
 	obj_flags = 8388638;
-	name = "plasmaman EVA crate";
 	locked = 0
 	},
 /obj/effect/decal/cleanable/wrapping,
@@ -85401,7 +83681,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -85814,8 +84093,7 @@
 /obj/structure/closet/crate/engineering{
 	name = "toolbox crate - #6846";
 	dir = 8;
-	obj_flags = 8388618;
-	name = "toolbox crate - #6846"
+	obj_flags = 8388618
 	},
 /obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/iron/large,
@@ -85824,8 +84102,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	name = "red connector port";
 	piping_layer = 4;
-	pipe_color = "#FF0000";
-	name = "red connector port"
+	pipe_color = "#FF0000"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen{
 	initial_gas_mix = "TEMP=0";
@@ -85841,8 +84118,7 @@
 	pixel_x = 5;
 	piping_layer = 4;
 	pipe_color = "#FF0000";
-	on = 1;
-	name = "red volumetric gas pump"
+	on = 1
 	},
 /obj/item/healthanalyzer{
 	dir = 4;
@@ -86077,10 +84353,6 @@
 	},
 /area/station/engineering/atmos)
 "bTg" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_sJiHYRy3qURV"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_sJiHYRy3qURV"
 	},
@@ -86844,8 +85116,7 @@
 "bUg" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -87228,8 +85499,7 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14.8;n2=47.8;TEMP=259.6"
@@ -87285,8 +85555,7 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/blood/oil{
 	name = "pool of oil";
@@ -87373,8 +85642,7 @@
 "bUP" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Airlock";
-	req_access = list();
-	name = "Airlock"
+	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -87464,7 +85732,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -87600,8 +85867,7 @@
 /obj/machinery/door/airlock/maintenance/external{
 	name = "Airlock";
 	req_access = list();
-	emergency = 1;
-	name = "Airlock"
+	emergency = 1
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -87614,8 +85880,7 @@
 /obj/machinery/door/airlock/maintenance/external{
 	name = "Airlock";
 	req_access = list();
-	emergency = 1;
-	name = "Airlock"
+	emergency = 1
 	},
 /obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/plating,
@@ -87888,10 +86153,6 @@
 	},
 /area/station/engineering/atmos)
 "bVz" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_jfYZrql1CC2Z"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_jfYZrql1CC2Z"
 	},
@@ -88501,7 +86762,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -88589,10 +86849,6 @@
 	},
 /area/station/engineering/atmos)
 "bWC" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_6BppRsHZNsYf"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_6BppRsHZNsYf"
 	},
@@ -88810,7 +87066,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -88921,10 +87176,6 @@
 	},
 /area/station/engineering/atmos)
 "bXb" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_DW1FfxOoVyJG"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_DW1FfxOoVyJG"
 	},
@@ -89122,7 +87373,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -89201,10 +87451,6 @@
 	},
 /area/station/engineering/atmos)
 "bXx" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_oLOuUttLzss1"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_oLOuUttLzss1"
 	},
@@ -89373,7 +87619,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -89459,10 +87704,6 @@
 	},
 /area/station/engineering/atmos)
 "bXQ" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_xrIQKnwc4Cfm"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_xrIQKnwc4Cfm"
 	},
@@ -89629,7 +87870,6 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	name = "omni gas filter";
 	dir = 8;
-	name = "omni gas filter";
 	flipped = 8;
 	filter_type = list()
 	},
@@ -89703,10 +87943,6 @@
 	},
 /area/station/engineering/atmos)
 "bYi" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_hKWwI0g8Nirk"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_hKWwI0g8Nirk"
 	},
@@ -89975,10 +88211,6 @@
 	},
 /area/station/engineering/atmos)
 "bYA" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_mWRPFWE1eWUF"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	persistence_pipe_id = "persistencegas_mWRPFWE1eWUF"
 	},
@@ -90278,10 +88510,6 @@
 	},
 /area/station/engineering/atmos)
 "bYY" = (
-/obj/effect/mapping_helpers/pipe_gas{
-	gas_mix = "TEMP=0";
-	id_filter = "persistencegas_xXALkEn0ugBr"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible{
 	persistence_pipe_id = "persistencegas_xXALkEn0ugBr"
 	},
@@ -90491,8 +88719,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "dark passive vent";
 	dir = 8;
-	pipe_color = "#454545";
-	name = "dark passive vent"
+	pipe_color = "#454545"
 	},
 /turf/open/space/basic,
 /area/space)
@@ -115336,7 +113563,7 @@ aaa
 aaa
 aaa
 ayJ
-azB
+azf
 azg
 azC
 ayN
@@ -118716,7 +116943,7 @@ aKS
 aKR
 aKQ
 aKQ
-aKU
+aKV
 aKV
 aKV
 aKV
@@ -118957,7 +117184,7 @@ aaa
 aaa
 aaa
 aJN
-aMf
+aMo
 aMg
 aMh
 aMi
@@ -118970,7 +117197,7 @@ aMi
 aMi
 aMi
 aMi
-aMf
+aMo
 aMl
 aMm
 aMn
@@ -119214,9 +117441,9 @@ aaa
 aaa
 aaa
 aJN
-aNA
+bvN
 aNB
-aNC
+bvO
 aND
 aNE
 aNE
@@ -119985,7 +118212,7 @@ aRi
 aRe
 aRj
 aKM
-aMf
+aMo
 aMg
 aRk
 aND
@@ -120242,7 +118469,7 @@ aRe
 aRe
 aSp
 aKM
-aMf
+aMo
 aMg
 aSq
 aND
@@ -120499,7 +118726,7 @@ aTC
 aTD
 aKM
 aKM
-aTE
+bpv
 aMg
 aTF
 aND
@@ -121014,7 +119241,7 @@ aVW
 aKM
 aVX
 aVY
-aVZ
+bmS
 aKR
 aWa
 aWb
@@ -121274,8 +119501,8 @@ aMi
 aMg
 aKR
 aXg
-aXh
-aXh
+bMy
+bMy
 aXi
 aNI
 aXj
@@ -121527,12 +119754,12 @@ aVT
 aWZ
 aYo
 aYp
-aMf
+aMo
 aMg
 aKR
 aXg
-aXh
-aXh
+bMy
+bMy
 aYq
 aNI
 aNL
@@ -121780,16 +120007,16 @@ aWZ
 aZb
 aZc
 aZd
-aZe
+aVU
 aWZ
 aZf
 aYp
-aMf
+aMo
 aMg
 aKR
 aZg
 aZh
-aXh
+bMy
 aZi
 aNL
 aZj
@@ -122041,7 +120268,7 @@ aZT
 aZU
 aZV
 aZW
-aMf
+aMo
 aMg
 aKR
 aZX
@@ -122299,7 +120526,7 @@ baG
 baG
 baG
 baH
-aVZ
+bmS
 aKR
 baI
 baJ
@@ -122555,7 +120782,7 @@ bbs
 bbt
 bbu
 bbv
-aMf
+aMo
 bbw
 bbx
 bby
@@ -122816,9 +121043,9 @@ bco
 aMg
 aKR
 aXg
-aXh
+bMy
 bcp
-aXh
+bMy
 bcq
 bcr
 bcs
@@ -123069,13 +121296,13 @@ bcY
 bcZ
 bda
 bdb
-bdc
+bKs
 bdd
 aKR
 aXg
-aXh
+bMy
 bcp
-aXh
+bMy
 aYs
 bde
 bdf
@@ -123326,9 +121553,9 @@ bdY
 bdZ
 bea
 bbo
-aMf
-beb
-bec
+aMo
+bin
+bio
 bed
 bee
 bef
@@ -123584,7 +121811,7 @@ bfd
 bfe
 bbo
 bff
-beb
+bin
 bfg
 bfh
 bfi
@@ -123841,7 +122068,7 @@ bge
 bgf
 bbo
 aOP
-beb
+bin
 bgg
 bfh
 bgh
@@ -126163,7 +124390,7 @@ bnU
 bnU
 bgh
 bkG
-bpw
+bpy
 bpx
 bpy
 bpz
@@ -127448,7 +125675,7 @@ bub
 buc
 bud
 bue
-buf
+buW
 aNL
 bug
 buh
@@ -127704,7 +125931,7 @@ buS
 buS
 buT
 buU
-buV
+bym
 buW
 aNL
 buX
@@ -127960,9 +126187,9 @@ bvQ
 bvR
 bvS
 bvT
-bvU
+byl
 bvV
-bvW
+bxv
 bvX
 bvY
 bvZ
