@@ -1,0 +1,672 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/turf/closed/indestructible/wood,
+/area/space)
+"cL" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
+/area/template_noop)
+"da" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/template_noop)
+"dt" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"dx" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/wood,
+/area/template_noop)
+"dy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/template_noop)
+"fh" = (
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"jf" = (
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/sign/warning/fire/directional/east,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/wood,
+/area/template_noop)
+"jQ" = (
+/turf/closed/indestructible/wood,
+/area/template_noop)
+"mM" = (
+/obj/structure/bookcase,
+/turf/open/floor/wood,
+/area/template_noop)
+"oU" = (
+/turf/open/floor/wood,
+/area/space)
+"ra" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"sT" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"vO" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/wood,
+/area/template_noop)
+"wQ" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/wood,
+/area/template_noop)
+"xd" = (
+/turf/open/floor/wood,
+/area/template_noop)
+"zs" = (
+/obj/structure/table/wood,
+/obj/item/pen/blue{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/pen/red,
+/turf/open/floor/wood,
+/area/template_noop)
+"zx" = (
+/obj/machinery/door/window/left/directional/west{
+	name = "Library Desk Door";
+	req_access = list("library");
+	pixel_x = 3
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"zS" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"DI" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/wood,
+/area/template_noop)
+"DP" = (
+/obj/structure/chair/comfy/teal,
+/turf/open/floor/wood,
+/area/template_noop)
+"Es" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
+/turf/open/floor/wood,
+/area/space)
+"Gp" = (
+/obj/structure/table/wood,
+/obj/item/camera_film{
+	pixel_y = 9
+	},
+/obj/item/camera_film{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"Gz" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"GX" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/wood,
+/area/template_noop)
+"Kq" = (
+/obj/machinery/door/morgue,
+/turf/open/floor/wood,
+/area/template_noop)
+"Re" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"Wf" = (
+/obj/structure/table/wood,
+/obj/item/taperecorder,
+/obj/item/tape,
+/turf/open/floor/wood,
+/area/template_noop)
+"YM" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"YX" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/template_noop)
+
+(1,1,1) = {"
+oU
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+"}
+(2,1,1) = {"
+oU
+xd
+jQ
+jQ
+jQ
+jQ
+jQ
+jQ
+jQ
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+"}
+(3,1,1) = {"
+oU
+xd
+jQ
+DI
+xd
+YX
+xd
+GX
+jQ
+xd
+xd
+jQ
+jQ
+jQ
+jQ
+dy
+dy
+xd
+xd
+xd
+"}
+(4,1,1) = {"
+oU
+xd
+jQ
+xd
+xd
+YX
+xd
+xd
+jQ
+xd
+xd
+jQ
+xd
+xd
+xd
+xd
+dy
+dy
+xd
+xd
+"}
+(5,1,1) = {"
+oU
+xd
+jQ
+DI
+xd
+xd
+xd
+GX
+jQ
+xd
+xd
+jQ
+vO
+xd
+mM
+xd
+xd
+dy
+dy
+xd
+"}
+(6,1,1) = {"
+oU
+xd
+jQ
+jQ
+jQ
+xd
+jQ
+jQ
+jQ
+xd
+xd
+jQ
+vO
+xd
+mM
+xd
+xd
+xd
+dy
+dy
+"}
+(7,1,1) = {"
+oU
+xd
+jQ
+xd
+xd
+xd
+xd
+xd
+jQ
+xd
+xd
+jQ
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+dy
+"}
+(8,1,1) = {"
+oU
+xd
+jQ
+xd
+da
+xd
+da
+xd
+jQ
+jQ
+jQ
+jQ
+xd
+xd
+xd
+mM
+xd
+xd
+xd
+jQ
+"}
+(9,1,1) = {"
+oU
+xd
+jQ
+xd
+da
+xd
+da
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+mM
+mM
+mM
+xd
+jQ
+"}
+(10,1,1) = {"
+oU
+xd
+jQ
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+ra
+ra
+xd
+xd
+mM
+xd
+xd
+xd
+jQ
+"}
+(11,1,1) = {"
+af
+jQ
+jQ
+xd
+xd
+zS
+Wf
+zx
+jQ
+jQ
+jQ
+YX
+YX
+dt
+xd
+xd
+xd
+xd
+Re
+jQ
+"}
+(12,1,1) = {"
+Es
+jf
+dx
+xd
+xd
+zs
+xd
+xd
+Kq
+fh
+jQ
+DP
+YX
+dt
+xd
+xd
+xd
+xd
+Re
+jQ
+"}
+(13,1,1) = {"
+af
+jQ
+jQ
+xd
+xd
+Gz
+sT
+Gp
+jQ
+jQ
+jQ
+YX
+YX
+dt
+xd
+xd
+xd
+xd
+Re
+jQ
+"}
+(14,1,1) = {"
+oU
+xd
+jQ
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+YM
+YM
+xd
+xd
+mM
+xd
+xd
+xd
+jQ
+"}
+(15,1,1) = {"
+oU
+xd
+jQ
+xd
+da
+xd
+da
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+mM
+mM
+mM
+xd
+jQ
+"}
+(16,1,1) = {"
+oU
+xd
+jQ
+xd
+da
+xd
+da
+xd
+jQ
+jQ
+jQ
+jQ
+xd
+xd
+xd
+mM
+xd
+xd
+xd
+jQ
+"}
+(17,1,1) = {"
+oU
+xd
+jQ
+xd
+xd
+xd
+xd
+xd
+jQ
+xd
+xd
+jQ
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+dy
+"}
+(18,1,1) = {"
+oU
+xd
+jQ
+jQ
+jQ
+xd
+jQ
+jQ
+jQ
+xd
+xd
+jQ
+vO
+xd
+mM
+xd
+xd
+xd
+dy
+dy
+"}
+(19,1,1) = {"
+oU
+xd
+jQ
+cL
+xd
+xd
+xd
+YX
+jQ
+xd
+xd
+jQ
+vO
+xd
+mM
+xd
+xd
+dy
+dy
+xd
+"}
+(20,1,1) = {"
+oU
+xd
+jQ
+cL
+xd
+xd
+xd
+wQ
+jQ
+xd
+xd
+jQ
+xd
+xd
+xd
+xd
+dy
+dy
+xd
+xd
+"}
+(21,1,1) = {"
+oU
+xd
+jQ
+YX
+xd
+xd
+xd
+wQ
+jQ
+xd
+xd
+jQ
+jQ
+jQ
+jQ
+dy
+dy
+xd
+xd
+xd
+"}
+(22,1,1) = {"
+oU
+xd
+jQ
+jQ
+jQ
+jQ
+jQ
+jQ
+jQ
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+"}
+(23,1,1) = {"
+oU
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+"}
