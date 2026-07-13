@@ -974,6 +974,80 @@
 	storage_type = /datum/storage/hanzo_sheath
 	stored_blade = /obj/item/nullrod/claymore/katana
 
+/obj/item/storage/belt/sheath/hanzo_katana/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_STORED_ITEM, PROC_REF(apply_anti_magic))
+
+/obj/item/storage/belt/sheath/hanzo_katana/Destroy(force)
+	. = ..()
+	UnregisterSignal(src, COMSIG_ATOM_STORED_ITEM)
+
+/obj/item/storage/belt/sheath/hanzo_katana/proc/apply_anti_magic(atom/parent, obj/item/stored_item, mob/user)
+	SIGNAL_HANDLER
+
+	var/datum/component/anti_magic/belt_anti_magic = GetComponent(/datum/component/anti_magic)
+	if(belt_anti_magic) // the belt spawned with some kind of native anti magic resistance already
+		return
+
+	var/datum/component/anti_magic/stored_item_anti_magic = stored_item.GetComponent(/datum/component/anti_magic)
+	if(stored_item_anti_magic && (stored_item_anti_magic.inventory_flags & (ITEM_SLOT_BACK|ITEM_SLOT_BELT)))
+		parent.AddComponent(/datum/component/anti_magic, \
+			antimagic_flags = stored_item_anti_magic.antimagic_flags \
+			inventory_flags = stored_item_anti_magic.inventory_flags, \
+			charges = stored_item_anti_magic.charges, \
+			block_magic = stored_item_anti_magic.block_magic, \
+			expiration = stored_item_anti_magic.expiration, \
+			check_blocking = stored_item_anti_magic.check_blocking, \
+		)
+	)
+
+
+
+/obj/item/storage/belt/sheath/Initialize(mapload)
+    . = ..()
+    RegisterSignal(src, COMSIG_ATOM_STORED_ITEM, PROC_REF(apply_anti_magic))
+    RegisterSignal(src, COMSIG_ATOM_REMOVED_ITEM, PROC_REF(remove_anti_magic))
+
+/obj/item/storage/belt/sheath/proc/apply_anti_magic(atom/parent, obj/item/stored_item)
+    SIGNAL_HANDLER
+
+    // If the sheath somehow already has antimagic then skip
+    if(GetComponent(/datum/component/anti_magic))
+        return
+
+    var/datum/component/anti_magic/sword_anti_magic = stored_item.GetComponent(/datum/component/anti_magic)
+    if(!sword_anti_magic)
+        return
+
+    parent.AddComponent(/datum/component/anti_magic, \
+        antimagic_flags = sword_anti_magic.antimagic_flags, \
+        inventory_flags = sword_anti_magic.inventory_flags, \
+        charges = sword_anti_magic.charges, \
+        block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+    )
+
+/obj/item/storage/belt/sheath/proc/remove_anti_magic(atom/parent, obj/item/removed_item)
+    SIGNAL_HANDLER
+
+    var/datum/component/anti_magic/sheath_protection = GetComponent(/datum/component/anti_magic)
+    if(sheath_protection)
+        qdel(sheath_protection)
+
+/// When the plant our gene is hosted in is drained of an anti-magic charge.
+/obj/item/storage/belt/sheath/proc/drain_antimagic(mob/user, obj/item/storage/belt/sheath/our_sheath)
+	to_chat(user, span_warning("[our_plant] hums slightly, and seems to decay a bit."))
+	block_magic?.Invoke(source, parent)
+	if((charges != INFINITY) && charge_cost > 0)
+		charges -= charge_cost
+		if(charges <= 0)
+			expiration?.Invoke(source, parent)
+			qdel(src) // no more antimagic
+
+/// When the plant our gene is hosted in is drained of all of its anti-magic charges.
+/obj/item/storage/belt/sheath/proc/expire(mob/user, obj/item/storage/belt/sheath/our_sheath)
+	to_chat(user, span_warning("[our_plant] rapidly turns into ash!"))
+	qdel(our_plant)
+
 /obj/item/storage/belt/sheath/hanzo_katana/empty
 	stored_blade = NONE
 
