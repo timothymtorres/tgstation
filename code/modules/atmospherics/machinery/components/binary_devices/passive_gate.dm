@@ -17,6 +17,8 @@ Passive gate is similar to the regular pump except:
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
 	use_power = NO_POWER_USE
+	light_mask_on = TRUE
+	light_mask_off = TRUE
 	///Set the target pressure the component should arrive to
 	var/target_pressure = ONE_ATMOSPHERE
 

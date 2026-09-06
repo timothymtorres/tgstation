@@ -131,6 +131,9 @@
 	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
 
+	if(on && is_operational)
+		. += emissive_appearance(icon, "thermo-emissive", src, alpha = src.alpha)
+
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
 	. += span_notice("With the panel open:")

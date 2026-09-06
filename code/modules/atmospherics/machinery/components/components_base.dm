@@ -18,6 +18,10 @@
 	var/list/datum/gas_mixture/airs
 	///Handles whether the custom reconcilation handling should be used
 	var/custom_reconcilation = FALSE
+	///The light mask for emissive effects while on
+	var/light_mask_on = FALSE
+	///The light mask for emissive effects while off (but still powered)
+	var/light_mask_off = FALSE
 
 /obj/machinery/atmospherics/components/get_save_vars()
 	. = ..()
@@ -49,6 +53,11 @@
  */
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
+
+/obj/machinery/atmospherics/components/update_overlays()
+	. = ..()
+	if(is_operational && ((on && light_mask_on) || (!on && light_mask_off)))
+		. += emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/machinery/atmospherics/components/on_hide(datum/source, underfloor_accessibility)
 	hide_pipe(underfloor_accessibility)

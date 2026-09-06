@@ -7,6 +7,7 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tpump"
 	vent_movement = NONE
+	light_mask_on = TRUE
 	///Percent of the heat delta to transfer
 	var/heat_transfer_rate = 0
 	///Maximum allowed transfer percentage

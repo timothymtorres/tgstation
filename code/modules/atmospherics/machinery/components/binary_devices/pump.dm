@@ -19,6 +19,7 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
 	vent_movement = NONE
+	light_mask_on = TRUE
 	///Pressure that the pump will reach when on
 	var/target_pressure = ONE_ATMOSPHERE
 
@@ -53,6 +54,15 @@
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
 	icon_state = (on && is_operational) ? "pump_on-[set_overlay_offset(piping_layer)]" : "pump_off-[set_overlay_offset(piping_layer)]"
+
+/*
+/obj/machinery/atmospherics/components/binary/pump/update_overlays()
+    . = ..()
+
+    if(on && is_operational)
+        var/offset = set_overlay_offset(piping_layer)
+        . += emissive_appearance(icon, "pump_on_emissive-[offset]", src, alpha = src.alpha)
+*/
 
 /obj/machinery/atmospherics/components/binary/pump/process_atmos()
 	if(!on || !is_operational)

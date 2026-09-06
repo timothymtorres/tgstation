@@ -7,6 +7,8 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pvalve"
 	use_power = NO_POWER_USE
+	light_mask_on = TRUE
+	light_mask_off = TRUE
 	///Amount of pressure needed before the valve for it to open
 	var/target_pressure = ONE_ATMOSPHERE
 	///Check if the gas is moving from one pipenet to the other
