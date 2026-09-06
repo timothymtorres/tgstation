@@ -520,6 +520,23 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	return TRUE
 
+/obj/machinery/airalarm/update_appearance(updates)
+	. = ..()
+
+	if(panel_open || (machine_stat & (NOPOWER|BROKEN)) || shorted)
+		set_light(0)
+		return
+
+	var/color
+	if(danger_level == AIR_ALARM_ALERT_HAZARD)
+		color = "#FF0022" // red
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
+		color = "#FFAA00" // yellow
+	else
+		color = "#00FFCC" // teal
+
+	set_light(1.2, 3.5, color, 90, dir)
+
 /obj/machinery/airalarm/update_icon_state()
 	if(panel_open)
 		switch(buildstage)
