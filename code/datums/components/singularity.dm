@@ -234,11 +234,13 @@
 
 /datum/component/singularity/proc/move()
 	var/drifting_dir = pick(GLOB.alldirs - last_failed_movement)
+	var/atom/movable/atom_parent = parent
 
 	if (!QDELETED(target) && prob(chance_to_move_to_target))
-		drifting_dir = get_dir(parent, target)
+		drifting_dir = get_dir(atom_parent, target)
 
-	step(parent, drifting_dir)
+	atom_parent.forceMove(get_step(atom_parent, drifting_dir))
+	//step(parent, drifting_dir)
 
 /datum/component/singularity/proc/moved(datum/source, atom/new_location)
 	SIGNAL_HANDLER
@@ -247,15 +249,15 @@
 	var/current_direction = atom_parent.dir
 	var/turf/current_turf = get_turf(parent)
 
-	for(var/dir in GLOB.cardinals)
-		if(current_direction & dir)
-			current_turf = get_step(current_turf, dir)
-			if(!current_turf)
-				break
-			// eat the stuff if we're going to move into it so it doesn't mess up our movement
-			for(var/atom/thing_on_turf in current_turf.contents)
-				consume(src, thing_on_turf)
-			consume(src, current_turf)
+	current_turf = get_step(current_turf, current_direction)
+	if(current_turf)
+		// eat the stuff if we're going to move into it so it doesn't mess up our movement
+		for(var/atom/thing_on_turf in current_turf.contents)
+			if(thing_on_turf == parent)
+				continue // don't eat yourself
+			consume(src, thing_on_turf)
+
+		consume(src, current_turf)
 
 	if(disregard_failed_movements || check_turfs_in(current_direction))
 		last_failed_movement = null

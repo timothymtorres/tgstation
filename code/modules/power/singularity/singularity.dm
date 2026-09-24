@@ -49,47 +49,100 @@
 	var/time_since_act = 0
 	/// What the game tells ghosts when you make one
 	var/ghost_notification_message = "IT'S LOOSE"
+	/// This points to the master singularity
+	var/obj/singularity/master
+	/// This holds all the multi-z clones
+	var/list/obj/singularity/clones
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
-/obj/singularity/Initialize(mapload, starting_energy)
-	. = ..()
+/obj/singularity/Initialize(mapload, starting_energy, obj/singularity/spawning_master)
+    . = ..()
 
-	energy = starting_energy || energy
+    if(spawning_master)
+        master = spawning_master
+        energy = master.energy
+        current_size = master.current_size
+        allowed_size = master.allowed_size
+        move_self = FALSE // Clones do not roam on their own
+    else
+        energy = starting_energy || energy
 
-	START_PROCESSING(SSsinguloprocess, src)
-	SSpoints_of_interest.make_point_of_interest(src)
+    START_PROCESSING(SSsinguloprocess, src)
+    SSpoints_of_interest.make_point_of_interest(src)
 
-	var/datum/component/singularity/new_component = AddComponent(
-		singularity_component_type, \
-		consume_callback = CALLBACK(src, PROC_REF(consume)), \
-		roaming = (move_self && current_size >= STAGE_TWO), \
-	)
+    var/datum/component/singularity/new_component = AddComponent(
+        singularity_component_type, \
+        consume_callback = CALLBACK(src, PROC_REF(consume)), \
+        roaming = (move_self && current_size >= STAGE_TWO), \
+    )
 
-	singularity_component = WEAKREF(new_component)
+    singularity_component = WEAKREF(new_component)
 
-	check_energy()
+    check_energy()
 
-	for (var/obj/machinery/power/singularity_beacon/singu_beacon as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/singularity_beacon))
-		if (singu_beacon.active)
-			new_component.target = singu_beacon
-			break
+    for (var/obj/machinery/power/singularity_beacon/singu_beacon as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/singularity_beacon))
+        if (singu_beacon.active)
+            new_component.target = singu_beacon
+            break
 
-	if (!mapload)
-		notify_ghosts(
-			ghost_notification_message,
-			source = src,
-			header = ghost_notification_message,
-			ghost_sound = 'sound/machines/warning-buzzer.ogg',
-			notify_volume = 75,
-		)
+    if(!master)
+        spawn_clones()
+
+    if (!mapload && !master)
+        notify_ghosts(
+            ghost_notification_message,
+            source = src,
+            header = ghost_notification_message,
+            ghost_sound = 'sound/machines/warning-buzzer.ogg',
+            notify_volume = 75,
+        )
 
 /obj/singularity/Destroy()
-	STOP_PROCESSING(SSsinguloprocess, src)
-	return ..()
+    STOP_PROCESSING(SSsinguloprocess, src)
+
+    if(master && !QDELETED(master))
+        qdel(master)
+    else if(length(clones))
+        for(var/obj/singularity/clone in clones)
+            if(!QDELETED(clone))
+                qdel(clone)
+        clones.Cut()
+
+    return ..()
+
+/// Generates clones on connected z-levels
+/obj/singularity/proc/spawn_clones()
+    clones = list()
+    var/turf/current_turf = get_turf(src)
+
+    var/check_z = current_turf.z
+    while(SSmapping.level_trait(check_z, ZTRAIT_UP))
+        check_z++
+        var/turf/above = locate(current_turf.x, current_turf.y, check_z)
+        if(above)
+            clones += new type(above, null, src)
+
+    check_z = current_turf.z
+    while(SSmapping.level_trait(check_z, ZTRAIT_DOWN))
+        check_z--
+        var/turf/below = locate(current_turf.x, current_turf.y, check_z)
+        if(below)
+            clones += new type(below, null, src)
+
+/obj/singularity/Moved(atom/old_loc, movement_dir)
+    . = ..()
+    if(master)
+        return // Clones are dragged by the master
+
+    for(var/obj/singularity/clone in clones)
+        var/turf/target_turf = locate(x, y, clone.z)
+        if(target_turf)
+            clone.forceMove(target_turf)
+            clone.setDir(dir)
 
 /obj/singularity/attack_tk(mob/user)
 	if(!iscarbon(user))
@@ -160,15 +213,18 @@
 	return TRUE
 
 /obj/singularity/process(seconds_per_tick)
-	time_since_act += seconds_per_tick
-	if(time_since_act < 2)
-		return
-	time_since_act = 0
-	if(current_size >= STAGE_TWO)
-		if(prob(event_chance))
-			event()
-	dissipate(seconds_per_tick)
-	check_energy()
+    if(master)
+        return // master handles shit
+
+    time_since_act += seconds_per_tick
+    if(time_since_act < 2)
+        return
+    time_since_act = 0
+    if(current_size >= STAGE_TWO)
+        if(prob(event_chance))
+            event()
+    dissipate(seconds_per_tick)
+    check_energy()
 
 /obj/singularity/proc/dissipate(seconds_per_tick)
 	if (!dissipate)
@@ -236,6 +292,10 @@
 				dissipate_delay = 4
 				time_since_last_dissipiation = 0
 				dissipate_strength = 20
+				bound_width = 96
+				bound_height = 96
+				bound_x = -32
+				bound_y = -32
 		if(STAGE_FOUR)
 			if(check_cardinals_range(3, TRUE))
 				current_size = STAGE_FOUR
@@ -248,6 +308,10 @@
 				dissipate_delay = 10
 				time_since_last_dissipiation = 0
 				dissipate_strength = 10
+				bound_width = 160
+				bound_height = 160
+				bound_x = -64
+				bound_y = -64
 		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
 			icon = 'icons/effects/288x288.dmi'
@@ -266,6 +330,10 @@
 			new_grav_pull = 15
 			new_consume_range = 5
 			dissipate = FALSE
+			bound_width = 288
+			bound_height = 288
+			bound_x = -128
+			bound_y = -128
 
 	if(temp_allowed_size == STAGE_SIX)
 		AddComponent(/datum/component/vision_hurting)
@@ -282,6 +350,11 @@
 
 	if(current_size == allowed_size)
 		investigate_log("grew to size [current_size].", INVESTIGATE_ENGINE)
+
+		if(!master && length(clones))
+			for(var/obj/singularity/clone in clones)
+				clone.expand(current_size)
+
 		return TRUE
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
@@ -312,36 +385,54 @@
 	return TRUE
 
 /obj/singularity/proc/consume(atom/thing)
-	if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter && !collapsing)
-		consume_boh(thing)
-		return
+    if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter && !collapsing)
+        if(master)
+            master.consume_boh(thing)
+        else
+            consume_boh(thing)
+        return
 
-	var/gain = thing.singularity_act(current_size, src)
-	energy += gain
-	if(istype(thing, /obj/machinery/power/supermatter_crystal) && !consumed_supermatter)
-		supermatter_upgrade()
+    var/gain = thing.singularity_act(current_size, src)
+
+    if(master) // transfer energy directly to the master
+        master.energy += gain
+        if(istype(thing, /obj/machinery/power/supermatter_crystal) && !master.consumed_supermatter)
+            master.supermatter_upgrade()
+    else
+        energy += gain
+        if(istype(thing, /obj/machinery/power/supermatter_crystal) && !consumed_supermatter)
+            supermatter_upgrade()
 
 /obj/singularity/proc/supermatter_upgrade()
-	name = "supermatter-charged [initial(name)]"
-	desc = "[initial(desc)] It glows fiercely with inner fire."
-	consumed_supermatter = TRUE
-	set_light(10)
+    name = "supermatter-charged [initial(name)]"
+    desc = "[initial(desc)] It glows fiercely with inner fire."
+    consumed_supermatter = TRUE
+    set_light(10)
+    if(!master && length(clones))
+        for(var/obj/singularity/clone in clones)
+            clone.supermatter_upgrade()
 
 /obj/singularity/proc/consume_boh(obj/boh)
-	collapsing = TRUE
-	name = "unstable [initial(name)]"
-	desc = "[initial(desc)] It seems to be collapsing in on itself."
-	visible_message(
-		message = span_danger("As [src] consumes [boh], it begins to collapse in on itself!"),
-		blind_message = span_hear("You hear aggressive crackling!"),
-		vision_distance = 15,
-	)
-	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = -1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
-	addtimer(CALLBACK(src, PROC_REF(consume_boh_sfx)), 4 SECONDS)
-	animate(src, time = 4 SECONDS, transform = transform.Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
-	animate(time = 0.5 SECONDS, alpha = 0)
-	QDEL_IN(src, 4.1 SECONDS)
-	qdel(boh)
+    collapsing = TRUE
+    name = "unstable [initial(name)]"
+    desc = "[initial(desc)] It seems to be collapsing in on itself."
+    visible_message(
+        message = span_danger("As [src] consumes \the [boh], it begins to collapse in on itself!"),
+        blind_message = span_hear("You hear aggressive crackling!"),
+        vision_distance = 15,
+    )
+    playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = -1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+    addtimer(CALLBACK(src, PROC_REF(consume_boh_sfx)), 4 SECONDS)
+    animate(src, time = 4 SECONDS, transform = transform.Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
+    animate(time = 0.5 SECONDS, alpha = 0)
+
+    if(boh)
+        qdel(boh)
+    QDEL_IN(src, 4.1 SECONDS)
+
+    if(!master && length(clones))
+        for(var/obj/singularity/clone in clones)
+            clone.consume_boh(null)
 
 /obj/singularity/proc/consume_boh_sfx()
 	playsound(loc, 'sound/effects/supermatter.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
