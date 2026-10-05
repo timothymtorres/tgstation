@@ -12,7 +12,11 @@
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/obj/hand
 
-/obj/item/organ/cyberimp/arm/get_overlay_state(image_layer, obj/item/bodypart/limb)
+/obj/item/organ/cyberimp/arm/swap_zone(target_zone)
+	. = ..()
+	update_overlay_state()
+
+/obj/item/organ/cyberimp/arm/get_overlay_state()
 	return "[aug_overlay][zone == BODY_ZONE_L_ARM ? "_left" : "_right"]"
 
 /obj/item/organ/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
@@ -66,11 +70,17 @@
 	. = ..()
 	if(ispath(active_item))
 		active_item = new active_item(src)
+		active_item.set_custom_materials(null)
 		items_list += WEAKREF(active_item)
 
 	for(var/typepath in items_to_create)
 		var/atom/new_item = new typepath(src)
+		new_item.set_custom_materials(null)
 		items_list += WEAKREF(new_item)
+
+	if(hand_state)
+		// Overlay is done in two layers, "[state]" and "[state]_hand"
+		bodypart_aug?.add_layer("hand", BODYPARTS_HIGH_LAYER)
 
 /obj/item/organ/cyberimp/arm/toolkit/Destroy()
 	hand = null
@@ -117,22 +127,6 @@
 		to_chat(owner, span_warning("The electromagnetic pulse causes [src] to malfunction!"))
 		// give the owner an idea about why his implant is glitching
 		Retract()
-
-/obj/item/organ/cyberimp/arm/toolkit/get_overlay(image_layer, obj/item/bodypart/limb)
-	if (!hand_state)
-		return ..()
-
-	var/mutable_appearance/arm_overlay = mutable_appearance(
-		icon = aug_icon,
-		icon_state = get_overlay_state(),
-		layer = image_layer,
-	)
-	var/mutable_appearance/hand_overlay = mutable_appearance(
-		icon = aug_icon,
-		icon_state = "[get_overlay_state()]_hand",
-		layer = -BODYPARTS_HIGH_LAYER,
-	)
-	return list(arm_overlay, hand_overlay)
 
 /**
  * Called when the mob uses the "drop item" hotkey
@@ -278,6 +272,7 @@
 		/obj/item/wirecutters/cyborg,
 		/obj/item/multitool/cyborg,
 	)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75)
 
 //The order of the item list for this implant is not alphabetized due to it actually affecting how it shows up playerside when opening the implant
 /obj/item/organ/cyberimp/arm/toolkit/paperwork
@@ -396,6 +391,7 @@
 		/obj/item/circular_saw/augment,
 		/obj/item/surgical_drapes,
 	)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /obj/item/organ/cyberimp/arm/toolkit/surgery/emagged
 	name = "hacked surgical toolset implant"
@@ -494,10 +490,10 @@
 
 /obj/item/organ/cyberimp/arm/strongarm/on_bodypart_remove(obj/item/bodypart/arm)
 	. = ..()
-	arm.unarmed_damage_low += lower_punch_damage
-	arm.unarmed_damage_high += upper_punch_damage
-	arm.unarmed_effectiveness += punch_effectiveness_added
-	arm.unarmed_grab_damage_bonus += bonus_grab_damage
+	arm.unarmed_damage_low -= lower_punch_damage
+	arm.unarmed_damage_high -= upper_punch_damage
+	arm.unarmed_effectiveness -= punch_effectiveness_added
+	arm.unarmed_grab_damage_bonus -= bonus_grab_damage
 
 /obj/item/organ/cyberimp/arm/strongarm/emp_act(severity)
 	. = ..()

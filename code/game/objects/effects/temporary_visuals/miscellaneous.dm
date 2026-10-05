@@ -274,6 +274,10 @@
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
 
+/obj/effect/temp_visual/fire/light
+	icon_state = "light"
+	color = COLOR_DARK_ORANGE
+
 /obj/effect/temp_visual/revenant
 	name = "spooky lights"
 	icon_state = "purplesparkles"
@@ -833,3 +837,7 @@
 
 /obj/effect/temp_visual/focus_ring/proc/dissipate()
 	animate(src, alpha = 0, time = 0.5 SECONDS, easing = QUAD_EASING|EASE_OUT)
+
+/obj/effect/temp_visual/pillow_hit
+	icon_state = "pillow_hit"
+	duration = 0.9 SECONDS

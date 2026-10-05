@@ -12,6 +12,7 @@
 	plane = AREA_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
+	tacmap_color = null
 
 	/// List of all turfs currently inside this area as nested lists indexed by zlevel.
 	/// Acts as a filtered version of area.contents For faster lookup
@@ -88,7 +89,7 @@
 	/// The default gravity for the area
 	var/default_gravity = ZERO_GRAVITY
 
-	var/parallax_movedir = 0
+	var/parallax_movedir = NONE
 
 	var/ambience_index = AMBIENCE_GENERIC
 	///A list of sounds to pick from every so often to play to clients.
@@ -136,6 +137,9 @@
 
 	/// Are shuttles allowed to dock in this area
 	var/allow_shuttle_docking = FALSE
+
+	/// If TRUE, then this area will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
 
 /**
  * A list of teleport locations
@@ -457,22 +461,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		fault_location = null
 	SEND_SIGNAL(src, COMSIG_AREA_FIRE_CHANGED, fire)
 
-/**
- * Update the icon state of the area
- *
- * I'm not sure what the heck this does, something to do with weather being able to set icon
- * states on areas?? where the heck would that even display?
- */
-/area/update_icon_state()
-	var/weather_icon
-	for(var/V in SSweather.processing)
-		var/datum/weather/W = V
-		if(W.stage != END_STAGE && (src in W.impacted_areas))
-			W.update_areas()
-			weather_icon = TRUE
-	if(!weather_icon)
-		icon_state = null
-	return ..()
+/// Ensures areas render their weather properly
+/area/update_icon()
+	. = ..()
+	for(var/datum/weather/weather as anything in SSweather.processing)
+		if(weather.stage != END_STAGE && (src in weather.impacted_areas))
+			weather.update_areas()
+
+/// Sets the area's parallax movedir (the direction parallax will animate in while in the area)
+/area/proc/set_parallax_movedir(new_dir)
+	if(parallax_movedir == new_dir)
+		return
+	parallax_movedir = new_dir
+	SEND_SIGNAL(src, COMSIG_AREA_PARALLAX_DIR_CHANGED, parallax_movedir)
 
 /**
  * Update the icon of the area (overridden to always be null for space
