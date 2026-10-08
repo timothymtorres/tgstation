@@ -1984,7 +1984,7 @@
 /// Called when surgical state changes so we can react to it
 /obj/item/bodypart/proc/update_surgical_state(old_state, changed_states)
 	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE, old_state, surgery_state, changed_states)
-	if((surgery_state & changed_states) == changed_states)
+	if(old_state == surgery_state)
 		return
 
 	if(HAS_ANY_SURGERY_STATE(changed_states, SURGERY_ORGANS_CUT|ALL_SURGERY_VESSEL_STATES))
