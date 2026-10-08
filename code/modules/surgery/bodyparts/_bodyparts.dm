@@ -2044,12 +2044,12 @@
 		if(IS_ORGANIC_LIMB(src))
 			playsound(owner, 'sound/misc/splort.ogg', 50, TRUE, -1)
 		if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
-			owner.Stun(1 SECONDS)
+			owner.Stun(2 SECONDS)
 	else
 		if(prob(10) && !HAS_TRAIT(owner, TRAIT_ANALGESIA))
 			to_chat(owner, span_warning("Your open [plaintext_zone] throbs painfully with every step! You feel like you should walk very carefully..."))
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living/, emote), "grimace")
-			owner.Stun(1 SECONDS)
+			owner.Stun(2 SECONDS)
 
 /obj/item/bodypart/vv_edit_var(vname, vval)
 	if(vname != NAMEOF(src, surgery_state))
