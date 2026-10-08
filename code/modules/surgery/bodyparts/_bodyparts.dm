@@ -1946,6 +1946,12 @@
 	bodyshape &= ~old_shape
 	owner?.synchronize_bodyshapes()
 
+/atom/movable/screen/alert/exposed_organs
+	name = "Exposed Organs"
+	desc = "You have an open wound exposing your organs! Moving around in this state is extremely dangerous."
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	overlay_state = "surgery"
+
 /// Add one or multiple surgical states to the bodypart
 /obj/item/bodypart/proc/add_surgical_state(new_states)
 	if(!new_states)
@@ -1993,20 +1999,8 @@
 	else if(HAS_SURGERY_STATE(old_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		qdel(owner.GetComponent(/datum/component/fishing_spot))
 
-/atom/movable/screen/alert/exposed_organs
-	name = "Exposed Organs"
-	desc = "You have an open wound exposing your organs! Moving around in this state is extremely dangerous."
-	use_user_hud_icon = USER_HUD_STYLE_INHERIT
-	overlay_state = "surgery"
-
-#define HEAVY_SURGERY (SURGERY_ORGANS_CUT|SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED|SURGERY_CAVITY_WIDENED)
-
-/// Used to check if heavy surgery is happening
-/obj/item/bodypart/proc/on_surgery_state_change(datum/source, old_state, current_state, changed_states)
-	SIGNAL_HANDLER
-
 	var/was_heavy_surgery = HAS_SURGERY_STATE(old_state, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(old_state, HEAVY_SURGERY)
-	var/is_heavy_surgery = HAS_SURGERY_STATE(current_state, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(current_state, HEAVY_SURGERY)
+	var/is_heavy_surgery = HAS_SURGERY_STATE(surgery_state, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(surgery_state, HEAVY_SURGERY)
 
 	if(!was_heavy_surgery && is_heavy_surgery)
 		owner.throw_alert(ALERT_EXPOSED_ORGANS, /atom/movable/screen/alert/exposed_organs)
@@ -2014,8 +2008,6 @@
 	else if(was_heavy_surgery && !is_heavy_surgery)
 		owner.clear_alert(ALERT_EXPOSED_ORGANS)
 		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-
-#undef HEAVY_SURGERY
 
 /// Tracks if the mob is moving while heavy surgery is taking place
 /obj/item/bodypart/proc/on_moved(obj/item/bodypart, atom/OldLoc, Dir, forced)
@@ -2031,29 +2023,34 @@
 		return
 
 	if(prob(5))
-		var/list/elligible_organs = list()
-		for(var/obj/item/organ/organ in contents) // make implants or cavity items elgible later
-			if(!(organ.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_VITAL)))
-				elligible_organs += organ
-
-		if(!elligible_organs.len)
+		var/list/possible_drop = list() // make implants or cavity items elgible later
+		for(var/obj/item/item in contents)
+			if(isorgan(item))
+				var/obj/item/organ/organ = item
+				if(!(organ.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_VITAL)))
+					possible_drop += organ
+			else
+				possible_drop += item
+		if(!possible_drop.len)
 			return
 
-		var/obj/item/organ/picked_organ = pick(elligible_organs)
+		var/obj/item/organ/picked_organ = pick(possible_drop)
 		picked_organ.Remove(owner)
 		picked_organ.apply_organ_damage(picked_organ.maxHealth * 0.5)
 		owner.visible_message(span_danger("[owner] [picked_organ.name] spills out of [p_their()] [src]!"), span_danger("Your [picked_organ.name] spills out of your open [src]!"))
 		picked_organ.forceMove(owner.drop_location())
-		owner.painful_scream()
+		update_icon_dropped()
 		if(IS_ORGANIC_LIMB(src))
 			playsound(owner, 'sound/misc/splort.ogg', 50, TRUE, -1)
-		update_icon_dropped()
+		if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+			//owner.Knockdown(3 SECONDS)
+			owner.Stun(2 SECONDS)
 	else
-		if(HAS_TRAIT(owner, TRAIT_ANALGESIA))
-			return
-		if(prob(10))
+		if(prob(10) && !HAS_TRAIT(owner, TRAIT_ANALGESIA))
 			to_chat(owner, span_warning("Your open [plaintext_zone] throbs painfully with every step! You feel like you should walk very carefully..."))
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living/, emote), "grimace")
+			//owner.Paralyze(1 SECONDS)
+			owner.Paralyze(2 SECONDS)
 
 /obj/item/bodypart/vv_edit_var(vname, vval)
 	if(vname != NAMEOF(src, surgery_state))
