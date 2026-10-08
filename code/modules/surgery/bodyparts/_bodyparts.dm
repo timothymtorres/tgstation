@@ -1999,18 +1999,19 @@
 	else if(HAS_SURGERY_STATE(old_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		qdel(owner.GetComponent(/datum/component/fishing_spot))
 
-	var/was_heavy_surgery = HAS_SURGERY_STATE(old_state, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(old_state, HEAVY_SURGERY)
-	var/is_heavy_surgery = HAS_SURGERY_STATE(surgery_state, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(surgery_state, HEAVY_SURGERY)
+	if(body_part & (CHEST|HEAD))
+		var/was_heavy_surgery = HAS_SURGERY_STATE(old_state, SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(old_state, HEAVY_SURGERY)
+		var/is_heavy_surgery = HAS_SURGERY_STATE(surgery_state, SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(surgery_state, HEAVY_SURGERY)
 
-	if(!was_heavy_surgery && is_heavy_surgery)
-		owner.throw_alert(ALERT_EXPOSED_ORGANS, /atom/movable/screen/alert/exposed_organs)
-		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
-	else if(was_heavy_surgery && !is_heavy_surgery)
-		owner.clear_alert(ALERT_EXPOSED_ORGANS)
-		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+		if(!was_heavy_surgery && is_heavy_surgery)
+			owner.throw_alert(ALERT_EXPOSED_ORGANS, /atom/movable/screen/alert/exposed_organs)
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
+		else if(was_heavy_surgery && !is_heavy_surgery)
+			owner.clear_alert(ALERT_EXPOSED_ORGANS)
+			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 /// Tracks if the mob is moving while heavy surgery is taking place
-/obj/item/bodypart/proc/on_moved(obj/item/bodypart, atom/OldLoc, Dir, forced)
+/obj/item/bodypart/proc/on_moved(mob/living/source, atom/OldLoc, Dir, forced)
 	SIGNAL_HANDLER
 
 	if(!owner)
@@ -2043,14 +2044,12 @@
 		if(IS_ORGANIC_LIMB(src))
 			playsound(owner, 'sound/misc/splort.ogg', 50, TRUE, -1)
 		if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
-			//owner.Knockdown(3 SECONDS)
-			owner.Stun(2 SECONDS)
+			owner.Stun(1 SECONDS)
 	else
 		if(prob(10) && !HAS_TRAIT(owner, TRAIT_ANALGESIA))
 			to_chat(owner, span_warning("Your open [plaintext_zone] throbs painfully with every step! You feel like you should walk very carefully..."))
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living/, emote), "grimace")
-			//owner.Paralyze(1 SECONDS)
-			owner.Paralyze(2 SECONDS)
+			owner.Stun(1 SECONDS)
 
 /obj/item/bodypart/vv_edit_var(vname, vval)
 	if(vname != NAMEOF(src, surgery_state))
